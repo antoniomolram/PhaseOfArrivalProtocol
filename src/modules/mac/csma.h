@@ -331,8 +331,9 @@ class MIXIM_API csma : public BaseMacLayer
 
     //Modified by Victor
     bool macDuplicateFilter;
-    bool ReceptionOnBackoff; // Enable the reception of packets during Backoff time.
-    bool TransmitOnReception; // Enable a transmission to interrupt a reception
+    bool receptionOnBackoff; // Enable the reception of packets during Backoff time.
+    bool receptionOnCCA;     // Enable the reception of packets during CCA
+    bool transmitOnReception; // Enable a transmission to interrupt a reception
     bool  IsInReception; // Trans
     // Modified by Jorge
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size

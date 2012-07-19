@@ -87,7 +87,8 @@ simple csma extends BaseMacLayer
         
       	//modified by Victor
       	bool macDuplicateFilter = default(true);
-		bool ReceptionOnBackoff = default(false);
-		bool TransmitOnReception = default(false);
+		bool receptionOnBackoff = default(true);
+		bool transmitOnReception = default(true);
+		bool receptionOnCCA = default(true);
 }
 
