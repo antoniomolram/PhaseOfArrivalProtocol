@@ -330,6 +330,7 @@ class MIXIM_API csma : public BaseMacLayer
     //int macaddress;
 
     //Modified by Victor
+    bool macDuplicateFilter;
     bool ReceptionOnBackoff; // Enable the reception of packets during Backoff time.
     bool TransmitOnReception; // Enable a transmission to interrupt a reception
     bool  IsInReception; // Trans

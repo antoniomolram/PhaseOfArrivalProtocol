@@ -10,6 +10,9 @@ void ComputerAppLayer::initialize(int stage)
 		// Assign the type of host to 3 (computer)
 		computer = cc->findNic(myNetwAddr);
 		computer->moduleType = 3;
+        // Eneable to filter duplicated packets in App layer
+        appDuplicateFilter = par("appDuplicateFilter");
+        duplicatedPktCounter= 0;
 	// We have to wait till stage 3 to make this because in case the anchors are randomly situated, it's done in stage 2
 	} else if (stage == 3) { // Slot calculation
 		BaseConnectionManager::NicEntries& nicList = cc->getNicList();
@@ -31,7 +34,7 @@ void ComputerAppLayer::initialize(int stage)
         /* Modified by Victor */
         packetsResend = (int*)calloc(sizeof(int),1000*numberOfNodes);
         numPckToSentByPeriod = 0;
-        for(int i=0;i<10*numberOfNodes;i++)
+        for(int i=0;i<1000*numberOfNodes;i++)
         {
             packetsResend[i] = -1;
         }
@@ -414,6 +417,8 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of packets 4 created by a mobile report TX OK", reportOK[4]);
 
 	recordScalar("Number of packets created by a mobile request TX OK", requestOK);
+
+	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
 
 	for(int i=0; i<numberOfAnchors; i++) {
 		int n1,n2,n3,n4,n5,n6,n7,n8,n9;
@@ -886,7 +891,14 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		}
 		break;
 	case BEGIN_PHASE:
-		// Empty the transmission Queue
+		if(phase == COM_SINK_PHASE_1)
+		{
+	        for(int i=0;i<numPckToSentByPeriod;i++)
+	        {
+	            packetsResend[i] = -1;
+	        }
+	        numPckToSentByPeriod = 0;
+		}
 		if (!transfersQueue.empty()) {
 			EV << "Emptying the queue with " << transfersQueue.length() << " elements in phase change" << endl;
 			nbPacketDroppedNoTimeApp = nbPacketDroppedNoTimeApp + transfersQueue.length();
@@ -1024,10 +1036,6 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 		delete msg;
 		break;
 	case AppLayer::COM_SINK_PHASE_1:
-        for(int i=0;i<numPckToSentByPeriod;i++)
-        {
-            packetsResend[i] = -1;
-        }
 		if (host->moduleType == 2) { // Mobile Node
 			EV << "Discarding the packet, computer cannot receive in Com Sink 1 Phase any packet from a Mobile Node" << endl;
 			delete msg;
@@ -1036,27 +1044,30 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 		    {
 		    case AppLayer::REPORT_WITHOUT_CSMA:
 		    case AppLayer::REPORT_WITH_CSMA:
-		    	nbReportsReceived++;
 				if (pkt->getDestAddr() == myNetwAddr) { // If the packet is for the computer
-
-                    pktRepeated = false;
-
-                    for( int i=0;i<numPckToSentByPeriod;i++)
+                    if (appDuplicateFilter)
                     {
-                        if(pkt->getEncapsulationTreeId() == packetsResend[i])
+                        pktRepeated = false;
+                        for( int i=0;i<numPckToSentByPeriod;i++)
                         {
-                            EV << "Packet with ID " <<  pkt->getEncapsulationTreeId() << "was re-send before" << endl;
-                            EV<< "Phase: " << phase << endl;
-                            pktRepeated = true;
-                            delete pkt;
-                            break;
+                            EV <<"Paquetes repetidos: "<<packetsResend[i]<<endl;
+                            if(pkt->getEncapsulationTreeId() == packetsResend[i])
+                            {
+                                EV << "Packet with ID " <<  pkt->getEncapsulationTreeId() << "was re-send before" << endl;
+                                EV<< "Phase: " << phase << endl;
+                                pktRepeated = true;
+                                duplicatedPktCounter++;
+                                delete pkt;
+                                break;
+                            }
                         }
                     }
-                    if(!pktRepeated)
+                    if(!pktRepeated || !appDuplicateFilter)
                     {
+                        nbReportsReceived++;
                         pkt->getArrivalGateId();
-                        numPckToSentByPeriod++;
                         packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();
+                        numPckToSentByPeriod++;
 
                         if (pkt->getRealDestAddr() == myNetwAddr) { // If the packet was really for the computer
                             nbReportsForMeReceived++;
@@ -1187,10 +1198,6 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 		}
 		break;
 	case AppLayer::COM_SINK_PHASE_2:
-        for(int i=0;i<numPckToSentByPeriod;i++)
-        {
-            packetsResend[i] = -1;
-        }
 		EV << "Discarding packet, the computer doesn't receive any packet during Com Sink 2 Phase" << endl;
 		delete msg;
 		break;

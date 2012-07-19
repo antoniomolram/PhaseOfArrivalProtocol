@@ -86,6 +86,7 @@ simple csma extends BaseMacLayer
         double macMaxBE = default(8);
         
       	//modified by Victor
+      	bool macDuplicateFilter = default(true);
 		bool ReceptionOnBackoff = default(false);
 		bool TransmitOnReception = default(false);
 }

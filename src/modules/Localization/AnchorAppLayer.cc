@@ -14,7 +14,8 @@ void AnchorAppLayer::initialize(int stage)
 		// Now the first maximum interpacket transmission time is the same as the rest of the times, it could be different, that's why we have 2 parameters
 		syncFirstMaxRandomTime = par("syncRestMaxRandomTimes");
 	   	syncRestMaxRandomTimes = par("syncRestMaxRandomTimes");
-
+	   	// Eneable to filter duplicated packets in App layer
+	   	appDuplicateFilter = par("appDuplicateFilter");
 	   	// Variable initialization, we could change this into parameters if necessary
 	   	syncPhaseNumber = SYNC_PHASE_1;
 		syncPacketsPerSyncPhaseCounter = 1;
@@ -23,12 +24,10 @@ void AnchorAppLayer::initialize(int stage)
 		broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
 		/* Modified by Victor */
+		duplicatedPktCounter = 0;
+
 		packetsResend = (int*)calloc(sizeof(int),20*numberOfNodes);
 		numPckToSentByPeriod = 0;
-        for(int i=0;i<10*numberOfNodes;i++)
-        {
-            packetsResend[i] = -1;
-        }
 	} else if (stage == 1) {
 		// Assign the type of host to 1 (anchor)
 		anchor = cc->findNic(myNetwAddr);
@@ -249,6 +248,8 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of packets created by a mobile request sent from this anchor", requestSent);
 	recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);
 
+	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
+
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
@@ -309,6 +310,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 
 			transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			sendDown(msg);
+			EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
 			if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
 				// Schedule the next queue element in the next random time
 				queueElementCounter++;
@@ -785,25 +787,29 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 					}
 					delete msg;
 				} else { // If the message is not for us, we just route the packet
-				    pktRepeated = false;
 
-				    for( int i=0;i<numPckToSentByPeriod;i++)
+				    if (appDuplicateFilter)
 				    {
-				        if(pkt->getEncapsulationTreeId() == packetsResend[i])
-				        {
-				            EV << "Packet with ID " <<  pkt->getEncapsulationTreeId() << "was re-send before" << endl;
-				            EV<< "Phase: " << phase << endl;
-				            pktRepeated = true;
-				         //   delete pkt;
-				            break;
-				        }
+				        pktRepeated = false;
+	                    for( int i=0;i<numPckToSentByPeriod;i++)
+	                    {
+	                        if(pkt->getEncapsulationTreeId() == packetsResend[i])
+	                        {
+	                            EV << "Packet with ID " <<  pkt->getEncapsulationTreeId() << "was re-send before" << endl;
+	                            EV<< "Phase: " << phase << endl;
+	                            pktRepeated = true;
+	                            duplicatedPktCounter++;
+	                            delete pkt;
+	                            break;
+	                        }
+	                    }
 				    }
-				    if(1)
+				    if(!pktRepeated || !appDuplicateFilter)
 				    {
 	                    pkt->getArrivalGateId();
 	                    numPckToSent++;
-	                    numPckToSentByPeriod++;
 	                    packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();
+	                    numPckToSentByPeriod++;
 
 	                    pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
 	                    pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK

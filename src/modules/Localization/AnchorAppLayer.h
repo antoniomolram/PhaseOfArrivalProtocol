@@ -60,7 +60,8 @@ protected:
 	double comsinkPhaseStartTime;	// Variable to save when the current COM_SINK 1 phase started
 
 	// Modified by Victor
-
+	bool appDuplicateFilter;
+	double duplicatedPktCounter;
 	int *packetsResend;            // Packets that were successfully resend.
     int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
     bool pktRepeated;                     // Flag to indicate if a packet is repeated
