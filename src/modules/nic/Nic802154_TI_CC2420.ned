@@ -58,6 +58,10 @@ module Nic802154_TI_CC2420 extends WirelessNicBattery
         phy.timeTXToSleep = 0 s;//0.00094 s;
 
         mac.rxSetupTime = 0 s; // 0.001792 s;
-        mac.txPower = default(100 mW);
+        mac.txPower = default(100 mW);       
+                
+        //Modified by Victor: Current values for new Phy state
+        rxBusyCurrent = 9.1 mA;
+        rxRxBusyCurrent = 9.1 mA;
 }
 

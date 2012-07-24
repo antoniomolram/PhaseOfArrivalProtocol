@@ -211,6 +211,8 @@ public:
 		/** @brief switching between two states*/
 		SWITCHING,
 
+		RX_BUSY,
+
 		/**
 		 * @brief No real radio state just a counter constant for the amount of states.
 		 *
@@ -418,7 +420,7 @@ protected:
 	 */
 	virtual Argument::mapped_type_cref mapStateToAtt(int state)
 	{
-		if (state == RX) {
+		if (state == RX || state == RX_BUSY) {
 			return minAtt;
 		}
 		else{

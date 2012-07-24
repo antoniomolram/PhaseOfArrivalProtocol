@@ -41,6 +41,10 @@ void PhyLayerBattery::initialize(int stage) {
 		setupTxCurrent = getNic()->par( "setupTxCurrent" );
 		rxTxCurrent = getNic()->par( "rxTxCurrent" );
 		txRxCurrent = getNic()->par( "txRxCurrent" );
+		//New Phy State
+		rxBusyCurrent = getNic()->par("rxBusyCurrent");
+		rxRxBusyCurrent = getNic()->par("rxRxBusyCurrent");
+
 	} else {
 		registerWithBattery("physical layer", numActivities);
 		setRadioCurrent(radio->getCurrentState());
@@ -83,7 +87,7 @@ Decider* PhyLayerBattery
 }
 
 void PhyLayerBattery::drawCurrent(double amount, int activity) {
-	if(radio->getCurrentState() == Radio::RX) {
+	if(radio->getCurrentState() == Radio::RX || radio->getCurrentState() == Radio::RX_BUSY) { //New phy state RX_BUSY has the same current behavior that RX
 		if(amount != 0.0) {
 			BatteryAccess::drawCurrent(rxCurrent + amount, DECIDER_ACCT + activity);
 		} else {
@@ -148,11 +152,31 @@ void PhyLayerBattery::setSwitchingCurrent(int from, int to) {
 		case Radio::TX:
 			current = rxTxCurrent;
 			break;
+        case Radio::RX_BUSY: // New phy state
+            current = rxBusyCurrent;
+            break;
 		default:
 			opp_error("Unknown radio switch! From RX to %d", to);
 			break;
 		}
 		break;
+
+	case Radio::RX_BUSY:
+	    switch(to){
+	    case Radio::RX:
+	        current = rxRxBusyCurrent;
+	        break;
+        case Radio::TX:
+            current = rxTxCurrent;
+            break;
+        case Radio::SLEEP:
+            current = rxCurrent;
+            break;
+        default:
+            opp_error("Unknown radio switch! From RX_BUSY to %d", to);
+            break;
+	    }
+	    break;
 
 	case Radio::TX:
 		switch(to) {
@@ -201,6 +225,9 @@ void PhyLayerBattery::setRadioCurrent(int rs) {
 	case Radio::SLEEP:
 		BatteryAccess::drawCurrent(sleepCurrent, SLEEP_ACCT);
 		break;
+    case Radio::RX_BUSY: //New phy state
+        BatteryAccess::drawCurrent(rxBusyCurrent, RX_ACCT);
+        break;
 	default:
 		opp_error("Unknown radio state: %d", rs);
 		break;

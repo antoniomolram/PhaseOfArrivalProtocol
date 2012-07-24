@@ -394,78 +394,60 @@ void csma::updateStatusBackoff(t_mac_event event, cMessage *msg) {
 /*********/
         break;
     case EV_DUPLICATE_RECEIVED:
-        if(!receptionOnBackoff)
-        {
-            EV << "(28) FSM State BACKOFF, EV_DUPLICATE_RECEIVED: Received frame Deleted, reception during Backoff not allow";
+
+        // suspend current transmission attempt,
+        // transmit ack,
+        // and resume transmission when entering manageQueue()
+        EV << "(28) FSM State BACKOFF, EV_DUPLICATE_RECEIVED:";
+        if(useMACAcks) {
+            EV << "suspending current transmit tentative and transmitting ack";
+            transmissionAttemptInterruptedByRx = true;
+            cancelEvent(backoffTimer);
+            phy->setRadioState(Radio::TX);
+            updateMacState(WAITSIFS_6);
+            /***MOD***/
+            if (node->moduleType == 2) { // Only for Mobile Nodes
+                energy->updateStateStatus(true, macState, Radio::TX);
+            }
+            /*********/
+            startTimer(TIMER_SIFS);
+            } else {
+              EV << "Nothing to do.";
+            }
+            //sendUp(decapsMsg(static_cast<MacSeqPkt *>(msg)));
             delete msg;
-        }
-        else{
-            // suspend current transmission attempt,
-            // transmit ack,
-            // and resume transmission when entering manageQueue()
-            EV << "(28) FSM State BACKOFF, EV_DUPLICATE_RECEIVED:";
-            if(useMACAcks) {
-                EV << "suspending current transmit tentative and transmitting ack";
-                transmissionAttemptInterruptedByRx = true;
-                cancelEvent(backoffTimer);
-                phy->setRadioState(Radio::TX);
-                updateMacState(WAITSIFS_6);
-                /***MOD***/
-                if (node->moduleType == 2) { // Only for Mobile Nodes
-                    energy->updateStateStatus(true, macState, Radio::TX);
-                }
-                /*********/
-                startTimer(TIMER_SIFS);
-                } else {
-                  EV << "Nothing to do.";
-                }
-                //sendUp(decapsMsg(static_cast<MacSeqPkt *>(msg)));
-                delete msg;
-        }
         break;
     case EV_FRAME_RECEIVED:
-        if(!receptionOnBackoff)
-        {
-            EV << "(28) FSM State BACKOFF, EV_FRAME_RECEIVED: Received frame Deleted, reception during Backoff not allow";
-            delete msg;
-        }
-        else{
-            // suspend current transmission attempt,
-            // transmit ack,
-            // and resume transmission when entering manageQueue()
-            EV << "(28) FSM State BACKOFF, EV_FRAME_RECEIVED:";
-            if(useMACAcks) {
-                EV << "suspending current transmit tentative and transmitting ack";
-                transmissionAttemptInterruptedByRx = true;
-                cancelEvent(backoffTimer);
-                phy->setRadioState(Radio::TX);
-                updateMacState(WAITSIFS_6);
-                /***MOD***/
-                if (node->moduleType == 2) { // Only for Mobile Nodes
-                    energy->updateStateStatus(true, macState, Radio::TX);
-                }
-                /*********/
-                startTimer(TIMER_SIFS);
-            } else {
-                       EV << "sending frame up and resuming normal operation.";
-                   }
-            sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
-            delete msg;
-        }
+
+        // suspend current transmission attempt,
+        // transmit ack,
+        // and resume transmission when entering manageQueue()
+        EV << "(28) FSM State BACKOFF, EV_FRAME_RECEIVED:";
+        if(useMACAcks) {
+            EV << "suspending current transmit tentative and transmitting ack";
+            transmissionAttemptInterruptedByRx = true;
+            cancelEvent(backoffTimer);
+            phy->setRadioState(Radio::TX);
+            updateMacState(WAITSIFS_6);
+            /***MOD***/
+            if (node->moduleType == 2) { // Only for Mobile Nodes
+                energy->updateStateStatus(true, macState, Radio::TX);
+            }
+            /*********/
+            startTimer(TIMER_SIFS);
+        } else {
+                   EV << "sending frame up and resuming normal operation.";
+               }
+        sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
+        delete msg;
         break;
 
     case EV_BROADCAST_RECEIVED:
-        if(!receptionOnBackoff)
-        {
-            EV << "(28) FSM State BACKOFF, EV_BROADCAST_RECEIVED: Received frame Deleted, reception during Backoff not allow";
-            delete msg;
-        }
-        else{
-            EV << "(29) FSM State BACKOFF, EV_BROADCAST_RECEIVED:"
-            << "sending frame up and resuming normal operation." <<endl;
-            sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
-            delete msg;
-        }
+
+        EV << "(29) FSM State BACKOFF, EV_BROADCAST_RECEIVED:"
+        << "sending frame up and resuming normal operation." <<endl;
+        sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
+        delete msg;
         break;
     default:
         fsmError(event, msg);
@@ -550,81 +532,62 @@ void csma::updateStatusCCA(t_mac_event event, cMessage *msg) {
         break;
     }
     case EV_DUPLICATE_RECEIVED:
-        if(!receptionOnCCA)
-        {
-            EV << "(28) FSM State CCA_3, EV_DUPLICATE_RECEIVED: Received frame deleted, reception during CCA not allow";
-            delete msg;
+
+        EV << "(26) FSM State CCA_3, EV_DUPLICATE_RECEIVED:";
+        if(useMACAcks) {
+            EV << " setting up radio tx -> WAITSIFS." << endl;
+            // suspend current transmission attempt,
+            // transmit ack,
+            // and resume transmission when entering manageQueue()
+            transmissionAttemptInterruptedByRx = true;
+            cancelEvent(ccaTimer);
+
+            phy->setRadioState(Radio::TX);
+            updateMacState(WAITSIFS_6);
+            /***MOD***/
+            if (node->moduleType == 2) { // Only for Mobile Nodes
+                energy->updateStateStatus(true, macState, Radio::TX);
+        }
+            /*********/
+        startTimer(TIMER_SIFS);
         }
         else{
-            EV << "(26) FSM State CCA_3, EV_DUPLICATE_RECEIVED:";
-            if(useMACAcks) {
-                EV << " setting up radio tx -> WAITSIFS." << endl;
-                // suspend current transmission attempt,
-                // transmit ack,
-                // and resume transmission when entering manageQueue()
-                transmissionAttemptInterruptedByRx = true;
-                cancelEvent(ccaTimer);
-
-                phy->setRadioState(Radio::TX);
-                updateMacState(WAITSIFS_6);
-                /***MOD***/
-                if (node->moduleType == 2) { // Only for Mobile Nodes
-                    energy->updateStateStatus(true, macState, Radio::TX);
-            }
-                /*********/
-            startTimer(TIMER_SIFS);
-            }
-            else{
-                EV << " Nothing to do." << endl;
-            }
-            //sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
-            delete msg;
+            EV << " Nothing to do." << endl;
         }
+        //sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
+        delete msg;
         break;
 
     case EV_FRAME_RECEIVED:
-        if(!receptionOnCCA)
-        {
-            EV << "(28) FSM State CCA_3, EV_FRAME_RECEIVED: Received frame deleted, reception during CCA not allow";
-            delete msg;
+        EV << "(26) FSM State CCA_3, EV_FRAME_RECEIVED:";
+        if(useMACAcks) {
+            EV << " setting up radio tx -> WAITSIFS." << endl;
+            // suspend current transmission attempt,
+            // transmit ack,
+            // and resume transmission when entering manageQueue()
+            transmissionAttemptInterruptedByRx = true;
+            cancelEvent(ccaTimer);
+            phy->setRadioState(Radio::TX);
+            updateMacState(WAITSIFS_6);
+            /***MOD***/
+            if (node->moduleType == 2) { // Only for Mobile Nodes
+                energy->updateStateStatus(true, macState, Radio::TX);
+            }
+            /*********/
+            startTimer(TIMER_SIFS);
         }
         else{
-            EV << "(26) FSM State CCA_3, EV_FRAME_RECEIVED:";
-            if(useMACAcks) {
-                EV << " setting up radio tx -> WAITSIFS." << endl;
-                // suspend current transmission attempt,
-                // transmit ack,
-                // and resume transmission when entering manageQueue()
-                transmissionAttemptInterruptedByRx = true;
-                cancelEvent(ccaTimer);
-                phy->setRadioState(Radio::TX);
-                updateMacState(WAITSIFS_6);
-                /***MOD***/
-                if (node->moduleType == 2) { // Only for Mobile Nodes
-                    energy->updateStateStatus(true, macState, Radio::TX);
-                }
-                /*********/
-                startTimer(TIMER_SIFS);
-            }
-            else{
-                EV << " Nothing to do." << endl;
-            }
-            sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
-            delete msg;
+            EV << " Nothing to do." << endl;
         }
+        sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
+        delete msg;
         break;
+
     case EV_BROADCAST_RECEIVED:
-        if(!receptionOnCCA)
-        {
-            EV << "(28) FSM State CCA_3, EV_FRAME_RECEIVED: Received frame deleted, reception during CCA not allow";
-            delete msg;
-        }
-        else{
-            EV << "(24) FSM State BACKOFF, EV_BROADCAST_RECEIVED:"
-            << " Nothing to do." << endl;
-            sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
-            delete msg;
-        }
+        EV << "(24) FSM State BACKOFF, EV_BROADCAST_RECEIVED:"
+        << " Nothing to do." << endl;
+        sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
+        delete msg;
         break;
     default:
         fsmError(event, msg);
@@ -847,7 +810,10 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
     EV<< "In executeMac" << endl;
     if(macState != IDLE_1 && event == EV_SEND_REQUEST) {
         updateStatusNotIdle(msg);
-    } else {
+    } else if(event == EV_SEND_REQUEST && phy->getRadioState() == Radio::RX_BUSY && !transmitOnReception){
+        updateStatusNotIdle(msg);
+    }
+    else{
         switch(macState) {
         case IDLE_1:
             updateStatusIdle(event, msg);
@@ -1096,87 +1062,97 @@ void csma::handleLowerMsg(cMessage *msg) {
     << ", myState=" << macState << " src=" << macPkt->getSrcAddr()
     << " dst=" << macPkt->getDestAddr() << " myAddr="
     << myMacAddr << endl;
+    if (phy->getRadioState() == Radio::RX_BUSY)
+        phy->setRadioState(Radio::RX); // CHANGE PARA TRASMITIR!!!
 
-    if(macPkt->getDestAddr() == myMacAddr)
+    if((backoffTimer->isScheduled() || ccaTimer->isScheduled()) && (!receptionOnCCA || !receptionOnBackoff))
     {
-        if(!useMACAcks) {
-            EV << "Received a data packet addressed to me." << endl;
-//          nbRxFrames++;
-            executeMac(EV_FRAME_RECEIVED, macPkt);
-        }
-        else {
-            long SeqNr = macPkt->getSequenceId();
+        EV << "This node is trying to transmit a Packet...executing Backoff or CCA procedure";
+        delete macPkt;
+    }
+    else
+    {
+        if(macPkt->getDestAddr() == myMacAddr)
+        {
+            if(!useMACAcks) {
+                EV << "Received a data packet addressed to me." << endl;
+    //          nbRxFrames++;
+                executeMac(EV_FRAME_RECEIVED, macPkt);
+            }
+            else {
+                long SeqNr = macPkt->getSequenceId();
 
-            if(strcmp(macPkt->getName(), "CSMA-Ack") != 0) {
-                // This is a data message addressed to us
-                // and we should send an ack.
-                // we build the ack packet here because we need to
-                // copy data from macPkt (src).
-                EV << "Received a data packet addressed to me,"
-                   << " preparing an ack..." << endl;
+                if(strcmp(macPkt->getName(), "CSMA-Ack") != 0) {
+                    // This is a data message addressed to us
+                    // and we should send an ack.
+                    // we build the ack packet here because we need to
+                    // copy data from macPkt (src).
+                    EV << "Received a data packet addressed to me,"
+                       << " preparing an ack..." << endl;
 
-//              nbRxFrames++;
+    //              nbRxFrames++;
 
-                if(ackMessage != NULL)
-                    delete ackMessage;
-                ackMessage = new MacPkt("CSMA-Ack");
-                ackMessage->setSrcAddr(myMacAddr);
-                ackMessage->setDestAddr(macPkt->getSrcAddr());
-                ackMessage->setBitLength(ackLength);
-                //Check for duplicates by checking expected seqNr of sender
-                if(SeqNrChild.find(src) == SeqNrChild.end()) {
-                    //no record of current child -> add expected next number to map
-                    SeqNrChild[src] = SeqNr + 1;
-                    EV << "Adding a new child to the map of Sequence numbers:" << src << endl;
-                    executeMac(EV_FRAME_RECEIVED, macPkt);
-                }
-                else {
-                    ExpectedNr = SeqNrChild[src];
-                    EV << "Expected Sequence number is " << ExpectedNr <<
-                    " and number of packet is " << SeqNr << endl;
-                    if(SeqNr < ExpectedNr) {
-                        //Duplicate Packet, count and do not send to upper layer
-                        nbDuplicates++;
-/***MOD***/
-                        EV << "Duplicate Packet Received" << endl;
-/********/
-                        if (macDuplicateFilter)
-                            executeMac(EV_DUPLICATE_RECEIVED, macPkt);
-                        else
-                            executeMac(EV_FRAME_RECEIVED, macPkt);
-                    }
-                    else {
+                    if(ackMessage != NULL)
+                        delete ackMessage;
+                    ackMessage = new MacPkt("CSMA-Ack");
+                    ackMessage->setSrcAddr(myMacAddr);
+                    ackMessage->setDestAddr(macPkt->getSrcAddr());
+                    ackMessage->setBitLength(ackLength);
+                    //Check for duplicates by checking expected seqNr of sender
+                    if(SeqNrChild.find(src) == SeqNrChild.end()) {
+                        //no record of current child -> add expected next number to map
                         SeqNrChild[src] = SeqNr + 1;
-/***MOD***/
-                        EV << "Normal Packet Received" << endl;
-
+                        EV << "Adding a new child to the map of Sequence numbers:" << src << endl;
                         executeMac(EV_FRAME_RECEIVED, macPkt);
                     }
-                }
+                    else {
+                        ExpectedNr = SeqNrChild[src];
+                        EV << "Expected Sequence number is " << ExpectedNr <<
+                        " and number of packet is " << SeqNr << endl;
+                        if(SeqNr < ExpectedNr) {
+                            //Duplicate Packet, count and do not send to upper layer
+                            nbDuplicates++;
+    /***MOD***/
+                            EV << "Duplicate Packet Received" << endl;
+    /********/
+                            if (macDuplicateFilter)
+                                executeMac(EV_DUPLICATE_RECEIVED, macPkt);
+                            else
+                                executeMac(EV_FRAME_RECEIVED, macPkt);
+                        }
+                        else {
+                            SeqNrChild[src] = SeqNr + 1;
+    /***MOD***/
+                            EV << "Normal Packet Received" << endl;
 
-            } else if(macQueue.size() != 0) {
+                            executeMac(EV_FRAME_RECEIVED, macPkt);
+                        }
+                    }
 
-                // message is an ack, and it is for us.
-                // Is it from the right node ?
-                MacPkt * firstPacket = static_cast<MacPkt *>(macQueue.front());
-                if(macPkt->getSrcAddr() == firstPacket->getDestAddr()) {
-                    nbRecvdAcks++;
-                    executeMac(EV_ACK_RECEIVED, macPkt);
+                } else if(macQueue.size() != 0) {
+
+                    // message is an ack, and it is for us.
+                    // Is it from the right node ?
+                    MacPkt * firstPacket = static_cast<MacPkt *>(macQueue.front());
+                    if(macPkt->getSrcAddr() == firstPacket->getDestAddr()) {
+                        nbRecvdAcks++;
+                        executeMac(EV_ACK_RECEIVED, macPkt);
+                    } else {
+                        EV << "Error! Received an ack from an unexpected source: src=" << macPkt->getSrcAddr() << ", I was expecting from node addr=" << firstPacket->getDestAddr() << endl;
+                        delete macPkt;
+                    }
                 } else {
-                    EV << "Error! Received an ack from an unexpected source: src=" << macPkt->getSrcAddr() << ", I was expecting from node addr=" << firstPacket->getDestAddr() << endl;
+                    EV << "Error! Received an Ack while my send queue was empty. src=" << macPkt->getSrcAddr() << "." << endl;
                     delete macPkt;
                 }
-            } else {
-                EV << "Error! Received an Ack while my send queue was empty. src=" << macPkt->getSrcAddr() << "." << endl;
-                delete macPkt;
             }
         }
-    }
-    else if (LAddress::isL2Broadcast(dest)) {
-        executeMac(EV_BROADCAST_RECEIVED, macPkt);
-    } else {
-        EV << "packet not for me, deleting...\n";
-        delete macPkt;
+        else if (LAddress::isL2Broadcast(dest)) {
+            executeMac(EV_BROADCAST_RECEIVED, macPkt);
+        } else {
+            EV << "packet not for me, deleting...\n";
+            delete macPkt;
+        }
     }
 }
 
@@ -1185,6 +1161,8 @@ void csma::handleLowerControl(cMessage *msg) {
         executeMac(EV_FRAME_TRANSMITTED, msg);
     } else if (msg->getKind() == BaseDecider::PACKET_DROPPED) {
         EV<< "control message: PACKED DROPPED" << endl;
+        if (phy->getRadioState() == Radio::RX_BUSY)
+            phy->setRadioState(Radio::RX); // CHANGE PARA TRASMITIR!!!
     } else if (msg->getKind() == MacToPhyInterface::RADIO_SWITCHING_OVER) {
 /***MOD***/
         //EV<< "control message: RADIO_SWITCHING_OVER" << endl;

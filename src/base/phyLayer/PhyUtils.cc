@@ -162,7 +162,6 @@ simtime_t Radio::switchTo(int newState, simtime_t_cref now)
 	state = SWITCHING;
 	radioStates.record(state);
 
-	// make entry to RSAM
 	makeRSAMEntry(now, state);
 
 	// return matching entry from the switch times matrix

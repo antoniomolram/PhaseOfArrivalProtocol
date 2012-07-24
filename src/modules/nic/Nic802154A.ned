@@ -39,5 +39,7 @@ module Nic802154A extends WirelessNicBattery
 
         phy.initialRadioState = 4; // initializes radio state to SYNC
         mac.maxRetries = 3;
+       
+        
 }
 

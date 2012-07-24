@@ -59,12 +59,12 @@ protected:
 
 	/** @name The different currents in mA.*/
 	/*@{*/
-	double sleepCurrent, rxCurrent, decodingCurrentDelta, txCurrent;
+	double sleepCurrent, rxCurrent, decodingCurrentDelta, txCurrent, rxBusyCurrent;
 	/*@}*/
 
 	/** @name The different switching state currents in mA.*/
 	/*@{*/
-	double setupRxCurrent, setupTxCurrent, rxTxCurrent, txRxCurrent;
+	double setupRxCurrent, setupTxCurrent, rxTxCurrent, txRxCurrent, rxRxBusyCurrent;
 	/*@}*/
 
 	/**

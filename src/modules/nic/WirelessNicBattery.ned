@@ -31,4 +31,7 @@ module WirelessNicBattery extends WirelessNic
         double setupTxCurrent @unit(mA);
         double rxTxCurrent @unit(mA);
         double txRxCurrent @unit(mA);
+        //Modified by Victor: Current values for new Phy state
+        double rxBusyCurrent @unit(mA);
+        double rxRxBusyCurrent @unit(mA);
 }

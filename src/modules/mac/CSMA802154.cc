@@ -22,6 +22,7 @@
 #include "PhyToMacControlInfo.h"
 #include "MacToNetwControlInfo.h"
 #include "MacPkt_m.h"
+#include "MacToPhyInterface.h"
 
 Define_Module(CSMA802154);
 
@@ -54,6 +55,8 @@ cPacket *CSMA802154::decapsMsg(MacPkt * macPkt) {
 void CSMA802154::handleLowerControl(cMessage *msg) {
 	if (msg->getKind() == Decider802154Narrow::RECEPTION_STARTED) {
 		debugEV<< "control message: RECEIVING AirFrame" << endl;
+		if(phy->getRadioState() == Radio::RX)
+		    phy->setRadioState(Radio::RX_BUSY);
 		delete msg;
 		return;
 	}

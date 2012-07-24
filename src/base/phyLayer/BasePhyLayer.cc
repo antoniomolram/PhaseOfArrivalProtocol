@@ -149,7 +149,10 @@ Radio* BasePhyLayer::initializeRadio() const {
 	radio->setSwitchTime(Radio::TX, Radio::SLEEP, (hasPar("timeTXToSleep") ? par("timeTXToSleep") : par("timeRXToSleep")).doubleValue());
 	//if no RX to sleep defined asume same time as TX to sleep
 	radio->setSwitchTime(Radio::RX, Radio::SLEEP, (hasPar("timeRXToSleep") ? par("timeRXToSleep") : par("timeTXToSleep")).doubleValue());
-
+	//switch time between
+	radio->setSwitchTime(Radio::RX,Radio::RX_BUSY,0);
+	radio->setSwitchTime(Radio::RX_BUSY,Radio::RX,0);
+	radio->setSwitchTime(Radio::RX_BUSY,Radio::TX,0);
 	return radio;
 }
 
@@ -482,6 +485,7 @@ void BasePhyLayer::handleUpperMessage(cMessage* msg){
 	// check if Radio is in TX state
 	if (radio->getCurrentState() != Radio::TX)
 	{
+	    EV <<"Current state: "<< radio->getCurrentState() << endl;
         delete msg;
         msg = 0;
 		opp_error("Error: message for sending received, but radio not in state TX");
@@ -758,7 +762,7 @@ simtime_t BasePhyLayer::setRadioState(int rs) {
 		return switchTime;
 
 	// if switching is done in exactly zero-time no extra self-message is scheduled
-	if (switchTime == 0.0)
+	if (switchTime == 0.0 && rs != Radio::RX_BUSY)
 	{
 		// TODO: in case of zero-time-switch, send no control-message to mac!
 		// maybe call a method finishRadioSwitchingSilent()
