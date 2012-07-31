@@ -41,6 +41,9 @@ protected:
 	/** @brief MAC address of the last hop of this packet.*/
 	LAddress::L2Type lastHopMac;
 
+    /** @brief MAC address of the nexz hop of this packet.*/
+    LAddress::L2Type nextHopMac;
+
 	/** @brief The received signal strength for this packet.*/
 	double rssi;
 
@@ -48,9 +51,10 @@ public:
 	/**
 	 * @brief Initializes with the passed last hop address and bit error rate.
 	 */
-	MacToNetwControlInfo(const LAddress::L2Type& lastHop, double ber = 0, double rssi = 0):
+	MacToNetwControlInfo(const LAddress::L2Type& lastHop, const LAddress::L2Type& nextHop = LAddress::L2NULL, double ber = 0, double rssi = 0):
 		bitErrorRate(ber),
 		lastHopMac(lastHop),
+		nextHopMac(nextHop),
 		rssi(rssi)
 	{}
 
@@ -80,6 +84,13 @@ public:
 		return lastHopMac;
 	}
 
+    /**
+     * @brief Returns the MAC address of the packets last hop.
+     */
+    const LAddress::L2Type& getNextHopMac() const {
+        return nextHopMac;
+    }
+
 	/**
 	 * @brief Sets the MAC address of the packets last hop.
 	 *
@@ -88,6 +99,15 @@ public:
 	virtual void setLastHopMac(const LAddress::L2Type& lastHop) {
 		lastHopMac = lastHop;
 	}
+
+    /**
+     * @brief Sets the MAC address of the packets next hop.
+     *
+     * @param lastHop The next hops MAC address
+     */
+    virtual void setNextHopMac(const LAddress::L2Type& nextHop) {
+        nextHopMac = nextHop;
+    }
 
 	/**
 	 * @brief Returns the packets received signal strength.

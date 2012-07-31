@@ -71,6 +71,10 @@ public:
 		QUEUE_FULL,
 		// When the ACK was sent
 		ACK_SENT,
+
+		ACK_RECEIVED,
+
+		MSG_RECEIVED,
 /*********/
     };
 

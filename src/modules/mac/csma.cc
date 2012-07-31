@@ -35,7 +35,7 @@
 #include "BaseConnectionManager.h"
 #include "FindModule.h"
 #include "MacPkt_m.h"
-
+#include <MacToNetwControlInfo.h>
 #include <NetwToMacControlInfo.h>
 
 Define_Module(csma);
@@ -1151,7 +1151,25 @@ void csma::handleLowerMsg(cMessage *msg) {
             executeMac(EV_BROADCAST_RECEIVED, macPkt);
         } else {
             EV << "packet not for me, deleting...\n";
-            delete macPkt;
+            if(strcmp(macPkt->getName(), "CSMA-Ack") == 0)
+                //mac->setKind(BaseMacLayer::ACK_RECEIVED);
+                delete macPkt;
+            else
+            {
+                if(nextPhase == csma::SYNC_PHASE_3)
+                {
+                    cMessage * macDesc = decapsMsg(static_cast<MacPkt *>(macPkt));
+                    macDesc->setKind(BaseMacLayer::MSG_RECEIVED);
+                    EV << "TIEMPO: "<< macDesc->getArrivalTime();
+                    macDesc->setTimestamp(macPkt->getTimestamp());
+                    sendControlUp(macDesc);
+
+                }
+                else
+                    delete macPkt;
+
+            }
+            //delete macPkt;
         }
     }
 }
@@ -1179,8 +1197,8 @@ void csma::handleLowerControl(cMessage *msg) {
 
 cPacket *csma::decapsMsg(MacPkt * macPkt) {
     cPacket * msg = macPkt->decapsulate();
-    setUpControlInfo(msg, macPkt->getSrcAddr());
-
+    MacToNetwControlInfo * cInfo = static_cast<MacToNetwControlInfo *>(setUpControlInfo(msg, macPkt->getSrcAddr()));
+    cInfo->setNextHopMac(macPkt->getDestAddr());
     return msg;
 }
 

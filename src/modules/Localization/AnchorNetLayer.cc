@@ -43,7 +43,23 @@ void AnchorNetLayer::handleLowerMsg(cMessage* msg)
  **/
 void AnchorNetLayer::handleLowerControl(cMessage* msg)
 {
-	sendControlUp(msg);
+    EV << "Control message received RED:  "<< msg->getKind()<< endl;
+
+    if(msg->getKind() == BaseMacLayer::MSG_RECEIVED)
+    {
+        NetwPkt *m = static_cast<NetwPkt *>(msg);
+        cMessage *net2AppMsg = m->decapsulate();
+        MacToNetwControlInfo* cInfo = static_cast<MacToNetwControlInfo*>(m->getControlInfo());
+        net2AppMsg->setControlInfo(new NetwControlInfo(m->getSrcAddr(),cInfo->getNextHopMac()));
+        net2AppMsg->setKind(BaseMacLayer::MSG_RECEIVED);
+
+        EV << " MSG Received from " << m->getSrcAddr() << endl;
+        EV << " Destino actual: "<< cInfo->getNextHopMac()<< endl;
+        EV << " net destination " << m->getDestAddr() << endl;
+        sendControlUp(net2AppMsg);
+    }
+    else
+        sendControlUp(msg);
 }
 
 /**
@@ -75,12 +91,12 @@ void AnchorNetLayer::handleUpperControl(cMessage* msg)
 cMessage* AnchorNetLayer::decapsMsg(NetwPkt *msg)
 {
     cMessage *m = msg->decapsulate();
-	//get control info attached by base class decapsMsg method
-	//and set its rssi and ber
-	assert(dynamic_cast<MacToNetwControlInfo*>(msg->getControlInfo()));
-	MacToNetwControlInfo* cInfo = static_cast<MacToNetwControlInfo*>(msg->getControlInfo());
+    //get control info attached by base class decapsMsg method
+    //and set its rssi and ber
+    assert(dynamic_cast<MacToNetwControlInfo*>(msg->getControlInfo()));
+    MacToNetwControlInfo* cInfo = static_cast<MacToNetwControlInfo*>(msg->getControlInfo());
 
-	m->setControlInfo(new NetwControlInfo(msg->getSrcAddr(), cInfo->getBitErrorRate(), cInfo->getRSSI()));
+    m->setControlInfo(new NetwControlInfo(msg->getSrcAddr(), cInfo->getBitErrorRate(), cInfo->getRSSI()));
     // delete the netw packet
     delete msg;
     return m;

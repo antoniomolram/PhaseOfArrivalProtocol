@@ -2,11 +2,15 @@
 #define ANCHORAPPLAYER_H_
 
 #include "AppLayer.h"
-
+#include <list>
+#include <vector>
 class AnchorAppLayer : public AppLayer
 {
 protected:
-
+    typedef cMessage * msgList;
+    typedef std::list<msgList> neighborList;
+    neighborList::iterator nListIt;
+    neighborList neighborListComSink1;
 	int phaseRepetitionNumber;			// Total number of full phases, -1 = unlimited
 	bool syncInSlot; 					// Indicates if the sync packets have to be slotted or not
 

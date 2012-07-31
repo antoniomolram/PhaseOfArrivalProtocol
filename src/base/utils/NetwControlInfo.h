@@ -53,11 +53,15 @@ class MIXIM_API NetwControlInfo : public cObject
 
 	/** @brief The received signal strength for this packet.*/
 	double rssi;
+
+    /** @brief MAC address of the nexz hop of this packet.*/
+    LAddress::L2Type nextHopMac;
 /**********/
   public:
     /** @brief Default constructor*/
-    NetwControlInfo(const LAddress::L3Type& addr = LAddress::L3NULL, double ber = 0, double rssi = 0) : 
+    NetwControlInfo(const LAddress::L3Type& addr = LAddress::L3NULL,const LAddress::L2Type& nextHopMac = LAddress::L2NULL, double ber = 0, double rssi = 0) :
 		netwAddr(addr),
+		nextHopMac(nextHopMac),
 		bitErrorRate(ber),
 		rssi(rssi) {};
     /** @brief Destructor*/
@@ -67,11 +71,25 @@ class MIXIM_API NetwControlInfo : public cObject
     virtual const LAddress::L3Type& getNetwAddr() const {
         return netwAddr;
     };
-
+    /**
+     * @brief Returns the MAC address of the packets next hop.
+     */
+    const LAddress::L2Type& getNextHopMac() const {
+        return nextHopMac;
+    }
     /** @brief Setter method*/
     virtual void setNetwAddr(const LAddress::L3Type& addr){
         netwAddr = addr;
     };
+
+    /**
+     * @brief Sets the MAC address of the packets next hop.
+     *
+     * @param lastHop The next hops MAC address
+     */
+    virtual void setNextHopMac(const LAddress::L2Type& nextHop) {
+        nextHopMac = nextHop;
+    }
 
 /***MOD**/
 	/**

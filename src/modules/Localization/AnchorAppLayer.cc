@@ -553,6 +553,16 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			if (phaseRepetitionNumber > 0) {
 				phaseRepetitionNumber--; // If the number of full phases is limited, decrease one as we just finished one
 			}
+           cMessage * msgIt;
+           EV << " Lista de vecinos: " << endl;
+            for(nListIt = neighborListComSink1.begin(); nListIt != neighborListComSink1.end();nListIt++)
+            {
+                msgIt = *nListIt;
+                EV <<msgIt->getArrivalTime() <<", "<< endl;
+            }
+            EV << " Total pauqetes de vecinos: " << neighborListComSink1.size() << endl;
+		    // delete msgIt;
+
 			break;
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
@@ -585,15 +595,13 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	// Pointer to the source host
 	host = cc->findNic(pkt->getSrcAddr());
 
-
-
-
 	// Filter first according to the phase we are in
 	switch(phase)
 	{
 	case AppLayer::SYNC_PHASE_1:
 	case AppLayer::SYNC_PHASE_2:
 	case AppLayer::SYNC_PHASE_3:
+
 		switch(pkt->getKind())
 	    {
 	    case AppLayer::REPORT_WITHOUT_CSMA:
@@ -920,6 +928,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			macDeviceFree = true;
 		}
 		EV << endl;
+		delete msg;
 		break;
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
@@ -950,6 +959,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			macDeviceFree = true;
 		}
 		EV << endl;
+		delete msg;
 		break;
 	case BaseMacLayer::QUEUE_FULL:
 		// Take the last message from the transmission queue, the last because as the mac queue is full the Mac queue never had this packet
@@ -958,6 +968,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		nbPacketDroppedMacQueueFull++;
 		nbErasedPacketsMacQueueFull++;
 		delete pkt;
+		delete msg;
 		break;
 	case BaseMacLayer::SYNC_SENT:
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
@@ -966,6 +977,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		nbBroadcastPacketsSent++;
 		macDeviceFree = true;
 		delete pkt;
+		delete msg;
 		break;
 	case BaseMacLayer::TX_OVER:
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
@@ -984,12 +996,33 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 
 		macDeviceFree = true; // TX ended, MAC can be set as free
 		delete pkt;
+		delete msg;
 		break;
 	case BaseMacLayer::ACK_SENT:
 		EV << "ACK correctly sent" << endl;
+		delete msg;
 		break;
+    case BaseMacLayer::ACK_RECEIVED:
+        if (AppLayer::COM_SINK_PHASE_1)
+        {
+ //           assert(dynamic_cast<NetwControlInfo*>(msg->getControlInfo()));
+//            NetwControlInfo* cInfo = static_cast<NetwControlInfo*>(msg->removeControlInfo());
+            EV <<"ACK received from a neighbor. SendingTime: "<< msg->getTimestamp() << endl;
+        }
+        delete msg;
+        break;
+    case BaseMacLayer::MSG_RECEIVED:
+        if (AppLayer::COM_SINK_PHASE_1)
+        {
+            EV<<"Mensaje de control"<< msg->getKind();
+            assert(dynamic_cast<NetwControlInfo*>(msg->getControlInfo()));
+            NetwControlInfo* cInfo = static_cast<NetwControlInfo*>(msg->removeControlInfo());
+            neighborListComSink1.push_back(msg);
+            EV <<"MSG received from a neighbor. SendingTime: "<< msg->getArrivalTime() <<", macAddr: "<< cInfo->getNextHopMac() << " srcInfo: " << cInfo->getNetwAddr()<< endl;
+        }
+        break;
 	}
-	delete msg;
+	//delete msg;
 }
 
 void AnchorAppLayer::sendBroadcast()
