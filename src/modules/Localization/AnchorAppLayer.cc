@@ -534,7 +534,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			} else {
 				EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
 			}
-
+			//Clean the neighbor list
+			neighborListComSink1.clear();
 			break;
 		case AppLayer::SYNC_PHASE_3:
 			phase = AppLayer::SYNC_PHASE_3;
@@ -586,6 +587,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	ApplPkt* pkt = check_and_cast<ApplPkt*>(msg);
 	EV << "Received packet from (" << pkt->getSrcAddr() << ", " << pkt->getRealSrcAddr() << ") to (" << pkt->getDestAddr() << ", " << pkt->getRealDestAddr() << ") with Name: " << pkt->getName() << endl;
 	EV << "Datos del paquete: " << pkt->getEncapsulationTreeId() << endl;
+
 	// Get control info attached by base class decapsMsg method to get RSSI and BER
 	assert(dynamic_cast<NetwControlInfo*>(pkt->getControlInfo()));
 	NetwControlInfo* cInfo = static_cast<NetwControlInfo*>(pkt->removeControlInfo());
@@ -814,6 +816,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 				    }
 				    if(!pktRepeated || !appDuplicateFilter)
 				    {
+
 	                    pkt->getArrivalGateId();
 	                    numPckToSent++;
 	                    packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();
@@ -831,6 +834,8 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    EV << "HOLAPacket with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
 	                    EV<< "Phase: " << phase << endl;
 	                    if(phase == AppLayer::COM_SINK_PHASE_1) { // If we are on COM_SINK_1, priority applies
+	                        //Push the msg in the list of all received packets
+	                        neighborListComSink1.push_back(msg->dup());
 	                        if((packetsQueue.getLength() != 0) && packetsQueue.firstHasPriority(packetsQueue.get(0), pkt)) {    // If queue is not empty and received
 	                            ApplPkt* buffer = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());                     // packet has less priority than
 	                            packetsQueue.insertElem(pkt, true);                                                             // than the first in queue, it is
@@ -890,7 +895,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 		delete msg;
 		break;
 	}
-	delete cInfo;
+	//delete cInfo;
 }
 
 

@@ -1153,7 +1153,15 @@ void csma::handleLowerMsg(cMessage *msg) {
             EV << "packet not for me, deleting...\n";
             if(strcmp(macPkt->getName(), "CSMA-Ack") == 0)
                 //mac->setKind(BaseMacLayer::ACK_RECEIVED);
+           {
+               /* cMessage * msgAck = static_cast<MacPkt *>(macPkt->decapsulate());
+                MacToNetwControlInfo * cInfo = static_cast<MacToNetwControlInfo *>(setUpControlInfo(msgAck, macPkt->getSrcAddr()));
+                cInfo->setNextHopMac(macPkt->getDestAddr());
+                msgAck->setKind(BaseMacLayer::ACK_RECEIVED);
+                EV << "TIEMPO ACK: "<< msgAck->getArrivalTime();
+                msgAck->setTimestamp(macPkt->getTimestamp());*/
                 delete macPkt;
+            }
             else
             {
                 if(nextPhase == csma::SYNC_PHASE_3)
