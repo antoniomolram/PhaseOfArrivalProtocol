@@ -14,6 +14,7 @@ void AnchorAppLayer::initialize(int stage)
 		// Now the first maximum interpacket transmission time is the same as the rest of the times, it could be different, that's why we have 2 parameters
 		syncFirstMaxRandomTime = par("syncRestMaxRandomTimes");
 	   	syncRestMaxRandomTimes = par("syncRestMaxRandomTimes");
+	   	comSinkRound = par ("comSinkRound");
 	   	// Eneable to filter duplicated packets in App layer
 	   	appDuplicateFilter = par("appDuplicateFilter");
 	   	// Variable initialization, we could change this into parameters if necessary
@@ -53,7 +54,7 @@ void AnchorAppLayer::initialize(int stage)
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
 		queueElementCounter = 0;
-		maxQueueElements = 30;
+		maxQueueElements = 70;
 		priorityLengthAddition = 5; //n = 2; m = 3
 		packetsQueue.setMaxLength(maxQueueElements);
 		transfersQueue.setMaxLength(maxQueueElements);
@@ -130,7 +131,7 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
-
+		delayComSinkSlottedPkt = new cMessage("comSink1-delay-timer",SEND_REPORT_WITHOUT_CSMA );
 	}
 }
 
@@ -262,14 +263,38 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 {
 	switch(msg->getKind())
 	{
+	//New SelfMsg for Slot configuration in Comsink phase
+	case SEND_REPORT_WITHOUT_CSMA:
+        scheduledComSinkSlot++;
+        //Verify the remain time in the Slot
+        if(nextSubComSinkSlotTime - simTime() > reportTransmissionTime)
+        {
+            scheduleAt(simTime(),checkQueue);
+        }
+        if (scheduledComSinkSlot < anchor->numSlots) { // If an Anchor has more than one slot per slot period (reuse of slots), first we assign all the slots
+            scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
+            EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) << endl;
+           } else { // Calculate the first time of the next slot period
+               scheduledComSinkSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
+               if (comSinkRoundCounter < comSinkRound) {
+                   comSinkRoundCounter++; // Increments the mini sync phases covered from a total of syncPacketsPerSyncPhase
+                   nextSubComSinkSlotTime = nextSubComSinkSlotTime + roundComSink1Time;
+                   scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
+                   EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) << endl;
+               } else { // If we reached all the slot periods (mini sync phase) from a sync phase, don't schedule any more, in next sync phase all will start again
+                   comSinkRoundCounter = 1;
+               }
+           }
+        break;
 	case SEND_SYNC_TIMER_WITHOUT_CSMA:
 		sendBroadcast(); // Send the broadcast
 		// If we still have full phases to do
 		if (syncInSlot) // Slotted mode
 		{
 			scheduledSlot++;
+
 			if (scheduledSlot < anchor->numSlots) { // If an Anchor has more than one slot per slot period (reuse of slots), first we assign all the slots
-				scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+				scheduleAt( nextSubComSinkSlotTime -  (anchor->transmisionSlot[scheduledComSinkSlot] * syncPacketTime), delayTimer);
 				EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
 			} else { // Calculate the first time of the next slot period
 				scheduledSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
@@ -293,6 +318,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 	case CHECK_QUEUE:
 		if (packetsQueue.length() > 0) { // If there are messages to send
 			ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
+
+			// In slotted ComSink1 mode the
+			msg->setKind(REPORT_WITHOUT_CSMA);
+			msg->setName("REPORT_WITHOUT_CSMA");
+			msg->setCSMA(false);
 			EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
 
 			macDeviceFree = false; // Mark the MAC as occupied
@@ -316,7 +346,10 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 				queueElementCounter++;
 				EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
 				EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-				scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+				if(nextSubComSinkSlotTime - simTime() > reportTransmissionTime)
+		        {
+		            scheduleAt(simTime() + reportTransmissionTime,checkQueue);
+		        }
 			}
 		}
 		break;
@@ -489,7 +522,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 						EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
 					} else {
 						EV << "Queue full, discarding packet" << endl;
-
 						broadPckQueue[broadPriority[i]]++;
 
 						nbPacketDroppedAppQueueFull++;
@@ -516,10 +548,23 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			comsinkPhaseStartTime = simTime().dbl();
 			nextPhaseStartTime = simTime() + timeComSinkPhase;
 			scheduleAt(nextPhaseStartTime, beginPhases);
-			// At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
+			//At the beginning of the ComSink 1 phase the anchor select a Slot to transmit. The higher the hop, the earlier the time of the slot.
+			roundComSink1Time = timeComSinkPhase / comSinkRound;
+			durationComSinkSlot = roundComSink1Time/anchor->numTotalSlots;
+			EV<< "ASignación de slots para tranmistir en la comSink" << endl;
+			EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
+			scheduledComSinkSlot = 0;
+			comSinkRoundCounter = 1;
+			nextSubComSinkSlotTime = simTime()+roundComSink1Time;
+			EV<< "Datos: "<< simTime() <<", "<< nextSubComSinkSlotTime << ", "<< anchor->transmisionSlot[scheduledComSinkSlot] <<", "<< durationComSinkSlot<< endl;
+			EV<< "Paquete programado para: " << nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot<<endl;
+			scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
+			randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
+
+/*			// At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
 			randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
 			if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-				stepTimeComSink1 = (timeComSinkPhase - guardTimeComSinkPhase/* - (0.030 * hops)*/) / packetsQueue.length();
+				stepTimeComSink1 = (timeComSinkPhase - guardTimeComSinkPhase - (0.030 * hops)) / packetsQueue.length();
 				//stepTimeComSink1 = 0.025;
 				EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
 				for (int i = 0; i < packetsQueue.length(); i++) {
@@ -533,7 +578,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 				scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
 			} else {
 				EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
-			}
+			}*/
 			//Clean the neighbor list
 			neighborListComSink1.clear();
 			break;
@@ -831,25 +876,56 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    EV << "Tipo: " << pkt->getKind() << endl;
 	                    EV << "Nombre: " << pkt->getName() << endl;
 	                    EV << "CSMA: " << pkt->getCSMA() << endl;
-	                    EV << "HOLAPacket with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
+	                    EV << "Packet with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
 	                    EV<< "Phase: " << phase << endl;
 	                    if(phase == AppLayer::COM_SINK_PHASE_1) { // If we are on COM_SINK_1, priority applies
 	                        //Push the msg in the list of all received packets
-	                        neighborListComSink1.push_back(msg->dup());
+	                       // neighborListComSink1.push_back(msg->dup());
 	                        if((packetsQueue.getLength() != 0) && packetsQueue.firstHasPriority(packetsQueue.get(0), pkt)) {    // If queue is not empty and received
+	                            EV<<"PRIORIDAD"<<endl;
 	                            ApplPkt* buffer = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());                     // packet has less priority than
 	                            packetsQueue.insertElem(pkt, true);                                                             // than the first in queue, it is
 	                            macDeviceFree = false;                                                                          // enqueued after the first in the queue
 	                            transfersQueue.insert(buffer->dup());                                                           // is routed
-	                            if(buffer->getWasBroadcast())
+	    /*                        if(buffer->getWasBroadcast())
 	                                broadSent[buffer->getPriority()]++;
 	                            else if(buffer->getWasReport())
 	                                reportSent[buffer->getPriority()]++;
 	                            else if(buffer->getWasRequest())
 	                                requestSent++;
-	                            sendDown(buffer);
-	                        } else {                                                                                            // Else, the received packet is directly
-	                            macDeviceFree = false;                                                                          // routed
+	                            sendDown(buffer);*/
+	                        } else {
+	                            // Else, the received packet is directly
+	                           // When a packet is received, it will put back in the packetsqueue.
+	/*                           pkt->setDestAddr(pkt->getRealDestAddr());
+                               pkt->setSrcAddr(myNetwAddr);
+                               pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
+                               pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
+                               pkt->setCSMA(true);
+
+                               fromNode[pkt->getFromNode()]++;
+
+                               if(pkt->getAskForRequest()) {
+                                   pkt->setWasRequest(true);
+                                   requestNew++;
+                               }
+                               else {
+                                   pkt->setWasReport(true);
+                                   reportNew[pkt->getPriority()]++;
+                               }
+
+                               pkt->setId(numPck);
+                               pkt->setCreatedIn(getParentModule()->getIndex());
+                               numPck++;
+
+                               pkt->setRequestPacket(false);
+                               pkt->setAskForRequest(false);*/
+
+                               if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for more packets
+                                   EV << "The packet is not really for me, is for the computer, I put it in the queue to send it in next Com Sink 1 to the computer" << endl;
+                               }
+	            //                packetsQueue.insertElem(pkt->dup());
+/*	                            macDeviceFree = false;                                                                          // routed
 	                            transfersQueue.insert(pkt->dup());
 	                            if(pkt->getWasBroadcast())
 	                                broadSent[pkt->getPriority()]++;
@@ -857,7 +933,19 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
-	                            sendDown(pkt);
+	                            sendDown(pkt);*/
+/*	                            if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for more packets
+	                                EV << "The packet is not really for me, is for someone else. Routing!" << endl;
+	                            }
+	                            else{
+	                                EV << "The packet is not really for me, is for the computer, but Queue full, discarding packet" << endl;
+	                                if(pkt->getWasReport())
+	                                    reportPckQueue[pkt->getPriority()]++;
+	                                else if(pkt->getWasRequest())
+	                                    requestPckQueue++;
+	                                nbPacketDroppedAppQueueFull++;
+	                               //delete msg;
+	                            }*/
 	                        }
 	                    } else { // There is no priority; message directly sent to MAC
 	                        macDeviceFree = false;
@@ -868,7 +956,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            reportSent[pkt->getPriority()]++;
 	                        else if(pkt->getWasRequest())
 	                            requestSent++;
-	                        sendDown(pkt);
+	                       // sendDown(pkt);
 	                    }
 	                    break;
 				    }

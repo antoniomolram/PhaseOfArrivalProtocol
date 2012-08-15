@@ -84,6 +84,7 @@ protected:
 	simtime_t guardTimeComSinkPhase;	// Guard time to leave at the end of every Com Sink Phase, so the transmissions don't invade next phase
 	simtime_t smallTime;				// Time to add to another time when we want to make an event after another when they should execute at the same time
 	simtime_t nextPhaseStartTime;		// Time to know the next Phase Start Time
+	simtime_t reportTransmissionTime;
 
 	int numTotalSlots;					// Number of Slots in every mini sync Phase, they are calculated by the computer in the initialize method
 	int numberOfAnchors;				// Number of Anchors in the Network

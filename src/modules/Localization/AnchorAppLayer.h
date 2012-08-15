@@ -66,9 +66,16 @@ protected:
 	// Modified by Victor
 	bool appDuplicateFilter;
 	double duplicatedPktCounter;
-	int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
+	int *packetsResend;                  // Packets that were successfully resend.
+    int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
+    bool pktRepeated;                    // Flag to indicate if a packet is repeated
+    cMessage *delayComSinkSlottedPkt;    // Pointer to the event we use to schedule all the sync packets in the sync phases
+    int comSinkRound;           // How many times will repeated the slots
+    simtime_t durationComSinkSlot;
+    simtime_t roundComSink1Time;
+    simtime_t nextSubComSinkSlotTime;
+    int scheduledComSinkSlot;            // Count the number of assigned slots in de comSink
+    int comSinkRoundCounter;
 public:
 	virtual ~AnchorAppLayer();
 
