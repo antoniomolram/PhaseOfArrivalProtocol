@@ -27,7 +27,7 @@ void AnchorAppLayer::initialize(int stage)
 		/* Modified by Victor */
 		duplicatedPktCounter = 0;
 
-		packetsResend = (int*)calloc(sizeof(int),20*numberOfNodes);
+		packetsResend = (int*)calloc(sizeof(int),100*numberOfNodes);
 		numPckToSentByPeriod = 0;
 	} else if (stage == 1) {
 		// Assign the type of host to 1 (anchor)
@@ -54,7 +54,7 @@ void AnchorAppLayer::initialize(int stage)
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
 		queueElementCounter = 0;
-		maxQueueElements = 70;
+		maxQueueElements = 100;
 		priorityLengthAddition = 5; //n = 2; m = 3
 		packetsQueue.setMaxLength(maxQueueElements);
 		transfersQueue.setMaxLength(maxQueueElements);
@@ -62,15 +62,23 @@ void AnchorAppLayer::initialize(int stage)
 
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
-		if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
+		if((anchNum == 7) || (anchNum == 8) || (anchNum == 9))
+			hops = 4;
+		if((anchNum == 3) || (anchNum == 4) || (anchNum == 5) || (anchNum == 6))
 			hops = 3;
-		if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
+		if((anchNum == 1) || (anchNum == 2))
 			hops = 2;
-		if((anchNum == 3) || (anchNum == 5))
+		if((anchNum == 0))
 			hops = 1;
-		if((anchNum == 4))
-			hops = 0;
-
+//mod Victor
+		numMaxHops = 4;
+        fiboVector = (int*)calloc(sizeof(int),numMaxHops);
+        fiboVector[0] = 1;
+        fiboVector[1] = 2;
+        for(int i=2;i<=numMaxHops;i++)
+        {
+            fiboVector[i] = fiboVector[i-1]+fiboVector[i-2];
+        }
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
@@ -272,15 +280,15 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             scheduleAt(simTime(),checkQueue);
         }
         if (scheduledComSinkSlot < anchor->numSlots) { // If an Anchor has more than one slot per slot period (reuse of slots), first we assign all the slots
-            scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
-            EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) << endl;
+            scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]), delayComSinkSlottedPkt);
+            EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) << endl;
            } else { // Calculate the first time of the next slot period
                scheduledComSinkSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
                if (comSinkRoundCounter < comSinkRound) {
                    comSinkRoundCounter++; // Increments the mini sync phases covered from a total of syncPacketsPerSyncPhase
                    nextSubComSinkSlotTime = nextSubComSinkSlotTime + roundComSink1Time;
-                   scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
-                   EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) << endl;
+                   scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]), delayComSinkSlottedPkt);
+                   EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]) << endl;
                } else { // If we reached all the slot periods (mini sync phase) from a sync phase, don't schedule any more, in next sync phase all will start again
                    comSinkRoundCounter = 1;
                }
@@ -549,16 +557,18 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			nextPhaseStartTime = simTime() + timeComSinkPhase;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			//At the beginning of the ComSink 1 phase the anchor select a Slot to transmit. The higher the hop, the earlier the time of the slot.
+
 			roundComSink1Time = timeComSinkPhase / comSinkRound;
-			durationComSinkSlot = roundComSink1Time/anchor->numTotalSlots;
-			EV<< "ASignación de slots para tranmistir en la comSink" << endl;
+			durationComSinkSlot = roundComSink1Time/anchor->slotsInComSink1; //Mod Fibonacci
+			//durationComSinkSlot = durationComSinkSlot * fiboVector[numMaxHops - hops]; //Mod Fibonacci
+			EV<< "Asignación de slots para tranmistir en la comSink" << endl;
 			EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
 			scheduledComSinkSlot = 0;
 			comSinkRoundCounter = 1;
 			nextSubComSinkSlotTime = simTime()+roundComSink1Time;
-			EV<< "Datos: "<< simTime() <<", "<< nextSubComSinkSlotTime << ", "<< anchor->transmisionSlot[scheduledComSinkSlot] <<", "<< durationComSinkSlot<< endl;
-			EV<< "Paquete programado para: " << nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot<<endl;
-			scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlot[scheduledComSinkSlot] * durationComSinkSlot) - durationComSinkSlot, delayComSinkSlottedPkt);
+			EV<< "Datos: "<< simTime() <<", "<< nextSubComSinkSlotTime << ", "<<scheduledComSinkSlot << ", "<< anchor->transmisionSlotComSink1[scheduledComSinkSlot] <<", "<< durationComSinkSlot<< endl;
+			EV<< "Paquete programado para: " << nextSubComSinkSlotTime - (anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops])<<endl;
+			scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]), delayComSinkSlottedPkt);
 			randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
 
 /*			// At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times

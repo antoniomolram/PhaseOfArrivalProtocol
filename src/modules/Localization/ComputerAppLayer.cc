@@ -32,9 +32,21 @@ void ComputerAppLayer::initialize(int stage)
 		bool compatible;
 
         /* Modified by Victor */
-        packetsResend = (int*)calloc(sizeof(int),1000*numberOfNodes);
+		slotsInComSink1 = 0;
+		slotsInComSink1Counter = 0;
+
+		numMaxHops = 4;
+		fiboVector = (int*)calloc(sizeof(int),numMaxHops);
+		fiboVector[0] = 1;
+		fiboVector[1] = 2;
+        for(int i=2;i<=numMaxHops;i++)
+        {
+            fiboVector[i] = fiboVector[i-1]+fiboVector[i-2];
+        }
+
+        packetsResend = (int*)calloc(sizeof(int),100*numberOfNodes);
         numPckToSentByPeriod = 0;
-        for(int i=0;i<1000*numberOfNodes;i++)
+        for(int i=0;i<100*numberOfNodes;i++)
         {
             packetsResend[i] = -1;
         }
@@ -145,6 +157,33 @@ void ComputerAppLayer::initialize(int stage)
 //        	EV << endl;
 		}
 
+
+        hops = (int*)calloc(sizeof(int), 10);
+
+        // Defines the amount of hops between the coordinator and an anchor with id = anchNum
+        for (int anchNum = 0; anchNum < numberOfAnchors; anchNum++) {
+            if((anchNum == 7) || (anchNum == 8) || (anchNum == 9))
+            {
+                hops[anchNum] = 4;
+                slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
+            }
+            if((anchNum == 3) || (anchNum == 4) || (anchNum == 5) || (anchNum == 6))
+            {
+                hops[anchNum] = 3;
+                slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
+            }
+            if((anchNum == 1) || (anchNum == 2))
+            {
+                hops[anchNum] = 2;
+                slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
+            }
+            if((anchNum == 0))
+            {
+                hops[anchNum] = 1;
+                slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
+            }
+        }
+
 		// This for prints the SLot configuration and assigns slot number values
 		// -----------------------------------------------------------------------------------
 		// - To have a more real system, here the computer would send packets to the Anchors -
@@ -158,11 +197,16 @@ void ComputerAppLayer::initialize(int stage)
 				anchors[slots[j][k]]->transmisionSlot[anchors[slots[j][k]]->numSlots] = j;
 				anchors[slots[j][k]]->numSlots = anchors[slots[j][k]]->numSlots +1;
 				anchors[slots[j][k]]->numTotalSlots = numTotalSlots;
-				EV << "(" << anchors[slots[j][k]]->numSlots << ")";
-				EV << slots[j][k] << ",";
+
+				anchors[slots[j][k]]->slotsInComSink1 = slotsInComSink1;
+				anchors[slots[j][k]]->transmisionSlotComSink1[k] = slotsInComSink1Counter;
+				slotsInComSink1Counter = slotsInComSink1Counter + fiboVector[numMaxHops - hops[slots[j][k]]];
+                EV << "(" << anchors[slots[j][k]]->numSlots << ")";
+                EV << slots[j][k] << ", "<<anchors[slots[j][k]]->transmisionSlotComSink1[k]<<", Slots:"<< anchors[slots[j][k]]->numSlots;
 			}
 			EV << endl;
 		}
+		EV << "Total Slots in ComSink1" << slotsInComSink1 << endl;
 		computer->numTotalSlots = numTotalSlots; // Asign in the computer NIC the total number of slots to have it accessible from other hosts
 
 		// This for prints the Slots in which every Anchor transmits (sometimes they could have more than one)
@@ -194,22 +238,9 @@ void ComputerAppLayer::initialize(int stage)
 
 		packetsQueue.setMaxLength(maxQueueElements); // Sets the lenght of the queue
 
-		hops = (int*)calloc(sizeof(int), 25);
-		// Defines the amount of hops between the coordinator and an anchor with id = anchNum
-		for (int anchNum = 0; anchNum < numberOfAnchors; anchNum++) {
-			if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
-				(anchNum == 23) || (anchNum == 24))
-				hops[anchNum] = 4;
-			if((anchNum == 1) || (anchNum == 6) || (anchNum == 11) || (anchNum == 16) || (anchNum == 17) || (anchNum == 18) || (anchNum == 19))
-				hops[anchNum] = 3;
-			if((anchNum == 4) || (anchNum == 2) || (anchNum == 7) || (anchNum == 12) || (anchNum == 13) || (anchNum == 14))
-				hops[anchNum] = 2;
-			if((anchNum == 3) || (anchNum == 8) || (anchNum == 9))
-				hops[anchNum] = 1;
-		}
 
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
-		memset(fromNode, 0, sizeof(int)*numberOfNodes);
+
 
 		receivedId = (bool*)calloc(sizeof(bool), numberOfAnchors*10000);
 		for(int i = 0; i < numberOfAnchors*10000; i++)

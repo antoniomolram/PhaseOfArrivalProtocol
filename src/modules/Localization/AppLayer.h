@@ -87,6 +87,7 @@ protected:
 	simtime_t reportTransmissionTime;
 
 	int numTotalSlots;					// Number of Slots in every mini sync Phase, they are calculated by the computer in the initialize method
+	int slotsInComSink1;                // Number of Slots in ComSink1
 	int numberOfAnchors;				// Number of Anchors in the Network
 	int numberOfNodes;					// Number of Mobile Nodes in the Network
 

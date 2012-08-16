@@ -69,6 +69,8 @@ protected:
     int transmisionSlot[100];	// Transmission slots this anchor has
     int numSlots; 				// Slots that this anchor has (mobile nodes and computer doesn't)
     int numTotalSlots; 			// Total slots that are in the network
+    int slotsInComSink1;        // Slots in ComSink
+    int transmisionSlotComSink1[100];   // Transmission slots this anchor has
 /*********/
     /** @brief Points to this nics ChannelAccess module */
     ChannelAccess* chAccess;

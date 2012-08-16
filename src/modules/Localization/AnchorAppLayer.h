@@ -76,6 +76,8 @@ protected:
     simtime_t nextSubComSinkSlotTime;
     int scheduledComSinkSlot;            // Count the number of assigned slots in de comSink
     int comSinkRoundCounter;
+    int *fiboVector;
+    int numMaxHops;
 public:
 	virtual ~AnchorAppLayer();
 
