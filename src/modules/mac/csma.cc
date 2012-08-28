@@ -340,6 +340,12 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
 /*********/
             startTimer(TIMER_SIFS);
         }
+        else
+        {
+            if(phy->getRadioState() == Radio::RX)
+                manageQueue();/*Mod Victor: revisar paquetes almacena*/
+        }
+
         break;
 
     case EV_FRAME_RECEIVED:
@@ -362,6 +368,11 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
 /*********/
             startTimer(TIMER_SIFS);
         }
+        else
+         {
+             if(phy->getRadioState() == Radio::RX)
+                 manageQueue();/*Mod Victor: revisar paquetes almacenados*/
+         }
         break;
 
     case EV_BROADCAST_RECEIVED:
@@ -369,6 +380,7 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
         nbRxFrames++;
         sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
         delete msg;
+        manageQueue(); // MOD JJR
         break;
     default:
         fsmError(event, msg);
@@ -668,7 +680,7 @@ void csma::updateStatusWaitAck(t_mac_event event, cMessage *msg) {
         break;
     case EV_BROADCAST_RECEIVED:
     case EV_FRAME_RECEIVED:
-        sendUp(decapsMsg(static_cast<MacPkt*>(msg)));
+        //sendUp(decapsMsg(static_cast<MacPkt*>(msg))); /*MOD Victor*/
         break;
     case EV_DUPLICATE_RECEIVED:
         EV << "Error ! Received a frame during SIFS !" << endl;
@@ -749,7 +761,7 @@ void csma::updateStatusSIFS(t_mac_event event, cMessage *msg) {
     case EV_BROADCAST_RECEIVED:
     case EV_FRAME_RECEIVED:
         EV << "Error ! Received a frame during SIFS !" << endl;
-        sendUp(decapsMsg(static_cast<MacPkt*>(msg)));
+        //sendUp(decapsMsg(static_cast<MacPkt*>(msg))); /*MOD Victor*/
         delete msg;
         break;
     default:
