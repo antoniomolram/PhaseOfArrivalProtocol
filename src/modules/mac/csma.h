@@ -338,7 +338,8 @@ class MIXIM_API csma : public BaseMacLayer
     // Modified by Jorge
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
-	simtime_t timeComSinkPhase;			// Duration of every Com Sink Phase
+	simtime_t timeComSinkPhase1;			// Duration of every Com Sink Phase 1
+    simtime_t timeComSinkPhase2;            // Duration of every Com Sink Phase 2
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase

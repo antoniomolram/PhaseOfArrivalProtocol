@@ -26,6 +26,9 @@ void AnchorAppLayer::initialize(int stage)
 		/* Modified by Victor */
 		duplicatedPktCounter = 0;
 
+        //Maximum number of retransmissions
+        maxRetransTotal = 4;
+
 		packetsResend = (int*)calloc(sizeof(int),20*numberOfNodes);
 		numPckToSentByPeriod = 0;
 	} else if (stage == 1) {
@@ -464,7 +467,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			for (int i = 0; i < numberOfNodes; i++) {
 				if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
 					ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
-					pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition);
+					pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
 					pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
 					pkt->setDestAddr(pkt->getRealDestAddr());
 					pkt->setSrcAddr(myNetwAddr);
@@ -514,12 +517,12 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
 			comsinkPhaseStartTime = simTime().dbl();
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase1;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
 			randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
 			if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-				stepTimeComSink1 = (timeComSinkPhase - guardTimeComSinkPhase/* - (0.030 * hops)*/) / packetsQueue.length();
+				stepTimeComSink1 = (timeComSinkPhase1 - guardTimeComSinkPhase/* - (0.030 * hops)*/) / packetsQueue.length();
 				//stepTimeComSink1 = 0.025;
 				EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
 				for (int i = 0; i < packetsQueue.length(); i++) {
@@ -557,7 +560,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase2;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			break;
 		}
@@ -897,7 +900,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
-		if (pkt->getRetransmisionCounterBO() < maxRetransDroppedBackOff) {
+		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterBO(pkt->getRetransmisionCounterBO() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() << " of " << maxRetransDroppedBackOff;
 			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
@@ -927,7 +930,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
-		if (pkt->getRetransmisionCounterACK() < maxRetransDroppedReportAN) {
+		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterACK(pkt->getRetransmisionCounterACK() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
 			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails

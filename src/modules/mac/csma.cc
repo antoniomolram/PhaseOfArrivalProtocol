@@ -167,14 +167,15 @@ void csma::initialize(int stage) {
         syncPacketTime = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("syncPacketTime");
         phase2VIPPercentage = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("phase2VIPPercentage");
         fullPhaseTime = getParentModule()->getParentModule()->getParentModule()->par("fullPhaseTime");
-        timeComSinkPhase = getParentModule()->getParentModule()->getParentModule()->par("timeComSinkPhase");
+        timeComSinkPhase1 = getParentModule()->getParentModule()->getParentModule()->par("timeComSinkPhase1");
+        timeComSinkPhase2 = getParentModule()->getParentModule()->getParentModule()->par("timeComSinkPhase2");
         smallTime = 0.000001;           //  1 us
         guardTransmitTime = 0.010;      //  2 ms, we use this time as guard time at the end of every phase
         timeFromBackOffToTX = ccaDetectionTime + aTurnaroundTime + rxSetupTime + guardTransmitTime;
         computer = cc->findNic(getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
-        timeSyncPhase = syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
-        timeVIPPhase = (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
-        timeReportPhase = (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
+        timeSyncPhase =  0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
+        timeVIPPhase = 0.3; // 300ms // (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
+        timeReportPhase = 0.4 ; // 400 ms // (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
         nextPhaseStartTime = simTime() + timeSyncPhase - smallTime;
         scheduleAt(nextPhaseStartTime, beginPhases);
     }
@@ -1029,7 +1030,7 @@ void csma::handleSelfMsg(cMessage *msg) {
             break;
         case csma::COM_SINK_PHASE_1:
             nextPhase = csma::SYNC_PHASE_3;
-            nextPhaseStartTime = simTime() + timeComSinkPhase;
+            nextPhaseStartTime = simTime() + timeComSinkPhase1;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
         case csma::SYNC_PHASE_3:
@@ -1039,7 +1040,7 @@ void csma::handleSelfMsg(cMessage *msg) {
             break;
         case csma::COM_SINK_PHASE_2:
             nextPhase = csma::SYNC_PHASE_1;
-            nextPhaseStartTime = simTime() + timeComSinkPhase;
+            nextPhaseStartTime = simTime() + timeComSinkPhase2;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
         }

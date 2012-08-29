@@ -56,6 +56,7 @@ void NodeAppLayer::initialize(int stage)
 		offsetBroadcastCounter		= activePhasesCounter; // Must be synchronized to the starting active phase in order to offset from the first active phase
 
 
+
 		// Start all the arrays to 0 and with the appropriate size reserved in memory
 		listRSSI = (RSSIs*)calloc(sizeof(RSSIs), numberOfAnchors);
 		randomTransTimes = (simtime_t*)calloc(sizeof(simtime_t), numberOfBroadcasts);
@@ -74,6 +75,8 @@ void NodeAppLayer::initialize(int stage)
 		wakeUp = new cMessage("waking up node",WAKE_UP);
 		sleep = new cMessage("sleeping the node",SLEEP);
 
+		//Maximum number of retransmissions
+        maxRetransTotal = 2;
 
     	// get handler to phy layer
         phy = FindModule<MacToPhyInterface*>::findSubModule(getParentModule());
@@ -1042,7 +1045,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_1:
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase1;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			goToSleep(simTime());
 			// Wake up node for next sync phase 3 if necessary, wake it up timeSleepToRX sec. before
@@ -1112,7 +1115,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase2;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			goToSleep(simTime());
 			// Wake up node for next sync phase 1 if necessary, wake it up timeSleepToRX sec. before
@@ -1279,7 +1282,7 @@ void NodeAppLayer::handleLowerControl(cMessage *msg)
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
-		if (pkt->getRetransmisionCounterBO() < maxRetransDroppedBackOff) {
+		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal && phase == AppLayer::REPORT_PHASE) {
 			pkt->setRetransmisionCounterBO(pkt->getRetransmisionCounterBO() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() << " of " << maxRetransDroppedBackOff;
 			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
@@ -1336,7 +1339,7 @@ void NodeAppLayer::handleLowerControl(cMessage *msg)
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
-		if (pkt->getRetransmisionCounterACK() < maxRetransDroppedReportMN) {
+		if (pkt->getRetransmisionCounterACK() + pkt->getRetransmisionCounterBO() <  maxRetransTotal && phase == AppLayer::REPORT_PHASE) {
 			pkt->setRetransmisionCounterACK(pkt->getRetransmisionCounterACK() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportMN;
 			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails

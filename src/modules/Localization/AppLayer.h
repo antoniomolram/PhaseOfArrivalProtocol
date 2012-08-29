@@ -73,7 +73,8 @@ protected:
 
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
-	simtime_t timeComSinkPhase;			// Duration of every Com Sink Phase
+	simtime_t timeComSinkPhase1;		// Duration of every Com Sink Phase 1
+	simtime_t timeComSinkPhase2;        // Duration of every Com Sink Phase 2
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase
@@ -112,7 +113,7 @@ protected:
 	int maxRetransDroppedReportMN;		// Maximum number of retransmissions from the App Layer when a Mobile Node gets a drop from MAC when it sends a Report
 	int maxRetransDroppedReportAN;		// Maximum number of retransmissions from the App Layer when an Anchor gets a drop from MAC when it sends a Report
 	int maxRetransDroppedBackOff;		// Maximum number of retransmissions from the App Layer when we get a CAF (Drop because of too many backoffs) from the MAC
-
+	int maxRetransTotal;
 	cQueueWithPriority transfersQueue;	// Priority queue to store the packets that we sent until we receive a confirmation from the MAC that they were sent or until we receive a drop and then try again
 	cMessage * beginPhases;				// Event to drop all the elements in the queue at the beginning from every phase
 	PhaseType phase;					// To know which phase we are in

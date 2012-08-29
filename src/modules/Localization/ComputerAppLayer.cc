@@ -185,7 +185,8 @@ void ComputerAppLayer::initialize(int stage)
 		EV << "T Sync: " << timeSyncPhase << endl;
 		EV << "T Report: " << timeReportPhase << endl;
 		EV << "T VIP: " << timeVIPPhase << endl;
-		EV << "T Com_Sink: " << timeComSinkPhase << endl;
+		EV << "T Com_Sink1: " << timeComSinkPhase1 << endl;
+		EV << "T Com_Sink2: " << timeComSinkPhase2 << endl;
 
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
@@ -940,7 +941,7 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_1:
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase1;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			break;
 		case AppLayer::SYNC_PHASE_3:
@@ -952,11 +953,11 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase2;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// At the beginning of the Com Sink 2 the Computer checks its queue to transmit the elements and calculate all the random transmission times
 			if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-				stepTimeComSink2 = (timeComSinkPhase - guardTimeComSinkPhase) / packetsQueue.length();
+				stepTimeComSink2 = (timeComSinkPhase2 - guardTimeComSinkPhase) / packetsQueue.length();
 				randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), packetsQueue.length());
 				EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
 				for (int i = 0; i < packetsQueue.length(); i++) {
