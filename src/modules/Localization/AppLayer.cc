@@ -57,11 +57,11 @@ void AppLayer::initialize(int stage)
 		nbReportsForMeReceived 		= 0;
 		guardTimeReportPhase 		= 0.020; 	// 20 ms
 		guardTimeVIPPhase 			= 0.020;	// 20 ms
-		guardTimeComSinkPhase 		= 0.100; 	// 100 ms
+		guardTimeComSinkPhase 		= 0.200; 	// 100 ms
 		smallTime 					= 0.000001;	//  1 us
 		maxRetransDroppedReportMN 	= 1;
-		maxRetransDroppedReportAN 	= 2;
-		maxRetransDroppedBackOff 	= 3;
+		maxRetransDroppedReportAN 	= 4;
+		maxRetransDroppedBackOff 	= 4;
 		myNetwAddr = getParentModule()->findSubmodule("nic");
 	} else if (stage == 4) { // We have to wait till stage 4 because before the number of slots are not yet calculated
 		computer = cc->findNic(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));

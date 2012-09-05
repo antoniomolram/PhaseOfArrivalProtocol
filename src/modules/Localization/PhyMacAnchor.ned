@@ -54,9 +54,9 @@ module PhyMacAnchor
                 @display("b=32,30;p=80,252;i=block/ifcard");
         }
     connections:
-        trans.upperLayerOut --> { @display("ls=black;m=m,25,50,25,0"); } --> appl.lowerLayerIn;
-        trans.upperLayerIn <-- { @display("ls=black;m=m,15,50,15,0"); } <-- appl.lowerLayerOut;
-        trans.upperControlOut --> { @display("ls=red;m=m,75,50,75,0"); } --> appl.lowerControlIn;
+        trans.upperLayerOut --> { @display("ls=black;m=m,25,50,25,0"); delay=0ms;} --> appl.lowerLayerIn;
+        trans.upperLayerIn <-- { @display("ls=black;m=m,15,50,15,0"); delay=0ms;} <-- appl.lowerLayerOut;
+        trans.upperControlOut --> { @display("ls=red;m=m,75,50,75,0"); delay=0ms;} --> appl.lowerControlIn;
         trans.upperControlIn <-- { @display("ls=red;m=m,85,0,85,0"); } <-- appl.lowerControlOut;
         net.upperLayerOut --> { @display("ls=black;m=m,25,50,25,0"); } --> trans.lowerLayerIn;
         net.upperLayerIn <-- { @display("ls=black;m=m,15,50,15,0"); } <-- trans.lowerLayerOut;

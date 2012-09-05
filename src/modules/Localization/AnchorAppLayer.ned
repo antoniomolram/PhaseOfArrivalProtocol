@@ -23,6 +23,9 @@ simple AnchorAppLayer
     	int answerANtoMNPacketLength @unit("bit") = default(136bit);// Report sent by AN to MN when MN makes a request, includes 1 byte status and 10 bytes info.
     	int bcastMixANPacketLength @unit("bit") = default(72bit); 	// Report sent by AN when it receives broadcasts from a MN, sends a report per broadcast, includes 1 byte status and 2 bytes RSSI info.
 		bool appDuplicateFilter = default(false);					// Aply filter for duplicated packets that were received.
+        int maxRetransTotal = default(4);							// Number of retransmissions.
+        int PktLengthMN3;											// Lenght of packets from mobile nodes in mode 3.
+       
         gates:
     	input lowerLayerIn; 										// from NIC
         output lowerLayerOut; 									// to NIC

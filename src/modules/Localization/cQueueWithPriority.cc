@@ -27,7 +27,7 @@ bool cQueueWithPriority::firstHasPriority(cObject *a, cObject *b)
 
 	//Check if the packet A has a higher priority or lower or same time of life in case the two packets have the same priority
 	if((A->getPriority() > B->getPriority()) || ((A->getPriority() == B->getPriority()) && (A->getTimeOfLife() < B->getTimeOfLife())))
-		return true;
+		return false;
 	else
 		return false;
 }

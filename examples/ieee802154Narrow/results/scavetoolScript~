@@ -1,0 +1,23 @@
+
+
+scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**received**) AND name(**really**)" -O out.csv -F csv *.sca -V
+
+scavetool scalar -p "module(**anchor[4]**) AND name(**Dropped**) AND name(**Packets**) AND name(**ACK**)" -O NoAck-4.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[4]**) AND name(**Dropped**) AND name(**Packets**) AND name(**BackOff**)" -O caf-4.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[4]**) AND name(**Number**) AND name(**packets**) AND name(**transmitted**)" -O tx-4.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[4]**) AND name(**packets**) AND name(**App**) AND name(**Queue**) AND name("ComSink1")" -O appPkt-4.csv -F csv *.sca -V
+
+scavetool scalar -p "module(**anchor[5]**) AND name(**Dropped**) AND name(**Packets**) AND name(**ACK**)" -O NoAck-5.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[5]**) AND name(**Dropped**) AND name(**Packets**) AND name(**BackOff**)" -O caf-5.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[5]**) AND name(**Number**) AND name(**packets**) AND name(**transmitted**)" -O tx-5.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[5]**) AND name(**packets**) AND name(**App**) AND name(**Queue**) AND name("ComSink1")" -O appPkt-5.csv -F csv *.sca -V
+
+scavetool scalar -p "module(**anchor[7]**) AND name(**Dropped**) AND name(**Packets**) AND name(**ACK**)" -O NoAck-7.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[7]**) AND name(**Dropped**) AND name(**Packets**) AND name(**BackOff**)" -O caf-7.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[7]**) AND name(**Number**) AND name(**packets**) AND name(**transmitted**)" -O tx-7.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[7]**) AND name(**packets**) AND name(**App**) AND name(**Queue**) AND name("ComSink1")" -O appPkt-7.csv -F csv *.sca -V
+
+scavetool scalar -p "module(**anchor[8]**) AND name(**Dropped**) AND name(**Packets**) AND name(**ACK**)" -O NoAck-8.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[8]**) AND name(**Dropped**) AND name(**Packets**) AND name(**BackOff**)" -O caf-8.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[8]**) AND name(**Number**) AND name(**packets**) AND name(**transmitted**)" -O tx-8.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[8]**) AND name(**packets**) AND name(**App**) AND name(**Queue**) AND name("ComSink1")" -O appPkt-8.csv -F csv *.sca -V

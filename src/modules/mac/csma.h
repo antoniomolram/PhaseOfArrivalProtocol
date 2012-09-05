@@ -335,6 +335,7 @@ class MIXIM_API csma : public BaseMacLayer
     bool receptionOnCCA;     // Enable the reception of packets during CCA
     bool transmitOnReception; // Enable a transmission to interrupt a reception
     bool  IsInReception; // Trans
+    bool checkQueue;
     // Modified by Jorge
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
@@ -370,6 +371,8 @@ class MIXIM_API csma : public BaseMacLayer
 	BaseConnectionManager* cc;			// Pointer to the Propagation Model module
 
 	EnergyConsumption* energy;			// Pointer to the Energy module
+
+	cMessage * LifsCheckQueue;         //  Introduce a delay to call the manageQueue funktion in order to simulate a LIFS time
 /***/
 protected:
 	// FSM functions

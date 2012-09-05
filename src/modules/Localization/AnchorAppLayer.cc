@@ -10,7 +10,6 @@ void AnchorAppLayer::initialize(int stage)
 		// Parameter load
 		syncInSlot = par("syncInSlot");
 		phaseRepetitionNumber = par("phaseRepetitionNumber");
-	   	//syncFirstMaxRandomTime = par("syncFirstMaxRandomTime");
 		// Now the first maximum interpacket transmission time is the same as the rest of the times, it could be different, that's why we have 2 parameters
 		syncFirstMaxRandomTime = par("syncRestMaxRandomTimes");
 	   	syncRestMaxRandomTimes = par("syncRestMaxRandomTimes");
@@ -23,12 +22,14 @@ void AnchorAppLayer::initialize(int stage)
 		broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes);
 		broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
+
 		/* Modified by Victor */
 		duplicatedPktCounter = 0;
-
+		txPktsCreatedInApp = 0;
+		remPktApp = 0;
         //Maximum number of retransmissions
-        maxRetransTotal = 4;
-
+        maxRetransTotal = par("maxRetransTotal");
+        PktLengthMN3 = par("PktLengthMN3");
 		packetsResend = (int*)calloc(sizeof(int),20*numberOfNodes);
 		numPckToSentByPeriod = 0;
 	} else if (stage == 1) {
@@ -252,6 +253,8 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);
 
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
+	recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
+	recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
 
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
@@ -263,313 +266,340 @@ void AnchorAppLayer::finish()
 
 void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 {
-	switch(msg->getKind())
-	{
-	case SEND_SYNC_TIMER_WITHOUT_CSMA:
-		sendBroadcast(); // Send the broadcast
-		// If we still have full phases to do
-		if (syncInSlot) // Slotted mode
-		{
-			scheduledSlot++;
-			if (scheduledSlot < anchor->numSlots) { // If an Anchor has more than one slot per slot period (reuse of slots), first we assign all the slots
-				scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-				EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-			} else { // Calculate the first time of the next slot period
-				scheduledSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
-				if (syncPacketsPerSyncPhaseCounter < syncPacketsPerSyncPhase) {
-					syncPacketsPerSyncPhaseCounter++; // Increments the mini sync phases covered from a total of syncPacketsPerSyncPhase
-					nextPhaseStart = nextPhaseStart + (timeSyncPhase / syncPacketsPerSyncPhase); // Here we add the time of a mini sync phase (another slot period)
-					scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-					EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-				} else { // If we reached all the slot periods (mini sync phase) from a sync phase, don't schedule any more, in next sync phase all will start again
-					syncPacketsPerSyncPhaseCounter = 1;
-				}
-			}
-		}
-		else
-		{
-			// ---------------------------------------------------------------------------
-			// - Here we would manage the sync packets when they are not in slotted mode -
-			// ---------------------------------------------------------------------------
-		}
-		break;
-	case CHECK_QUEUE:
-		if (packetsQueue.length() > 0) { // If there are messages to send
-			ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
-			EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
+    if(msg->getName() == "MAC-error-management")
+        errorManagement(msg);
+    else
+    {
+        switch(msg->getKind())
+        {
+        case SEND_SYNC_TIMER_WITHOUT_CSMA:
+            sendBroadcast(); // Send the broadcast
+            // If we still have full phases to do
+            if (syncInSlot) // Slotted mode
+            {
+                scheduledSlot++;
+                if (scheduledSlot < anchor->numSlots) { // If an Anchor has more than one slot per slot period (reuse of slots), first we assign all the slots
+                    scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                    EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                } else { // Calculate the first time of the next slot period
+                    scheduledSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
+                    if (syncPacketsPerSyncPhaseCounter < syncPacketsPerSyncPhase) {
+                        syncPacketsPerSyncPhaseCounter++; // Increments the mini sync phases covered from a total of syncPacketsPerSyncPhase
+                        nextPhaseStart = nextPhaseStart + (timeSyncPhase / syncPacketsPerSyncPhase); // Here we add the time of a mini sync phase (another slot period)
+                        scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                        EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                    } else { // If we reached all the slot periods (mini sync phase) from a sync phase, don't schedule any more, in next sync phase all will start again
+                        syncPacketsPerSyncPhaseCounter = 1;
+                    }
+                }
+            }
+            else
+            {
+                // ---------------------------------------------------------------------------
+                // - Here we would manage the sync packets when they are not in slotted mode -
+                // ---------------------------------------------------------------------------
+            }
+            break;
+        case CHECK_QUEUE:
+            EV << "CHECK_QUEUE: " << endl;
+            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+            {
+                if (packetsQueue.length() > 0) { // If there are messages to send
+                    if(!blockAppTransmissions)
+                    {
+                        ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
+                        msg->setCreatedIn(getParentModule()->getIndex());
+                        EV << "BLOCK, sending Packet with origin: " << msg->getCreatedIn() <<"this origin:"<<getParentModule()->getIndex()<< endl;
+                        EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
+                        macDeviceFree = false; // Mark the MAC as occupied
+                        if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
+                            msg->setTimestampAnchorTX(simTime().dbl());
+                            msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
+                        }
+                        //Counts the number of packets sent from the anchor depending to its type
+                        if(msg->getWasBroadcast())
+                            broadSent[msg->getPriority()]++;
+                        else if(msg->getWasReport())
+                            reportSent[msg->getPriority()]++;
+                        else if(msg->getWasRequest())
+                            requestSent++;
+                        transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+                        sendDown(msg);
+                        // Block transmission from App Layer until arrive control msg for this msg.
+                        blockAppTransmissions = true;
+                        stepTimeComSink1End = stepTimeComSink1End + stepTimeComSink1;
+                        EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
+                        if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
+                            // Schedule the next queue element in the next random time
+                            queueElementCounter++;
+                            EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
+                            EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
+                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                        }
+                    }
+                }
+            }
 
-			macDeviceFree = false; // Mark the MAC as occupied
-			if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
-				msg->setTimestampAnchorTX(simTime().dbl());
-				msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
-			}
-			//Counts the number of packets sent from the anchor depending to its type
-			if(msg->getWasBroadcast())
-				broadSent[msg->getPriority()]++;
-			else if(msg->getWasReport())
-				reportSent[msg->getPriority()]++;
-			else if(msg->getWasRequest())
-				requestSent++;
+            break;
+        case BEGIN_PHASE:
+            // Empty the transmission Queue
+            EV << "APP PACKETQUEUE with: " << packetsQueue.length() << " elements in phase change" << endl;
+          //  remPktApp = packetsQueue.length();
+            if (!transfersQueue.empty()) {
+                EV << "Emptying the transfer queue with " << transfersQueue.length() << " elements in phase change" << endl;
+                nbPacketDroppedNoTimeApp = nbPacketDroppedNoTimeApp + transfersQueue.length();
 
-			transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-			sendDown(msg);
-			EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
-			if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
-				// Schedule the next queue element in the next random time
-				queueElementCounter++;
-				EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-				EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-				scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-			}
-		}
-		break;
-	case BEGIN_PHASE:
-		// Empty the transmission Queue
-		if (!transfersQueue.empty()) {
-			EV << "Emptying the queue with " << transfersQueue.length() << " elements in phase change" << endl;
-			nbPacketDroppedNoTimeApp = nbPacketDroppedNoTimeApp + transfersQueue.length();
-			//Flushes the transfersQueue if not empty for a new phase
-			//transfersQueue.clear();
-//			while(!transfersQueue.empty()) {
-//				ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-//				if(pkt->getWasBroadcast())
-//					broadNoTime[pkt->getPriority()]++;
-//				else if(pkt->getWasReport())
-//					reportNoTime[pkt->getPriority()]++;
-//				else if(pkt->getWasRequest())
-//					requestNoTime++;
-//				delete pkt;
-//			}
+                //Packets are recovered for a new attempt...
 
-			//Packets are recovered for a new attempt...
-			while(!transfersQueue.empty()) {
-				ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-				if(pkt->getTimeOfLife() != 1) { // ...if they still have enough TTL...
-					if(packetsQueue.insertElem(pkt)){} // ...by reinserting them into the anchors queue
-					else { // Count if there was no space in queue
-						if(pkt->getWasBroadcast())
-							broadPckQueue[pkt->getPriority()]++;
-						else if(pkt->getWasReport())
-							reportPckQueue[pkt->getPriority()]++;
-						else if(pkt->getWasRequest())
-							requestPckQueue++;
-						delete pkt;
-					}
-				} else { // Count if they had not enough TTL
-					if(pkt->getWasBroadcast())
-						broadNoTime[pkt->getPriority()]++;
-					else if(pkt->getWasReport())
-						reportNoTime[pkt->getPriority()]++;
-					else if(pkt->getWasRequest())
-						requestNoTime++;
-					delete pkt;
-				}
-			}
-		}
-			// --------------------------------------------------------------------------------------
-			// - If we don't want to clear the queue and lose the packets, --------------------------
-			// - we could somehow here leave the rest of the queue for the next full phase (period) -
-			// --------------------------------------------------------------------------------------
-		else {
-			EV << "App Transmission Queue empty in phase change." << endl;
+                while(!transfersQueue.empty()) {
+                    ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+                    if(pkt->getTimeOfLife() != 1) { // ...if they still have enough TTL...
+                        if(packetsQueue.insertElem(pkt)){} // ...by reinserting them into the anchors queue
+                        else { // Count if there was no space in queue
+                            if(pkt->getWasBroadcast())
+                                broadPckQueue[pkt->getPriority()]++;
+                            else if(pkt->getWasReport())
+                                reportPckQueue[pkt->getPriority()]++;
+                            else if(pkt->getWasRequest())
+                                requestPckQueue++;
+                            delete pkt;
+                        }
+                    } else { // Count if they had not enough TTL
+                        if(pkt->getWasBroadcast())
+                            broadNoTime[pkt->getPriority()]++;
+                        else if(pkt->getWasReport())
+                            reportNoTime[pkt->getPriority()]++;
+                        else if(pkt->getWasRequest())
+                            requestNoTime++;
+                        delete pkt;
+                    }
+                }
+            }
+                // --------------------------------------------------------------------------------------
+                // - If we don't want to clear the queue and lose the packets, --------------------------
+                // - we could somehow here leave the rest of the queue for the next full phase (period) -
+                // --------------------------------------------------------------------------------------
+            else {
+                EV << "App Transmission Queue empty in phase change." << endl;
+            }
+            if(phase == AppLayer::SYNC_PHASE_3)
+            {
+                 remPktApp = packetsQueue.length();
+                 if(!packetsQueue.empty())
+                    {
+                        EV << "COMSINK1 Finish: Emptying the Packet queue with " << packetsQueue.length() << " elements in phase change" << endl;
+    /*		            while(!packetsQueue.empty())
+                        {
+                            ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
+                            delete pkt;
+                        }*/
+                    }
+                    else
+                    {
+                        EV << "App Transmission Packet Queue empty in phase change." << endl;
+                    }
+            }
 
-		}
-		if (phase == AppLayer::SYNC_PHASE_1) { //Update the values of TOF when the new period starts
-			drop = packetsQueue.updateQueue(regPck); // A buffer must be used to know how many and why the packet were dropped inside the update method
-			for(int i = 1; i < 5; i++) {
-				broadUpdate[i] = broadUpdate[i] + drop[i-1];
-				reportUpdate[i] = reportUpdate[i] + drop[i+3];
-			}
-			requestUpdate = requestUpdate + drop[8];
-			// Erase the Queue of packets resended.
-	        for(int i=0;i<numPckToSentByPeriod;i++)
-	        {
-	            packetsResend[i] = -1;
-	        }
-	        numPckToSentByPeriod = 0;
-		}
-		switch (nextPhase)
-		{
-		case AppLayer::SYNC_PHASE_1:
-			phase = AppLayer::SYNC_PHASE_1;
-			nextPhase = AppLayer::REPORT_PHASE;
-			nextPhaseStartTime = simTime() + timeSyncPhase;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			// Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
+            if (phase == AppLayer::SYNC_PHASE_1) { //Update the values of TOF when the new period starts
+                // A buffer must be used to know how many and why the packet were dropped inside the update method
+                drop = packetsQueue.updateQueue(regPck);
+                for(int i = 1; i < 5; i++) {
+                    broadUpdate[i] = broadUpdate[i] + drop[i-1];
+                    reportUpdate[i] = reportUpdate[i] + drop[i+3];
+                }
+                requestUpdate = requestUpdate + drop[8];
+                // Erase the Queue of packets resended.
+                for(int i=0;i<numPckToSentByPeriod;i++)
+                {
+                    packetsResend[i] = -1;
+                }
+                numPckToSentByPeriod = 0;
+            }
+            switch (nextPhase)
+            {
+            case AppLayer::SYNC_PHASE_1:
+                phase = AppLayer::SYNC_PHASE_1;
+                nextPhase = AppLayer::REPORT_PHASE;
+                nextPhaseStartTime = simTime() + timeSyncPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
 
-			EV << "The number of packets sent from this anchor is: " << numPckToSent << endl;
-			EV << "The number of packets correctly sent from this anchor is: " << numPckSentOk << endl;
+                EV << "The number of packets sent from this anchor is: " << numPckToSent << endl;
+                EV << "The number of packets correctly sent from this anchor is: " << numPckSentOk << endl;
 
-			if(numPckToSent == 0 || (numPckSentOk > numPckToSent)) 	// If no packets were to be sent
-				selfSuccess = 1;									// the success could be calculated; it is set to 1
-			else
-				selfSuccess = numPckSentOk/numPckToSent;			// else, the real ratio is calculated
+                if(numPckToSent == 0 || (numPckSentOk > numPckToSent)) 	// If no packets were to be sent
+                    selfSuccess = 1;									// the success could be calculated; it is set to 1
+                else
+                    selfSuccess = numPckSentOk/numPckToSent;			// else, the real ratio is calculated
 
-			EV << "Hence, the success of my Tx is: " << selfSuccess << endl;
-			EV << "My father is the anchor: " << parentAnchor << endl;
-			EV << "The success of my anchor father was: " << parentSuccess << endl;
+                EV << "Hence, the success of my Tx is: " << selfSuccess << endl;
+                EV << "My father is the anchor: " << parentAnchor << endl;
+                EV << "The success of my anchor father was: " << parentSuccess << endl;
 
-			// Maybe we should only take in account the periods in which we really sent packets in order to have a more accurate rate
-			formerSuccess[meanIndex] = selfSuccess;
-			meanIndex++;
-			meanIndex = meanIndex % meanWindow;
+                // Maybe we should only take in account the periods in which we really sent packets in order to have a more accurate rate
+                formerSuccess[meanIndex] = selfSuccess;
+                meanIndex++;
+                meanIndex = meanIndex % meanWindow;
+                successToTx = 0;
+                // Calculates the mean of the successes of the last periods
+                for(int i = 0; i < meanWindow; i++) {
+                    EV << "Former successes for me were: " << formerSuccess[i] << endl;
+                    successToTx = successToTx + formerSuccess[i];
+                }
+                successToTx = (successToTx / meanWindow) * parentSuccess; // Sets the final success to transmit to the air
+                if(numPckToSent != 0) {
+                    meanSuccess = meanSuccess + successToTx;
+                    numPeriods++;
+                }
+                EV << "So, the real success for me is: " << successToTx << endl;
+                numPckToSent = numPckSentOk = 0;
+                if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
+                    nextPhaseStart = simTime();
+                    scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                    EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                    scheduledSlot++;
+                } else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
+                    scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
+                }
+                break;
+            case AppLayer::REPORT_PHASE:
+                phase = AppLayer::REPORT_PHASE;
+                nextPhase = AppLayer::VIP_PHASE;
+                nextPhaseStartTime = simTime() + timeReportPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                break;
+            case AppLayer::VIP_PHASE:
+                phase = AppLayer::VIP_PHASE;
+                nextPhase = AppLayer::SYNC_PHASE_2;
+                nextPhaseStartTime = simTime() + timeVIPPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                break;
+            case AppLayer::SYNC_PHASE_2:
+                phase = AppLayer::SYNC_PHASE_2;
+                nextPhase = AppLayer::COM_SINK_PHASE_1;
+                nextPhaseStartTime = simTime() + timeSyncPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                for (int i = 0; i < numberOfNodes; i++) {
+                    if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
+                        ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
+                        //pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
+                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
+                        pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
+                        pkt->setDestAddr(pkt->getRealDestAddr());
+                        pkt->setSrcAddr(myNetwAddr);
+                        pkt->setRealSrcAddr(getParentModule()->getParentModule()->getSubmodule("node", i)->findSubmodule("nic"));
+                        pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
+                        pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
+                        pkt->setCSMA(true);
+                        pkt->setPriority(broadPriority[i]);
+                        pkt->setNodeMode(broadNodeMode[i]);
+                        pkt->setFromNode(i);
+                        pkt->setTimeOfLife(1);
+                        pkt->setWasBroadcast(true);
+                        //broadNew[broadPriority]++;
+                        fromNode[i]++;
+                        broadNew[broadPriority[i]]++;
+                        pkt->setId(numPck);
+                        pkt->setCreatedIn(getParentModule()->getIndex());
+                        //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
+                        numPck++;
 
-			//To test the improvement BORRAR SI NO FUNCIONA!
-//			if(numPckToSent != 0) {
-//				formerSuccess[meanIndex] = selfSuccess;
-//				meanIndex++;
-//				meanIndex = meanIndex % meanWindow;
-//			}
+                        if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for this packet
+                            EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
+                            EV << "Packet size of packet " << i <<pkt->getBitLength()<< endl;
+                        } else {
+                            EV << "Queue full, discarding packet" << endl;
+                            broadPckQueue[broadPriority[i]]++;
+                            nbPacketDroppedAppQueueFull++;
+                            delete pkt;
+                        }
+                    }
+                }
+                broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
+                broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
+                broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
+                // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
+                if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
+                    nextPhaseStart = simTime();
+                    scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                    EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                    scheduledSlot++;
+                } else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
+                    scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
+                }
+                break;
+            case AppLayer::COM_SINK_PHASE_1:
+                phase = AppLayer::COM_SINK_PHASE_1;
+                nextPhase = AppLayer::SYNC_PHASE_3;
+                comsinkPhaseStartTime = simTime().dbl();
+                nextPhaseStartTime = simTime() + timeComSinkPhase1;
+                initTimeComSink1 = simTime();
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
+                randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
+                if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
+                    stepTimeComSink1 = (timeComSinkPhase1 - guardTimeComSinkPhase) / packetsQueue.length();
+                    // Changing the random transmit method in order to achive a behavior like in the real network
+                    blockAppTransmissions = false;
+                    if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                        stepTimeComSink1 = 0.05;
+                    stepTimeComSink1End = simTime();// + stepTimeComSink1;
 
-			successToTx = 0;
-			// Calculates the mean of the successes of the last periods
-			for(int i = 0; i < meanWindow; i++) {
-				EV << "Former successes for me were: " << formerSuccess[i] << endl;
-				successToTx = successToTx + formerSuccess[i];
-			}
-			successToTx = (successToTx / meanWindow) * parentSuccess; // Sets the final success to transmit to the air
+                    EV << "Estimating the next transmission time: " << endl;
+                    EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
+                    EV << "End of the stepComSink1: "<< stepTimeComSink1End << endl;
+                    EV << "NextPhaseStartTime: "<< nextPhaseStartTime << endl;
+                    EV << "GuardTime: "<< guardTimeComSinkPhase << endl;
+                    EV << "stepComSinkPhase "<< stepTimeComSink1<< endl;
 
-			if(numPckToSent != 0) {
-				meanSuccess = meanSuccess + successToTx;
-				numPeriods++;
-			}
+                    for (int i = 0; i < packetsQueue.length(); i++) {
+                        randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                        EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                    }
+                    numPckToSent = packetsQueue.length();
+                    queueElementCounter = 0; // Reset the index to know which random time from vector to use
 
-			EV << "So, the real success for me is: " << successToTx << endl;
+                    EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
+                    EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
 
-			numPckToSent = numPckSentOk = 0;
+                    scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                } else {
+                    EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
+                }
 
-			if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
-				nextPhaseStart = simTime();
-				scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-				EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-				scheduledSlot++;
-			} else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
-				scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
-			}
-			break;
-		case AppLayer::REPORT_PHASE:
-			phase = AppLayer::REPORT_PHASE;
-			nextPhase = AppLayer::VIP_PHASE;
-			nextPhaseStartTime = simTime() + timeReportPhase;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			break;
-		case AppLayer::VIP_PHASE:
-			phase = AppLayer::VIP_PHASE;
-			nextPhase = AppLayer::SYNC_PHASE_2;
-			nextPhaseStartTime = simTime() + timeVIPPhase;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			break;
-		case AppLayer::SYNC_PHASE_2:
-			phase = AppLayer::SYNC_PHASE_2;
-			nextPhase = AppLayer::COM_SINK_PHASE_1;
-			nextPhaseStartTime = simTime() + timeSyncPhase;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			for (int i = 0; i < numberOfNodes; i++) {
-				if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
-					ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
-					pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
-					pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
-					pkt->setDestAddr(pkt->getRealDestAddr());
-					pkt->setSrcAddr(myNetwAddr);
-					pkt->setRealSrcAddr(getParentModule()->getParentModule()->getSubmodule("node", i)->findSubmodule("nic"));
-					pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
-					pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
-					pkt->setCSMA(true);
-					pkt->setPriority(broadPriority[i]);
-					pkt->setNodeMode(broadNodeMode[i]);
-					pkt->setFromNode(i);
-					pkt->setTimeOfLife(1);
-					pkt->setWasBroadcast(true);
-					//broadNew[broadPriority]++;
-					fromNode[i]++;
-					broadNew[broadPriority[i]]++;
-					pkt->setId(numPck);
-					pkt->setCreatedIn(getParentModule()->getIndex());
-					//regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
-					numPck++;
-
-					if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for this packet
-						EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
-					} else {
-						EV << "Queue full, discarding packet" << endl;
-
-						broadPckQueue[broadPriority[i]]++;
-
-						nbPacketDroppedAppQueueFull++;
-						delete pkt;
-					}
-				}
-			}
-			broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
-			broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
-			broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
-			// Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
-			if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
-				nextPhaseStart = simTime();
-				scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-				EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-				scheduledSlot++;
-			} else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
-				scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
-			}
-			break;
-		case AppLayer::COM_SINK_PHASE_1:
-			phase = AppLayer::COM_SINK_PHASE_1;
-			nextPhase = AppLayer::SYNC_PHASE_3;
-			comsinkPhaseStartTime = simTime().dbl();
-			nextPhaseStartTime = simTime() + timeComSinkPhase1;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			// At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
-			randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
-			if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-				stepTimeComSink1 = (timeComSinkPhase1 - guardTimeComSinkPhase/* - (0.030 * hops)*/) / packetsQueue.length();
-				//stepTimeComSink1 = 0.025;
-				EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
-				for (int i = 0; i < packetsQueue.length(); i++) {
-					randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0, stepTimeComSink1, 0);
-					EV << "Time " << i << ": " << randomQueueTime[i] << endl;
-				}
-				numPckToSent = packetsQueue.length();
-				queueElementCounter = 0; // Reset the index to know which random time from vector to use
-				EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-				EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-				scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-			} else {
-				EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
-			}
-
-			break;
-		case AppLayer::SYNC_PHASE_3:
-			phase = AppLayer::SYNC_PHASE_3;
-			nextPhase = AppLayer::COM_SINK_PHASE_2;
-			nextPhaseStartTime = simTime() + timeSyncPhase;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			// Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
-			if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
-				nextPhaseStart = simTime();
-				scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-				EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-				scheduledSlot++;
-			} else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
-				scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
-			}
-			if (phaseRepetitionNumber > 0) {
-				phaseRepetitionNumber--; // If the number of full phases is limited, decrease one as we just finished one
-			}
-			break;
-		case AppLayer::COM_SINK_PHASE_2:
-			phase = AppLayer::COM_SINK_PHASE_2;
-			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase2;
-			scheduleAt(nextPhaseStartTime, beginPhases);
-			break;
-		}
-		break;
-	default:
-		EV << "Unkown selfmessage! -> delete, kind: "<<msg->getKind() <<endl;
-		delete msg;
-		break;
-	}
+                break;
+            case AppLayer::SYNC_PHASE_3:
+                phase = AppLayer::SYNC_PHASE_3;
+                nextPhase = AppLayer::COM_SINK_PHASE_2;
+                nextPhaseStartTime = simTime() + timeSyncPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
+                if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
+                    nextPhaseStart = simTime();
+                    scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                    EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                    scheduledSlot++;
+                } else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
+                    scheduleAt(simTime() + uniform(0, 0.8*syncFirstMaxRandomTime, 0), delayTimer);
+                }
+                if (phaseRepetitionNumber > 0) {
+                    phaseRepetitionNumber--; // If the number of full phases is limited, decrease one as we just finished one
+                }
+                break;
+            case AppLayer::COM_SINK_PHASE_2:
+                phase = AppLayer::COM_SINK_PHASE_2;
+                nextPhase = AppLayer::SYNC_PHASE_1;
+                nextPhaseStartTime = simTime() + timeComSinkPhase2;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                break;
+            }
+            break;
+        default:
+            EV << "Unkown selfmessage! -> delete, kind: "<<msg->getKind() <<endl;
+            delete msg;
+            break;
+        }
+    }
 }
 
 
@@ -577,20 +607,18 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 {
 	// Convert the message to an Appl Packet
 	ApplPkt* pkt = check_and_cast<ApplPkt*>(msg);
-	EV << "Received packet from (" << pkt->getSrcAddr() << ", " << pkt->getRealSrcAddr() << ") to (" << pkt->getDestAddr() << ", " << pkt->getRealDestAddr() << ") with Name: " << pkt->getName() << endl;
-	EV << "Datos del paquete: " << pkt->getEncapsulationTreeId() << endl;
+
 	// Get control info attached by base class decapsMsg method to get RSSI and BER
 	assert(dynamic_cast<NetwControlInfo*>(pkt->getControlInfo()));
 	NetwControlInfo* cInfo = static_cast<NetwControlInfo*>(pkt->removeControlInfo());
+
+    EV << "Received packet from (" << pkt->getSrcAddr() << ", " << pkt->getRealSrcAddr() << ") to (" << pkt->getDestAddr() << ", " << pkt->getRealDestAddr() << ") with Name: " << pkt->getName() << endl;
+    EV << "Datos del paquete: " << pkt->getEncapsulationTreeId() << endl;
 	EV << "The RSSI in Appl Layer is: " << cInfo->getRSSI() << endl;
 	EV << "The BER in Appl Layer is: " << cInfo->getBitErrorRate() << endl;
 
 	// Pointer to the source host
 	host = cc->findNic(pkt->getSrcAddr());
-
-
-
-
 	// Filter first according to the phase we are in
 	switch(phase)
 	{
@@ -622,7 +650,6 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 		    		EV << "It's success was: " << pkt->getBroadcastedSuccess() << endl;
 
 		    		parentSuccess = pkt->getBroadcastedSuccess();
-
 	    		}
 	    		EV << "Discarding the packet, Anchor doesn't make anything with Sync Broadcast packets from the AN" << endl;
 	    	}
@@ -679,7 +706,6 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 					{
 						// The packet is probably for the computer, Centralized, we assign the dest. addr the computer addr and put it in the queue to transmit
 						// We change also the src addr for the addr from the AN, so the next AN can find it in the routing table
-
 					    pkt->setDestAddr(pkt->getRealDestAddr());
 						pkt->setSrcAddr(myNetwAddr);
 						pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
@@ -813,9 +839,9 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    numPckToSent++;
 	                    packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();
 	                    numPckToSentByPeriod++;
-
 	                    pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
 	                    pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
+
 	                    EV << "Origen: " << pkt->getSrcAddr() << endl;
 	                    EV << "Origen real: " << pkt->getRealSrcAddr() << endl;
 	                    EV << "Destino: " << pkt->getDestAddr() << endl;
@@ -823,8 +849,9 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    EV << "Tipo: " << pkt->getKind() << endl;
 	                    EV << "Nombre: " << pkt->getName() << endl;
 	                    EV << "CSMA: " << pkt->getCSMA() << endl;
-	                    EV << "HOLAPacket with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
+	                    EV << "Packet with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
 	                    EV<< "Phase: " << phase << endl;
+
 	                    if(phase == AppLayer::COM_SINK_PHASE_1) { // If we are on COM_SINK_1, priority applies
 	                        if((packetsQueue.getLength() != 0) && packetsQueue.firstHasPriority(packetsQueue.get(0), pkt)) {    // If queue is not empty and received
 	                            ApplPkt* buffer = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());                     // packet has less priority than
@@ -837,6 +864,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[buffer->getPriority()]++;
 	                            else if(buffer->getWasRequest())
 	                                requestSent++;
+	                            EV<<"Intruso en la packet queue" <<endl;
 	                            sendDown(buffer);
 	                        } else {                                                                                            // Else, the received packet is directly
 	                            macDeviceFree = false;                                                                          // routed
@@ -897,17 +925,22 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+		pkt->setName("MAC-error-management");
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
 		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterBO(pkt->getRetransmisionCounterBO() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() << " of " << maxRetransDroppedBackOff;
-			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-			sendDown(pkt);
+			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			//sendDown(pkt);
+			scheduleAt(simTime()+0.001,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
+
+	        // Check
+			EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
 
 			if(regPck[pkt->getCreatedIn()*10000 + pkt->getId()] == 0) {
 				regPck[pkt->getCreatedIn()*10000 + pkt->getId()] = 2;
@@ -927,14 +960,16 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+		pkt->setName("MAC-error-management");
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
 		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterACK(pkt->getRetransmisionCounterACK() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
-			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-			sendDown(pkt);
+			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			//sendDown(pkt);
+			scheduleAt(simTime()+0.001,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsNoACKMax++;
@@ -960,6 +995,40 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		EV << "The queue in MAC is full, discarding the message" << endl;
 		nbPacketDroppedMacQueueFull++;
 		nbErasedPacketsMacQueueFull++;
+        // Check
+        EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+        if(pkt->getCreatedIn() == getParentModule()->getIndex())
+        {
+            EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+            blockAppTransmissions = false;
+            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+            {
+                EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                if(packetsQueue.length()>0)
+                {
+                    EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                    if(simTime() > stepTimeComSink1End)
+                    {
+                        EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                        EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                        if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                            stepTimeComSink1 = 0.05;
+                        for (int i = 0; i < packetsQueue.length(); i++) {
+                            randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                            EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                        }
+                        stepTimeComSink1End = simTime() + stepTimeComSink1;
+                        numPckToSent = packetsQueue.length();
+                        queueElementCounter = 0;
+                        if (checkQueue->isScheduled())
+                           cancelEvent(checkQueue);
+                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                    }
+                }
+            }
+        }
 		delete pkt;
 		break;
 	case BaseMacLayer::SYNC_SENT:
@@ -976,15 +1045,50 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		EV << "Message correctly transmitted, received the ACK." << endl;
 		nbReportsWithACK++;
 
+		// Check
+		 // Check
+        EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+        if(pkt->getCreatedIn() == getParentModule()->getIndex())
+        {
+            txPktsCreatedInApp++;
+            EV << "Packet transmitted was make here. UNBLOCK transmissions"<< endl;
+            blockAppTransmissions = false;
+            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+            {
+                EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                if(packetsQueue.length()>0)
+                {
+                    EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                    if(simTime() > stepTimeComSink1End)
+                    {
+                        EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                        EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                        if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                            stepTimeComSink1 = 0.05;
+                        for (int i = 0; i < packetsQueue.length(); i++) {
+                            randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                            EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                        }
+                        stepTimeComSink1End = simTime() + stepTimeComSink1;
+                        numPckToSent = packetsQueue.length();
+                        queueElementCounter = 0;
+                        if (checkQueue->isScheduled())
+                           cancelEvent(checkQueue);
+                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                    }
+                }
+            }
+
+        }
 		if(pkt->getWasBroadcast())
 			broadSentOK[pkt->getPriority()]++;
 		else if(pkt->getWasReport())
 			reportSentOK[pkt->getPriority()]++;
 		else if(pkt->getWasRequest())
 			requestSentOK++;
-
 		numPckSentOk++;
-
 		macDeviceFree = true; // TX ended, MAC can be set as free
 		delete pkt;
 		break;
@@ -1014,6 +1118,14 @@ void AnchorAppLayer::sendBroadcast()
 	EV << "Inserting Broadcast Packet in Transmission Queue" << endl;
 	transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 	sendDown(pkt);
+}
+
+void AnchorAppLayer::errorManagement(cMessage *msg)
+{
+    EV<<"Managing a Mac Error"<<endl;
+    ApplPkt *pkt = check_and_cast<ApplPkt*>(msg);
+    transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+    sendDown(pkt);
 }
 
 void AnchorAppLayer::createScheduleEvents()

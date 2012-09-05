@@ -60,11 +60,21 @@ protected:
 	double comsinkPhaseStartTime;	// Variable to save when the current COM_SINK 1 phase started
 
 	// Modified by Victor
-	bool appDuplicateFilter;
+
 	double duplicatedPktCounter;
-	int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
+	int *packetsResend;                  // Packets that were successfully resend.
+    int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
+    int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
+    int txPktsCreatedInApp;              // Save the number of packets created in this AN
+    int remPktApp;                       // SAve the number the packets that were not send.
+    bool pktRepeated;                    // Flag to indicate if a packet is repeated
+    bool appDuplicateFilter;             // Flag to allow filtering in the App layer
+    bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
+    simtime_t randomTimeComsink1;        // Random time to transmit in ComSink1
+    simtime_t stepTimeComSink1End;       // Save the Time when finish the stepTimeComSink1
+    simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
+
+
 public:
 	virtual ~AnchorAppLayer();
 
@@ -98,6 +108,9 @@ protected:
 
 	/** @brief Send a broadcast message to lower layer. */
 	virtual void sendBroadcast();
+
+	/** @brief Manage the Mac errors */
+	void errorManagement(cMessage *msg);
 
 	/** @brief Recalculates the sending events for the packetsQueue starting from the current simTime */
 	void createScheduleEvents();

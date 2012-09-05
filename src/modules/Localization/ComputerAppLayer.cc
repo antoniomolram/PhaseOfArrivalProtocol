@@ -870,6 +870,7 @@ void ComputerAppLayer::finish()
 	}
 
 	free(packetsResend);
+	EV<<"Computer INDEX: "<<getParentModule()->getIndex()<<endl;
 }
 
 void ComputerAppLayer::handleSelfMsg(cMessage *msg)

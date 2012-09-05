@@ -15,9 +15,9 @@ simtime_t BaseDecider::processSignal(AirFrame* frame) {
 
 	assert(frame);
 	deciderEV << "Processing AirFrame..." << endl;
-
 	switch(getSignalState(frame)) {
 	case NEW:
+	    setChannelIdleStatus(false); //
 		return processNewSignal(frame);
 	case EXPECT_HEADER:
 		return processSignalHeader(frame);
