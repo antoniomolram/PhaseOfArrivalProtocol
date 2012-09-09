@@ -78,6 +78,7 @@ simtime_t Decider802154Narrow::processSignalHeader(AirFrame* frame)
 		currentSignal.first = 0;
 		//channel is back idle
 		setChannelIdleStatus(true);
+		EV<<"CHANNEL IDLE"<<endl;
 		return notAgain;
 	}
 
@@ -87,7 +88,7 @@ simtime_t Decider802154Narrow::processSignalHeader(AirFrame* frame)
 
 	//channel is busy now
 	setChannelIdleStatus(false);
-
+	EV<<"CHANNEL BUSY"<<endl;
 	//TODO: publish rssi and channel state
 	// Inform the MAC that we started receiving a frame
 	phy->sendControlMsgToMac(new cMessage("start_rx",RECEPTION_STARTED));
@@ -208,7 +209,7 @@ simtime_t Decider802154Narrow::processSignalEnd(AirFrame* frame)
 
 	//channel is back idle
 	setChannelIdleStatus(true);
-
+	EV<<"CHANNEL IDLE"<<endl;
 	//TODO: publish rssi and channel state
 	return notAgain;
 }

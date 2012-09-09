@@ -86,6 +86,12 @@ void csma::initialize(int stage) {
         receptionOnBackoff = par("receptionOnBackoff");
         transmitOnReception = par("transmitOnReception");
         receptionOnCCA = par("receptionOnCCA");
+        ccaStatusIniIdle = true;
+        ccaSamples = 20;
+        ccaThreshold = 1;
+        ccaSamplesCounter = 0;
+        ccaValueBusy = 0;
+
 
         //init parameters for backoff method
         std::string backoffMethodStr = par("backoffMethod").stdstringValue();
@@ -121,6 +127,7 @@ void csma::initialize(int stage) {
         sifsTimer = new cMessage("timer-sifs");
         rxAckTimer = new cMessage("timer-rxAck");
         LifsCheckQueue = new cMessage("lifs-checkQueue-timer");
+        ccaSamplerTimer = new cMessage("cca-sampler-timer");
         macState = IDLE_1;
         txAttempts = 0;
 
@@ -400,6 +407,7 @@ void csma::updateStatusBackoff(t_mac_event event, cMessage *msg) {
         updateMacState(CCA_3);
 /***MOD***/
         EV<< "Radio Status: " << phy->getRadioState()<<endl;
+        ccaStatusIniIdle = phy->getChannelState().isIdle(); // MOD VICTOR
 /*********/
         phy->setRadioState(Radio::RX);
 /***MOD***/
@@ -483,8 +491,12 @@ void csma::updateStatusCCA(t_mac_event event, cMessage *msg) {
     case EV_TIMER_CCA:
     {
         EV<< "(25) FSM State CCA_3, EV_TIMER_CCA" << endl;
-        bool isIdle = phy->getChannelState().isIdle();
-        if(isIdle) {
+       // bool isIdle = phy->getChannelState().isIdle();
+        if(!phy->getChannelState().isIdle())
+            ccaValueBusy++;
+     //   if(isIdle) {
+        if(ccaValueBusy<ccaThreshold){
+            ccaValueBusy = 0;
             EV << "(3) FSM State CCA_3, EV_TIMER_CCA, [Channel Idle]: -> TRANSMITFRAME_4." << endl;
             updateMacState(TRANSMITFRAME_4);
             phy->setRadioState(Radio::TX);
@@ -501,6 +513,7 @@ void csma::updateStatusCCA(t_mac_event event, cMessage *msg) {
             sendDelayed(mac, aTurnaroundTime, lowerLayerOut);
             nbTxFrames++;
         } else {
+            ccaValueBusy = 0;
             // Channel was busy, increment 802.15.4 backoff timers as specified.
             EV << "(7) FSM State CCA_3, EV_TIMER_CCA, [Channel Busy]: "
             << " increment counters." << endl;
@@ -544,6 +557,7 @@ void csma::updateStatusCCA(t_mac_event event, cMessage *msg) {
 /**********/
             }
         }
+        ccaValueBusy = 0;
         break;
     }
     case EV_DUPLICATE_RECEIVED:
@@ -675,8 +689,8 @@ void csma::updateStatusWaitAck(t_mac_event event, cMessage *msg) {
         sendControlUp(mac);
         delete msg;
         if(nextPhase == csma::SYNC_PHASE_3){
-            //scheduleAt((simTime()+0.000640), LifsCheckQueue);
-            manageQueue();
+            scheduleAt((simTime()+0.00064), LifsCheckQueue);
+          //  manageQueue();
         }
         else
             manageQueue();
@@ -791,7 +805,8 @@ void csma::updateStatusTransmitAck(t_mac_event event, cMessage *msg) {
         }
 /**********/
         //      delete msg;
-        manageQueue();
+        // scheduleAt(simTime()+0.000160,LifsCheckQueue);
+         manageQueue();
 /***MOD***/
         // Notify the App layer that we already sent and ACK to confirm the received report
         sendControlUp(new cMessage("ACK SENT", ACK_SENT));
@@ -948,6 +963,7 @@ void csma::startTimer(t_mac_timer timer) {
         EV<< "(startTimer) ccaTimer value=" << ccaTime
         << "(rxSetupTime,ccaDetectionTime:" << rxSetupTime
         << "," << ccaDetectionTime <<")." << endl;
+        scheduleAt((simTime()+(ccaTime/ccaSamples)),ccaSamplerTimer);
         scheduleAt(simTime()+rxSetupTime+ccaDetectionTime, ccaTimer);
     } else if (timer==TIMER_SIFS) {
         assert(useMACAcks);
@@ -1031,6 +1047,19 @@ void csma::handleSelfMsg(cMessage *msg) {
         executeMac(EV_ACK_TIMEOUT, msg);
 /***MOD***/
     }
+    else if(msg == ccaSamplerTimer){
+        if(ccaSamplesCounter < ccaSamples-1)
+        {
+            ccaSamplesCounter++;
+            if(!phy->getChannelState().isIdle())
+                ccaValueBusy++;
+            simtime_t ccaTime = rxSetupTime + ccaDetectionTime;
+            if(ccaSamplesCounter < ccaSamples-2)
+                scheduleAt(simTime()+(ccaTime/ccaSamples),ccaSamplerTimer);
+            else
+                ccaSamplesCounter = 0;
+        }
+    }
      else if(msg == LifsCheckQueue)
         manageQueue();
      else if(msg==beginPhases) {
@@ -1111,8 +1140,10 @@ void csma::handleLowerMsg(cMessage *msg) {
         EV << "This node is trying to transmit a Packet...executing Backoff or CCA procedure";
         delete macPkt;
     }
-    else
-    {
+    else if(LifsCheckQueue->isScheduled()){
+        delete macPkt;
+    }
+    else{
         if(macPkt->getDestAddr() == myMacAddr)
         {
             if(!useMACAcks) {

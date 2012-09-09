@@ -331,11 +331,19 @@ class MIXIM_API csma : public BaseMacLayer
 
     //Modified by Victor
     bool macDuplicateFilter;
-    bool receptionOnBackoff; // Enable the reception of packets during Backoff time.
-    bool receptionOnCCA;     // Enable the reception of packets during CCA
-    bool transmitOnReception; // Enable a transmission to interrupt a reception
-    bool  IsInReception; // Trans
+    bool receptionOnBackoff;    // Enable the reception of packets during Backoff time.
+    bool receptionOnCCA;        // Enable the reception of packets during CCA
+    bool transmitOnReception;   // Enable a transmission to interrupt a reception
+    bool  IsInReception;        // Trans
     bool checkQueue;
+    bool ccaStatusIniIdle;           // Save the status of the channel before to set  the CCA_TIMER
+    int ccaSamples;
+    int ccaSamplesCounter;
+    int ccaThreshold;
+    float ccaValueBusy;
+    cMessage * ccaSamplerTimer;
+    cMessage * LifsCheckQueue;         //  Introduce a delay to call the manageQueue funktion in order to simulate a LIFS time
+
     // Modified by Jorge
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
@@ -372,7 +380,7 @@ class MIXIM_API csma : public BaseMacLayer
 
 	EnergyConsumption* energy;			// Pointer to the Energy module
 
-	cMessage * LifsCheckQueue;         //  Introduce a delay to call the manageQueue funktion in order to simulate a LIFS time
+
 /***/
 protected:
 	// FSM functions

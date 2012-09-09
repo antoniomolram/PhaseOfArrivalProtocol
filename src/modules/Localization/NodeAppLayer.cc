@@ -319,7 +319,7 @@ NodeAppLayer::~NodeAppLayer() {
 
 void NodeAppLayer::finish()
 {
-	recordScalar("Dropped Packets in MN - No ACK received", nbPacketDroppedNoACK);
+/*	recordScalar("Dropped Packets in MN - No ACK received", nbPacketDroppedNoACK);
 	recordScalar("Dropped Packets in MN - Max MAC BackOff tries", nbPacketDroppedBackOff);
 	recordScalar("Dropped Packets in MN - App Queue Full", nbPacketDroppedAppQueueFull);
 	recordScalar("Dropped Packets in MN - Mac Queue Full", nbPacketDroppedMacQueueFull);
@@ -380,7 +380,7 @@ void NodeAppLayer::finish()
 			sprintf(buffer, "K%d Anchor - Histogram %d: Effectiveness", j, i);
 			recordScalar(buffer, effecByAnchor[numberOfAnchors*i + j]);
 		}
-	}
+	}*/
 }
 
 void NodeAppLayer::handleSelfMsg(cMessage *msg)

@@ -404,7 +404,7 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of Comp Reports with ACK", nbReportsWithACK);
 	recordScalar("Number of Reports received in Comp", nbReportsReceived);
 	recordScalar("Number of Reports really for me received in Comp", nbReportsForMeReceived);
-
+/*
 	recordScalar("Number of packets 1 created by a mobile broadcast TX OK", broadOK[1]);
 	recordScalar("Number of packets 1 created by a mobile report TX OK", reportOK[1]);
 
@@ -418,9 +418,9 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of packets 4 created by a mobile report TX OK", reportOK[4]);
 
 	recordScalar("Number of packets created by a mobile request TX OK", requestOK);
-
+*/
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
-
+/*
 	for(int i=0; i<numberOfAnchors; i++) {
 		int n1,n2,n3,n4,n5,n6,n7,n8,n9;
 		n1=n2=n3=n4=n5=n6=n7=n8=n9=0;
@@ -868,7 +868,7 @@ void ComputerAppLayer::finish()
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
 	}
-
+*/
 	free(packetsResend);
 	EV<<"Computer INDEX: "<<getParentModule()->getIndex()<<endl;
 }
@@ -1064,6 +1064,8 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                             }
                         }
                     }
+                    if(pktRepeated)
+                        duplicatedPktCounter++;
                     if(!pktRepeated || !appDuplicateFilter)
                     {
                         nbReportsReceived++;
