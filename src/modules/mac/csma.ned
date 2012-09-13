@@ -72,7 +72,7 @@ simple csma extends BaseMacLayer
         double sifs @unit(s) = default(0.000192 s); // 12 symbols
         
         //backoff method to use: constant, linear or exponential
-        string backoffMethod = default("linear");
+        string backoffMethod = default("exponential");
         // maximum backoffs
         double macMaxCSMABackoffs = default(4);
         // base unit for all backoff calculations

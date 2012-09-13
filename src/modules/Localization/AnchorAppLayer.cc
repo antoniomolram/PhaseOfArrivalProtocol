@@ -24,9 +24,11 @@ void AnchorAppLayer::initialize(int stage)
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
 
 		/* Modified by Victor */
+		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
 		duplicatedPktCounter = 0;
 		txPktsCreatedInApp = 0;
 		remPktApp = 0;
+		firtsBCCounter = 0;
         //Maximum number of retransmissions
         maxRetransTotal = par("maxRetransTotal");
         PktLengthMN3 = par("PktLengthMN3");
@@ -479,6 +481,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhase = AppLayer::COM_SINK_PHASE_1;
                 nextPhaseStartTime = simTime() + timeSyncPhase;
                 scheduleAt(nextPhaseStartTime, beginPhases);
+
                 for (int i = 0; i < numberOfNodes; i++) {
                     if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
                         ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
@@ -491,9 +494,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
                         pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
                         pkt->setCSMA(true);
-                        pkt->setPriority(broadPriority[i]);
-                        pkt->setNodeMode(broadNodeMode[i]);
-                        pkt->setFromNode(i);
+                        pkt->setPriority(broadPriority[firstMNBroadcasTime[i]]);
+                        pkt->setNodeMode(broadNodeMode[firstMNBroadcasTime[i]]);
+                        pkt->setFromNode(firstMNBroadcasTime[i]);
                         pkt->setTimeOfLife(1);
                         pkt->setWasBroadcast(true);
                         //broadNew[broadPriority]++;
@@ -503,7 +506,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         pkt->setCreatedIn(getParentModule()->getIndex());
                         //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
                         numPck++;
-
+                        EV << "PAQUETE DE MN " << pkt->getFromNode() << endl;
                         if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for this packet
                             EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
                             EV << "Packet size of packet " << i <<pkt->getBitLength()<< endl;
@@ -518,6 +521,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
                 broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
                 broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
+                firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
+                firtsBCCounter = 0;
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
                     nextPhaseStart = simTime();
@@ -762,9 +767,15 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 				// The computer will analyze all the received packets from different AN to estimate the position
 	    		nbBroadcastPacketsReceived++;
 	    		indexBroadcast = simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex();
+	    		if (broadcastCounter[indexBroadcast] == 0)
+	    		{
+	    		    firstMNBroadcasTime[firtsBCCounter] = indexBroadcast;
+	    		    firtsBCCounter++;
+	    		}
 				broadcastCounter[indexBroadcast]++;
 	    		broadPriority[indexBroadcast] = pkt->getPriority();
 	    		broadNodeMode[indexBroadcast] = pkt->getNodeMode();
+
 				EV << "Received the Broadcast Packet number " << broadcastCounter[indexBroadcast] << ". From the Mobile Node with Addr: " << pkt->getSrcAddr() << endl;
 				delete msg;
 	    	} else { // Computer or AN
@@ -935,7 +946,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedBackOff;
 			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
-			scheduleAt(simTime()+0.003,pkt);
+			scheduleAt(simTime()+0.0005,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
@@ -955,7 +966,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                         {
                             EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
                                     "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
                             EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
                             if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
                                 stepTimeComSink1 = 0.05;
@@ -1001,7 +1012,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
 			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
-			scheduleAt(simTime()+0.003,pkt);
+			scheduleAt(simTime()+0.0005,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsNoACKMax++;
@@ -1022,7 +1033,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                         {
                             EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
                                     "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
                             EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
                             if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
                                 stepTimeComSink1 = 0.05;
@@ -1078,7 +1089,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                     {
                         EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
                                 "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
                         EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
                         if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
                             stepTimeComSink1 = 0.05;
@@ -1130,7 +1141,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                     {
                         EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
                                 "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / packetsQueue.length();
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1) - guardTimeComSinkPhase) / (packetsQueue.length());
                         EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
                         if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
                             stepTimeComSink1 = 0.05;

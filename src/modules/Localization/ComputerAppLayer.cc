@@ -420,6 +420,7 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of packets created by a mobile request TX OK", requestOK);
 */
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
+	recordScalar("Number of no duplicated reports",nbReportsNoDuplicated);
 /*
 	for(int i=0; i<numberOfAnchors; i++) {
 		int n1,n2,n3,n4,n5,n6,n7,n8,n9;
@@ -861,16 +862,15 @@ void ComputerAppLayer::finish()
 		char buffer[100] = "";
 		sprintf(buffer, "Minimum delay for Request from node %d", i);
 		recordScalar(buffer, minDelayRequest[i]);
-	}
+	}*/
 
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
 	}
-*/
+
 	free(packetsResend);
-	EV<<"Computer INDEX: "<<getParentModule()->getIndex()<<endl;
 }
 
 void ComputerAppLayer::handleSelfMsg(cMessage *msg)
@@ -1047,8 +1047,8 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 		    case AppLayer::REPORT_WITHOUT_CSMA:
 		    case AppLayer::REPORT_WITH_CSMA:
 				if (pkt->getDestAddr() == myNetwAddr) { // If the packet is for the computer
-                    if (appDuplicateFilter)
-                    {
+                 //   if (appDuplicateFilter)
+                 //   {
                         pktRepeated = false;
                         for( int i=0;i<numPckToSentByPeriod;i++)
                         {
@@ -1059,15 +1059,19 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                                 EV<< "Phase: " << phase << endl;
                                 pktRepeated = true;
                                 duplicatedPktCounter++;
-                                delete pkt;
+                               // delete pkt;
                                 break;
                             }
                         }
-                    }
+                  //  }
                     if(pktRepeated)
+                    {
                         duplicatedPktCounter++;
+                    }
                     if(!pktRepeated || !appDuplicateFilter)
                     {
+                        if(!pktRepeated)
+                            nbReportsNoDuplicated++;
                         nbReportsReceived++;
                         pkt->getArrivalGateId();
                         packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();

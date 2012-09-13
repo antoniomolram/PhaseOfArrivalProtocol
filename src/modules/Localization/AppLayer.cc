@@ -57,7 +57,7 @@ void AppLayer::initialize(int stage)
 		nbReportsForMeReceived 		= 0;
 		guardTimeReportPhase 		= 0.020; 	// 20 ms
 		guardTimeVIPPhase 			= 0.020;	// 20 ms
-		guardTimeComSinkPhase 		= 0.200; 	// 100 ms
+		guardTimeComSinkPhase 		= 0.080; 	// 100 ms
 		smallTime 					= 0.000001;	//  1 us
 		maxRetransDroppedReportMN 	= 1;
 		maxRetransDroppedReportAN 	= 4;

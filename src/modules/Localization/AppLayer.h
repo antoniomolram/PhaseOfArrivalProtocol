@@ -158,6 +158,9 @@ protected:
 												// Change first bound according to numberOfAnchors
 	int numPck;									// Id of the packets created/first routed by an anchor
 
+	//Victor
+    long nbReportsNoDuplicated;         // Variable to count the number of no duplicated reports successfully received
+
 public:
 
 	virtual void initialize(int stage);

@@ -88,7 +88,7 @@ void csma::initialize(int stage) {
         receptionOnCCA = par("receptionOnCCA");
         ccaStatusIniIdle = true;
         ccaSamples = 20;
-        ccaThreshold = 1;
+        ccaThreshold = 5;
         ccaSamplesCounter = 0;
         ccaValueBusy = 0;
 
@@ -179,7 +179,8 @@ void csma::initialize(int stage) {
         timeComSinkPhase1 = getParentModule()->getParentModule()->getParentModule()->par("timeComSinkPhase1");
         timeComSinkPhase2 = getParentModule()->getParentModule()->getParentModule()->par("timeComSinkPhase2");
         smallTime = 0.000001;           //  1 us
-        guardTransmitTime = 0.010;      //  2 ms, we use this time as guard time at the end of every phase
+        guardTransmitTime = 0.002;      //  2 ms, we use this time as guard time at the end of every phase
+        rxSetupTime = 0;                //
         timeFromBackOffToTX = ccaDetectionTime + aTurnaroundTime + rxSetupTime + guardTransmitTime;
         computer = cc->findNic(getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
         timeSyncPhase =  0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
@@ -805,8 +806,8 @@ void csma::updateStatusTransmitAck(t_mac_event event, cMessage *msg) {
         }
 /**********/
         //      delete msg;
-        // scheduleAt(simTime()+0.000160,LifsCheckQueue);
-         manageQueue();
+         scheduleAt(simTime()+0.000640,LifsCheckQueue);
+       //  manageQueue();
 /***MOD***/
         // Notify the App layer that we already sent and ACK to confirm the received report
         sendControlUp(new cMessage("ACK SENT", ACK_SENT));
