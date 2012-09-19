@@ -88,7 +88,7 @@ void csma::initialize(int stage) {
         receptionOnCCA = par("receptionOnCCA");
         ccaStatusIniIdle = true;
         ccaSamples = 20;
-        ccaThreshold = 5;
+        ccaThreshold = 8;
         ccaSamplesCounter = 0;
         ccaValueBusy = 0;
 
@@ -807,7 +807,7 @@ void csma::updateStatusTransmitAck(t_mac_event event, cMessage *msg) {
 /**********/
         //      delete msg;
          scheduleAt(simTime()+0.000640,LifsCheckQueue);
-       //  manageQueue();
+        // manageQueue();
 /***MOD***/
         // Notify the App layer that we already sent and ACK to confirm the received report
         sendControlUp(new cMessage("ACK SENT", ACK_SENT));
@@ -1027,7 +1027,7 @@ simtime_t csma::scheduleBackoff() {
     if(backoffTime > 0)
         return backoffTime + simTime();
     else
-        return backoffTime + simTime() + sifs;
+        return backoffTime + simTime() + 0.0000001;
  //  return backoffTime + simTime() + sifs;
 /*********/
 }
@@ -1053,6 +1053,8 @@ void csma::handleSelfMsg(cMessage *msg) {
         {
             ccaSamplesCounter++;
             if(!phy->getChannelState().isIdle())
+                ccaValueBusy++;
+            if(0.88 < uniform(0, 1, 0))
                 ccaValueBusy++;
             simtime_t ccaTime = rxSetupTime + ccaDetectionTime;
             if(ccaSamplesCounter < ccaSamples-2)
