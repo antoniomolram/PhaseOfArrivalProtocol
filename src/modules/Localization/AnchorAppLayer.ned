@@ -22,10 +22,14 @@ simple AnchorAppLayer
     	int broadcastPacketLength @unit("bit") = default(64bit);	// Broadcast Packet Length, includes 1 byte status and 1 aditional byte information. This is the broadcast packet sent by MN type 3 and 4
     	int answerANtoMNPacketLength @unit("bit") = default(136bit);// Report sent by AN to MN when MN makes a request, includes 1 byte status and 10 bytes info.
     	int bcastMixANPacketLength @unit("bit") = default(72bit); 	// Report sent by AN when it receives broadcasts from a MN, sends a report per broadcast, includes 1 byte status and 2 bytes RSSI info.
-		bool appDuplicateFilter = default(false);					// Aply filter for duplicated packets that were received.
+		// Added by Victor	
+		bool appDuplicateFilter = default(false);					// Applies filter for duplicated packets that were received.
+        bool insertedSlots = default(false);						// Decide if two slots of the same hop can be scheduled together
         int maxRetransTotal = default(4);							// Number of retransmissions.
         int PktLengthMN3;											// Lenght of packets from mobile nodes in mode 3.
-       
+        int nbSubComSink1Slots = default(4);					// Number of equal parts in which the Comsink will be divided 
+        string hopSlotsDistributionMethod = default("equal");		// Kind of propotional Amount of time that receive the Anchors in relation with their hop.
+        
         gates:
     	input lowerLayerIn; 										// from NIC
         output lowerLayerOut; 									// to NIC

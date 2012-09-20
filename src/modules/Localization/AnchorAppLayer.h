@@ -29,9 +29,6 @@ protected:
 	int *broadcastCounter;				// Vector of number of broadcasts from Mobile Node already read, to check if we just read the last one
 	int indexBroadcast;					// Number of Mobile Node who sent the broadcast to store the value of Broadcast received in the correct field
 
-	cMessage *delayTimer;				// Pointer to the event we use to schedule all the sync packets in the sync phases
-	cMessage *checkQueue;				// Variable to schedule the events to process the Queue elements
-	cMessage* MsgPrueba;
 
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 
@@ -62,20 +59,38 @@ protected:
 	// Modified by Victor
 
 	double duplicatedPktCounter;
-	int *packetsResend;                  // Packets that were successfully resend.
-	int* firstMNBroadcasTime;             // Vector to save the order in which arrive the first broadcasst from MN.
+	cMessage *hopSlotTimer;
+	cMessage *delayTimer;                // Pointer to the event we use to schedule all the sync packets in the sync phases
+	cMessage *checkQueue;                // Variable to schedule the events to process the Queue elements
+	int* packetsResend;                  // Packets that were successfully resend.
+	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcasst from MN.
+	int* hopSlots2TransmitA;              // Vector with the hopslots that each anchor has to transmit
+    int* hopSlots2TransmitB;              // Vector with the hopslots that each anchor has to transmit
+	int** transmissionMatrix;             // Matrix to save the hop that this anchor has for each subComSink slot.
+	int* hopSlotsDistributionVector;
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
     int txPktsCreatedInApp;              // Save the number of packets created in this AN
     int remPktApp;                       // SAve the number the packets that were not send.
+    int nbSubComSink1Slots;              // Number of equal parts in which the Comsink will be divided
+    int subComSink1Counter;
+    int nbTotalHops;                     // Number of hops that the network has.
+    int hopSlotsCounter;                 // Number of hopSlots that have been used.
+    int myNumberOfHopSlotsA;              // Save the number of hopSlots for this Anchor
+    int myNumberOfHopSlotsB;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
+    bool insertedSlots;                  // Decide if two slots of the same hop can be scheduled together
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
-    simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
-
+    simtime_t initTimeComSink1;           // Save the time when the ComSink1 began
+    simtime_t baseSlotTime;               // Minimal time Unit that may receive a Anchor in the comsink1 to transmit a packet.
+    simtime_t subComSink1Time;            // Duration of a RepetitionComSink1Slot
+    simtime_t hopSlotTime;                // Time that have the Anchors of a specific hop to transmit
+    simtime_t hopSlotTimeStamp;
+    std::string hopSlotsDistributionMethod;
 
 public:
 	virtual ~AnchorAppLayer();
@@ -119,6 +134,8 @@ protected:
 
 	/** @brief Returns the max of two simtime_t variables */
 	simtime_t max (simtime_t a, simtime_t b) { return (a<b)? b : a; }
+
+	void comSinkStrategyInit();
 };
 
 #endif

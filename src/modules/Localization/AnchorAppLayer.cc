@@ -32,8 +32,9 @@ void AnchorAppLayer::initialize(int stage)
         //Maximum number of retransmissions
         maxRetransTotal = par("maxRetransTotal");
         PktLengthMN3 = par("PktLengthMN3");
-		packetsResend = (int*)calloc(sizeof(int),20*numberOfNodes);
+		packetsResend = (int*)calloc(sizeof(long),20*numberOfNodes);
 		numPckToSentByPeriod = 0;
+
 	} else if (stage == 1) {
 		// Assign the type of host to 1 (anchor)
 		anchor = cc->findNic(myNetwAddr);
@@ -68,13 +69,13 @@ void AnchorAppLayer::initialize(int stage)
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
 		if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
-			hops = 3;
+			hops = 4;
 		if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
-			hops = 2;
+			hops = 3;
 		if((anchNum == 3) || (anchNum == 5))
-			hops = 1;
+			hops = 2;
 		if((anchNum == 4))
-			hops = 0;
+			hops = 1;
 
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
@@ -136,9 +137,116 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
+		comSinkStrategyInit();
 
 	}
 }
+void AnchorAppLayer::comSinkStrategyInit()
+{
+    hopSlotsDistributionMethod = par("hopSlotsDistributionMethod").stdstringValue();
+    insertedSlots = par("insertedSlots");
+    nbSubComSink1Slots =  par("nbSubComSink1Slots");
+    subComSink1Counter = 0;
+    hopSlotsCounter = 0;
+    nbTotalHops = 4;
+    hopSlotsDistributionVector = (int*)calloc(sizeof(int), nbTotalHops);
+    if(hopSlotsDistributionMethod == "equal")
+    {
+       baseSlotTime = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots*nbTotalHops);
+       for(int i=1;i<=nbTotalHops;i++)
+       {
+           hopSlotsDistributionVector[i] = 1;
+       }
+    }
+    else if(hopSlotsDistributionMethod == "sequential")
+    {
+        int totalBaseHops = 0;
+        for(int i=1;i<=nbTotalHops;i++)
+        {
+            totalBaseHops = totalBaseHops + i;
+            hopSlotsDistributionVector[i] = i;
+        }
+        baseSlotTime = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots*totalBaseHops);
+    }
+
+    if(nbTotalHops % 2 == 0)
+    {
+        myNumberOfHopSlotsA = nbTotalHops/2;
+        hopSlots2TransmitA = (int*)calloc(sizeof(int), myNumberOfHopSlotsA);
+        if(hops % 2 == 0)
+        {
+            int k = 1;
+            for(int i=0;i<myNumberOfHopSlotsA;i++)
+            {
+                hopSlots2TransmitA[i] = k;
+                k=k+2;
+            }
+        }
+        else{
+            int k = 2;
+            for(int i=0;i<myNumberOfHopSlotsA;i++)
+            {
+                hopSlots2TransmitA[i] = k;
+                k=k+2;
+            }
+        }
+    }
+    else{
+        if(hops % 2 == 0)
+        {
+            myNumberOfHopSlotsA = nbTotalHops/2;
+            hopSlots2TransmitA = (int*)calloc(sizeof(int), myNumberOfHopSlotsA);
+            int k = 2;
+            for(int i=0;i<myNumberOfHopSlotsA;i++)
+            {
+                hopSlots2TransmitA[i] = k;
+                k=k+2;
+            }
+            if(insertedSlots){
+                myNumberOfHopSlotsB = (nbTotalHops/2)+1;
+                hopSlots2TransmitB = (int*)calloc(sizeof(int), myNumberOfHopSlotsB);
+                int k = 1;
+                for(int i=0;i<myNumberOfHopSlotsB;i++)
+                {
+                    hopSlots2TransmitB[i] = k;
+                    k=k+2;
+                }
+            }
+        }
+        else{
+            myNumberOfHopSlotsA = (nbTotalHops/2) +1;
+            hopSlots2TransmitA = (int*)calloc(sizeof(int), myNumberOfHopSlotsA);
+            int k = 1;
+            for(int i=0;i<myNumberOfHopSlotsA;i++)
+            {
+                hopSlots2TransmitA[i] = k;
+                k=k+2;
+            }
+            if(insertedSlots){
+                myNumberOfHopSlotsB = nbTotalHops/2;
+                hopSlots2TransmitB = (int*)calloc(sizeof(int), myNumberOfHopSlotsB);
+                int k = 2;
+                for(int i=0;i<myNumberOfHopSlotsB;i++)
+                {
+                    hopSlots2TransmitB[i] = k;
+                    k=k+2;
+                }
+            }
+        }
+    }
+
+    EV<<"SlotA to transmit for this Anchor: ";
+    for(int i=0;i<myNumberOfHopSlotsA;i++)
+        EV<<hopSlots2TransmitA[i]<<", ";
+    EV<<endl;
+    EV<<"SlotB to transmit for this Anchor: ";
+    for(int i=0;i<myNumberOfHopSlotsB;i++)
+        EV<<hopSlots2TransmitB[i]<<", ";
+    EV<<endl;
+
+     hopSlotTimer = new cMessage("hop-slot-timer", HOP_SLOT_TIMER);
+}
+
 
 AnchorAppLayer::~AnchorAppLayer() {
 	cancelAndDelete(delayTimer);
@@ -154,125 +262,33 @@ AnchorAppLayer::~AnchorAppLayer() {
 }
 
 
-void AnchorAppLayer::finish()
-{
-	recordScalar("Dropped Packets in AN - No ACK received", nbPacketDroppedNoACK);
-	recordScalar("Dropped Packets in AN - Max MAC BackOff tries", nbPacketDroppedBackOff);
-	recordScalar("Dropped Packets in AN - App Queue Full", nbPacketDroppedAppQueueFull);
-	recordScalar("Dropped Packets in AN - Mac Queue Full", nbPacketDroppedMacQueueFull);
-	recordScalar("Dropped Packets in AN - No Time in the Phase", nbPacketDroppedNoTimeApp);
-	recordScalar("Erased Packets in AN - No more BackOff retries", nbErasedPacketsBackOffMax);
-	recordScalar("Erased Packets in AN - No more No ACK retries", nbErasedPacketsNoACKMax);
-	recordScalar("Erased Packets in AN - No more MAC Queue Full retries", nbErasedPacketsMacQueueFull);
-//	recordScalar("Number of AN Broadcasts Successfully sent", nbBroadcastPacketsSent);
-	recordScalar("Number of AN Reports with ACK", nbReportsWithACK);
-	recordScalar("Number of Broadcasts received in AN", nbBroadcastPacketsReceived);
-	recordScalar("Number of Reports received in AN", nbReportsReceived);
-	recordScalar("Number of Reports really for me received in AN", nbReportsForMeReceived);
 
-//	recordScalar("Mean of successful packets", meanSuccess/numPeriods);
-/*
-	recordScalar("Number of packets 1 created by a mobile broadcast", broadNew[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast dropped in packets queue", broadPckQueue[1] + packetsQueue.broadQueueDrop[0]);
-	recordScalar("Number of packets 1 created by a mobile broadcast discarded due no ACK", broadNoAck[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast dropped by backoff", broadDrop[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast dropped by TOF update", broadUpdate[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast erased because TX had to stop", broadNoTime[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast sent from this anchor", broadSent[1]);
-	recordScalar("Number of packets 1 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[1]);
-
-	recordScalar("Number of packets 1 created by a mobile report", reportNew[1]);
-	recordScalar("Number of packets 1 created by a mobile report dropped in packets queue", reportPckQueue[1] + packetsQueue.reportQueueDrop[0]);
-	recordScalar("Number of packets 1 created by a mobile report discarded due no ACK", reportNoAck[1]);
-	recordScalar("Number of packets 1 created by a mobile report dropped by backoff", reportDrop[1]);
-	recordScalar("Number of packets 1 created by a mobile report dropped by TOF update", reportUpdate[1]);
-	recordScalar("Number of packets 1 created by a mobile report erased because TX had to stop", reportNoTime[1]);
-	recordScalar("Number of packets 1 created by a mobile report sent from this anchor", reportSent[1]);
-	recordScalar("Number of packets 1 created by a mobile report sent from this anchor TX OK", reportSentOK[1]);
-
-	recordScalar("Number of packets 2 created by a mobile broadcast", broadNew[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast dropped in packets queue", broadPckQueue[2] + packetsQueue.broadQueueDrop[1]);
-	recordScalar("Number of packets 2 created by a mobile broadcast discarded due no ACK", broadNoAck[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast dropped by backoff", broadDrop[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast dropped by TOF update", broadUpdate[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast erased because TX had to stop", broadNoTime[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast sent from this anchor", broadSent[2]);
-	recordScalar("Number of packets 2 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[2]);
-
-	recordScalar("Number of packets 2 created by a mobile report", reportNew[2]);
-	recordScalar("Number of packets 2 created by a mobile report dropped in packets queue", reportPckQueue[2] + packetsQueue.reportQueueDrop[1]);
-	recordScalar("Number of packets 2 created by a mobile report discarded due no ACK", reportNoAck[2]);
-	recordScalar("Number of packets 2 created by a mobile report dropped by backoff", reportDrop[2]);
-	recordScalar("Number of packets 2 created by a mobile report dropped by TOF update", reportUpdate[2]);
-	recordScalar("Number of packets 2 created by a mobile report erased because TX had to stop", reportNoTime[2]);
-	recordScalar("Number of packets 2 created by a mobile report sent from this anchor", reportSent[2]);
-	recordScalar("Number of packets 2 created by a mobile report sent from this anchor TX OK", reportSentOK[2]);
-
-	recordScalar("Number of packets 3 created by a mobile broadcast", broadNew[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast dropped in packets queue", broadPckQueue[3] + packetsQueue.broadQueueDrop[2]);
-	recordScalar("Number of packets 3 created by a mobile broadcast discarded due no ACK", broadNoAck[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast dropped by backoff", broadDrop[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast dropped by TOF update", broadUpdate[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast erased because TX had to stop", broadNoTime[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast sent from this anchor", broadSent[3]);
-	recordScalar("Number of packets 3 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[3]);
-
-	recordScalar("Number of packets 3 created by a mobile report", reportNew[3]);
-	recordScalar("Number of packets 3 created by a mobile report dropped in packets queue", reportPckQueue[3] + packetsQueue.reportQueueDrop[2]);
-	recordScalar("Number of packets 3 created by a mobile report discarded due no ACK", reportNoAck[3]);
-	recordScalar("Number of packets 3 created by a mobile report dropped by backoff", reportDrop[3]);
-	recordScalar("Number of packets 3 created by a mobile report dropped by TOF update", reportUpdate[3]);
-	recordScalar("Number of packets 3 created by a mobile report erased because TX had to stop", reportNoTime[3]);
-	recordScalar("Number of packets 3 created by a mobile report sent from this anchor", reportSent[3]);
-	recordScalar("Number of packets 3 created by a mobile report sent from this anchor TX OK", reportSentOK[3]);
-
-	recordScalar("Number of packets 4 created by a mobile broadcast", broadNew[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast dropped in packets queue", broadPckQueue[4] + packetsQueue.broadQueueDrop[3]);
-	recordScalar("Number of packets 4 created by a mobile broadcast discarded due no ACK", broadNoAck[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast dropped by backoff", broadDrop[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast dropped by TOF update", broadUpdate[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast erased because TX had to stop", broadNoTime[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast sent from this anchor", broadSent[4]);
-	recordScalar("Number of packets 4 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[4]);
-
-	recordScalar("Number of packets 4 created by a mobile report", reportNew[4]);
-	recordScalar("Number of packets 4 created by a mobile report dropped in packets queue", reportPckQueue[4] + packetsQueue.reportQueueDrop[3]);
-	recordScalar("Number of packets 4 created by a mobile report discarded due no ACK", reportNoAck[4]);
-	recordScalar("Number of packets 4 created by a mobile report dropped by backoff", reportDrop[4]);
-	recordScalar("Number of packets 4 created by a mobile report dropped by TOF update", reportUpdate[4]);
-	recordScalar("Number of packets 4 created by a mobile report erased because TX had to stop", reportNoTime[4]);
-	recordScalar("Number of packets 4 created by a mobile report sent from this anchor", reportSent[4]);
-	recordScalar("Number of packets 4 created by a mobile report sent from this anchor TX OK", reportSentOK[4]);
-
-	recordScalar("Number of packets created by a mobile request", requestNew);
-	recordScalar("Number of packets created by a mobile request TX OK", requestOK);
-	recordScalar("Number of packets created by a mobile request dropped in packets queue",requestPckQueue);
-	recordScalar("Number of packets created by a mobile request discarded due no ACK", requestNoAck);
-	recordScalar("Number of packets created by a mobile request dropped by backoff", requestDrop);
-	recordScalar("Number of packets created by a mobile request dropped by TOF update", requestUpdate);
-	recordScalar("Number of packets created by a mobile request erased because TX had to stop", requestNoTime);
-	recordScalar("Number of packets created by a mobile request sent from this anchor", requestSent);
-	recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);*/
-
-	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
-	recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
-	recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
-/*
-	for(int i = 0; i < numberOfNodes; i++) {
-		char buffer[100] = "";
-		sprintf(buffer, "Number of packets sent from mobile node %d", i);
-		recordScalar(buffer, fromNode[i]);
-	}*/
-	free(packetsResend);
-}
 
 void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 {
-
         switch(msg->getKind())
         {
         case MAC_ERROR_MANAGEMENT:
             errorManagement(msg);
+        break;
+        case HOP_SLOT_TIMER:
+            if(hopSlotsCounter == nbTotalHops){
+                if(subComSink1Counter == nbSubComSink1Slots){
+                    EV<<"End of the Comsink1 phase" <<endl;
+                }
+                else{
+                    scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
+                    hopSlotTimeStamp = simTime();
+                    hopSlotsCounter = 1;
+                    subComSink1Counter++;
+                }
+            }
+            else{
+                scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
+                hopSlotTimeStamp = simTime();
+                hopSlotsCounter++;
+            }
+
         break;
         case SEND_SYNC_TIMER_WITHOUT_CSMA:
             sendBroadcast(); // Send the broadcast
@@ -307,39 +323,30 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
             {
                 if (packetsQueue.length() > 0) { // If there are messages to send
-                    if(!blockAppTransmissions)
-                    {
-                        ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
-                        msg->setCreatedIn(getParentModule()->getIndex());
-                        EV << "BLOCK, sending Packet with origin: " << msg->getCreatedIn() <<"this origin:"<<getParentModule()->getIndex()<< endl;
-                        EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
-                        macDeviceFree = false; // Mark the MAC as occupied
-                        if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
-                            msg->setTimestampAnchorTX(simTime().dbl());
-                            msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
-                        }
-                        //Counts the number of packets sent from the anchor depending to its type
-                        if(msg->getWasBroadcast())
-                            broadSent[msg->getPriority()]++;
-                        else if(msg->getWasReport())
-                            reportSent[msg->getPriority()]++;
-                        else if(msg->getWasRequest())
-                            requestSent++;
-                        transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-                        sendDown(msg);
-                        // Block transmission from App Layer until arrive control msg for this msg.
-                        blockAppTransmissions = true;
-                        stepTimeComSink1End = stepTimeComSink1End + stepTimeComSink1;
-                        EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
-                        if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
-                            // Schedule the next queue element in the next random time
-                            queueElementCounter++;
-                            EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-                            EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-                        }
+                    ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
+                    msg->setCreatedIn(getParentModule()->getIndex());
+                    macDeviceFree = false; // Mark the MAC as occupied
+                    if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
+                        msg->setTimestampAnchorTX(simTime().dbl());
+                        msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
+                    }
+                    //Counts the number of packets sent from the anchor depending to its type
+                    if(msg->getWasBroadcast())
+                        broadSent[msg->getPriority()]++;
+                    else if(msg->getWasReport())
+                        reportSent[msg->getPriority()]++;
+                    else if(msg->getWasRequest())
+                        requestSent++;
+                    transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+                    sendDown(msg);
+
+                    EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
+                    if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
+
+                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                     }
                 }
+
             }
 
             break;
@@ -540,37 +547,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhaseStartTime = simTime() + timeComSinkPhase1;
                 initTimeComSink1 = simTime();
                 scheduleAt(nextPhaseStartTime, beginPhases);
+                hopSlotsCounter = 1;
+                subComSink1Counter = 1;
+                scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
+                hopSlotTimeStamp = simTime();
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
-                randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
-                if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-                    stepTimeComSink1 = (timeComSinkPhase1 - guardTimeComSinkPhase) / packetsQueue.length();
-                    // Changing the random transmit method in order to achive a behavior like in the real network
-                    blockAppTransmissions = false;
-                    if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                        stepTimeComSink1 = 0.05;
-                    stepTimeComSink1End = simTime();// + stepTimeComSink1;
-
-                    EV << "Estimating the next transmission time: " << endl;
-                    EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
-                    EV << "End of the stepComSink1: "<< stepTimeComSink1End << endl;
-                    EV << "NextPhaseStartTime: "<< nextPhaseStartTime << endl;
-                    EV << "GuardTime: "<< guardTimeComSinkPhase << endl;
-                    EV << "stepComSinkPhase "<< stepTimeComSink1<< endl;
-
-                    for (int i = 0; i < packetsQueue.length(); i++) {
-                        randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                        EV << "Time " << i << ": " << randomQueueTime[i] << endl;
-                    }
-                    numPckToSent = packetsQueue.length();
-                    queueElementCounter = 0; // Reset the index to know which random time from vector to use
-
-                    EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-                    EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-
-                    scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-                } else {
-                    EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
-                }
 
                 break;
             case AppLayer::SYNC_PHASE_3:
@@ -1230,4 +1211,116 @@ void AnchorAppLayer::createScheduleEvents()
 	queueElementCounter = 0; // Reset the index to know which random time from vector to use
 	EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
 	EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
+}
+
+void AnchorAppLayer::finish()
+{
+    recordScalar("Dropped Packets in AN - No ACK received", nbPacketDroppedNoACK);
+    recordScalar("Dropped Packets in AN - Max MAC BackOff tries", nbPacketDroppedBackOff);
+    recordScalar("Dropped Packets in AN - App Queue Full", nbPacketDroppedAppQueueFull);
+    recordScalar("Dropped Packets in AN - Mac Queue Full", nbPacketDroppedMacQueueFull);
+    recordScalar("Dropped Packets in AN - No Time in the Phase", nbPacketDroppedNoTimeApp);
+    recordScalar("Erased Packets in AN - No more BackOff retries", nbErasedPacketsBackOffMax);
+    recordScalar("Erased Packets in AN - No more No ACK retries", nbErasedPacketsNoACKMax);
+    recordScalar("Erased Packets in AN - No more MAC Queue Full retries", nbErasedPacketsMacQueueFull);
+//  recordScalar("Number of AN Broadcasts Successfully sent", nbBroadcastPacketsSent);
+    recordScalar("Number of AN Reports with ACK", nbReportsWithACK);
+    recordScalar("Number of Broadcasts received in AN", nbBroadcastPacketsReceived);
+    recordScalar("Number of Reports received in AN", nbReportsReceived);
+    recordScalar("Number of Reports really for me received in AN", nbReportsForMeReceived);
+
+//  recordScalar("Mean of successful packets", meanSuccess/numPeriods);
+/*
+    recordScalar("Number of packets 1 created by a mobile broadcast", broadNew[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast dropped in packets queue", broadPckQueue[1] + packetsQueue.broadQueueDrop[0]);
+    recordScalar("Number of packets 1 created by a mobile broadcast discarded due no ACK", broadNoAck[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast dropped by backoff", broadDrop[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast dropped by TOF update", broadUpdate[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast erased because TX had to stop", broadNoTime[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast sent from this anchor", broadSent[1]);
+    recordScalar("Number of packets 1 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[1]);
+
+    recordScalar("Number of packets 1 created by a mobile report", reportNew[1]);
+    recordScalar("Number of packets 1 created by a mobile report dropped in packets queue", reportPckQueue[1] + packetsQueue.reportQueueDrop[0]);
+    recordScalar("Number of packets 1 created by a mobile report discarded due no ACK", reportNoAck[1]);
+    recordScalar("Number of packets 1 created by a mobile report dropped by backoff", reportDrop[1]);
+    recordScalar("Number of packets 1 created by a mobile report dropped by TOF update", reportUpdate[1]);
+    recordScalar("Number of packets 1 created by a mobile report erased because TX had to stop", reportNoTime[1]);
+    recordScalar("Number of packets 1 created by a mobile report sent from this anchor", reportSent[1]);
+    recordScalar("Number of packets 1 created by a mobile report sent from this anchor TX OK", reportSentOK[1]);
+
+    recordScalar("Number of packets 2 created by a mobile broadcast", broadNew[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast dropped in packets queue", broadPckQueue[2] + packetsQueue.broadQueueDrop[1]);
+    recordScalar("Number of packets 2 created by a mobile broadcast discarded due no ACK", broadNoAck[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast dropped by backoff", broadDrop[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast dropped by TOF update", broadUpdate[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast erased because TX had to stop", broadNoTime[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast sent from this anchor", broadSent[2]);
+    recordScalar("Number of packets 2 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[2]);
+
+    recordScalar("Number of packets 2 created by a mobile report", reportNew[2]);
+    recordScalar("Number of packets 2 created by a mobile report dropped in packets queue", reportPckQueue[2] + packetsQueue.reportQueueDrop[1]);
+    recordScalar("Number of packets 2 created by a mobile report discarded due no ACK", reportNoAck[2]);
+    recordScalar("Number of packets 2 created by a mobile report dropped by backoff", reportDrop[2]);
+    recordScalar("Number of packets 2 created by a mobile report dropped by TOF update", reportUpdate[2]);
+    recordScalar("Number of packets 2 created by a mobile report erased because TX had to stop", reportNoTime[2]);
+    recordScalar("Number of packets 2 created by a mobile report sent from this anchor", reportSent[2]);
+    recordScalar("Number of packets 2 created by a mobile report sent from this anchor TX OK", reportSentOK[2]);
+
+    recordScalar("Number of packets 3 created by a mobile broadcast", broadNew[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast dropped in packets queue", broadPckQueue[3] + packetsQueue.broadQueueDrop[2]);
+    recordScalar("Number of packets 3 created by a mobile broadcast discarded due no ACK", broadNoAck[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast dropped by backoff", broadDrop[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast dropped by TOF update", broadUpdate[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast erased because TX had to stop", broadNoTime[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast sent from this anchor", broadSent[3]);
+    recordScalar("Number of packets 3 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[3]);
+
+    recordScalar("Number of packets 3 created by a mobile report", reportNew[3]);
+    recordScalar("Number of packets 3 created by a mobile report dropped in packets queue", reportPckQueue[3] + packetsQueue.reportQueueDrop[2]);
+    recordScalar("Number of packets 3 created by a mobile report discarded due no ACK", reportNoAck[3]);
+    recordScalar("Number of packets 3 created by a mobile report dropped by backoff", reportDrop[3]);
+    recordScalar("Number of packets 3 created by a mobile report dropped by TOF update", reportUpdate[3]);
+    recordScalar("Number of packets 3 created by a mobile report erased because TX had to stop", reportNoTime[3]);
+    recordScalar("Number of packets 3 created by a mobile report sent from this anchor", reportSent[3]);
+    recordScalar("Number of packets 3 created by a mobile report sent from this anchor TX OK", reportSentOK[3]);
+
+    recordScalar("Number of packets 4 created by a mobile broadcast", broadNew[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast dropped in packets queue", broadPckQueue[4] + packetsQueue.broadQueueDrop[3]);
+    recordScalar("Number of packets 4 created by a mobile broadcast discarded due no ACK", broadNoAck[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast dropped by backoff", broadDrop[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast dropped by TOF update", broadUpdate[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast erased because TX had to stop", broadNoTime[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast sent from this anchor", broadSent[4]);
+    recordScalar("Number of packets 4 created by a mobile broadcast sent from this anchor TX OK", broadSentOK[4]);
+
+    recordScalar("Number of packets 4 created by a mobile report", reportNew[4]);
+    recordScalar("Number of packets 4 created by a mobile report dropped in packets queue", reportPckQueue[4] + packetsQueue.reportQueueDrop[3]);
+    recordScalar("Number of packets 4 created by a mobile report discarded due no ACK", reportNoAck[4]);
+    recordScalar("Number of packets 4 created by a mobile report dropped by backoff", reportDrop[4]);
+    recordScalar("Number of packets 4 created by a mobile report dropped by TOF update", reportUpdate[4]);
+    recordScalar("Number of packets 4 created by a mobile report erased because TX had to stop", reportNoTime[4]);
+    recordScalar("Number of packets 4 created by a mobile report sent from this anchor", reportSent[4]);
+    recordScalar("Number of packets 4 created by a mobile report sent from this anchor TX OK", reportSentOK[4]);
+
+    recordScalar("Number of packets created by a mobile request", requestNew);
+    recordScalar("Number of packets created by a mobile request TX OK", requestOK);
+    recordScalar("Number of packets created by a mobile request dropped in packets queue",requestPckQueue);
+    recordScalar("Number of packets created by a mobile request discarded due no ACK", requestNoAck);
+    recordScalar("Number of packets created by a mobile request dropped by backoff", requestDrop);
+    recordScalar("Number of packets created by a mobile request dropped by TOF update", requestUpdate);
+    recordScalar("Number of packets created by a mobile request erased because TX had to stop", requestNoTime);
+    recordScalar("Number of packets created by a mobile request sent from this anchor", requestSent);
+    recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);*/
+
+    recordScalar("Number of app duplicated packets",duplicatedPktCounter);
+    recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
+    recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
+/*
+    for(int i = 0; i < numberOfNodes; i++) {
+        char buffer[100] = "";
+        sprintf(buffer, "Number of packets sent from mobile node %d", i);
+        recordScalar(buffer, fromNode[i]);
+    }*/
+    free(packetsResend);
 }

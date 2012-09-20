@@ -195,7 +195,7 @@ void ComputerAppLayer::initialize(int stage)
 
 		packetsQueue.setMaxLength(maxQueueElements); // Sets the lenght of the queue
 
-		hops = (int*)calloc(sizeof(int), 25);
+/*		hops = (int*)calloc(sizeof(int), 25);
 		// Defines the amount of hops between the coordinator and an anchor with id = anchNum
 		for (int anchNum = 0; anchNum < numberOfAnchors; anchNum++) {
 			if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
@@ -207,7 +207,7 @@ void ComputerAppLayer::initialize(int stage)
 				hops[anchNum] = 2;
 			if((anchNum == 3) || (anchNum == 8) || (anchNum == 9))
 				hops[anchNum] = 1;
-		}
+		}*/
 
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);

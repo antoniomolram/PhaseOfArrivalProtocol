@@ -35,7 +35,8 @@ public:
 		BEGIN_PHASE,					// Event to be executed at the beginning of every phase
 		WAKE_UP,						// Event to wake up the node timeSleepToRX before activity
 		SLEEP,						    // Event to sleep the node
-		MAC_ERROR_MANAGEMENT            // Event to to delay the handle of packets with MAC error.
+		MAC_ERROR_MANAGEMENT,            // Event to to delay the handle of packets with MAC error.
+		HOP_SLOT_TIMER
 	};
 
 	enum PhaseType{						// Phases of the Full Phase or Period
