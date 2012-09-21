@@ -137,8 +137,9 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
+		int Brothers[] = {0,1,1,1,0,1,1,1,1,1};
+		numberOfBrothers = Brothers[getParentModule()->getIndex()]+1; // Number of brothers include also this Anchor
 		comSinkStrategyInit();
-
 	}
 }
 void AnchorAppLayer::comSinkStrategyInit()
@@ -157,6 +158,7 @@ void AnchorAppLayer::comSinkStrategyInit()
        {
            hopSlotsDistributionVector[i] = 1;
        }
+       hopSlotsDistributionVector[0] = 0;
     }
     else if(hopSlotsDistributionMethod == "sequential")
     {
@@ -244,7 +246,20 @@ void AnchorAppLayer::comSinkStrategyInit()
         EV<<hopSlots2TransmitB[i]<<", ";
     EV<<endl;
 
+    TxComSinkPktMatrix = new int* [nbTotalHops];
+    for(int i=0;i<nbSubComSink1Slots;i++)
+        TxComSinkPktMatrix[i] = new int [nbSubComSink1Slots];
+    for(int i=0;i<nbTotalHops;i++)
+    {
+        for(int j=0;j<nbSubComSink1Slots;j++)
+            TxComSinkPktMatrix[i][j] = 0;
+    }
      hopSlotTimer = new cMessage("hop-slot-timer", HOP_SLOT_TIMER);
+
+}
+
+void AnchorAppLayer::pktAllocator(cMessage* msg){
+
 }
 
 
@@ -541,6 +556,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 }
                 break;
             case AppLayer::COM_SINK_PHASE_1:
+
                 phase = AppLayer::COM_SINK_PHASE_1;
                 nextPhase = AppLayer::SYNC_PHASE_3;
                 comsinkPhaseStartTime = simTime().dbl();
@@ -552,7 +568,68 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
                 hopSlotTimeStamp = simTime();
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
+                availablePktsProHopSlot = new int [myNumberOfHopSlotsA];
+                usedPkts = new int [myNumberOfHopSlotsA];
+                pktProHopSlot=0;
+                totalPktpProSubComSink1=0;
+                randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
 
+                EV<<"COMSINK1 INIT: "<< packetsQueue.length()<<endl;
+                for(int i=0; i<myNumberOfHopSlotsA;i++)
+                {
+                    // Calculate the number of packets available for this anchor in the first subComSink1
+                    availablePktsProHopSlot[i] = (baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[i]])/(0.002*numberOfBrothers);
+                    totalPktpProSubComSink1 = totalPktpProSubComSink1 + availablePktsProHopSlot[i];
+                }
+                if(totalPktpProSubComSink1 > packetsQueue.length())
+                {
+                    pktProHopSlot = packetsQueue.length()/myNumberOfHopSlotsA;
+                    timePointer = 0;
+                    for(int k=0; k<myNumberOfHopSlotsA;k++)
+                    {
+                       if( packetsQueue.length() % myNumberOfHopSlotsA != 0 && k == 0){
+                           stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot+1);
+                           for(int i=0; i<pktProHopSlot+1;i++)
+                           {
+                               if(packetsQueue.length()>0)
+                               {
+                                   randomQueueTime[timePointer] = simTime() + (i * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0);
+                                   for(int j=1;j<hopSlots2TransmitA[k];j++)
+                                   {
+                                       randomQueueTime[timePointer] = randomQueueTime[timePointer] + baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[j]];
+                                   }
+                                   EV << "Time " << timePointer<< ": " << randomQueueTime[timePointer] << endl;
+                                   timePointer++;
+                               }
+                           }
+                           if(packetsQueue.length() == 1)
+                               break;
+                       }
+                       else{
+                           stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot);
+                           for(int i=0; i<pktProHopSlot;i++)
+                           {
+                               if(packetsQueue.length()>0)
+                               {
+                                   randomQueueTime[timePointer] = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.003), 0);
+                                   for(int j=1;j<hopSlots2TransmitA[k];j++)
+                                   {
+                                       randomQueueTime[timePointer] = randomQueueTime[timePointer] + baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[j]];
+                                   }
+                                   EV << "Time " << timePointer << ": " << randomQueueTime[timePointer] << endl;
+                                   timePointer++;
+                               }
+                           }
+                       }
+                    }
+                }
+                else{
+                    EV<<"LOS PAQUETES NO CABEN EN LA PRIMER SUBCOMSINK"<<endl;
+                }
+                numPckToSent = packetsQueue.length();
+                queueElementCounter = 0; // Reset the index to know which random time from vector to use
+                if(packetsQueue.length() != 0)
+                   scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                 break;
             case AppLayer::SYNC_PHASE_3:
                 phase = AppLayer::SYNC_PHASE_3;
@@ -858,7 +935,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            else if(buffer->getWasRequest())
 	                                requestSent++;
 	                            EV<<"Intruso en la packet queue" <<endl;
-	                            sendDown(buffer);
+	                       //     sendDown(buffer);
 	                        } else {                                                                                            // Else, the received packet is directly
 	                            macDeviceFree = false;                                                                          // routed
 	                            transfersQueue.insert(pkt->dup());
@@ -868,7 +945,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
-	                            sendDown(pkt);
+	                         //   sendDown(pkt);
 	                        }
 	                    } else { // There is no priority; message directly sent to MAC
 	                        macDeviceFree = false;
@@ -1323,4 +1400,7 @@ void AnchorAppLayer::finish()
         recordScalar(buffer, fromNode[i]);
     }*/
     free(packetsResend);
+    for(int i = 0; i < nbTotalHops; i++)
+        delete[] TxComSinkPktMatrix[i];
+    delete[] TxComSinkPktMatrix;
 }

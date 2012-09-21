@@ -66,8 +66,12 @@ protected:
 	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcasst from MN.
 	int* hopSlots2TransmitA;              // Vector with the hopslots that each anchor has to transmit
     int* hopSlots2TransmitB;              // Vector with the hopslots that each anchor has to transmit
-	int** transmissionMatrix;             // Matrix to save the hop that this anchor has for each subComSink slot.
+	int** TxComSinkPktMatrix;             // Matrix to save the hop that this anchor has for each subComSink slot.
 	int* hopSlotsDistributionVector;
+	int* availablePktsProHopSlot;
+	int* usedPkts;
+	int pktProHopSlot;
+	int totalPktpProSubComSink1;
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
@@ -79,6 +83,8 @@ protected:
     int hopSlotsCounter;                 // Number of hopSlots that have been used.
     int myNumberOfHopSlotsA;              // Save the number of hopSlots for this Anchor
     int myNumberOfHopSlotsB;
+    int numberOfBrothers;
+    int timePointer;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
@@ -90,6 +96,7 @@ protected:
     simtime_t subComSink1Time;            // Duration of a RepetitionComSink1Slot
     simtime_t hopSlotTime;                // Time that have the Anchors of a specific hop to transmit
     simtime_t hopSlotTimeStamp;
+    simtime_t stepHopSlot;
     std::string hopSlotsDistributionMethod;
 
 public:
@@ -136,6 +143,8 @@ protected:
 	simtime_t max (simtime_t a, simtime_t b) { return (a<b)? b : a; }
 
 	void comSinkStrategyInit();
+
+	void pktAllocator(cMessage* msg);
 };
 
 #endif
