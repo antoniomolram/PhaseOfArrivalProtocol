@@ -152,7 +152,7 @@ void AnchorAppLayer::comSinkStrategyInit()
     subComSink1Counter = 0;
     hopSlotsCounter = 0;
     nbTotalHops = 4;
-    maxPktinHopSlot
+  //  maxPktinHopSlot =
     subComSink1Time = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots);
     hopSlotsDistributionVector = (int*)calloc(sizeof(int), nbTotalHops);
     if(hopSlotsDistributionMethod == "equal")
@@ -250,21 +250,68 @@ void AnchorAppLayer::comSinkStrategyInit()
         EV<<hopSlots2TransmitB[i]<<", ";
     EV<<endl;
 
-    TxComSinkPktMatrix = new int* [nbTotalHops];
+    TxComSinkPktMatrix = new int* [nbSubComSink1Slots];
     for(int i=0;i<nbSubComSink1Slots;i++)
-        TxComSinkPktMatrix[i] = new int [nbSubComSink1Slots];
-    for(int i=0;i<nbTotalHops;i++)
+        TxComSinkPktMatrix[i] = new int [nbTotalHops];
+
+
+    for(int i=0;i<nbSubComSink1Slots;i++)
     {
-        for(int j=0;j<nbSubComSink1Slots;j++)
-            TxComSinkPktMatrix[i][j] = maxPktinHopSlot;
+        for(int j=0;j<nbTotalHops;j++)
+        {
+            TxComSinkPktMatrix[i][j] = 0;
+        }
+    }
+    for(int i=0;i<nbSubComSink1Slots;i++)
+    {
+        for(int j=0;j<myNumberOfHopSlotsA;j++)
+        {
+            TxComSinkPktMatrix[i][hopSlots2TransmitA[j]-1] = (baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
+        }
+    }
+    for(int i=0;i<nbSubComSink1Slots;i++)
+    {
+        for(int j=0;j<nbTotalHops;j++)
+        {
+            EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
+        }
+        EV<<endl;
     }
      hopSlotTimer = new cMessage("hop-slot-timer", HOP_SLOT_TIMER);
 
 }
 
-void AnchorAppLayer::pktAllocator(){
+bool AnchorAppLayer::pktAllocator(){
+    int maxHopSlot;
+    int maxSubComSinK;
+    int availableSlot = 0;
+    simtime_t posibleTime;
 
-    TxComSinkPktMatrix[][]
+    for(int i=hopSlotsCounter;i<=nbTotalHops;i++)
+    {
+        for(int j=subComSink1Counter;j<nbSubComSink1Slots;j++)
+            if(TxComSinkPktMatrix[i][j] > availableSlot)
+            {
+                maxSubComSinK = i;
+                maxHopSlot = j;
+                availableSlot = TxComSinkPktMatrix[i][j];
+            }
+    }
+
+    stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[maxHopSlot]];
+    int k = 5;
+    while(k > 0)
+    {
+        posibleTime = simTime() + (maxHopSlot * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * maxSubComSinK);
+        if(myTimeList.checkSpace(posibleTime)){
+            randomQueueTime[timePointer] = posibleTime;
+            timePointer++;
+            k = 0;
+            return true;
+        }
+        k--;
+    }
+    return false;
 }
 
 void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
@@ -285,7 +332,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
                       testVar1= hopSlots2TransmitA[j];
                       testTime =  randomQueueTime[timePointer];
                   }
-                  TxComSinkPktMatrix[hopSlots2TransmitA[k]][subComSink1]--;
+                 // TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
                   EV << "Time " << timePointer<< ": " << randomQueueTime[timePointer] << endl;
                   timePointer++;
               }
@@ -308,13 +355,22 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
                       testVar1= hopSlots2TransmitA[j];
                       testTime =  randomQueueTime[timePointer];
                   }
-                  TxComSinkPktMatrix[hopSlots2TransmitA[k]][subComSink1]--;
+           //       TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
                   EV << "Time " << timePointer << ": " << randomQueueTime[timePointer] << endl;
                   timePointer++;
               }
           }
       }
    }
+   for(int i=0;i<nbSubComSink1Slots;i++)
+   {
+       for(int j=0;j<nbTotalHops;j++)
+       {
+          // EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
+       }
+       EV<<endl;
+   }
+
 }
 AnchorAppLayer::~AnchorAppLayer() {
 	cancelAndDelete(delayTimer);
@@ -667,7 +723,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                               nbOfPkts2allocate--;
                           }
                           while(nbOfPkts2allocate != 0)
+                          {
                               pktAllocator();
+                              nbOfPkts2allocate--;
+                          }
+
                       }
                 }
 

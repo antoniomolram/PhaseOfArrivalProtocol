@@ -152,7 +152,7 @@ protected:
 
 	void comSinkStrategyInit();
 
-	void pktAllocator();
+	bool pktAllocator();
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 };
