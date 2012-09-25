@@ -85,6 +85,12 @@ protected:
     int myNumberOfHopSlotsB;
     int numberOfBrothers;
     int timePointer;
+    int testVar1;
+    int testVar2;
+    int maxHopPkt;
+    int nextSubComSinkPkts;
+    int nbOfPkts2allocate;
+    int maxPktinHopSlot;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
@@ -95,9 +101,11 @@ protected:
     simtime_t baseSlotTime;               // Minimal time Unit that may receive a Anchor in the comsink1 to transmit a packet.
     simtime_t subComSink1Time;            // Duration of a RepetitionComSink1Slot
     simtime_t hopSlotTime;                // Time that have the Anchors of a specific hop to transmit
-    simtime_t hopSlotTimeStamp;
+    simtime_t comSinkSendTimeStamp;
     simtime_t stepHopSlot;
+    simtime_t testTime;
     std::string hopSlotsDistributionMethod;
+    TimeList myTimeList;
 
 public:
 	virtual ~AnchorAppLayer();
@@ -144,7 +152,9 @@ protected:
 
 	void comSinkStrategyInit();
 
-	void pktAllocator(cMessage* msg);
+	void pktAllocator();
+
+	void firstPktAllocation(int nbOfPkt, int subComSink1);
 };
 
 #endif
