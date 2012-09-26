@@ -154,7 +154,7 @@ void AnchorAppLayer::comSinkStrategyInit()
     nbTotalHops = 4;
   //  maxPktinHopSlot =
     subComSink1Time = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots);
-    hopSlotsDistributionVector = (int*)calloc(sizeof(int), nbTotalHops);
+    hopSlotsDistributionVector = (int*)calloc(sizeof(int), nbTotalHops+1);
     if(hopSlotsDistributionMethod == "equal")
     {
        baseSlotTime = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots*nbTotalHops);
@@ -243,13 +243,20 @@ void AnchorAppLayer::comSinkStrategyInit()
 
     EV<<"SlotA to transmit for this Anchor: ";
     for(int i=0;i<myNumberOfHopSlotsA;i++)
+    {
+        assert(hopSlots2TransmitA[i]);
         EV<<hopSlots2TransmitA[i]<<", ";
-    EV<<endl;
-    EV<<"SlotB to transmit for this Anchor: ";
-    for(int i=0;i<myNumberOfHopSlotsB;i++)
-        EV<<hopSlots2TransmitB[i]<<", ";
-    EV<<endl;
+    }
 
+    EV<<endl;
+//    EV<<"SlotB to transmit for this Anchor: ";
+//    for(int i=0;i<myNumberOfHopSlotsB;i++)
+//    {
+//        assert(hopSlots2TransmitB[i]);
+//        EV<<hopSlots2TransmitB[i]<<", ";
+//    }
+//
+//    EV<<endl;
     TxComSinkPktMatrix = new int* [nbSubComSink1Slots];
     for(int i=0;i<nbSubComSink1Slots;i++)
         TxComSinkPktMatrix[i] = new int [nbTotalHops];
@@ -287,9 +294,9 @@ bool AnchorAppLayer::pktAllocator(){
     int availableSlot = 0;
     simtime_t posibleTime;
 
-    for(int i=hopSlotsCounter;i<=nbTotalHops;i++)
+    for(int i=subComSink1Counter;i<nbSubComSink1Slots;i++)
     {
-        for(int j=subComSink1Counter;j<nbSubComSink1Slots;j++)
+        for(int j=hopSlotsCounter;j<nbTotalHops;j++)
             if(TxComSinkPktMatrix[i][j] > availableSlot)
             {
                 maxSubComSinK = i;
@@ -332,7 +339,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
                       testVar1= hopSlots2TransmitA[j];
                       testTime =  randomQueueTime[timePointer];
                   }
-                 // TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
+                  TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
                   EV << "Time " << timePointer<< ": " << randomQueueTime[timePointer] << endl;
                   timePointer++;
               }
@@ -355,7 +362,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
                       testVar1= hopSlots2TransmitA[j];
                       testTime =  randomQueueTime[timePointer];
                   }
-           //       TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
+                  TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
                   EV << "Time " << timePointer << ": " << randomQueueTime[timePointer] << endl;
                   timePointer++;
               }
@@ -366,7 +373,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
    {
        for(int j=0;j<nbTotalHops;j++)
        {
-          // EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
+           EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
        }
        EV<<endl;
    }
@@ -673,6 +680,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 hopSlotsCounter = 1;
                 subComSink1Counter = 1;
+
                 scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
                 availablePktsProHopSlot = new int [myNumberOfHopSlotsA];
@@ -1053,6 +1061,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
 	                         //   sendDown(pkt);
+	                            pktAllocator();
 	                        }
 	                    } else { // There is no priority; message directly sent to MAC
 	                        macDeviceFree = false;
@@ -1063,7 +1072,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            reportSent[pkt->getPriority()]++;
 	                        else if(pkt->getWasRequest())
 	                            requestSent++;
-	                        sendDown(pkt);
+	                   //     sendDown(pkt);
 	                    }
 	                    break;
 				    }
@@ -1097,14 +1106,16 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 void AnchorAppLayer::handleLowerControl(cMessage *msg)
 {
 	ApplPkt* pkt;
+	Time2Transmit* time;
 	switch (msg->getKind())
 	{
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-        if(myTimeList.findTime(comSinkSendTimeStamp))
-            myTimeList.updateSuccess(false);
-		pkt->setKind(MAC_ERROR_MANAGEMENT);
+		time = myTimeList.findTime(comSinkSendTimeStamp);
+        if(time)
+            myTimeList.updateSuccess(time, false);
+	//	pkt->setKind(MAC_ERROR_MANAGEMENT);
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
@@ -1136,9 +1147,15 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-        if(myTimeList.findTime(comSinkSendTimeStamp))
-            myTimeList.updateSuccess(false);
-		pkt->setKind(MAC_ERROR_MANAGEMENT);
+		time = myTimeList.findTime(comSinkSendTimeStamp);
+        if(time)
+        {
+            myTimeList.updateSuccess(time, false);
+            if(time->succesIndicator==0)
+                myTimeList.deleteTime(time->transmitTime);
+        }
+
+	//pkt->setKind(MAC_ERROR_MANAGEMENT);
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
@@ -1185,9 +1202,10 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		break;
 	case BaseMacLayer::TX_OVER:
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
-		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-		if(myTimeList.findTime(comSinkSendTimeStamp))
-		    myTimeList.updateSuccess(true);
+    	pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+        time = myTimeList.findTime(comSinkSendTimeStamp);
+        if(time)
+		    myTimeList.updateSuccess(time, true);
 		else
 		    myTimeList.insertTime(comSinkSendTimeStamp);
 		EV << "Message correctly transmitted, received the ACK." << endl;

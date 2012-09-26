@@ -3,6 +3,7 @@
 #define TIMELIST_H_
 
 #include "Time2Transmit.h"
+#include <assert.h>
 #include <omnetpp.h>
 
 class TimeList {
@@ -14,15 +15,15 @@ public:
     Time2Transmit* currentTime;
 
     void insertTime(simtime_t);
-    void deleteTime(simsignal_t);
+    void deleteTime(simtime_t);
     bool emptyList() { return firstTime == NULL; }
     void printTimes();
     void getnextTime();
     void getfirstTime();
     void getlastTime();
     bool currentTime2Transmit() { return currentTime != NULL; }
-    void updateSuccess(bool);
-    bool findTime(simtime_t time2find);
+    void updateSuccess(Time2Transmit* time, bool success);
+    Time2Transmit* findTime(simtime_t time2find);
     bool checkSpace(simtime_t time);
 };
 

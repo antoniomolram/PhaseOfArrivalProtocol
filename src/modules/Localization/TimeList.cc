@@ -33,7 +33,7 @@ void TimeList::insertTime(simtime_t newTime)
    }
 }
 
-void TimeList::deleteTime(simsignal_t time2delete)
+void TimeList::deleteTime(simtime_t time2delete)
 {
    Time2Transmit* lastTime;
    Time2Transmit* time;
@@ -84,49 +84,59 @@ void TimeList::getlastTime()
           getnextTime();
 }
 
-void TimeList::updateSuccess(bool success)
+void TimeList::updateSuccess(Time2Transmit* time, bool success)
 {
-    if(currentTime->succesIndicator<4 && currentTime->succesIndicator>0)
+    if(time)
     {
-        if(success)
-            currentTime->succesIndicator++;
-        else
-            currentTime->succesIndicator--;
-    }
-    else{
-        if(currentTime->succesIndicator == 4 && !success)
-            currentTime->succesIndicator--;
-        else if(currentTime->succesIndicator == 0 && success)
-            currentTime->succesIndicator++;
+        if(time->succesIndicator<4 && time->succesIndicator>0)
+        {
+            if(success)
+                time->succesIndicator++;
+            else
+                time->succesIndicator--;
+        }
+        else{
+            if(time->succesIndicator == 4 && !success)
+                time->succesIndicator--;
+            else if(time->succesIndicator == 0 && success)
+                time->succesIndicator++;
+        }
     }
 }
 
-bool TimeList::findTime(simtime_t time2find)
+Time2Transmit* TimeList::findTime(simtime_t time2find)
 {
     Time2Transmit* time;
     time = firstTime;
-    while(time && time->nextTime->transmitTime < time2find) {
+    while(time && time->nextTime && time->nextTime->transmitTime < time2find) {
        time = time->nextTime;
     }
     if(!time || time->transmitTime != time2find)
-        return false;
+        return NULL;
     else
-        return true;
+        return time;
 }
 
 bool TimeList::checkSpace(simtime_t time)
 {
     Time2Transmit * aux;
     aux = firstTime;
-     while(aux && aux->nextTime->transmitTime < time)
-        aux = aux->nextTime;
-    if(aux->transmitTime + 0.002 <= time){
-        if(aux->nextTime->transmitTime >= time+0.002)
-            return true;
-        else
-            return false;
+    if(aux == NULL)
+    {
+        return true;
     }
-    else
-        return false;
-
+    else{
+        while(aux && aux->nextTime && aux->nextTime->transmitTime < time)
+           aux = aux->nextTime;
+       if(aux->transmitTime + 0.002 <= time){
+           if(aux->nextTime == NULL)
+               return true;
+           if(aux->nextTime->transmitTime >= time+0.002)
+               return true;
+           else
+               return false;
+       }
+       else
+           return false;
+    }
 }
