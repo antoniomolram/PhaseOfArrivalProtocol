@@ -14,7 +14,7 @@ public:
     Time2Transmit* firstTime;
     Time2Transmit* currentTime;
 
-    void insertTime(simtime_t);
+    void insertTime(simtime_t, int, int);
     void deleteTime(simtime_t);
     bool emptyList() { return firstTime == NULL; }
     void printTimes();
@@ -22,7 +22,7 @@ public:
     void getfirstTime();
     void getlastTime();
     bool currentTime2Transmit() { return currentTime != NULL; }
-    void updateSuccess(Time2Transmit* time, bool success);
+    bool updateSuccess(simtime_t time, bool success);
     Time2Transmit* findTime(simtime_t time2find);
     bool checkSpace(simtime_t time);
 };

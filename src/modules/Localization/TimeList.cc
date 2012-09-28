@@ -18,18 +18,18 @@ TimeList::~TimeList()
    currentTime = NULL;
 }
 
-void TimeList::insertTime(simtime_t newTime)
+void TimeList::insertTime(simtime_t newTime, int hopSlot, int subComSink1)
 {
    Time2Transmit* lastTime;
 
    if(emptyList() || firstTime->transmitTime > newTime) {
-      firstTime = new Time2Transmit(newTime, firstTime);
+      firstTime = new Time2Transmit(newTime, hopSlot, subComSink1, firstTime);
    }
    else {
       lastTime = firstTime;
       while(lastTime->nextTime && lastTime->nextTime->transmitTime <= newTime)
          lastTime = lastTime->nextTime;
-      lastTime->nextTime = new Time2Transmit(newTime, lastTime->nextTime);
+      lastTime->nextTime = new Time2Transmit(newTime, hopSlot,subComSink1, lastTime->nextTime);
    }
 }
 
@@ -37,10 +37,12 @@ void TimeList::deleteTime(simtime_t time2delete)
 {
    Time2Transmit* lastTime;
    Time2Transmit* time;
-
-  time = firstTime;
+   simtime_t testTime;
+   testTime = time2delete;
+   EV<<"TIEMPO A BORRAR: "<<time2delete<<endl;
+   time = firstTime;
    lastTime = NULL;
-   while(time && time->nextTime->transmitTime < time2delete) {
+   while(time && time->nextTime && time->transmitTime < time2delete) {
       lastTime = time;
       time = time->nextTime;
    }
@@ -84,31 +86,44 @@ void TimeList::getlastTime()
           getnextTime();
 }
 
-void TimeList::updateSuccess(Time2Transmit* time, bool success)
+bool TimeList::updateSuccess(simtime_t time, bool success)
 {
-    if(time)
+    bool returnSuccess;
+    Time2Transmit* aux = currentTime;
+    getfirstTime();
+    while(time != currentTime->transmitTime)
+        getnextTime();
+
+    if(currentTime->succesIndicator<4 && currentTime->succesIndicator>0)
     {
-        if(time->succesIndicator<4 && time->succesIndicator>0)
-        {
-            if(success)
-                time->succesIndicator++;
-            else
-                time->succesIndicator--;
-        }
-        else{
-            if(time->succesIndicator == 4 && !success)
-                time->succesIndicator--;
-            else if(time->succesIndicator == 0 && success)
-                time->succesIndicator++;
-        }
+        if(success)
+            currentTime->succesIndicator++;
+        else
+            currentTime->succesIndicator--;
+        returnSuccess = true;
     }
+    else{
+        if(currentTime->succesIndicator == 4 && !success){
+            currentTime->succesIndicator--;
+            returnSuccess = true;
+        }
+        else if(currentTime->succesIndicator == 0 && success){
+            currentTime->succesIndicator++;
+            returnSuccess = true;
+        }
+        else if(currentTime->succesIndicator == 0 && !success)
+            returnSuccess = false;
+    }
+    EV<<"NEW SUCCESS INDICATOR: "<<currentTime->succesIndicator<<endl;
+    currentTime = aux;
+    return returnSuccess;
 }
 
 Time2Transmit* TimeList::findTime(simtime_t time2find)
 {
     Time2Transmit* time;
     time = firstTime;
-    while(time && time->nextTime && time->nextTime->transmitTime < time2find) {
+    while(time && time->nextTime && time->transmitTime < time2find) {
        time = time->nextTime;
     }
     if(!time || time->transmitTime != time2find)
@@ -126,7 +141,7 @@ bool TimeList::checkSpace(simtime_t time)
         return true;
     }
     else{
-        while(aux && aux->nextTime && aux->nextTime->transmitTime < time)
+        while(aux && aux->nextTime && (aux->nextTime->transmitTime < time))
            aux = aux->nextTime;
        if(aux->transmitTime + 0.002 <= time){
            if(aux->nextTime == NULL)

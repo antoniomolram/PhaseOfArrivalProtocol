@@ -91,6 +91,8 @@ protected:
     int nextSubComSinkPkts;
     int nbOfPkts2allocate;
     int maxPktinHopSlot;
+    int hopSlotStamp;
+    int subComSink1Stamp;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
@@ -104,8 +106,11 @@ protected:
     simtime_t comSinkSendTimeStamp;
     simtime_t stepHopSlot;
     simtime_t testTime;
+    simtime_t testTime1;
+    simtime_t testTime2;
     std::string hopSlotsDistributionMethod;
     TimeList myTimeList;
+    TimeList waitingRespondList;
 
 public:
 	virtual ~AnchorAppLayer();
@@ -152,7 +157,7 @@ protected:
 
 	void comSinkStrategyInit();
 
-	bool pktAllocator();
+	bool pktAllocator(cMessage* msg);
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 };

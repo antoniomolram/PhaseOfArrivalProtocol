@@ -8,9 +8,10 @@
 class Time2Transmit {
 friend class TimeList;
 public:
-    Time2Transmit(simtime_t, Time2Transmit *);
+    Time2Transmit(simtime_t, int, int, Time2Transmit *);
     virtual ~Time2Transmit();
-
+    int hopSlot;
+    int subComSink1;
     int succesIndicator;
     simtime_t transmitTime;
     Time2Transmit *nextTime;
