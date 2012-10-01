@@ -288,55 +288,112 @@ void AnchorAppLayer::comSinkStrategyInit()
 
 }
 
-bool AnchorAppLayer::pktAllocator(cMessage* msg){
+bool AnchorAppLayer::pktAllocator(cMessage* msg, bool newPkt){
     int maxHopSlot = 0;
     int maxSubComSinK = 0;
     int availableSlot = 0;
-    int hopSlotsCounterAux = hopSlotsCounter;
+    int hopSlotsCounterAux; // = hopSlotsCounter;
+    int subComSink1CounterAux; //
     simtime_t posibleTime;
     testVar1 = getParentModule()->getIndex();
     EV<<"Allocating a received Packet"<<endl;
-    for(int i=subComSink1Counter;i<=nbSubComSink1Slots;i++)
+
+    if(subComSink1Counter == nbSubComSink1Slots && hopSlotsCounter == hopSlots2TransmitA[myNumberOfHopSlotsA]){
+        EV<<"No available time to reallocate packet"<<endl;
+        return false;
+    }
+    int myNextHop = 0;
+    testVar1 = hopSlots2TransmitA[myNumberOfHopSlotsA-1];
+    if(newPkt)
     {
-        for(int j=hopSlotsCounterAux;j<=nbTotalHops;j++)
+        if(hopSlotsCounter >= hopSlots2TransmitA[myNumberOfHopSlotsA-1])
+       {
+           hopSlotsCounterAux = hopSlots2TransmitA[0];
+           subComSink1CounterAux = subComSink1Counter+1;
+       }
+        else
         {
-            testVar1 = TxComSinkPktMatrix[i-1][j-1];
-            if(TxComSinkPktMatrix[i-1][j-1] > availableSlot)
+            while(hopSlotsCounter >= hopSlots2TransmitA[myNextHop]){
+                testVar2 = hopSlots2TransmitA[myNextHop];
+                myNextHop++;
+            }
+            hopSlotsCounterAux = hopSlots2TransmitA[myNextHop];
+            subComSink1CounterAux = subComSink1Counter;
+        }
+    }
+    else{
+        if(subComSink1Counter < nbSubComSink1Slots)
+        {
+            myNextHop = 0;
+            subComSink1CounterAux = subComSink1Counter+1;
+        }
+        else{
+            EV<<"No more available time in this COMSINK1 phase"<<endl;
+            return false;
+        }
+
+    }
+
+    for(int i=subComSink1CounterAux;i<=nbSubComSink1Slots;i++) // From the next period
+    {
+       // for(int j=hopSlotsCounterAux;j<=nbTotalHops;j++) // From the next period
+        for(int j=myNextHop;j<myNumberOfHopSlotsA;j++)
+        {
+            testVar2 = hopSlots2TransmitA[j];
+            testVar1 = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
+            if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > availableSlot)
             {
                 maxSubComSinK = i;
-                maxHopSlot = j;
-                availableSlot = TxComSinkPktMatrix[i-1][j-1];
+                maxHopSlot = hopSlots2TransmitA[j];
+                availableSlot = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
             }
         }
-        hopSlotsCounterAux = 1;
+        myNextHop = 0;
     }
+    if(availableSlot == 0)
+        return false;
     stepHopSlot = baseSlotTime*hopSlotsDistributionVector[maxHopSlot];
     int k = 10;
     while(k > 0)
     {
         posibleTime = initTimeComSink1 + ((maxHopSlot-1) * stepHopSlot) + uniform(0,stepHopSlot-0.01, 0) + (subComSink1Time * (maxSubComSinK-1));
-        if(myTimeList.checkSpace(posibleTime)){
+        if(posibleTime > simTime() && myTimeList.checkSpace(posibleTime)){
             EV<<"CURRENT ANTES: "<<myTimeList.currentTime->transmitTime<<endl;
-            if(myTimeList.currentTime->transmitTime > posibleTime)
+            if(myTimeList.firstTime == NULL)
+            {
+                myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
+                myTimeList.getfirstTime(); // The current pointer point to the first and only ne element in the list
+            }
+            else if(myTimeList.currentTime->transmitTime > posibleTime)
             {
                 if(checkQueue->isScheduled())
                     cancelEvent(checkQueue);
                 EV<<"Viejo Current: "<<myTimeList.currentTime->transmitTime<<endl;
-                myTimeList.insertTime(posibleTime,hopSlotsCounter,subComSink1Counter);
+                myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
                 myTimeList.getfirstTime();
                 while(myTimeList.currentTime->transmitTime != posibleTime)
                     myTimeList.getnextTime();
                 EV<<"Nuevo Current: "<<myTimeList.currentTime->transmitTime<<endl;
             }
-            else{
+            else
+            {
                 if(myTimeList.currentTime->transmitTime < simTime() )
                 {
-                    myTimeList.insertTime(posibleTime,hopSlotsCounter,subComSink1Counter);
+                    testVar1 = getParentModule()->getIndex();
+                    testTime1 = myTimeList.currentTime->transmitTime;
+                    testTime2 = myTimeList.firstTime->transmitTime;
+                    myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
+//                    if(myTimeList.currentTime == NULL)
+//                        myTimeList.getlastTime();
+//                    else{
+                    testTime1 = myTimeList.currentTime->transmitTime;
                     assert(myTimeList.currentTime->nextTime);
                     myTimeList.getnextTime();
+           //       }
+
                 }
                 else
-                    myTimeList.insertTime(posibleTime,hopSlotsCounter,subComSink1Counter);
+                    myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
             }
             EV<<"CURRENT ALLOCATION: "<<myTimeList.currentTime->transmitTime<<endl;
             myTimeList.printTimes();
@@ -355,9 +412,10 @@ bool AnchorAppLayer::pktAllocator(cMessage* msg){
         else
             EV<<"No time founded for this packet"<<endl;
         k--;
-    }
+      }
     return false;
 }
+
 
 void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
 {
@@ -793,6 +851,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
                 EV<<"LIST OF TIMES:"<<endl;
                 myTimeList.printTimes();
+                for(int i=0;i<nbSubComSink1Slots;i++)
+                {
+                    for(int j=0;j<nbTotalHops;j++)
+                    {
+                        EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
+                    }
+                    EV<<endl;
+                }
                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
                     nextPhaseStart = simTime();
                     scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
@@ -1109,7 +1175,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 //	                                    EV<<"PacketsQueue is Full!!!"<<endl;
 //	                            }
                               if (packetsQueue.length() < maxQueueElements)
-                                  pktAllocator(pkt);
+                                  pktAllocator(pkt, true);
                               else
                                   EV<<"PacketsQueue is Full!!!"<<endl;
 	                        }
@@ -1161,23 +1227,35 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-        EV<<"Esperando respuesta: "<<endl;
-        waitingRespondList.printTimes();
-		testVar1 = getParentModule()->getIndex();
-		testTime = waitingRespondList.firstTime->transmitTime;
-        assert(waitingRespondList.firstTime);
-        if(waitingRespondList.firstTime != NULL){
-            EV<<"Response of packet sent at time: "<<waitingRespondList.firstTime->transmitTime<<" received"<<endl;
-            if(myTimeList.updateSuccess(waitingRespondList.firstTime->transmitTime, false))
-                EV<<"Success decreased!"<<endl;
-            else{
-                myTimeList.deleteTime(waitingRespondList.firstTime->transmitTime);
-                EV<<"Time with 0 success. Time deleted"<<endl;
+		if(phase == COM_SINK_PHASE_1)
+		{
+            testVar1 = getParentModule()->getIndex();
+            testVar1 = phase;
+            assert(waitingRespondList.firstTime);
+            waitingRespondList.printTimes();
+            if(waitingRespondList.firstTime != NULL){
+                EV<<"Response of packet sent at time: "<<waitingRespondList.firstTime->transmitTime<<" received"<<endl;
+                if(myTimeList.updateSuccess(waitingRespondList.firstTime->transmitTime, false))
+                    EV<<"Success decreased!"<<endl;
+                else{
+                    testVar1 = waitingRespondList.firstTime->subComSink1;
+                    testVar2 = TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot];
+                 //   assert(TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]);
+                    TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]++;
+                    if(myTimeList.currentTime->transmitTime == waitingRespondList.firstTime->transmitTime)
+                    {
+                        if(myTimeList.currentTime->nextTime == NULL){
+                            myTimeList.getfirstTime();
+                            while(myTimeList.currentTime->nextTime && myTimeList.currentTime->nextTime->transmitTime !=  waitingRespondList.firstTime->transmitTime)
+                                myTimeList.getnextTime();
+                        }
+                    }
+                    myTimeList.deleteTime(waitingRespondList.firstTime->transmitTime);
+                    EV<<"Time with 0 success. Time deleted"<<endl;
+                }
+                waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
             }
-            waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
-        }
-        EV<<"Lista de tiempos para transmitir:"<<endl;
-        myTimeList.printTimes();
+		}
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
@@ -1187,9 +1265,15 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
 			//	scheduleAt(simTime()+0.001,pkt);
-//			packetsQueue.insert(pkt);
-//			pktAllocator();
-//			EV << " RETRANSMITIENDO PAQUETE CON FALLA PACKET_DROPPED_BACKOFF" <<endl;
+			if(phase == COM_SINK_PHASE_1)
+			{
+                EV<<"REUBICANDO PAQUETE-LISTA INICIAL"<<endl;
+                myTimeList.printTimes();
+                pktAllocator(pkt, false);
+                EV<<"REUBICANDO PAQUETE"<<endl;
+                myTimeList.printTimes();
+                EV << " RETRANSMITIENDO PAQUETE CON FALLA PACKET_DROPPED_BACKOFF" <<endl;
+			}
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
@@ -1212,23 +1296,32 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-		EV<<"Esperando respuesta: "<<endl;
-		waitingRespondList.printTimes();
-        testVar1 = getParentModule()->getIndex();
-        testTime = waitingRespondList.firstTime->transmitTime;
-        assert(waitingRespondList.firstTime);
-        if(waitingRespondList.firstTime != NULL){
-            EV<<"Response of packet sent at time: "<<waitingRespondList.firstTime->transmitTime<<" received"<<endl;
-            if(myTimeList.updateSuccess(waitingRespondList.firstTime->transmitTime, false))
-                EV<<"Success decreased!"<<endl;
-            else{
-                myTimeList.deleteTime(waitingRespondList.firstTime->transmitTime);
-                EV<<"Time with 0 success. Time deleted"<<endl;
-            }
-            waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
-        }
-        EV<<"Lista de tiempos para transmitir:"<<endl;
-        myTimeList.printTimes();
+		assert(waitingRespondList.firstTime);
+		if(phase == COM_SINK_PHASE_1)
+		{
+		    if(waitingRespondList.firstTime != NULL){
+                EV<<"Response of packet sent at time: "<<waitingRespondList.firstTime->transmitTime<<" received"<<endl;
+                if(myTimeList.updateSuccess(waitingRespondList.firstTime->transmitTime, false))
+                    EV<<"Success decreased!"<<endl;
+                else{
+                    testVar1 = waitingRespondList.firstTime->subComSink1;
+                    testVar2 = waitingRespondList.firstTime->hopSlot;
+ //                   assert(TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]);
+                    TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]++;
+                    if(myTimeList.currentTime->transmitTime == waitingRespondList.firstTime->transmitTime)
+                    {
+                        if(myTimeList.currentTime->nextTime == NULL){
+                            myTimeList.getfirstTime();
+                            while(myTimeList.currentTime->nextTime && myTimeList.currentTime->nextTime->transmitTime !=  waitingRespondList.firstTime->transmitTime)
+                                myTimeList.getnextTime();
+                        }
+                    }
+                    myTimeList.deleteTime(waitingRespondList.firstTime->transmitTime);
+                    EV<<"Time with 0 success. Time deleted"<<endl;
+                }
+                waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
+		    }
+		}
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
@@ -1238,9 +1331,15 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
 			//scheduleAt(simTime()+0.0005,pkt);
-//            packetsQueue.insert(pkt);
-//            pktAllocator();
-//            EV << " RETRANSMITIENDO PAQUETE CON FALLA PACKET_DROPPED" <<endl;
+			if(phase == COM_SINK_PHASE_1)
+			{
+                EV<<"REUBICANDO PAQUETE-LISTA INICIAL"<<endl;
+                myTimeList.printTimes();
+                pktAllocator(pkt,false);
+                EV<<"REUBICANDO PAQUETE"<<endl;
+                myTimeList.printTimes();
+                EV << " RETRANSMITIENDO PAQUETE CON FALLA PACKET_DROPPED" <<endl;
+			}
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsNoACKMax++;

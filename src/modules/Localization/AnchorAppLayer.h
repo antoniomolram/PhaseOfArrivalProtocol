@@ -157,7 +157,7 @@ protected:
 
 	void comSinkStrategyInit();
 
-	bool pktAllocator(cMessage* msg);
+	bool pktAllocator(cMessage* msg, bool newPkt);
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 };

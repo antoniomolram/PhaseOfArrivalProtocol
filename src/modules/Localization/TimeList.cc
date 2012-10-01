@@ -21,14 +21,15 @@ TimeList::~TimeList()
 void TimeList::insertTime(simtime_t newTime, int hopSlot, int subComSink1)
 {
    Time2Transmit* lastTime;
-
    if(emptyList() || firstTime->transmitTime > newTime) {
       firstTime = new Time2Transmit(newTime, hopSlot, subComSink1, firstTime);
    }
    else {
       lastTime = firstTime;
-      while(lastTime->nextTime && lastTime->nextTime->transmitTime <= newTime)
-         lastTime = lastTime->nextTime;
+      while(lastTime->nextTime && lastTime->nextTime->transmitTime <= newTime){
+          lastTime->transmitTime;
+          lastTime = lastTime->nextTime;
+      }
       lastTime->nextTime = new Time2Transmit(newTime, hopSlot,subComSink1, lastTime->nextTime);
    }
 }
