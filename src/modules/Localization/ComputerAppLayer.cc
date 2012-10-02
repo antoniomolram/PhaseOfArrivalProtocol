@@ -1094,7 +1094,6 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                             pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
                             pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
                             pkt->setCSMA(true);
-
                             if(!receivedId[pkt->getCreatedIn()*10000 + pkt->getId()]) { // Checks if the packet was already received to only count it once
                                 fromNode[pkt->getFromNode()]++;
                                 receivedId[pkt->getCreatedIn()*10000 + pkt->getId()] = true;

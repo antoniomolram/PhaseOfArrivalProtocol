@@ -563,7 +563,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             {
                 if (packetsQueue.length() > 0) { // If there are messages to send
                     ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
-                    msg->setCreatedIn(getParentModule()->getIndex());
+                   // msg->setCreatedIn(getParentModule()->getIndex());
                     macDeviceFree = false; // Mark the MAC as occupied
                     if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
                         msg->setTimestampAnchorTX(simTime().dbl());
@@ -1262,7 +1262,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterBO(pkt->getRetransmisionCounterBO() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedBackOff;
-			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
 			//	scheduleAt(simTime()+0.001,pkt);
 			if(phase == COM_SINK_PHASE_1)
@@ -1328,7 +1328,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterACK(pkt->getRetransmisionCounterACK() + 1);
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
-			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
 			//scheduleAt(simTime()+0.0005,pkt);
 			if(phase == COM_SINK_PHASE_1)
