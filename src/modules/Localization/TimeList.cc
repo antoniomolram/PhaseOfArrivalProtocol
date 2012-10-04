@@ -40,7 +40,6 @@ void TimeList::deleteTime(simtime_t time2delete)
    Time2Transmit* time;
    simtime_t testTime;
    testTime = time2delete;
-   EV<<"TIEMPO A BORRAR: "<<time2delete<<endl;
    time = firstTime;
    lastTime = NULL;
    while(time && time->nextTime && time->transmitTime < time2delete) {
@@ -92,16 +91,33 @@ bool TimeList::updateSuccess(simtime_t time, bool success)
     bool returnSuccess;
     Time2Transmit* aux = currentTime;
     getfirstTime();
-    while(time != currentTime->transmitTime)
-        getnextTime();
+    while(time != currentTime->transmitTime){
+        if(currentTime->nextTime == NULL)
+        {
+            EV<<"TIEMPO PARA BORRAR NO ENCONTRADO"<<endl;
+            break;
+        }
+        else
+            getnextTime();
+    }
+
 
     if(currentTime->succesIndicator<4 && currentTime->succesIndicator>0)
     {
         if(success)
+        {
             currentTime->succesIndicator++;
+            returnSuccess = true;
+        }
         else
+        {
             currentTime->succesIndicator--;
-        returnSuccess = true;
+            if(currentTime->succesIndicator == 0)
+                returnSuccess = false;
+            else
+                returnSuccess = true;
+        }
+
     }
     else{
         if(currentTime->succesIndicator == 4 && !success){
