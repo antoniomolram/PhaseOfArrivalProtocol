@@ -164,6 +164,8 @@ protected:
 	bool pktAllocator(bool newPkt);
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
+
+	void updateSuccessTimeList (bool success);
 };
 
 #endif
