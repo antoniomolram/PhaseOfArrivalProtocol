@@ -359,7 +359,8 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             int k = 5;
             while(k > 0)
             {
-                posibleTime = (initTimeComSink1 + ((maxHopSlot-1) * stepHopSlot) + uniform(0,stepHopSlot-0.01, 0) + (subComSink1Time * (maxSubComSinK-1))) - periodIniTime;
+                posibleTime = (initTimeComSink1 + ((maxHopSlot-1) * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * (maxSubComSinK-1))) - periodIniTime;
+                EV<<"PKTALLOCATOR: "<<posibleTime<<endl;
                 if((posibleTime+periodIniTime) > simTime() && myTimeList.checkSpace(posibleTime)){
                     EV<<"CURRENT ANTES: "<<myTimeList.currentTime->transmitTime<<endl;
                     if(myTimeList.firstTime == NULL)
@@ -433,11 +434,12 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
           {
               if(nbOfPkt)
               {
-                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * subComSink1);
+                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * subComSink1) - periodIniTime;
                   for(int j=1;j<hopSlots2TransmitA[k];j++)
                   {
                       time2transmit = time2transmit + baseSlotTime*hopSlotsDistributionVector[j];
                   }
+                  EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
                   TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
                   myTimeList.insertTime(time2transmit,hopSlots2TransmitA[k]-1, subComSink1);
                   nbTotalAvailableTime++;
@@ -453,7 +455,8 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
               if(packetsQueue.length()>0)
               {
                   testVar1= hopSlots2TransmitA[k];
-                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.003), 0) + (subComSink1Time * subComSink1);
+                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.003), 0) + (subComSink1Time * subComSink1) - periodIniTime;
+                  EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
                   testTime = time2transmit;
                   for(int j=1;j<hopSlots2TransmitA[k];j++)
                   {
@@ -548,15 +551,10 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         break;
         case HOP_SLOT_TIMER:
             EV<<"CURRENT1: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
-            for(int i=0;i<myNumberOfHopSlotsA;i++)
-            {
-                if(hopSlotsCounter == hopSlots2TransmitA[i])
-                {
-                    while(waitingRespondList.firstTime != NULL)
-                        updateSuccessTimeList(false);
-                    break;
-                }
-            }
+
+            while(waitingRespondList.firstTime != NULL)
+                updateSuccessTimeList(false);
+
             EV<<"CURRENT: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Tiempos disponibles: "<<nbCurrentAvailableTime<<endl;
             for(int i=0;i<nbSubComSink1Slots;i++)
@@ -566,17 +564,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     EV<<" "<<TxComSinkPktMatrix[i][j]<<"";
                 }
                 EV<<endl;
-            }
-            if(!checkQueue->isScheduled())
-            {
-                while((myTimeList.currentTime->transmitTime + periodIniTime) < simTime() && myTimeList.currentTime->nextTime)
-                {
-                    EV<<"Current: "<<myTimeList.currentTime->transmitTime<<endl;
-                    assert(myTimeList.currentTime->nextTime);
-                    myTimeList.getnextTime();
-                    nbCurrentAvailableTime--;
-                }
-                EV<<"Current: "<<myTimeList.currentTime->transmitTime<<endl;
             }
             if(hopSlotsCounter == nbTotalHops){
                 if(subComSink1Counter == nbSubComSink1Slots){
@@ -599,9 +586,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 hopSlotsCounter++;
                 if(!checkQueue->isScheduled() && packetsQueue.length()>0)
                 {
-                    testVar1 = getParentModule()->getIndex();
-                    testTime = simTime();
-                    testTime = myTimeList.currentTime->transmitTime;
                     EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
                     myTimeList.printTimes();
                     scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
@@ -660,16 +644,20 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     sendDown(msg);
                     assert(myTimeList.currentTime);
                     waitingRespondList.insertTime(myTimeList.currentTime->transmitTime,myTimeList.currentTime->hopSlot,myTimeList.currentTime->subComSink1);
-                    if (packetsQueue.length() > 0 ) { // We have to check again if the queue has still elements after taking the element previously
-                        assert(myTimeList.currentTime->nextTime);
+                    EV<<"nbCurrentTime: "<<nbCurrentAvailableTime<<endl;
                         if(myTimeList.currentTime->nextTime){
                            myTimeList.getnextTime();
-                           EV<<"QUEUE NUEVO CURRENT: "<<myTimeList.currentTime->transmitTime<<endl;
-                           EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-                           EV << "Random Transmission number at : " << myTimeList.currentTime->transmitTime << " s" << endl;
-                           EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
                            scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime, checkQueue);
                        }
+                }
+                else
+                {
+                    nbCurrentAvailableTime--;
+                    if(myTimeList.currentTime->nextTime)
+                    {
+                        myTimeList.getnextTime();
+                        EV <<"No packet to send. Next time to transmit: "<<myTimeList.currentTime->transmitTime<< endl;
+                        scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime, checkQueue);
                     }
                 }
             }
@@ -942,9 +930,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     }
                 }
                 numPckToSent = packetsQueue.length();
-                testVar2 = getParentModule()->getIndex();
-                testVar1 = nbTotalAvailableTime;
-                testVar2 = nbCurrentAvailableTime;
                 if(packetsQueue.length() != 0 && myTimeList.firstTime){
                     myTimeList.getfirstTime();
                     scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime, checkQueue);
@@ -1277,24 +1262,41 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
-                                if(packetsQueue.length() < maxQueueElements)
-                                {
-                                    if(nbCurrentAvailableTime > 0)
-                                    {
-                                        nbCurrentAvailableTime--;
-                                        EV<<"Received packet allocated in a existing time in the list of times"<<endl;
-                                        packetsQueue.insertElem(pkt);
-                                    }
-                                    else
-                                    {
-                                        if(pktAllocator(true))
-                                            packetsQueue.insertElem(pkt);
-                                        else
-                                            EV<<"No time for packet routing found"<<endl;
-                                    }
-                                }
-                                else
-                                  EV<<"PacketsQueue is Full!!!"<<endl;
+	                            testVar1 = getParentModule()->getIndex();
+	                            for(int i=0;i<myNumberOfHopSlotsA;i++)
+	                            {
+	                                if(hopSlotsCounter == hopSlots2TransmitA[i])
+	                                {
+	                                    transmitHopSlot = true;
+	                                    i = myNumberOfHopSlotsA;
+	                                }
+	                                else
+	                                    transmitHopSlot = false;
+	                            }
+	                            if(!transmitHopSlot)
+	                            {
+                                    if(packetsQueue.length() < maxQueueElements)
+                                     {
+                                         if(nbCurrentAvailableTime > 0)
+                                         {
+                                             nbCurrentAvailableTime--;
+                                             EV<<"Received packet allocated in a existing time in the list of times"<<endl;
+                                             packetsQueue.insertElem(pkt);
+                                         }
+                                         else
+                                         {
+                                             if(pktAllocator(true))
+                                                 packetsQueue.insertElem(pkt);
+                                             else
+                                                 EV<<"No time for packet routing found"<<endl;
+                                         }
+                                     }
+                                     else
+                                         EV<<"PacketsQueue is Full!!!"<<endl;
+	                            }
+	                            else
+	                                EV<<"Packet received in a slot to transmit"<<endl;
+
 	                         }
 	                    }
 //	                        else { // There is no priority; message directly sent to MAC
@@ -1340,6 +1342,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 void AnchorAppLayer::handleLowerControl(cMessage *msg)
 {
 	ApplPkt* pkt;
+
 	switch (msg->getKind())
 	{
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
@@ -1518,9 +1521,27 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::TX_OVER:
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
     	pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+    	testVar1 = getParentModule()->getIndex();
+
     	if(phase == COM_SINK_PHASE_1){
+            for(int i=0;i<myNumberOfHopSlotsA;i++)
+//            {
+//                if(hopSlotsCounter == hopSlots2TransmitA[i])
+//                {
+//                    transmitHopSlot = true;
+//                    i = myNumberOfHopSlotsA;
+//                }
+//                else
+//                    transmitHopSlot = false;
+//            }
+    	    waitingRespondList.printTimes();
     	    if(waitingRespondList.firstTime != NULL)
-    	        updateSuccessTimeList(true);
+    	    {
+//    	        if(transmitHopSlot)
+    	            updateSuccessTimeList(true);
+//    	        else
+//    	            updateSuccessTimeList(false);
+    	    }
     	}
 		EV << "Message correctly transmitted, received the ACK." << endl;
 		nbReportsWithACK++;

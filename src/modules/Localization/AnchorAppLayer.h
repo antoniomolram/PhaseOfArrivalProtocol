@@ -99,6 +99,7 @@ protected:
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
     bool insertedSlots;                  // Decide if two slots of the same hop can be scheduled together
+    bool transmitHopSlot;
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
     simtime_t initTimeComSink1;           // Save the time when the ComSink1 began

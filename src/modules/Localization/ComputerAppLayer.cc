@@ -189,7 +189,9 @@ void ComputerAppLayer::initialize(int stage)
 		EV << "T Com_Sink2: " << timeComSinkPhase2 << endl;
 		// ADD VICTOR
 		receivedPacketsVec.setName("received-packets-per-period");
+		noRepPacketsVec.setName("received-no-repeated-packets-per-period");
 		receivedPacketsPerPeriod = 0;
+		nbReportsNoDupPerPeriod = 0;
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
 		queueElementCounter = 0;
@@ -421,7 +423,9 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 	        }
 	        numPckToSentByPeriod = 0;
 	        receivedPacketsVec.record(receivedPacketsPerPeriod);
+	        noRepPacketsVec.record(nbReportsNoDupPerPeriod);
 	        receivedPacketsPerPeriod = 0;
+	        nbReportsNoDupPerPeriod = 0;
 		}
 		if (!transfersQueue.empty()) {
 			EV << "Emptying the queue with " << transfersQueue.length() << " elements in phase change" << endl;
@@ -540,7 +544,7 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 	    case AppLayer::SYNC_MESSAGE_WITH_CSMA:
 	    	if (host->moduleType == 2) { // Mobile Node
 				EV << "Discarding the packet, in Sync Phase computer cannot receive any Broadcast from a Mobile Node" << endl;
-	    	} else { // Computer or AN
+	    	} else { // Computer or ANreceivedPacketsVecUtil
 	    		// --------------------------------------------------------------------------------------
 	    		// - If we need to do something with the sync packets from the Anchors, it will be here -
 	    		// --------------------------------------------------------------------------------------
@@ -593,7 +597,10 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                     if(!pktRepeated || !appDuplicateFilter)
                     {
                         if(!pktRepeated)
+                        {
+                            nbReportsNoDupPerPeriod++;
                             nbReportsNoDuplicated++;
+                        }
                         nbReportsReceived++;
                         receivedPacketsPerPeriod++;
                         pkt->getArrivalGateId();
