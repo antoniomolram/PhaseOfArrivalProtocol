@@ -344,11 +344,14 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             {
                 testVar2 = hopSlots2TransmitA[j];
                 testVar1 = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
-                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > availableSlot)
+               // if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > availableSlot)
+                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > 5)
                 {
                     maxSubComSinK = i;
                     maxHopSlot = hopSlots2TransmitA[j];
                     availableSlot = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
+                    j = myNumberOfHopSlotsA+1;
+                    i = nbSubComSink1Slots+1;
                 }
             }
             myNextHop = 0;
@@ -360,7 +363,7 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             while(k > 0)
             {
                 posibleTime = (initTimeComSink1 + ((maxHopSlot-1) * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * (maxSubComSinK-1))) - periodIniTime;
-                EV<<"PKTALLOCATOR: "<<posibleTime<<endl;
+                EV<<"PKTALLOCATOR: "<<posibleTime<<", Tota: "<<posibleTime+periodIniTime<<endl;
                 if((posibleTime+periodIniTime) > simTime() && myTimeList.checkSpace(posibleTime)){
                     EV<<"CURRENT ANTES: "<<myTimeList.currentTime->transmitTime<<endl;
                     if(myTimeList.firstTime == NULL)
@@ -551,7 +554,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         break;
         case HOP_SLOT_TIMER:
             EV<<"CURRENT1: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
-
+            EV<<"Paquetes a enviar: "<<packetsQueue.length()<<endl;
             while(waitingRespondList.firstTime != NULL)
                 updateSuccessTimeList(false);
 
@@ -623,6 +626,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             break;
         case CHECK_QUEUE:
             EV << "CHECK_QUEUE: " << endl;
+            EV<<"Paquetes en la packetQueue: "<<packetsQueue.length()<<" CURRENT: "<<myTimeList.currentTime->transmitTime<<endl;
+            myTimeList.printTimes();
+
             if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
             {
                 if (packetsQueue.length() > 0) { // If there are messages to send
@@ -924,6 +930,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                                 {
                                     EV<<"NEw packet can not be allocated. Packet will be removed from the packetQueue"<<endl;
                                     packetsQueue.remove(packetsQueue.back());
+                                    i--;
                                 }
                             }
                         }
@@ -1288,7 +1295,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
                                              if(pktAllocator(true))
                                                  packetsQueue.insertElem(pkt);
                                              else
-                                                 EV<<"No time for packet routing found"<<endl;
+                                                 EV<<"HLM-No time for packet routing found"<<endl;
                                          }
                                      }
                                      else
@@ -1377,7 +1384,10 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                        if(pktAllocator(false))
                            packetsQueue.insertElem(pkt);
                        else
-                           EV<<"No time for packet routing found"<<endl;
+                       {
+                           EV<<"CARAJO!-No time for packet routing found"<<endl;
+                           EV<<"Paquetes en la packetqueue: "<<packetsQueue.length()<<endl;
+                       }
                     }
                 }
                 else
@@ -1401,7 +1411,10 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                         if(pktAllocator(false))
                             packetsQueue.insertElem(pkt);
                         else
-                            EV<<"No time for packet routing found"<<endl;
+                        {
+                            EV<<"CARAJO-No time for packet routing found"<<endl;
+                            EV<<"Paquetes en la packetqueue: "<<packetsQueue.length()<<endl;
+                        }
                     }
                 }
 			}
@@ -1456,7 +1469,10 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                        if(pktAllocator(false))
                            packetsQueue.insertElem(pkt);
                        else
-                           EV<<"No time for packet routing found"<<endl;
+                       {
+                           EV<<"CARAJO-No time for packet routing found"<<endl;
+                           EV<<"Paquetes en la packetqueue: "<<packetsQueue.length()<<endl;
+                       }
                     }
                 }
                 else
@@ -1480,7 +1496,10 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                         if(pktAllocator(false))
                             packetsQueue.insertElem(pkt);
                         else
-                            EV<<"No time for packet routing found"<<endl;
+                        {
+                            EV<<"CARAJO-No time for packet routing found"<<endl;
+                            EV<<"Paquetes en la packetqueue: "<<packetsQueue.length()<<endl;
+                        };
                     }
                 }
             }
@@ -1525,22 +1544,38 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 
     	if(phase == COM_SINK_PHASE_1){
             for(int i=0;i<myNumberOfHopSlotsA;i++)
-//            {
-//                if(hopSlotsCounter == hopSlots2TransmitA[i])
-//                {
-//                    transmitHopSlot = true;
-//                    i = myNumberOfHopSlotsA;
-//                }
-//                else
-//                    transmitHopSlot = false;
-//            }
+            {
+                if(hopSlotsCounter == hopSlots2TransmitA[i])
+                {
+                    transmitHopSlot = true;
+                    i = myNumberOfHopSlotsA;
+                }
+                else
+                    transmitHopSlot = false;
+            }
+            EV<<"Waitlist"<<endl;
     	    waitingRespondList.printTimes();
     	    if(waitingRespondList.firstTime != NULL)
     	    {
-//    	        if(transmitHopSlot)
-    	            updateSuccessTimeList(true);
-//    	        else
-//    	            updateSuccessTimeList(false);
+    	        if(transmitHopSlot)
+    	        {
+                    if(waitingRespondList.firstTime->transmitTime > (simTime()-0.0017))
+                        updateSuccessTimeList(true);
+                    else
+                    {
+                        EV<<"My list"<<endl;
+                        myTimeList.printTimes();
+                        testVar1 = getParentModule()->getIndex();
+                        testTime = simTime()-0.0017-periodIniTime;
+                        myTimeList.handleFineTimeError((simTime()-0.0017-periodIniTime),waitingRespondList.firstTime->transmitTime);
+                        EV<<"Time just ajusted, new time: "<<simTime()-0.0017-periodIniTime<<", old time: "<<waitingRespondList.firstTime->transmitTime<<endl;
+                        EV<<"My list"<<endl;
+                        myTimeList.printTimes();
+                        waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
+                    }
+    	        }
+    	        else
+    	            updateSuccessTimeList(false);
     	    }
     	}
 		EV << "Message correctly transmitted, received the ACK." << endl;

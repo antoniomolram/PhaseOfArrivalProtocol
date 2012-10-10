@@ -25,6 +25,7 @@ public:
     bool updateSuccess(simtime_t time, bool success);
     Time2Transmit* findTime(simtime_t time2find);
     bool checkSpace(simtime_t time);
+    void handleFineTimeError(simtime_t adjusTime, simtime_t transmitTime);
 };
 
 #endif /* TIMELIST_H_ */

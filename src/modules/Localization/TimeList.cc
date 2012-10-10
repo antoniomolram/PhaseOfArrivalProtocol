@@ -157,13 +157,17 @@ bool TimeList::checkSpace(simtime_t time)
     {
         return true;
     }
+    else if(firstTime->transmitTime > time + 0.0025)
+    {
+        return true;
+    }
     else{
         while(aux && aux->nextTime && (aux->nextTime->transmitTime < time))
            aux = aux->nextTime;
-       if(aux->transmitTime + 0.002 <= time){
+       if(aux->transmitTime + 0.0025 <= time){
            if(aux->nextTime == NULL)
                return true;
-           if(aux->nextTime->transmitTime >= time+0.002)
+           if(aux->nextTime->transmitTime >= time+0.0025)
                return true;
            else
                return false;
@@ -171,4 +175,19 @@ bool TimeList::checkSpace(simtime_t time)
        else
            return false;
     }
+}
+
+void TimeList::handleFineTimeError(simtime_t adjusTime, simtime_t transmitTime)
+{
+    Time2Transmit * aux;
+    aux = firstTime;
+    while(aux->transmitTime != transmitTime)
+    {
+        assert(aux->nextTime);
+        aux = aux->nextTime;
+    }
+    if(aux->succesIndicator > 1)
+        aux->succesIndicator--;
+    else
+        aux->transmitTime = adjusTime;
 }
