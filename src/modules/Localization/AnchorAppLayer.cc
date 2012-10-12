@@ -386,6 +386,7 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
                     {
                         if((myTimeList.currentTime->transmitTime + periodIniTime)< simTime() )
                         {
+                            EV<<"NUEVO: "<<myTimeList.currentTime->transmitTime<<endl;
                             testVar1 = getParentModule()->getIndex();
                             testTime1 = myTimeList.currentTime->transmitTime;
                             testTime2 = myTimeList.firstTime->transmitTime;
@@ -395,7 +396,10 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
                             myTimeList.getnextTime();
                         }
                         else
+                        {
                             myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
+                        }
+
                     }
                     EV<<"CURRENT ALLOCATION: "<<myTimeList.currentTime->transmitTime<<endl;
                     myTimeList.printTimes();
@@ -555,6 +559,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         case HOP_SLOT_TIMER:
             EV<<"CURRENT1: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Paquetes a enviar: "<<packetsQueue.length()<<endl;
+            myTimeList.printTimes();
             while(waitingRespondList.firstTime != NULL)
                 updateSuccessTimeList(false);
 
@@ -651,6 +656,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     assert(myTimeList.currentTime);
                     waitingRespondList.insertTime(myTimeList.currentTime->transmitTime,myTimeList.currentTime->hopSlot,myTimeList.currentTime->subComSink1);
                     EV<<"nbCurrentTime: "<<nbCurrentAvailableTime<<endl;
+  //                  assert(myTimeList.currentTime->nextTime);
                         if(myTimeList.currentTime->nextTime){
                            myTimeList.getnextTime();
                            scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime, checkQueue);
@@ -1559,7 +1565,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
     	    {
     	        if(transmitHopSlot)
     	        {
-                    if(waitingRespondList.firstTime->transmitTime > (simTime()-0.0017))
+                    if((waitingRespondList.firstTime->transmitTime + periodIniTime) > (simTime()-0.002))
                         updateSuccessTimeList(true);
                     else
                     {
@@ -1755,6 +1761,14 @@ void AnchorAppLayer::finish()
     recordScalar("Number of app duplicated packets",duplicatedPktCounter);
     recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
     recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
+
+    myTimeList.getfirstTime();
+    while(myTimeList.currentTime->nextTime != NULL)
+    {
+        successTimeVec.record(myTimeList.currentTime->transmitTime);
+        timeVec.record(myTimeList.currentTime->succesIndicator);
+        myTimeList.getnextTime();
+    }
 /*
     for(int i = 0; i < numberOfNodes; i++) {
         char buffer[100] = "";

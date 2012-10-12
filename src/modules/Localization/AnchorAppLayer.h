@@ -116,6 +116,8 @@ protected:
     TimeList myTimeList;
     TimeList* timeListAlloc;                 // Save the time that was already assigned to a packet.
     TimeList waitingRespondList;
+    cOutVector successTimeVec;
+    cOutVector timeVec;
 
 public:
 	virtual ~AnchorAppLayer();

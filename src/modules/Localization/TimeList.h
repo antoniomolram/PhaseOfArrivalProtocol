@@ -14,7 +14,7 @@ public:
     Time2Transmit* firstTime;
     Time2Transmit* currentTime;
 
-    void insertTime(simtime_t, int, int);
+    void insertTime(simtime_t, int hopSlot, int subComSink1 );
     void deleteTime(simtime_t);
     bool emptyList() { return firstTime == NULL; }
     void printTimes();

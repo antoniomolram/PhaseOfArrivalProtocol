@@ -42,7 +42,7 @@ void TimeList::deleteTime(simtime_t time2delete)
    testTime = time2delete;
    time = firstTime;
    lastTime = NULL;
-   while(time && time->nextTime && time->transmitTime < time2delete) {
+   while(time && time->nextTime && time->transmitTime != time2delete) {
       lastTime = time;
       time = time->nextTime;
    }
@@ -189,5 +189,24 @@ void TimeList::handleFineTimeError(simtime_t adjusTime, simtime_t transmitTime)
     if(aux->succesIndicator > 1)
         aux->succesIndicator--;
     else
-        aux->transmitTime = adjusTime;
+    {
+        this->deleteTime(aux->transmitTime);
+        this->insertTime(adjusTime,aux->hopSlot,aux->subComSink1);
+        if(aux->succesIndicator > 0)
+            updateSuccess(adjusTime, true);
+        EV<<"FINE ERROR-CURRENT A: "<<currentTime->transmitTime<<endl;
+        EV<<"FINE ERROR-CURRENT H: "<<aux->transmitTime<<endl;
+        if(this->currentTime->transmitTime < adjusTime)
+        {
+            assert(currentTime->nextTime);
+            this->getnextTime();
+//            getfirstTime();
+//            while(this->currentTime->transmitTime != adjusTime)
+//            {
+//                assert(currentTime->nextTime);
+//                this->getnextTime();
+//            }
+            EV<<"FINE ERROR-CURRENTB: "<<currentTime->transmitTime<<endl;
+        }
+    }
 }
