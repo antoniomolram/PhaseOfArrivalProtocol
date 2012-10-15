@@ -95,6 +95,7 @@ protected:
     int subComSink1Stamp;
     int nbTotalAvailableTime;
     int nbCurrentAvailableTime;
+    float perTime2Change;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
@@ -169,6 +170,7 @@ protected:
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 
 	void updateSuccessTimeList (bool success);
+	void optimalTimeSearch();
 };
 
 #endif
