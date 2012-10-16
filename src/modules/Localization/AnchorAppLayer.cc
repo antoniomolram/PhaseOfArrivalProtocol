@@ -175,6 +175,20 @@ void AnchorAppLayer::comSinkStrategyInit()
         }
         baseSlotTime = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots*totalBaseHops);
     }
+    else if(hopSlotsDistributionMethod == "fibonacci")
+    {
+        int totalBaseHops = 0;
+        hopSlotsDistributionVector[0] = 0;
+        hopSlotsDistributionVector[1] = 1;
+        hopSlotsDistributionVector[2] = 2;
+        totalBaseHops = hopSlotsDistributionVector[1] + hopSlotsDistributionVector[2];
+        for(int i=3;i<=nbTotalHops;i++)
+        {
+            hopSlotsDistributionVector[i] = hopSlotsDistributionVector[i-1]+hopSlotsDistributionVector[i-2];
+            totalBaseHops = totalBaseHops + hopSlotsDistributionVector[i];
+        }
+        baseSlotTime = (timeComSinkPhase1 - guardTimeComSinkPhase)/(nbSubComSink1Slots*totalBaseHops);
+    }
 
     if(nbTotalHops % 2 == 0)
     {
