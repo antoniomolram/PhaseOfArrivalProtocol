@@ -120,6 +120,14 @@ protected:
     cOutVector successTimeVec;
     cOutVector timeVec;
 
+    enum allocationType{                     // Phases of the Full Phase or Period
+
+        time4newPacket = 1,
+        time4oldPacket,
+        timeOptimized
+        };
+
+
 public:
 	virtual ~AnchorAppLayer();
 
@@ -165,7 +173,7 @@ protected:
 
 	void comSinkStrategyInit();
 
-	bool pktAllocator(bool newPkt);
+	bool pktAllocator(int kindOfAllocation);
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 

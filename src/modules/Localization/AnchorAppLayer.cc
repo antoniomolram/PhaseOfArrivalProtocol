@@ -303,7 +303,7 @@ void AnchorAppLayer::comSinkStrategyInit()
 
 }
 
-bool AnchorAppLayer::pktAllocator(bool newPkt){
+bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     int maxHopSlot = 0;
     int maxSubComSinK = 0;
     int availableSlot = 0;
@@ -319,13 +319,14 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
     }
     int myNextHop = 0;
     testVar1 = hopSlots2TransmitA[myNumberOfHopSlotsA-1];
-    if(newPkt)
+    switch(kindOfAllocation)
     {
+    case time4newPacket:
         if(hopSlotsCounter >= hopSlots2TransmitA[myNumberOfHopSlotsA-1])// IGUAL
-       {
+        {
            hopSlotsCounterAux = hopSlots2TransmitA[0];
            subComSink1CounterAux = subComSink1Counter+1;
-       }
+        }
         else
         {
             while(hopSlotsCounter >= hopSlots2TransmitA[myNextHop]){ // IGUAL
@@ -335,8 +336,8 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             hopSlotsCounterAux = hopSlots2TransmitA[myNextHop];
             subComSink1CounterAux = subComSink1Counter;
         }
-    }
-    else{
+        break;
+    case time4oldPacket:
         if(subComSink1Counter < nbSubComSink1Slots)
         {
             myNextHop = 0;
@@ -346,10 +347,10 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             EV<<"No more available time in this COMSINK1 phase"<<endl;
             return false;
         }
-
+        break;
     }
-
     int tries = 3;
+    int negMaxPkts;
     while(tries > 0)
     {
         for(int i=subComSink1CounterAux;i<=nbSubComSink1Slots;i++) // From the next period
@@ -358,8 +359,8 @@ bool AnchorAppLayer::pktAllocator(bool newPkt){
             {
                 testVar2 = hopSlots2TransmitA[j];
                 testVar1 = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
-               // if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > availableSlot)
-                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > 0)
+              //  negMaxPkts = (-1)*0.08*(baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
+                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > negMaxPkts)
                 {
                     maxSubComSinK = i;
                     maxHopSlot = hopSlots2TransmitA[j];
@@ -968,8 +969,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                       }
                     else
                     {
-//                        if(uniform(0,1, 0) > 0.7)
-//                            optimalTimeSearch();
+                        if(uniform(0,1, 0) > 0.8)
+                            optimalTimeSearch();
                         EV<<"List of available times: "<<nbCurrentAvailableTime<<"of "<<nbTotalAvailableTime<<endl;
                         myTimeList.printTimes();
                         for(int i=0;i<packetsQueue.length();i++)
@@ -978,7 +979,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                                 nbCurrentAvailableTime--;
                             else
                             {
-                                if(pktAllocator(true))
+                                if(pktAllocator(time4newPacket))
                                     EV<<"New packet allocated at the init of the ComSink1"<<endl;
                                 else
                                 {
@@ -1346,7 +1347,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
                                          }
                                          else
                                          {
-                                             if(pktAllocator(true))
+                                             if(pktAllocator(time4newPacket))
                                                  packetsQueue.insertElem(pkt);
                                              else
                                                  EV<<"HLM-No time for packet routing found"<<endl;
@@ -1435,7 +1436,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                        packetsQueue.insertElem(pkt);
                     }
                     else{
-                       if(pktAllocator(false))
+                       if(pktAllocator(time4oldPacket))
                            packetsQueue.insertElem(pkt);
                        else
                        {
@@ -1462,7 +1463,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                     }
                     else
                     {
-                        if(pktAllocator(false))
+                        if(pktAllocator(time4oldPacket))
                             packetsQueue.insertElem(pkt);
                         else
                         {
@@ -1520,7 +1521,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                        packetsQueue.insertElem(pkt);
                     }
                     else{
-                       if(pktAllocator(false))
+                       if(pktAllocator(time4oldPacket))
                            packetsQueue.insertElem(pkt);
                        else
                        {
@@ -1547,7 +1548,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                     }
                     else
                     {
-                        if(pktAllocator(false))
+                        if(pktAllocator(time4oldPacket))
                             packetsQueue.insertElem(pkt);
                         else
                         {
