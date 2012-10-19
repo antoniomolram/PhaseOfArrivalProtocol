@@ -177,7 +177,7 @@ protected:
 
 	void firstPktAllocation(int nbOfPkt, int subComSink1);
 
-	void updateSuccessTimeList (bool success);
+	void updateSuccessTimeList (bool success, int);
 	void optimalTimeSearch();
 };
 

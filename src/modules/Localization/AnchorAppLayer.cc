@@ -309,7 +309,10 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     int availableSlot = 0;
     int hopSlotsCounterAux; // = hopSlotsCounter;
     int subComSink1CounterAux; //
+    int nbAvailableTimes;
     simtime_t posibleTime;
+    int tries = 3;
+    int negMaxPkts;
     testVar1 = getParentModule()->getIndex();
     EV<<"Allocating a received Packet"<<endl;
 
@@ -340,17 +343,58 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     case time4oldPacket:
         if(subComSink1Counter < nbSubComSink1Slots)
         {
+          //  myNextHop = myNumberOfHopSlotsA * uniform(0,1,0);
             myNextHop = 0;
+//            nbAvailableTimes = TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[0]];
+//            for(int i=0;i<myNumberOfHopSlotsA;i++)
+//            {
+//                if(nbAvailableTimes < TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[i]-1])
+//                {
+//                    nbAvailableTimes = TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[i]-1];
+//                    myNextHop = hopSlots2TransmitA[i]-1;
+//                }
+//            }
             subComSink1CounterAux = subComSink1Counter+1;
+//            if(hopSlotsCounter >= hopSlots2TransmitA[myNumberOfHopSlotsA-1])// IGUAL
+//            {
+//                myNextHop = hopSlots2TransmitA[0];
+//               subComSink1CounterAux = subComSink1Counter+1;
+//            }
+//            else
+//            {
+//                while(hopSlotsCounter >= hopSlots2TransmitA[myNextHop]){ // IGUAL
+//                    testVar2 = hopSlots2TransmitA[myNextHop];
+//                    myNextHop++;
+//                }
+//                subComSink1CounterAux = subComSink1Counter;
+//            }
         }
         else{
             EV<<"No more available time in this COMSINK1 phase"<<endl;
             return false;
         }
         break;
+    case timeOptimized:
+       if(uniform(0,1, 0) > 0.5)
+           subComSink1CounterAux = 1;
+       else
+           subComSink1CounterAux = 2;
+
+       nbAvailableTimes = TxComSinkPktMatrix[subComSink1CounterAux-1][hopSlots2TransmitA[0]];
+       for(int i=0;i<myNumberOfHopSlotsA;i++)
+       {
+           negMaxPkts = (-1)*0.1*(baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[i]])/(0.002*numberOfBrothers);
+           if(nbAvailableTimes < TxComSinkPktMatrix[subComSink1CounterAux-1][hopSlots2TransmitA[i]-1])
+           {
+               nbAvailableTimes = TxComSinkPktMatrix[subComSink1CounterAux-1][hopSlots2TransmitA[i]-1];
+               myNextHop = hopSlots2TransmitA[i]-1;
+           }
+       }
+       if(nbAvailableTimes < negMaxPkts)
+           return false;
+           break;
     }
-    int tries = 3;
-    int negMaxPkts;
+
     while(tries > 0)
     {
         for(int i=subComSink1CounterAux;i<=nbSubComSink1Slots;i++) // From the next period
@@ -359,8 +403,8 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
             {
                 testVar2 = hopSlots2TransmitA[j];
                 testVar1 = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
-              //  negMaxPkts = (-1)*0.08*(baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
-                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > negMaxPkts)
+                negMaxPkts = (-1)*0.1*(baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
+                if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > 0)
                 {
                     maxSubComSinK = i;
                     maxHopSlot = hopSlots2TransmitA[j];
@@ -418,7 +462,6 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
                         {
                             myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
                         }
-
                     }
                     EV<<"CURRENT ALLOCATION: "<<myTimeList.currentTime->transmitTime<<endl;
                     myTimeList.printTimes();
@@ -562,10 +605,14 @@ void AnchorAppLayer::optimalTimeSearch()
     nbTime2change = nbCurrentAvailableTime * perTime2Change;
     if(nbTime2change > 1)
     {
-        firstPktAllocation(nbTime2change, 0);
+//        firstPktAllocation(nbTime2change, 0);
+        if(uniform(0,1, 0) > 0.5)
+            firstPktAllocation(nbTime2change, 0);
+        else
+            firstPktAllocation(nbTime2change, 1);
 //        for(int i=0;i<nbTime2change;i++)
 //        {
-//            pktAllocator(true);
+//            pktAllocator(timeOptimized);
 //        }
     }
 }
@@ -969,7 +1016,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                       }
                     else
                     {
-                        if(uniform(0,1, 0) > 0.8)
+                        if(uniform(0,1, 0) > 0.7)
                             optimalTimeSearch();
                         EV<<"List of available times: "<<nbCurrentAvailableTime<<"of "<<nbTotalAvailableTime<<endl;
                         myTimeList.printTimes();
@@ -1811,13 +1858,13 @@ void AnchorAppLayer::finish()
     recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
     recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
 
-//    myTimeList.getfirstTime();
-//    while(myTimeList.currentTime->nextTime != NULL)
-//    {
-//        successTimeVec.record(myTimeList.currentTime->transmitTime);
-//        timeVec.record(myTimeList.currentTime->succesIndicator);
-//        myTimeList.getnextTime();
-//    }
+    myTimeList.getfirstTime();
+    while(myTimeList.currentTime->nextTime != NULL)
+    {
+        successTimeVec.record(myTimeList.currentTime->transmitTime);
+        timeVec.record(myTimeList.currentTime->succesIndicator);
+        myTimeList.getnextTime();
+    }
 /*
     for(int i = 0; i < numberOfNodes; i++) {
         char buffer[100] = "";
