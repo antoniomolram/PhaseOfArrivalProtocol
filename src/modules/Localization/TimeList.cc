@@ -88,7 +88,7 @@ void TimeList::getlastTime()
 
 bool TimeList::updateSuccess(simtime_t time, bool success)
 {
-    bool returnSuccess;
+    bool returnSuccess = true;
     Time2Transmit* aux = currentTime;
     getfirstTime();
     while(time != currentTime->transmitTime){
@@ -102,7 +102,7 @@ bool TimeList::updateSuccess(simtime_t time, bool success)
     }
 
 
-    if(currentTime->succesIndicator<4 && currentTime->succesIndicator>0)
+    if(currentTime->succesIndicator<5 && currentTime->succesIndicator>0)
     {
         if(success)
         {
@@ -120,7 +120,7 @@ bool TimeList::updateSuccess(simtime_t time, bool success)
 
     }
     else{
-        if(currentTime->succesIndicator == 4 && !success){
+        if(currentTime->succesIndicator == 5 && !success){
             currentTime->succesIndicator--;
             returnSuccess = true;
         }
@@ -181,6 +181,8 @@ void TimeList::handleFineTimeError(simtime_t adjusTime, simtime_t transmitTime)
 {
     Time2Transmit * aux;
     aux = firstTime;
+    EV<<"Transmit time:"<<transmitTime<<endl;
+    EV<<"Adjust time:"<<adjusTime<<endl;
     while(aux->transmitTime != transmitTime)
     {
         assert(aux->nextTime);

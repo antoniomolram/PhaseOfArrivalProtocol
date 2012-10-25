@@ -311,7 +311,7 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     int subComSink1CounterAux; //
     int nbAvailableTimes;
     simtime_t posibleTime;
-    int tries = 3;
+    int tries = 4;
     int negMaxPkts;
     testVar1 = getParentModule()->getIndex();
     EV<<"Allocating a received Packet"<<endl;
@@ -602,8 +602,18 @@ void AnchorAppLayer::optimalTimeSearch()
 {
     perTime2Change = 0.05; // percentage
     int nbTime2change;
+    int dispA = 0;
+    int dispB = 0;
+    int threshold = 0.5;
     nbTime2change = nbCurrentAvailableTime * perTime2Change;
-    if(nbTime2change > 1)
+    for(int i=0;i<nbTotalHops;i++)
+    {
+        dispA = dispA + TxComSinkPktMatrix[0][i];
+        dispB = dispB + TxComSinkPktMatrix[1][i];
+    }
+    threshold = (dispA)/(dispA+dispB);
+    nbTime2change = nbCurrentAvailableTime * perTime2Change;
+    if(nbTime2change >1 && nbTime2change < dispA)
     {
 //        firstPktAllocation(nbTime2change, 0);
         if(uniform(0,1, 0) > 0.5)
@@ -642,8 +652,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             EV<<"Paquetes a enviar: "<<packetsQueue.length()<<endl;
             EV<<"HopSlot: "<<hopSlotsCounter<<" SubComSink1: "<<subComSink1Counter<<endl;
             myTimeList.printTimes();
-            while(waitingRespondList.firstTime != NULL)
-                updateSuccessTimeList(false);
+//            while(waitingRespondList.firstTime != NULL)
+//                updateSuccessTimeList(false);
 
             EV<<"CURRENT: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Tiempos disponibles: "<<nbCurrentAvailableTime<<endl;
@@ -768,6 +778,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 
             break;
         case BEGIN_PHASE:
+            while(waitingRespondList.firstTime != NULL)
+                updateSuccessTimeList(false);
             // Empty the transmission Queue
             EV << "APP PACKETQUEUE with: " << packetsQueue.length() << " elements in phase change" << endl;
           //  remPktApp = packetsQueue.length();
@@ -1016,8 +1028,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                       }
                     else
                     {
-                        if(uniform(0,1, 0) > 0.7)
-                            optimalTimeSearch();
+//                        if(selfSuccess < 0.8)
+//                        {
+                            if(uniform(0,1, 0) > 0.7)
+                                optimalTimeSearch();
+ //                       }
                         EV<<"List of available times: "<<nbCurrentAvailableTime<<"of "<<nbTotalAvailableTime<<endl;
                         myTimeList.printTimes();
                         for(int i=0;i<packetsQueue.length();i++)
@@ -1051,6 +1066,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhaseStartTime = simTime() + timeSyncPhase;
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
+                EV<<"Packet lenght: "<<packetsQueue.length()<<endl;
                 EV<<"LIST OF TIMES:"<<endl;
                 myTimeList.printTimes();
                 for(int i=0;i<nbSubComSink1Slots;i++)
@@ -1408,18 +1424,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 
 	                         }
 	                    }
-//	                        else { // There is no priority; message directly sent to MAC
-//	                        macDeviceFree = false;
-//	                        transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-//	                        if(pkt->getWasBroadcast())
-//	                            broadSent[pkt->getPriority()]++;
-//	                        else if(pkt->getWasReport())
-//	                            reportSent[pkt->getPriority()]++;
-//	                        else if(pkt->getWasRequest())
-//	                            requestSent++;
-//	                   //     sendDown(pkt);
-//	                    }
-	                    break;
+	               //     break;
 				    }
 				}
 	    	}
@@ -1645,21 +1650,21 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
     	testVar1 = getParentModule()->getIndex();
 
     	if(phase == COM_SINK_PHASE_1){
-            for(int i=0;i<myNumberOfHopSlotsA;i++)
-            {
-                if(hopSlotsCounter == hopSlots2TransmitA[i])
-                {
-                    transmitHopSlot = true;
-                    i = myNumberOfHopSlotsA;
-                }
-                else
-                    transmitHopSlot = false;
-            }
+//            for(int i=0;i<myNumberOfHopSlotsA;i++)
+//            {
+//                if(hopSlotsCounter == hopSlots2TransmitA[i])
+//                {
+//                    transmitHopSlot = true;
+//                    i = myNumberOfHopSlotsA+1;
+//                }
+//                else
+//                    transmitHopSlot = false;
+//            }
             EV<<"Waitlist"<<endl;
     	    waitingRespondList.printTimes();
     	    if(waitingRespondList.firstTime != NULL)
     	    {
-    	        if(transmitHopSlot)
+    	        if(/*transmitHopSlot && */waitingRespondList.firstTime->hopSlot == hopSlotsCounter-1)
     	        {
                     if((waitingRespondList.firstTime->transmitTime + periodIniTime) > (simTime()-0.002))
                         updateSuccessTimeList(true);
@@ -1669,8 +1674,8 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                         myTimeList.printTimes();
                         testVar1 = getParentModule()->getIndex();
                         testTime = simTime()-0.0017-periodIniTime;
-                        myTimeList.handleFineTimeError((simTime()-0.0017-periodIniTime),waitingRespondList.firstTime->transmitTime);
-                        EV<<"Time just ajusted, new time: "<<simTime()-0.0017-periodIniTime<<", old time: "<<waitingRespondList.firstTime->transmitTime<<endl;
+                        myTimeList.handleFineTimeError((simTime()-0.0018-periodIniTime),waitingRespondList.firstTime->transmitTime);
+                        EV<<"Time just ajusted, new time: "<<simTime()-0.0018-periodIniTime<<", old time: "<<waitingRespondList.firstTime->transmitTime<<endl;
                         EV<<"My list"<<endl;
                         myTimeList.printTimes();
                         waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
