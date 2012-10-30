@@ -62,6 +62,8 @@ protected:
 	// Modified by Victor
 
 	double duplicatedPktCounter;
+	int nbCafInComSink1;
+	int nbNoAckInComsink1;
 	int *packetsResend;                  // Packets that were successfully resend.
 	int* firstMNBroadcasTime;             // Vector to save the order in which arrive the first broadcasst from MN.
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast

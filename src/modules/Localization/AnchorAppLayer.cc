@@ -24,6 +24,8 @@ void AnchorAppLayer::initialize(int stage)
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
 
 		/* Modified by Victor */
+		nbCafInComSink1 = 0;
+		nbNoAckInComsink1 = 0;
 		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
 		duplicatedPktCounter = 0;
 		txPktsCreatedInApp = 0;
@@ -257,6 +259,8 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
 	recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
 	recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
+	recordScalar("Number of CAF in ComSink1",nbCafInComSink1);
+	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
 /*
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
@@ -937,6 +941,8 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+		if(phase == COM_SINK_PHASE_1)
+		    nbCafInComSink1++;
 		pkt->setKind(MAC_ERROR_MANAGEMENT);
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
@@ -946,7 +952,7 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedBackOff;
 			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 			//sendDown(pkt);
-			scheduleAt(simTime()+0.001,pkt);
+			scheduleAt(simTime()+0.0005,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
@@ -1004,6 +1010,8 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
 		pkt->setKind(MAC_ERROR_MANAGEMENT);
+		if(phase == COM_SINK_PHASE_1)
+		    nbNoAckInComsink1++;
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";

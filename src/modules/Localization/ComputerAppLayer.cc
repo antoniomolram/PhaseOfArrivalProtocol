@@ -34,6 +34,7 @@ void ComputerAppLayer::initialize(int stage)
         /* Modified by Victor */
         packetsResend = (int*)calloc(sizeof(int),1000*numberOfNodes);
         numPckToSentByPeriod = 0;
+        nbReportsNoDuplicated = 0;
         for(int i=0;i<1000*numberOfNodes;i++)
         {
             packetsResend[i] = -1;
