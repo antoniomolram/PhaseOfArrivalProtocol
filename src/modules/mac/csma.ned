@@ -39,7 +39,7 @@ simple csma extends BaseMacLayer
         bool trace = default(false);
 
         // length of MAC header
-        headerLength @unit(bit) = default(72 bit);
+        headerLength @unit(bit) = default(104 bit);
         // size of the MAC queue (maximum number of packets in Tx buffer)
         double queueLength = default(100);
         // bit rate 
@@ -72,9 +72,9 @@ simple csma extends BaseMacLayer
         double sifs @unit(s) = default(0.000192 s); // 12 symbols
         
         //backoff method to use: constant, linear or exponential
-        string backoffMethod = default("linear");
+        string backoffMethod = default("exponential");
         // maximum backoffs
-        double macMaxCSMABackoffs = default(5);
+        double macMaxCSMABackoffs = default(4);
         // base unit for all backoff calculations
         double aUnitBackoffPeriod @unit(s) = default(0.00032 s);
         // # of backoff periods of the initial contention window
@@ -83,7 +83,7 @@ simple csma extends BaseMacLayer
         // minimum backoff exponent (for exponential backoff method only)
         double macMinBE = default(3);
         // maximum backoff exponent (for exponential backoff method only)
-        double macMaxBE = default(8);
+        double macMaxBE = default(5);
         
       	//modified by Victor
       	bool macDuplicateFilter = default(true);

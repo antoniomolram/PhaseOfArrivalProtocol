@@ -34,7 +34,8 @@ void AppLayer::initialize(int stage)
 		syncPacketTime = par("syncPacketTime");
 		phase2VIPPercentage = par("phase2VIPPercentage");
 		fullPhaseTime = getParentModule()->getParentModule()->par("fullPhaseTime");
-		timeComSinkPhase = getParentModule()->getParentModule()->par("timeComSinkPhase");
+		timeComSinkPhase1 = getParentModule()->getParentModule()->par("timeComSinkPhase1");
+		timeComSinkPhase2 = getParentModule()->getParentModule()->par("timeComSinkPhase2");
 		numberOfAnchors = getParentModule()->getParentModule()->par("numAnchors");
 		numberOfNodes = getParentModule()->getParentModule()->par("numNodes");
 
@@ -56,18 +57,19 @@ void AppLayer::initialize(int stage)
 		nbReportsForMeReceived 		= 0;
 		guardTimeReportPhase 		= 0.020; 	// 20 ms
 		guardTimeVIPPhase 			= 0.020;	// 20 ms
-		guardTimeComSinkPhase 		= 0.080; 	// 80 ms
+
 	    reportTransmissionTime      = 0.0016; // 1.6ms
+
 		smallTime 					= 0.000001;	//  1 us
 		maxRetransDroppedReportMN 	= 1;
-		maxRetransDroppedReportAN 	= 2;
-		maxRetransDroppedBackOff 	= 3;
+		maxRetransDroppedReportAN 	= 4;
+		maxRetransDroppedBackOff 	= 4;
 		myNetwAddr = getParentModule()->findSubmodule("nic");
 	} else if (stage == 4) { // We have to wait till stage 4 because before the number of slots are not yet calculated
 		computer = cc->findNic(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
-		timeSyncPhase = syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
-		timeVIPPhase = (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
-		timeReportPhase = (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
+		timeSyncPhase = 0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
+		timeVIPPhase =  0.3; // 300ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
+		timeReportPhase = 0.4 ; // 400 ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
 
 		beginPhases = new cMessage("next-phase",AppLayer::BEGIN_PHASE);
 		nextPhase = AppLayer::SYNC_PHASE_1;

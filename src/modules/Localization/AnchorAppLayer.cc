@@ -10,7 +10,6 @@ void AnchorAppLayer::initialize(int stage)
 		// Parameter load
 		syncInSlot = par("syncInSlot");
 		phaseRepetitionNumber = par("phaseRepetitionNumber");
-	   	//syncFirstMaxRandomTime = par("syncFirstMaxRandomTime");
 		// Now the first maximum interpacket transmission time is the same as the rest of the times, it could be different, that's why we have 2 parameters
 		syncFirstMaxRandomTime = par("syncRestMaxRandomTimes");
 	   	syncRestMaxRandomTimes = par("syncRestMaxRandomTimes");
@@ -24,10 +23,20 @@ void AnchorAppLayer::initialize(int stage)
 		broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes);
 		broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
+
 		/* Modified by Victor */
+		nbCafInComSink1 = 0;
+		nbNoAckInComsink1 = 0;
+		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
 		duplicatedPktCounter = 0;
 
-		packetsResend = (int*)calloc(sizeof(int),100*numberOfNodes);
+		txPktsCreatedInApp = 0;
+		remPktApp = 0;
+		firtsBCCounter = 0;
+        //Maximum number of retransmissions
+        maxRetransTotal = par("maxRetransTotal");
+        PktLengthMN3 = par("PktLengthMN3");
+
 		numPckToSentByPeriod = 0;
 	} else if (stage == 1) {
 		// Assign the type of host to 1 (anchor)
@@ -167,14 +176,14 @@ void AnchorAppLayer::finish()
 	recordScalar("Erased Packets in AN - No more BackOff retries", nbErasedPacketsBackOffMax);
 	recordScalar("Erased Packets in AN - No more No ACK retries", nbErasedPacketsNoACKMax);
 	recordScalar("Erased Packets in AN - No more MAC Queue Full retries", nbErasedPacketsMacQueueFull);
-	recordScalar("Number of AN Broadcasts Successfully sent", nbBroadcastPacketsSent);
+//	recordScalar("Number of AN Broadcasts Successfully sent", nbBroadcastPacketsSent);
 	recordScalar("Number of AN Reports with ACK", nbReportsWithACK);
 	recordScalar("Number of Broadcasts received in AN", nbBroadcastPacketsReceived);
 	recordScalar("Number of Reports received in AN", nbReportsReceived);
 	recordScalar("Number of Reports really for me received in AN", nbReportsForMeReceived);
 
-	recordScalar("Mean of successful packets", meanSuccess/numPeriods);
-
+//	recordScalar("Mean of successful packets", meanSuccess/numPeriods);
+/*
 	recordScalar("Number of packets 1 created by a mobile broadcast", broadNew[1]);
 	recordScalar("Number of packets 1 created by a mobile broadcast dropped in packets queue", broadPckQueue[1] + packetsQueue.broadQueueDrop[0]);
 	recordScalar("Number of packets 1 created by a mobile broadcast discarded due no ACK", broadNoAck[1]);
@@ -255,15 +264,19 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of packets created by a mobile request dropped by TOF update", requestUpdate);
 	recordScalar("Number of packets created by a mobile request erased because TX had to stop", requestNoTime);
 	recordScalar("Number of packets created by a mobile request sent from this anchor", requestSent);
-	recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);
+	recordScalar("Number of packets created by a mobile request sent from this anchor TX OK", requestSentOK);*/
 
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
-
+	recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
+	recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
+	recordScalar("Number of CAF in ComSink1",nbCafInComSink1);
+	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
+/*
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
-	}
+	}*/
 	free(packetsResend);
 }
 
@@ -554,11 +567,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
 			comsinkPhaseStartTime = simTime().dbl();
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase1;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			//At the beginning of the ComSink 1 phase the anchor select a Slot to transmit. The higher the hop, the earlier the time of the slot.
 
-			roundComSink1Time = timeComSinkPhase / comSinkRound;
+			roundComSink1Time = timeComSinkPhase1 / comSinkRound;
 			durationComSinkSlot = roundComSink1Time/anchor->slotsInComSink1; //Mod Fibonacci
 			//durationComSinkSlot = durationComSinkSlot * fiboVector[numMaxHops - hops]; //Mod Fibonacci
 			EV<< "Asignación de slots para tranmistir en la comSink" << endl;
@@ -623,7 +636,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase2;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			break;
 		}
@@ -633,6 +646,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 		delete msg;
 		break;
 	}
+
 }
 
 
@@ -640,12 +654,17 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 {
 	// Convert the message to an Appl Packet
 	ApplPkt* pkt = check_and_cast<ApplPkt*>(msg);
+
 	EV << "Received packet from (" << pkt->getSrcAddr() << ", " << pkt->getRealSrcAddr() << ") to (" << pkt->getDestAddr() << ", " << pkt->getRealDestAddr() << ") with Name: " << pkt->getName() << endl;
 	EV << "Datos del paquete: " << pkt->getEncapsulationTreeId() << endl;
+
 
 	// Get control info attached by base class decapsMsg method to get RSSI and BER
 	assert(dynamic_cast<NetwControlInfo*>(pkt->getControlInfo()));
 	NetwControlInfo* cInfo = static_cast<NetwControlInfo*>(pkt->removeControlInfo());
+
+    EV << "Received packet from (" << pkt->getSrcAddr() << ", " << pkt->getRealSrcAddr() << ") to (" << pkt->getDestAddr() << ", " << pkt->getRealDestAddr() << ") with Name: " << pkt->getName() << endl;
+    EV << "Datos del paquete: " << pkt->getEncapsulationTreeId() << endl;
 	EV << "The RSSI in Appl Layer is: " << cInfo->getRSSI() << endl;
 	EV << "The BER in Appl Layer is: " << cInfo->getBitErrorRate() << endl;
 
@@ -684,7 +703,6 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 		    		EV << "It's success was: " << pkt->getBroadcastedSuccess() << endl;
 
 		    		parentSuccess = pkt->getBroadcastedSuccess();
-
 	    		}
 	    		EV << "Discarding the packet, Anchor doesn't make anything with Sync Broadcast packets from the AN" << endl;
 	    	}
@@ -741,7 +759,6 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 					{
 						// The packet is probably for the computer, Centralized, we assign the dest. addr the computer addr and put it in the queue to transmit
 						// We change also the src addr for the addr from the AN, so the next AN can find it in the routing table
-
 					    pkt->setDestAddr(pkt->getRealDestAddr());
 						pkt->setSrcAddr(myNetwAddr);
 						pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
@@ -799,9 +816,15 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 				// The computer will analyze all the received packets from different AN to estimate the position
 	    		nbBroadcastPacketsReceived++;
 	    		indexBroadcast = simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex();
+	    		if (broadcastCounter[indexBroadcast] == 0)
+	    		{
+	    		    firstMNBroadcasTime[firtsBCCounter] = indexBroadcast;
+	    		    firtsBCCounter++;
+	    		}
 				broadcastCounter[indexBroadcast]++;
 	    		broadPriority[indexBroadcast] = pkt->getPriority();
 	    		broadNodeMode[indexBroadcast] = pkt->getNodeMode();
+
 				EV << "Received the Broadcast Packet number " << broadcastCounter[indexBroadcast] << ". From the Mobile Node with Addr: " << pkt->getSrcAddr() << endl;
 				delete msg;
 	    	} else { // Computer or AN
@@ -856,8 +879,10 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 				    if (appDuplicateFilter)
 				    {
 				        pktRepeated = false;
+				        EV<<"Checking duplicated packet "<<pkt->getEncapsulationTreeId()<<endl;
 	                    for( int i=0;i<numPckToSentByPeriod;i++)
 	                    {
+	                        EV<<"Packets received in this anchor "<< packetsResend[i]<<endl;
 	                        if(pkt->getEncapsulationTreeId() == packetsResend[i])
 	                        {
 	                            EV << "Packet with ID " <<  pkt->getEncapsulationTreeId() << "was re-send before" << endl;
@@ -876,9 +901,9 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    numPckToSent++;
 	                    packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();
 	                    numPckToSentByPeriod++;
-
 	                    pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
 	                    pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
+
 	                    EV << "Origen: " << pkt->getSrcAddr() << endl;
 	                    EV << "Origen real: " << pkt->getRealSrcAddr() << endl;
 	                    EV << "Destino: " << pkt->getDestAddr() << endl;
@@ -888,6 +913,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                    EV << "CSMA: " << pkt->getCSMA() << endl;
 	                    EV << "Packet with ID " <<  simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex() << endl;
 	                    EV<< "Phase: " << phase << endl;
+
 	                    if(phase == AppLayer::COM_SINK_PHASE_1) { // If we are on COM_SINK_1, priority applies
 	                        //Push the msg in the list of all received packets
 	                       // neighborListComSink1.push_back(msg->dup());
@@ -903,6 +929,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[buffer->getPriority()]++;
 	                            else if(buffer->getWasRequest())
 	                                requestSent++;
+<<<<<<< HEAD
 	                            sendDown(buffer);*/
 	                        } else {
 	                            // Else, the received packet is directly
@@ -936,6 +963,12 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
                                }
 	            //                packetsQueue.insertElem(pkt->dup());
 /*	                            macDeviceFree = false;                                                                          // routed
+=======
+	                            EV<<"Intruso en la packet queue" <<endl;
+	                            sendDown(buffer);
+	                        } else {                                                                                            // Else, the received packet is directly
+	                            macDeviceFree = false;                                                                          // routed
+>>>>>>> redFísica
 	                            transfersQueue.insert(pkt->dup());
 	                            if(pkt->getWasBroadcast())
 	                                broadSent[pkt->getPriority()]++;
@@ -1005,17 +1038,55 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+		if(phase == COM_SINK_PHASE_1)
+		    nbCafInComSink1++;
+		pkt->setKind(MAC_ERROR_MANAGEMENT);
 		nbPacketDroppedBackOff++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum BackOff periods, ";
-		if (pkt->getRetransmisionCounterBO() < maxRetransDroppedBackOff) {
+		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterBO(pkt->getRetransmisionCounterBO() + 1);
-			EV << " retransmission number " << pkt->getRetransmisionCounterBO() << " of " << maxRetransDroppedBackOff;
-			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-			sendDown(pkt);
+			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedBackOff;
+			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			//sendDown(pkt);
+			scheduleAt(simTime()+0.0005,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
+			 // Check
+            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+            if(pkt->getCreatedIn() == getParentModule()->getIndex())
+            {
+                EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+                blockAppTransmissions = false;
+                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+                {
+                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                    if(packetsQueue.length()>0)
+                    {
+                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                        if(simTime() > stepTimeComSink1End)
+                        {
+                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
+                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                                stepTimeComSink1 = 0.05;
+                            for (int i = 0; i < packetsQueue.length(); i++) {
+                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                            }
+                            stepTimeComSink1End = simTime() + stepTimeComSink1;
+                            numPckToSent = packetsQueue.length();
+                            queueElementCounter = 0;
+                            if (checkQueue->isScheduled())
+                               cancelEvent(checkQueue);
+                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                        }
+                    }
+                }
+            }
 
 			if(regPck[pkt->getCreatedIn()*10000 + pkt->getId()] == 0) {
 				regPck[pkt->getCreatedIn()*10000 + pkt->getId()] = 2;
@@ -1036,17 +1107,56 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
+		pkt->setKind(MAC_ERROR_MANAGEMENT);
+		if(phase == COM_SINK_PHASE_1)
+		    nbNoAckInComsink1++;
 		nbPacketDroppedNoACK++;
 		// Will check if we already tried the maximum number of tries and if not increase the number of retransmission in the packet variable
 		EV << "Packet was dropped because it reached maximum tries of transmission in MAC without ACK, ";
-		if (pkt->getRetransmisionCounterACK() < maxRetransDroppedReportAN) {
+		if (pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() < maxRetransTotal) {
 			pkt->setRetransmisionCounterACK(pkt->getRetransmisionCounterACK() + 1);
-			EV << " retransmission number " << pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
-			transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-			sendDown(pkt);
+			EV << " retransmission number " << pkt->getRetransmisionCounterBO() + pkt->getRetransmisionCounterACK() << " of " << maxRetransDroppedReportAN;
+			//transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+			//sendDown(pkt);
+			scheduleAt(simTime()+0.0005,pkt);
 		} else { // We reached the maximum number of retransmissions
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsNoACKMax++;
+
+     // Check
+            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+            if(pkt->getCreatedIn() == getParentModule()->getIndex())
+            {
+                EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+                blockAppTransmissions = false;
+                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+                {
+                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                    if(packetsQueue.length()>0)
+                    {
+                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                        if(simTime() > stepTimeComSink1End)
+                        {
+                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
+                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                                stepTimeComSink1 = 0.05;
+                            for (int i = 0; i < packetsQueue.length(); i++) {
+                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                            }
+                            stepTimeComSink1End = simTime() + stepTimeComSink1;
+                            numPckToSent = packetsQueue.length();
+                            queueElementCounter = 0;
+                            if (checkQueue->isScheduled())
+                               cancelEvent(checkQueue);
+                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                        }
+                    }
+                }
+            }
 
 			if(regPck[pkt->getCreatedIn()*10000 + pkt->getId()] == 0) {
 				regPck[pkt->getCreatedIn()*10000 + pkt->getId()] = 2;
@@ -1070,6 +1180,40 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		EV << "The queue in MAC is full, discarding the message" << endl;
 		nbPacketDroppedMacQueueFull++;
 		nbErasedPacketsMacQueueFull++;
+        // Check
+        EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+        if(pkt->getCreatedIn() == getParentModule()->getIndex())
+        {
+            EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+            blockAppTransmissions = false;
+            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+            {
+                EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                if(packetsQueue.length()>0)
+                {
+                    EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                    if(simTime() > stepTimeComSink1End)
+                    {
+                        EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
+                        EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                        if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                            stepTimeComSink1 = 0.05;
+                        for (int i = 0; i < packetsQueue.length(); i++) {
+                            randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                            EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                        }
+                        stepTimeComSink1End = simTime() + stepTimeComSink1;
+                        numPckToSent = packetsQueue.length();
+                        queueElementCounter = 0;
+                        if (checkQueue->isScheduled())
+                           cancelEvent(checkQueue);
+                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                    }
+                }
+            }
+        }
 		delete pkt;
 		delete msg;
 		break;
@@ -1088,15 +1232,50 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		EV << "Message correctly transmitted, received the ACK." << endl;
 		nbReportsWithACK++;
 
+		// Check
+		 // Check
+        EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+        if(pkt->getCreatedIn() == getParentModule()->getIndex())
+        {
+            txPktsCreatedInApp++;
+            EV << "Packet transmitted was make here. UNBLOCK transmissions"<< endl;
+            blockAppTransmissions = false;
+            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+            {
+                EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                if(packetsQueue.length()>0)
+                {
+                    EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                    if(simTime() > stepTimeComSink1End)
+                    {
+                        EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1) - guardTimeComSinkPhase) / (packetsQueue.length());
+                        EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                        if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                            stepTimeComSink1 = 0.05;
+                        for (int i = 0; i < packetsQueue.length(); i++) {
+                            randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                            EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                        }
+                        stepTimeComSink1End = simTime() + stepTimeComSink1;
+                        numPckToSent = packetsQueue.length();
+                        queueElementCounter = 0;
+                        if (checkQueue->isScheduled())
+                           cancelEvent(checkQueue);
+                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                    }
+                }
+            }
+
+        }
 		if(pkt->getWasBroadcast())
 			broadSentOK[pkt->getPriority()]++;
 		else if(pkt->getWasReport())
 			reportSentOK[pkt->getPriority()]++;
 		else if(pkt->getWasRequest())
 			requestSentOK++;
-
 		numPckSentOk++;
-
 		macDeviceFree = true; // TX ended, MAC can be set as free
 		delete pkt;
 		delete msg;
@@ -1147,6 +1326,15 @@ void AnchorAppLayer::sendBroadcast()
 	EV << "Inserting Broadcast Packet in Transmission Queue" << endl;
 	transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
 	sendDown(pkt);
+}
+
+void AnchorAppLayer::errorManagement(cMessage *msg)
+{
+    EV<<"Managing a Mac Error"<<endl;
+    ApplPkt *pkt = check_and_cast<ApplPkt*>(msg);
+    pkt->setKind(REPORT_WITH_CSMA);
+    transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+    sendDown(pkt);
 }
 
 void AnchorAppLayer::createScheduleEvents()

@@ -330,15 +330,25 @@ class MIXIM_API csma : public BaseMacLayer
     //int macaddress;
 
     //Modified by Victor
-    bool macDuplicateFilter;
-    bool receptionOnBackoff; // Enable the reception of packets during Backoff time.
-    bool receptionOnCCA;     // Enable the reception of packets during CCA
-    bool transmitOnReception; // Enable a transmission to interrupt a reception
-    bool  IsInReception; // Trans
+    bool macDuplicateFilter;    // Enable de Mac filter for duplicated packets
+    bool receptionOnBackoff;    // Enable the reception of packets during Backoff time.
+    bool receptionOnCCA;        // Enable the reception of packets during CCA
+    bool transmitOnReception;   // Enable a transmission to interrupt a reception
+    bool  IsInReception;        // Flag that indicate that the mac is receiving a packet now
+    bool checkQueue;            // Flag to indicate that the manageQueue function must be called after a reception
+    bool ccaStatusIniIdle;      // Save the status of the channel before to set  the CCA_TIMER
+    int ccaSamples;             // Specify the number of times that the mac layer checks the channel during a CCA procedure
+    int ccaSamplesCounter;      // Count the number of times that the mac layer had checked the channel during a CCA procedure
+    int ccaThreshold;           // How many times should be found the channel busy in order to return a CAF
+    float ccaValueBusy;         // Count the number of times that the channel would be found busy in a CCA procedure.
+    cMessage * ccaSamplerTimer;  // Msg to set the event that periodically check if the channel is busy in a CCA procedur.
+    cMessage * LifsCheckQueue;         //  Introduce a delay to call the manageQueue funktion in order to simulate a LIFS time
+
     // Modified by Jorge
 	simtime_t syncPacketTime;			// Max. duration of a Sync Packet, determines the slot size
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
-	simtime_t timeComSinkPhase;			// Duration of every Com Sink Phase
+	simtime_t timeComSinkPhase1;			// Duration of every Com Sink Phase 1
+    simtime_t timeComSinkPhase2;            // Duration of every Com Sink Phase 2
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase
@@ -369,6 +379,8 @@ class MIXIM_API csma : public BaseMacLayer
 	BaseConnectionManager* cc;			// Pointer to the Propagation Model module
 
 	EnergyConsumption* energy;			// Pointer to the Energy module
+
+
 /***/
 protected:
 	// FSM functions

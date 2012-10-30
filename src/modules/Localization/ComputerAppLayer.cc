@@ -46,6 +46,8 @@ void ComputerAppLayer::initialize(int stage)
 
         packetsResend = (int*)calloc(sizeof(int),100*numberOfNodes);
         numPckToSentByPeriod = 0;
+
+        nbReportsNoDuplicated = 0;
         for(int i=0;i<100*numberOfNodes;i++)
         {
             packetsResend[i] = -1;
@@ -229,7 +231,8 @@ void ComputerAppLayer::initialize(int stage)
 		EV << "T Sync: " << timeSyncPhase << endl;
 		EV << "T Report: " << timeReportPhase << endl;
 		EV << "T VIP: " << timeVIPPhase << endl;
-		EV << "T Com_Sink: " << timeComSinkPhase << endl;
+		EV << "T Com_Sink1: " << timeComSinkPhase1 << endl;
+		EV << "T Com_Sink2: " << timeComSinkPhase2 << endl;
 
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
@@ -434,7 +437,7 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of Comp Reports with ACK", nbReportsWithACK);
 	recordScalar("Number of Reports received in Comp", nbReportsReceived);
 	recordScalar("Number of Reports really for me received in Comp", nbReportsForMeReceived);
-
+/*
 	recordScalar("Number of packets 1 created by a mobile broadcast TX OK", broadOK[1]);
 	recordScalar("Number of packets 1 created by a mobile report TX OK", reportOK[1]);
 
@@ -448,9 +451,10 @@ void ComputerAppLayer::finish()
 	recordScalar("Number of packets 4 created by a mobile report TX OK", reportOK[4]);
 
 	recordScalar("Number of packets created by a mobile request TX OK", requestOK);
-
+*/
 	recordScalar("Number of app duplicated packets",duplicatedPktCounter);
-
+	recordScalar("Number of no duplicated reports",nbReportsNoDuplicated);
+/*
 	for(int i=0; i<numberOfAnchors; i++) {
 		int n1,n2,n3,n4,n5,n6,n7,n8,n9;
 		n1=n2=n3=n4=n5=n6=n7=n8=n9=0;
@@ -891,7 +895,7 @@ void ComputerAppLayer::finish()
 		char buffer[100] = "";
 		sprintf(buffer, "Minimum delay for Request from node %d", i);
 		recordScalar(buffer, minDelayRequest[i]);
-	}
+	}*/
 
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
@@ -971,7 +975,7 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_1:
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase1;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			break;
 		case AppLayer::SYNC_PHASE_3:
@@ -983,11 +987,11 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		case AppLayer::COM_SINK_PHASE_2:
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
-			nextPhaseStartTime = simTime() + timeComSinkPhase;
+			nextPhaseStartTime = simTime() + timeComSinkPhase2;
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// At the beginning of the Com Sink 2 the Computer checks its queue to transmit the elements and calculate all the random transmission times
 			if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-				stepTimeComSink2 = (timeComSinkPhase - guardTimeComSinkPhase) / packetsQueue.length();
+				stepTimeComSink2 = (timeComSinkPhase2 - guardTimeComSinkPhase) / packetsQueue.length();
 				randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), packetsQueue.length());
 				EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
 				for (int i = 0; i < packetsQueue.length(); i++) {
@@ -1076,8 +1080,8 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 		    case AppLayer::REPORT_WITHOUT_CSMA:
 		    case AppLayer::REPORT_WITH_CSMA:
 				if (pkt->getDestAddr() == myNetwAddr) { // If the packet is for the computer
-                    if (appDuplicateFilter)
-                    {
+                 //   if (appDuplicateFilter)
+                 //   {
                         pktRepeated = false;
                         for( int i=0;i<numPckToSentByPeriod;i++)
                         {
@@ -1088,13 +1092,19 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                                 EV<< "Phase: " << phase << endl;
                                 pktRepeated = true;
                                 duplicatedPktCounter++;
-                                delete pkt;
+                               // delete pkt;
                                 break;
                             }
                         }
+                  //  }
+                    if(pktRepeated)
+                    {
+                        duplicatedPktCounter++;
                     }
                     if(!pktRepeated || !appDuplicateFilter)
                     {
+                        if(!pktRepeated)
+                            nbReportsNoDuplicated++;
                         nbReportsReceived++;
                         pkt->getArrivalGateId();
                         packetsResend[numPckToSentByPeriod] =  pkt->getEncapsulationTreeId();

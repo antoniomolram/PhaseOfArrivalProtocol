@@ -32,7 +32,8 @@ bool Decider802154Narrow::syncOnSFD(AirFrame* frame) {
 	BER = evalBER(frame);
 	sfdErrorProbability = 1.0 - pow((1.0 - BER), sfdLength);
     bool sfdErrorProbabilityFlag = sfdErrorProbability < uniform(0, 1, 0); /*MOD*/
-	return sfdErrorProbability < uniform(0, 1, 0);
+    return true;
+	//return sfdErrorProbability < uniform(0, 1, 0);
 }
 
 double Decider802154Narrow::evalBER(AirFrame* frame) {
@@ -77,6 +78,7 @@ simtime_t Decider802154Narrow::processSignalHeader(AirFrame* frame)
 		currentSignal.first = 0;
 		//channel is back idle
 		setChannelIdleStatus(true);
+		EV<<"CHANNEL IDLE"<<endl;
 		return notAgain;
 	}
 
@@ -86,7 +88,7 @@ simtime_t Decider802154Narrow::processSignalHeader(AirFrame* frame)
 
 	//channel is busy now
 	setChannelIdleStatus(false);
-
+	EV<<"CHANNEL BUSY"<<endl;
 	//TODO: publish rssi and channel state
 	// Inform the MAC that we started receiving a frame
 	phy->sendControlMsgToMac(new cMessage("start_rx",RECEPTION_STARTED));
@@ -207,7 +209,7 @@ simtime_t Decider802154Narrow::processSignalEnd(AirFrame* frame)
 
 	//channel is back idle
 	setChannelIdleStatus(true);
-
+	EV<<"CHANNEL IDLE"<<endl;
 	//TODO: publish rssi and channel state
 	return notAgain;
 }

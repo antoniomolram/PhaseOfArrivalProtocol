@@ -52,8 +52,8 @@ module Nic802154_TI_CC2420 extends WirelessNicBattery
         // From TI CC1100 datasheet rev. C
         phy.timeSleepToRX = 0 s;//0.00188 s;
         phy.timeSleepToTX = 0 s;//0.00208 s;
-        phy.timeRXToTX = 0.000192 s;
-        phy.timeTXToRX = 0.000192 s;
+        phy.timeRXToTX = 0.000016 s; //0.000192 s;
+        phy.timeTXToRX = 0.000032 s; //0.000192 s;
         phy.timeRXToSleep = 0 s;//0.00094 s;
         phy.timeTXToSleep = 0 s;//0.00094 s;
 
