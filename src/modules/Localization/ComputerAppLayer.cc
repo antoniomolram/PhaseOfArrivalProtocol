@@ -56,7 +56,7 @@ void ComputerAppLayer::initialize(int stage)
 //		EV << "   0  1  2  3  4  5  6  7  8  9  10 11 " << endl;
 		EV << "Coverage " << cc->getMaxInterferenceDistance() << endl; // Maximal interference distance
 		// First here we look for the Anchors and discard computer an MN, and put them in our array
-		for(BaseConnectionManager::NicEntries::iterator i = nicList.begin(); i != nicList.end(); ++i) {
+	 	for(BaseConnectionManager::NicEntries::iterator i = nicList.begin(); i != nicList.end(); ++i) {
 			if (i->second->moduleType == 1) {
 				anchors[j] = i->second;
 				anchors[j]->numSlots = 0;
@@ -164,22 +164,22 @@ void ComputerAppLayer::initialize(int stage)
 
         // Defines the amount of hops between the coordinator and an anchor with id = anchNum
         for (int anchNum = 0; anchNum < numberOfAnchors; anchNum++) {
-            if((anchNum == 7) || (anchNum == 8) || (anchNum == 9))
+            if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
             {
                 hops[anchNum] = 4;
                 slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
             }
-            if((anchNum == 3) || (anchNum == 4) || (anchNum == 5) || (anchNum == 6))
+            if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
             {
                 hops[anchNum] = 3;
                 slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
             }
-            if((anchNum == 1) || (anchNum == 2))
+            if((anchNum == 3) || (anchNum == 5))
             {
                 hops[anchNum] = 2;
                 slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];
             }
-            if((anchNum == 0))
+            if((anchNum == 4))
             {
                 hops[anchNum] = 1;
                 slotsInComSink1 = slotsInComSink1 + fiboVector[numMaxHops - hops[anchNum]];

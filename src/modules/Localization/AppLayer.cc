@@ -58,7 +58,7 @@ void AppLayer::initialize(int stage)
 		guardTimeReportPhase 		= 0.020; 	// 20 ms
 		guardTimeVIPPhase 			= 0.020;	// 20 ms
 
-	    reportTransmissionTime      = 0.0016; // 1.6ms
+	    reportTransmissionTime      = 0.002; // 1.6ms
 
 		smallTime 					= 0.000001;	//  1 us
 		maxRetransDroppedReportMN 	= 1;

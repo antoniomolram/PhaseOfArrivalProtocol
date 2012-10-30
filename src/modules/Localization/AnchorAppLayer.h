@@ -64,13 +64,18 @@ protected:
 	double comsinkPhaseStartTime;	// Variable to save when the current COM_SINK 1 phase started
 
 	// Modified by Victor
-    cMessage *delayComSinkSlottedPkt;    // Pointer to the event we use to schedule all the sync packets in the sync phases
 
+	double duplicatedPktCounter;
+	cMessage *delayComSinkSlottedPkt;    // Pointer to the event we use to schedule all the sync packets in the sync phases
+	int transmissionSlot;
+	int totalSlots;
+    int comSinkRound;           // How many times will repeated the slots
     simtime_t durationComSinkSlot;
     simtime_t roundComSink1Time;
+    simtime_t endComSinkSlotTime;
     simtime_t nextSubComSinkSlotTime;
-    int comSinkRound;           // How many times will repeated the slots
     int scheduledComSinkSlot;            // Count the number of assigned slots in de comSink
+    int myNumberOfSlots;
     int comSinkRoundCounter;
     int *fiboVector;
     int numMaxHops;
@@ -86,10 +91,10 @@ protected:
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
-    double duplicatedPktCounter;
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
     simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
+
 
 
 public:
