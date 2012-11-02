@@ -31,9 +31,9 @@ bool Decider802154Narrow::syncOnSFD(AirFrame* frame) {
 
 	BER = evalBER(frame);
 	sfdErrorProbability = 1.0 - pow((1.0 - BER), sfdLength);
-    bool sfdErrorProbabilityFlag = sfdErrorProbability < uniform(0, 1, 0); /*MOD*/
-    return true;
-	//return sfdErrorProbability < uniform(0, 1, 0);
+  //  bool sfdErrorProbabilityFlag = sfdErrorProbability < uniform(0, 1, 0); /*MOD*/
+  //  return true;
+	return sfdErrorProbability < uniform(0, 1, 0);
 }
 
 double Decider802154Narrow::evalBER(AirFrame* frame) {

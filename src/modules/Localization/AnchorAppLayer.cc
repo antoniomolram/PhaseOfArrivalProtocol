@@ -41,8 +41,8 @@ void AnchorAppLayer::initialize(int stage)
 		anchor->moduleType = 1;
 	// We have to wait till stage 4 to make this because till stage 3 the slot configuration is not done
 	} else if (stage == 2) {
-//		int list[25] = {1,2,3,25,3,6,2,8,25,25,11,7,8,9,9,16,12,12,13,14,16,17,17,18,19}; // Lists the parent Anchor of each Anchor
-        int list[10] = {1,3,3,4,10,4,5,5,7,7}; // Lists the parent Anchor of each Anchor
+		int list[25] = {1,2,3,25,3,6,2,8,25,25,11,7,8,9,9,16,12,12,13,14,16,17,17,18,19}; // Lists the parent Anchor of each Anchor
+//        int list[10] = {1,3,3,4,10,4,5,5,7,7}; // Lists the parent Anchor of each Anchor
 		parentAnchor = list[getParentModule()->getIndex()];	// Sents the parent anchor for the current anchor
 	//	anchor->getOutGateTo(cc->findNic(getParentModule()->getParentModule()->getSubmodule("anchor", parentAnchor)->findSubmodule("nic")))->setDisplayString("o = red, 2");
 		numPckToSent = 0;
@@ -68,14 +68,24 @@ void AnchorAppLayer::initialize(int stage)
 
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
-		if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
-			hops = 4;
-		if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
-			hops = 3;
-		if((anchNum == 3) || (anchNum == 5))
-			hops = 2;
-		if((anchNum == 4))
-			hops = 1;
+//		if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
+//			hops = 4;
+//		if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
+//			hops = 3;
+//		if((anchNum == 3) || (anchNum == 5))
+//			hops = 2;
+//		if((anchNum == 4))
+//			hops = 1;
+        if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
+                (anchNum == 23) || (anchNum == 24))
+            hops = 4;
+        if((anchNum == 1) || (anchNum == 6) || (anchNum == 11) || (anchNum == 16) || (anchNum == 17) || (anchNum == 18) || (anchNum == 19))
+            hops = 3;
+        if((anchNum == 4) || (anchNum == 2) || (anchNum == 7) || (anchNum == 12) || (anchNum == 13) || (anchNum == 14))
+            hops = 2;
+        if((anchNum == 3) || (anchNum == 8) || (anchNum == 9))
+            hops = 1;
+
 
 	    noAckDroppedVec.setName("Dropped Packets in AN - No ACK received");
 	    backoffDroppedVec.setName("Dropped Packets in AN - Max MAC BackOff tries");
@@ -141,7 +151,7 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
-		int Brothers[] = {0,1,1,1,0,1,1,1,1,1};
+		int Brothers[] = {0,0,1,3,1,0,0,1,3,3,0,0,1,1,1,1,1,1,0,0,1,1,1,1,0};
 		numberOfBrothers = Brothers[getParentModule()->getIndex()]+1; // Number of brothers include also this Anchor
 		comSinkSendTimeStamp = 0;
 		comSinkStrategyInit();
@@ -149,6 +159,7 @@ void AnchorAppLayer::initialize(int stage)
 }
 void AnchorAppLayer::comSinkStrategyInit()
 {
+    testVar1 = getParentModule()->getIndex();
     hopSlotsDistributionMethod = par("hopSlotsDistributionMethod").stdstringValue();
     insertedSlots = par("insertedSlots");
     nbSubComSink1Slots =  par("nbSubComSink1Slots");
