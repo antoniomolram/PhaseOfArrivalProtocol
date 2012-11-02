@@ -443,7 +443,7 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
                 }
                 EV<<"PKTALLOCATOR: "<<posibleTime<<", Total: "<<posibleTime+periodIniTime<<endl;
                 if((posibleTime+periodIniTime) > simTime() && myTimeList.checkSpace(posibleTime)){
-                    EV<<"CURRENT ANTES: "<<myTimeList.currentTime->transmitTime<<endl;
+//                    EV<<"CURRENT ANTES: "<<myTimeList.currentTime->transmitTime<<endl;
                     if(myTimeList.firstTime == NULL)
                     {
                         myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
@@ -513,7 +513,8 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
    for(int k=0; k<myNumberOfHopSlotsA;k++)
    {
       if( nbOfPkt % myNumberOfHopSlotsA != 0 && k == 0){
-          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot+1);
+          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]];///(pktProHopSlot+1);
+        //  pktProHopSlot = TxComSinkPktMatrix[subComSink1][k];
           for(int i=0; i<pktProHopSlot+1;i++)
           {
               if(nbOfPkt)
@@ -533,12 +534,13 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
               break;
       }
       else{
-          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot);
+          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]];//(pktProHopSlot);
           for(int i=0; i<pktProHopSlot;i++)
           {
               if(packetsQueue.length()>0)
               {
                   testVar1= hopSlots2TransmitA[k];
+                  testTime = uniform(0,(stepHopSlot-0.003));
                   time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.003), 0) + (subComSink1Time * subComSink1) - periodIniTime;
                   EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
                   testTime = time2transmit;
@@ -663,14 +665,15 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             errorManagement(msg);
         break;
         case HOP_SLOT_TIMER:
-            EV<<"CURRENT1: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+            if(myTimeList.currentTime)
+                EV<<"CURRENT1: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Paquetes a enviar: "<<packetsQueue.length()<<endl;
             EV<<"HopSlot: "<<hopSlotsCounter<<" SubComSink1: "<<subComSink1Counter<<endl;
             myTimeList.printTimes();
 //            while(waitingRespondList.firstTime != NULL)
 //                updateSuccessTimeList(false);
 
-            EV<<"CURRENT: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+ //           EV<<"CURRENT: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Tiempos disponibles: "<<nbCurrentAvailableTime<<endl;
             for(int i=0;i<nbSubComSink1Slots;i++)
             {
@@ -691,7 +694,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 
                     if(!checkQueue->isScheduled() && packetsQueue.length()>0)
                     {
-                        EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+ //                       EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
                         myTimeList.printTimes();
                         scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
                     }
@@ -711,7 +714,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                             EV<<"POSIBLEMENTE DOS EVENTOS AL MISMO TIEMPO"<<endl;
                         }
                     }
-                    EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+       //             EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
                     myTimeList.printTimes();
                     scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
                 }
@@ -1018,6 +1021,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 usedPkts = new int [myNumberOfHopSlotsA];
                 pktProHopSlot=0;
                 totalPktpProSubComSink1=0;
+                testVar1  = packetsQueue.length();
+                testVar2 = getParentModule()->getIndex();
                 EV<<"COMSINK1 INIT: "<< packetsQueue.length()<<endl;
                 while(waitingRespondList.firstTime != NULL)
                     waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
@@ -1080,8 +1085,10 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     }
                 }
                 numPckToSent = packetsQueue.length();
-                if(packetsQueue.length() != 0 && myTimeList.firstTime){
+                if(myTimeList.firstTime)
                     myTimeList.getfirstTime();
+                if(packetsQueue.length() != 0 && myTimeList.firstTime){
+                    EV<<"Ubicando paquete comSink"<<endl;
                     scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime, checkQueue);
                     waitingRespondList.printTimes();
                 }
@@ -1888,13 +1895,15 @@ void AnchorAppLayer::finish()
     recordScalar("Number of app duplicated packets",duplicatedPktCounter);
     recordScalar("Number of transmitted packets created in this AN",txPktsCreatedInApp);
     recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
-
-    myTimeList.getfirstTime();
-    while(myTimeList.currentTime->nextTime != NULL)
+    if(myTimeList.firstTime)
     {
-        successTimeVec.record(myTimeList.currentTime->transmitTime);
-        timeVec.record(myTimeList.currentTime->succesIndicator);
-        myTimeList.getnextTime();
+        myTimeList.getfirstTime();
+        while(myTimeList.currentTime->nextTime != NULL)
+        {
+            successTimeVec.record(myTimeList.currentTime->transmitTime);
+            timeVec.record(myTimeList.currentTime->succesIndicator);
+            myTimeList.getnextTime();
+        }
     }
 /*
     for(int i = 0; i < numberOfNodes; i++) {
