@@ -111,6 +111,7 @@ protected:
     bool pktRepeated;                     // Flag to indicate if a packet is repeated
     cOutVector receivedPacketsVec;
     cOutVector noRepPacketsVec;
+    cOutVector pktFromNode0Vec;
 
 
 public:

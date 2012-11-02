@@ -119,6 +119,9 @@ protected:
     TimeList waitingRespondList;
     cOutVector successTimeVec;
     cOutVector timeVec;
+    cOutVector noAckDroppedVec;
+    cOutVector backoffDroppedVec;
+    cOutVector reportsWithAckVec;
 
     enum allocationType{                     // Phases of the Full Phase or Period
 

@@ -190,6 +190,7 @@ void ComputerAppLayer::initialize(int stage)
 		// ADD VICTOR
 		receivedPacketsVec.setName("received-packets-per-period");
 		noRepPacketsVec.setName("received-no-repeated-packets-per-period");
+		pktFromNode0Vec.setName("Number of packets sent from mobile node 0");
 		receivedPacketsPerPeriod = 0;
 		nbReportsNoDupPerPeriod = 0;
 		// Necessary variables for the queue initialization
@@ -424,8 +425,10 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 	        numPckToSentByPeriod = 0;
 	        receivedPacketsVec.record(receivedPacketsPerPeriod);
 	        noRepPacketsVec.record(nbReportsNoDupPerPeriod);
+	        pktFromNode0Vec.record(fromNode[0]);
 	        receivedPacketsPerPeriod = 0;
 	        nbReportsNoDupPerPeriod = 0;
+	        fromNode[0] = 0;
 		}
 		if (!transfersQueue.empty()) {
 			EV << "Emptying the queue with " << transfersQueue.length() << " elements in phase change" << endl;

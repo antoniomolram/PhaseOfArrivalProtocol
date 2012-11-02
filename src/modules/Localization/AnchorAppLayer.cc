@@ -77,6 +77,10 @@ void AnchorAppLayer::initialize(int stage)
 		if((anchNum == 4))
 			hops = 1;
 
+	    noAckDroppedVec.setName("Dropped Packets in AN - No ACK received");
+	    backoffDroppedVec.setName("Dropped Packets in AN - Max MAC BackOff tries");
+	    reportsWithAckVec.setName("Number of AN Reports with ACK");
+
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
@@ -820,6 +824,17 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             else {
                 EV << "App Transmission Queue empty in phase change." << endl;
             }
+            if(phase == COM_SINK_PHASE_1)
+            {
+                noAckDroppedVec.record(nbPacketDroppedNoACK);
+                backoffDroppedVec.record(nbPacketDroppedBackOff);
+                reportsWithAckVec.record(nbReportsWithACK);
+                numPckToSentByPeriod = 0;
+                nbPacketDroppedNoACK = 0;
+                nbPacketDroppedBackOff = 0;
+                nbReportsWithACK = 0;
+            }
+
             if(phase == AppLayer::SYNC_PHASE_3)
             {
                 EV<<"TIME LIST: "<<endl;
