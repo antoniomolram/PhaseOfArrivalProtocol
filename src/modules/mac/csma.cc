@@ -88,7 +88,7 @@ void csma::initialize(int stage) {
         receptionOnCCA = par("receptionOnCCA");
         ccaStatusIniIdle = true;
         ccaSamples = 20;
-        ccaThreshold = 10;
+        ccaThreshold = 5;
         ccaSamplesCounter = 0;
         ccaValueBusy = 0;
 

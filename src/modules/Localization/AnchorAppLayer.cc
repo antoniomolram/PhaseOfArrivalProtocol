@@ -498,16 +498,49 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
 void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
 {
    pktProHopSlot = nbOfPkt/myNumberOfHopSlotsA;
+   int pktProSlot[myNumberOfHopSlotsA];
+   int pkts2Alloc = nbOfPkt;
+   for(int i=0;i<myNumberOfHopSlotsA;i++)
+   {
+       pktProSlot[i] = 0;
+   }
+   while(pkts2Alloc)
+   {
+        for(int i=0;i<myNumberOfHopSlotsA;i++)
+        {
+            testVar1 = hopSlotsDistributionVector[hopSlots2TransmitA[i]];
+            if(pktProSlot[i] < TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[i]-1])
+            {
+                if(pkts2Alloc >= hopSlotsDistributionVector[hopSlots2TransmitA[i]])
+                {
+                    pktProSlot[i] = pktProSlot[i] + hopSlotsDistributionVector[hopSlots2TransmitA[i]];
+                    pkts2Alloc = pkts2Alloc - hopSlotsDistributionVector[hopSlots2TransmitA[i]];
+                }
+                else
+                {
+                    pktProSlot[i] = pktProSlot[i] + pkts2Alloc;
+                    pkts2Alloc = 0;
+                }
+            }
+        }
+   }
+   EV<<"DISTRIBUCION DE PAQUETES:"<<endl;
+   for(int i=0;i<myNumberOfHopSlotsA;i++)
+   {
+       EV<<pktProSlot[i]<<", ";
+   }
+   EV<<endl;
    simtime_t time2transmit;
    for(int k=0; k<myNumberOfHopSlotsA;k++)
    {
       if( nbOfPkt % myNumberOfHopSlotsA != 0 && k == 0){
-          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot+1);
-          for(int i=0; i<pktProHopSlot+1;i++)
+          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]] / (pktProSlot[k]+1);///(pktProHopSlot+1);
+        //  pktProHopSlot = TxComSinkPktMatrix[subComSink1][k];
+          for(int i=0; i<pktProSlot[k]+1;i++)
           {
               if(nbOfPkt)
               {
-                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,stepHopSlot-0.003, 0) + (subComSink1Time * subComSink1) - periodIniTime;
+                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,stepHopSlot-0.002, 0) + (subComSink1Time * subComSink1) - periodIniTime;
                   for(int j=1;j<hopSlots2TransmitA[k];j++)
                   {
                       time2transmit = time2transmit + baseSlotTime*hopSlotsDistributionVector[j];
@@ -522,22 +555,26 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
               break;
       }
       else{
-          stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProHopSlot);
-          for(int i=0; i<pktProHopSlot;i++)
+          if(pktProSlot[k])
           {
-              if(packetsQueue.length()>0)
+              stepHopSlot = baseSlotTime*hopSlotsDistributionVector[hopSlots2TransmitA[k]]/(pktProSlot[k]);//(pktProHopSlot);
+              for(int i=0; i<pktProSlot[k];i++)
               {
-                  testVar1= hopSlots2TransmitA[k];
-                  time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.003), 0) + (subComSink1Time * subComSink1) - periodIniTime;
-                  EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
-                  testTime = time2transmit;
-                  for(int j=1;j<hopSlots2TransmitA[k];j++)
+                  if(packetsQueue.length()>0)
                   {
-                      time2transmit = time2transmit + baseSlotTime*hopSlotsDistributionVector[j];
+                      testVar1= hopSlots2TransmitA[k];
+                      testTime = uniform(0,(stepHopSlot-0.002));
+                      time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.002), 0) + (subComSink1Time * subComSink1) - periodIniTime;
+                      EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
+                      testTime = time2transmit;
+                      for(int j=1;j<hopSlots2TransmitA[k];j++)
+                      {
+                          time2transmit = time2transmit + baseSlotTime*hopSlotsDistributionVector[j];
+                      }
+                      TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
+                      myTimeList.insertTime(time2transmit,hopSlots2TransmitA[k]-1, subComSink1);
+                      nbTotalAvailableTime++;
                   }
-                  TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[k]-1]--;
-                  myTimeList.insertTime(time2transmit,hopSlots2TransmitA[k]-1, subComSink1);
-                  nbTotalAvailableTime++;
               }
           }
       }
@@ -554,6 +591,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
        EV<<endl;
    }
 }
+
 
 void AnchorAppLayer::updateSuccessTimeList(bool success)
 {
@@ -606,28 +644,10 @@ void AnchorAppLayer::optimalTimeSearch()
 {
     perTime2Change = 0.05; // percentage
     int nbTime2change;
-    int dispA = 0;
-    int dispB = 0;
-    int threshold = 0.5;
     nbTime2change = nbCurrentAvailableTime * perTime2Change;
-    for(int i=0;i<nbTotalHops;i++)
+    for(int i=0;i<nbTime2change;i++)
     {
-        dispA = dispA + TxComSinkPktMatrix[0][i];
-        dispB = dispB + TxComSinkPktMatrix[1][i];
-    }
-    threshold = (dispA)/(dispA+dispB);
-    nbTime2change = nbCurrentAvailableTime * perTime2Change;
-    if(nbTime2change >1 && nbTime2change < dispA)
-    {
-//        firstPktAllocation(nbTime2change, 0);
-        if(uniform(0,1, 0) > 0.5)
-            firstPktAllocation(nbTime2change, 0);
-        else
-            firstPktAllocation(nbTime2change, 1);
-//        for(int i=0;i<nbTime2change;i++)
-//        {
-//            pktAllocator(timeOptimized);
-//        }
+        pktAllocator(timeOptimized);
     }
 }
 
