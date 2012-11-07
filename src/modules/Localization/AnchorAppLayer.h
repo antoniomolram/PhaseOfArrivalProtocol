@@ -71,6 +71,7 @@ protected:
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
     int txPktsCreatedInApp;              // Save the number of packets created in this AN
     int remPktApp;                       // SAve the number the packets that were not send.
+    int pktsFromThisAnchor;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet

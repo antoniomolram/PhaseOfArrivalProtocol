@@ -261,6 +261,7 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of packets in App Queue at the end of the ComSink1",remPktApp);
 	recordScalar("Number of CAF in ComSink1",nbCafInComSink1);
 	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
+	recordScalar("Number of packets from this anchor",pktsFromThisAnchor);
 /*
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
@@ -544,6 +545,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhaseStartTime = simTime() + timeComSinkPhase1;
                 initTimeComSink1 = simTime();
                 scheduleAt(nextPhaseStartTime, beginPhases);
+                pktsFromThisAnchor = packetsQueue.length();
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
                 randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
                 if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
