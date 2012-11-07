@@ -603,6 +603,7 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
    }
 }
 
+
 void AnchorAppLayer::updateSuccessTimeList(bool success)
 {
     EV<<"WAITLIST"<<endl;
@@ -665,17 +666,21 @@ void AnchorAppLayer::optimalTimeSearch()
     }
     threshold = (dispA)/(dispA+dispB);
     nbTime2change = nbCurrentAvailableTime * perTime2Change;
-    if(nbTime2change >1 && nbTime2change < dispA)
+//    if(nbTime2change >1 && nbTime2change < dispA)
+//    {
+////        firstPktAllocation(nbTime2change, 0);
+//        if(uniform(0,1, 0) > 0.5)
+//            firstPktAllocation(nbTime2change, 0);
+//        else
+//            firstPktAllocation(nbTime2change, 1);
+////        for(int i=0;i<nbTime2change;i++)
+////        {
+////            pktAllocator(timeOptimized);
+////        }
+//    }
+    for(int i=0;i<nbTime2change;i++)
     {
-//        firstPktAllocation(nbTime2change, 0);
-        if(uniform(0,1, 0) > 0.5)
-            firstPktAllocation(nbTime2change, 0);
-        else
-            firstPktAllocation(nbTime2change, 1);
-//        for(int i=0;i<nbTime2change;i++)
-//        {
-//            pktAllocator(timeOptimized);
-//        }
+        pktAllocator(timeOptimized);
     }
 }
 
@@ -878,7 +883,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 noAckDroppedVec.record(nbPacketDroppedNoACK);
                 backoffDroppedVec.record(nbPacketDroppedBackOff);
                 reportsWithAckVec.record(nbReportsWithACK);
-                pktsFromThisAnchor.record(packetsQueue.length());
                 numPckToSentByPeriod = 0;
                 nbPacketDroppedNoACK = 0;
                 nbPacketDroppedBackOff = 0;
@@ -1048,7 +1052,8 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 hopSlotsCounter = 1;
                 subComSink1Counter = 1;
-
+                testVar1 =  packetsQueue.length();
+                pktsFromThisAnchor.record(packetsQueue.length());
                 scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
    //             hopSlotsCounter++;
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
