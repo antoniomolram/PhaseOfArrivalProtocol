@@ -152,13 +152,15 @@ void BaseMobility::initialize(int stage)
 			double z = hasPar("z") ? par("z").doubleValue() : par("initialZ").doubleValue();
 
 			pos = getRandomPosition();
-
+			pos.x;
+			pos.y;
+			pos.z;
 			//set position with values from parameters if available
-			if (isFiniteNumber(x))
+			if(x > -1)//if (isFiniteNumber(x))
 				pos.x = x;
-			if (isFiniteNumber(y))
+			if(y > -1)//if (isFiniteNumber(y))
 				pos.y = y;
-			if (!use2D && isFiniteNumber(z))
+			if(z > -1)//if (!use2D && isFiniteNumber(z))
 				pos.z = z;
 /***MOD***/        
             //Modified by Jorge, distribution of the anchors in a grid when the position is -2, only valid for 2D
@@ -176,11 +178,11 @@ void BaseMobility::initialize(int stage)
         }
 		// set start-position and start-time (i.e. current simulation-time) of the Move
         move.setStart(pos);
-		coreEV << "start pos: " << move.getStartPos().info() << endl;
+		EV << "start pos: " << move.getStartPos().info() << endl;
 
         // set speed and direction of the Move
-        move.setSpeed(0);
-        move.setDirectionByVector(Coord::ZERO);
+    //    move.setSpeed(0);
+    //    move.setDirectionByVector(Coord::ZERO);
     }
     else if (stage == 1){
         coreEV << "initializing BaseMobility stage " << stage << endl;

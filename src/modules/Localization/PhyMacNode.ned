@@ -1,6 +1,7 @@
 package org.mixim.modules.Localization;
 
 import org.mixim.modules.mobility.LinearMobility;
+import org.mixim.modules.mobility.ConstSpeedMobility;
 //import org.mixim.modules.application.BurstApplLayer;
 import org.mixim.base.modules.BaseWorldUtility;
 import org.mixim.base.modules.BaseArp;
@@ -15,7 +16,6 @@ module PhyMacNode
 {
     parameters:
         double numNodes; // total number of hosts in the network
-
         @display("bgb=363,335,white;bgp=10,10");
     gates:
         input radioIn;
@@ -34,7 +34,7 @@ module PhyMacNode
             parameters:
                 @display("p=205,146;i=block/blackboard");
         }
-        mobility: BaseMobility {
+        mobility: ConstSpeedMobility {
             parameters:
                 @display("p=205,81;i=block/cogwheel");
         }

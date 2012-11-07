@@ -122,6 +122,7 @@ protected:
     cOutVector noAckDroppedVec;
     cOutVector backoffDroppedVec;
     cOutVector reportsWithAckVec;
+    cOutVector pktsFromThisAnchor;
 
     enum allocationType{                     // Phases of the Full Phase or Period
 

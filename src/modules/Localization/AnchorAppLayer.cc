@@ -90,7 +90,7 @@ void AnchorAppLayer::initialize(int stage)
 	    noAckDroppedVec.setName("Dropped Packets in AN - No ACK received");
 	    backoffDroppedVec.setName("Dropped Packets in AN - Max MAC BackOff tries");
 	    reportsWithAckVec.setName("Number of AN Reports with ACK");
-
+	    pktsFromThisAnchor.setName("Number of packets from this anchor");
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
@@ -878,6 +878,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 noAckDroppedVec.record(nbPacketDroppedNoACK);
                 backoffDroppedVec.record(nbPacketDroppedBackOff);
                 reportsWithAckVec.record(nbReportsWithACK);
+                pktsFromThisAnchor.record(packetsQueue.length());
                 numPckToSentByPeriod = 0;
                 nbPacketDroppedNoACK = 0;
                 nbPacketDroppedBackOff = 0;
