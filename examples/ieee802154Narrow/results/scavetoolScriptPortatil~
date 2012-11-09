@@ -5,6 +5,8 @@ scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**no*dup
 
 scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**packets**) AND name(**sent**) AND name(**mobile**) AND name(**node*0**)" -O ./ScavetoolPortatil/SendFromMN.csv -F csv *.sca -V
 
+scavetool scalar -p "module(**anchor[*]**) AND name(**Number**) AND name(**from*this*anchor**)" -O ./ScavetoolPortatil/pktFromThisAnchor.csv -F csv *.sca -V
+
 
 scavetool scalar -p "module(**anchor[4]**) AND name(**Number**) AND name(**ack-ComSink1**)" -O ./ScavetoolPortatil/NoAck-4.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[4]**) AND name(**Number**) AND name(**CAF**) AND name(**ComSink1**)" -O ./ScavetoolPortatil/caf-4.csv -F csv *.sca -V

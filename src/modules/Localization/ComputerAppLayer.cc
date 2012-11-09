@@ -213,6 +213,9 @@ void ComputerAppLayer::initialize(int stage)
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
+		fromAnchor = (int*)calloc(sizeof(int), numberOfAnchors);
+		memset(fromNode, 0, sizeof(int)*numberOfAnchors);
+
 		receivedId = (bool*)calloc(sizeof(bool), numberOfAnchors*10000);
 		for(int i = 0; i < numberOfAnchors*10000; i++)
 			receivedId[i] = false;
@@ -871,6 +874,12 @@ void ComputerAppLayer::finish()
 		recordScalar(buffer, fromNode[i]);
 	}
 
+    for(int i = 0; i < numberOfAnchors; i++) {
+        char buffer[100] = "";
+        sprintf(buffer, "Number of packets sent from anchor %d", i);
+        recordScalar(buffer, fromAnchor[i]);
+    }
+
 	free(packetsResend);
 }
 
@@ -1098,6 +1107,7 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 
                             if(!receivedId[pkt->getCreatedIn()*10000 + pkt->getId()]) { // Checks if the packet was already received to only count it once
                                 fromNode[pkt->getFromNode()]++;
+                                fromAnchor[pkt->getCreatedIn()]++;
                                 receivedId[pkt->getCreatedIn()*10000 + pkt->getId()] = true;
                             }
 
