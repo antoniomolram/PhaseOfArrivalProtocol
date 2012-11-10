@@ -69,14 +69,16 @@ void AnchorAppLayer::initialize(int stage)
 
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
-		if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
-			hops = 3;
-		if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
-			hops = 2;
-		if((anchNum == 3) || (anchNum == 5))
-			hops = 1;
-		if((anchNum == 4))
-			hops = 0;
+
+        if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
+            (anchNum == 23) || (anchNum == 24))
+            hops = 4;
+        if((anchNum == 1) || (anchNum == 6) || (anchNum == 11) || (anchNum == 16) || (anchNum == 17) || (anchNum == 18) || (anchNum == 19))
+            hops = 3;
+        if((anchNum == 4) || (anchNum == 2) || (anchNum == 7) || (anchNum == 12) || (anchNum == 13) || (anchNum == 14))
+            hops = 2;
+        if((anchNum == 3) || (anchNum == 8) || (anchNum == 9))
+            hops = 1;
 
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
@@ -262,13 +264,14 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of CAF in ComSink1",nbCafInComSink1);
 	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
 	recordScalar("Number of packets from this anchor",pktsFromThisAnchor);
+	recordScalar("Effectiveness",successToTx);
 /*
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
 	}*/
-	free(packetsResend);
+	//free(packetsResend);
 }
 
 void AnchorAppLayer::handleSelfMsg(cMessage *msg)
@@ -351,6 +354,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         case BEGIN_PHASE:
             // Empty the transmission Queue
             EV << "APP PACKETQUEUE with: " << packetsQueue.length() << " elements in phase change" << endl;
+            blockAppTransmissions = false;
           //  remPktApp = packetsQueue.length();
             if (!transfersQueue.empty()) {
                 EV << "Emptying the transfer queue with " << transfersQueue.length() << " elements in phase change" << endl;
@@ -959,39 +963,42 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			EV << " maximum number of retransmission reached, dropping the packet in App Layer.";
 			nbErasedPacketsBackOffMax++;
 			 // Check
-            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
-            if(pkt->getCreatedIn() == getParentModule()->getIndex())
-            {
-                EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
-                blockAppTransmissions = false;
-                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+			if(phase == COM_SINK_PHASE_1)
+			{
+                EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+                if(pkt->getCreatedIn() == getParentModule()->getIndex())
                 {
-                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
-                    if(packetsQueue.length()>0)
+                    EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+                    blockAppTransmissions = false;
+                    if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
                     {
-                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
-                        if(simTime() > stepTimeComSink1End)
+                        EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                        if(packetsQueue.length()>0)
                         {
-                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
-                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
-                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
-                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                                stepTimeComSink1 = 0.05;
-                            for (int i = 0; i < packetsQueue.length(); i++) {
-                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                            EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                            if(simTime() > stepTimeComSink1End)
+                            {
+                                EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                        "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                                stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
+                                EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                                if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                                    stepTimeComSink1 = 0.05;
+                                for (int i = 0; i < packetsQueue.length(); i++) {
+                                    randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                                    EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                                }
+                                stepTimeComSink1End = simTime() + stepTimeComSink1;
+                                numPckToSent = packetsQueue.length();
+                                queueElementCounter = 0;
+                                if (checkQueue->isScheduled())
+                                   cancelEvent(checkQueue);
+                                scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                             }
-                            stepTimeComSink1End = simTime() + stepTimeComSink1;
-                            numPckToSent = packetsQueue.length();
-                            queueElementCounter = 0;
-                            if (checkQueue->isScheduled())
-                               cancelEvent(checkQueue);
-                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                         }
                     }
                 }
-            }
+			}
 
 			if(regPck[pkt->getCreatedIn()*10000 + pkt->getId()] == 0) {
 				regPck[pkt->getCreatedIn()*10000 + pkt->getId()] = 2;
@@ -1028,39 +1035,42 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 			nbErasedPacketsNoACKMax++;
 
      // Check
-            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
-            if(pkt->getCreatedIn() == getParentModule()->getIndex())
-            {
-                EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
-                blockAppTransmissions = false;
-                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+			if(phase == COM_SINK_PHASE_1)
+			{
+                EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+                if(pkt->getCreatedIn() == getParentModule()->getIndex())
                 {
-                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
-                    if(packetsQueue.length()>0)
+                    EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
+                    blockAppTransmissions = false;
+                    if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
                     {
-                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
-                        if(simTime() > stepTimeComSink1End)
+                        EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                        if(packetsQueue.length()>0)
                         {
-                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
-                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
-                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
-                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                                stepTimeComSink1 = 0.05;
-                            for (int i = 0; i < packetsQueue.length(); i++) {
-                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                            EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                            if(simTime() > stepTimeComSink1End)
+                            {
+                                EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                        "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                                stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1)- guardTimeComSinkPhase) / (packetsQueue.length());
+                                EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                                if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                                    stepTimeComSink1 = 0.05;
+                                for (int i = 0; i < packetsQueue.length(); i++) {
+                                    randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                                    EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                                }
+                                stepTimeComSink1End = simTime() + stepTimeComSink1;
+                                numPckToSent = packetsQueue.length();
+                                queueElementCounter = 0;
+                                if (checkQueue->isScheduled())
+                                   cancelEvent(checkQueue);
+                                scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                             }
-                            stepTimeComSink1End = simTime() + stepTimeComSink1;
-                            numPckToSent = packetsQueue.length();
-                            queueElementCounter = 0;
-                            if (checkQueue->isScheduled())
-                               cancelEvent(checkQueue);
-                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                         }
                     }
                 }
-            }
+			}
 
 			if(regPck[pkt->getCreatedIn()*10000 + pkt->getId()] == 0) {
 				regPck[pkt->getCreatedIn()*10000 + pkt->getId()] = 2;
@@ -1134,41 +1144,42 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		nbReportsWithACK++;
 
 		// Check
-		 // Check
-        EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
-        if(pkt->getCreatedIn() == getParentModule()->getIndex())
-        {
-            txPktsCreatedInApp++;
-            EV << "Packet transmitted was make here. UNBLOCK transmissions"<< endl;
-            blockAppTransmissions = false;
-            if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
+		if(phase == COM_SINK_PHASE_1)
+		{
+            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
+            if(pkt->getCreatedIn() == getParentModule()->getIndex())
             {
-                EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
-                if(packetsQueue.length()>0)
+                txPktsCreatedInApp++;
+                EV << "Packet transmitted was make here. UNBLOCK transmissions"<< endl;
+                blockAppTransmissions = false;
+                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
                 {
-                    EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
-                    if(simTime() > stepTimeComSink1End)
+                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
+                    if(packetsQueue.length()>0)
                     {
-                        EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
-                                "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                        stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1) - guardTimeComSinkPhase) / (packetsQueue.length());
-                        EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
-                        if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                            stepTimeComSink1 = 0.05;
-                        for (int i = 0; i < packetsQueue.length(); i++) {
-                            randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                            EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
+                        if(simTime() > stepTimeComSink1End)
+                        {
+                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
+                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
+                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1) - guardTimeComSinkPhase) / (packetsQueue.length());
+                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
+                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
+                                stepTimeComSink1 = 0.05;
+                            for (int i = 0; i < packetsQueue.length(); i++) {
+                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
+                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
+                            }
+                            stepTimeComSink1End = simTime() + stepTimeComSink1;
+                            numPckToSent = packetsQueue.length();
+                            queueElementCounter = 0;
+                            if (checkQueue->isScheduled())
+                               cancelEvent(checkQueue);
+                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                         }
-                        stepTimeComSink1End = simTime() + stepTimeComSink1;
-                        numPckToSent = packetsQueue.length();
-                        queueElementCounter = 0;
-                        if (checkQueue->isScheduled())
-                           cancelEvent(checkQueue);
-                        scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
                     }
                 }
             }
-
         }
 		if(pkt->getWasBroadcast())
 			broadSentOK[pkt->getPriority()]++;

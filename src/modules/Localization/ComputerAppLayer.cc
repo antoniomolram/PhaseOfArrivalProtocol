@@ -876,11 +876,11 @@ void ComputerAppLayer::finish()
 
     for(int i = 0; i < numberOfAnchors; i++) {
         char buffer[100] = "";
-        sprintf(buffer, "Number of packets sent from anchor %d", i);
+        sprintf(buffer, "Number of packets sent from anchor%d", i);
         recordScalar(buffer, fromAnchor[i]);
     }
 
-	free(packetsResend);
+	//free(packetsResend);
 }
 
 void ComputerAppLayer::handleSelfMsg(cMessage *msg)
