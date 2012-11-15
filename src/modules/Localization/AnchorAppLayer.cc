@@ -42,8 +42,8 @@ void AnchorAppLayer::initialize(int stage)
 		anchor->moduleType = 1;
 	// We have to wait till stage 4 to make this because till stage 3 the slot configuration is not done
 	} else if (stage == 2) {
-//		int list[25] = {1,2,3,25,3,6,2,8,25,25,11,7,8,9,9,16,12,12,13,14,16,17,17,18,19}; // Lists the parent Anchor of each Anchor
-        int list[10] = {1,3,3,4,10,4,5,5,7,7}; // Lists the parent Anchor of each Anchor
+		int list[25] = {1,2,3,25,3,6,2,8,25,25,11,7,8,9,9,16,12,12,13,14,16,17,17,18,19}; // Lists the parent Anchor of each Anchor
+//        int list[10] = {1,3,3,4,10,4,5,5,7,7}; // Lists the parent Anchor of each Anchor
 		parentAnchor = list[getParentModule()->getIndex()];	// Sents the parent anchor for the current anchor
 	//	anchor->getOutGateTo(cc->findNic(getParentModule()->getParentModule()->getSubmodule("anchor", parentAnchor)->findSubmodule("nic")))->setDisplayString("o = red, 2");
 		numPckToSent = 0;
@@ -61,7 +61,7 @@ void AnchorAppLayer::initialize(int stage)
 		// Necessary variables for the queue initialization
 		checkQueue = new cMessage("transmit queue elements", CHECK_QUEUE);
 		queueElementCounter = 0;
-		maxQueueElements = 30;
+		maxQueueElements = 50;
 		priorityLengthAddition = 5; //n = 2; m = 3
 		packetsQueue.setMaxLength(maxQueueElements);
 		transfersQueue.setMaxLength(maxQueueElements);
@@ -69,6 +69,14 @@ void AnchorAppLayer::initialize(int stage)
 
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
+		//      if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
+		//          hops = 4;
+		//      if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
+		//          hops = 3;
+		//      if((anchNum == 3) || (anchNum == 5))
+		//          hops = 2;
+		//      if((anchNum == 4))
+		//          hops = 1;
 
         if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
             (anchNum == 23) || (anchNum == 24))
@@ -264,19 +272,18 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of CAF in ComSink1",nbCafInComSink1);
 	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
 	recordScalar("Number of packets from this anchor",pktsFromThisAnchor);
-	recordScalar("Effectiveness",successToTx);
-/*
+	recordScalar("Effectiveness in each anchor",successToTx);
+
 	for(int i = 0; i < numberOfNodes; i++) {
 		char buffer[100] = "";
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
-	}*/
+	}
 	//free(packetsResend);
 }
 
 void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 {
-
         switch(msg->getKind())
         {
         case MAC_ERROR_MANAGEMENT:
@@ -399,11 +406,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                  if(!packetsQueue.empty())
                     {
                         EV << "COMSINK1 Finish: Emptying the Packet queue with " << packetsQueue.length() << " elements in phase change" << endl;
-    /*		            while(!packetsQueue.empty())
+    		            while(!packetsQueue.empty())
                         {
                             ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
                             delete pkt;
-                        }*/
+                        }
                     }
                     else
                     {
@@ -425,6 +432,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     packetsResend[i] = -1;
                 }
                 numPckToSentByPeriod = 0;
+                fromNode[0] = 0;
             }
             switch (nextPhase)
             {
@@ -453,8 +461,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 meanIndex = meanIndex % meanWindow;
                 successToTx = 0;
                 // Calculates the mean of the successes of the last periods
+                int testvar;
+                testthisanchor = getParentModule()->getIndex();
                 for(int i = 0; i < meanWindow; i++) {
                     EV << "Former successes for me were: " << formerSuccess[i] << endl;
+                    testvar = formerSuccess[i];
                     successToTx = successToTx + formerSuccess[i];
                 }
                 successToTx = (successToTx / meanWindow) * parentSuccess; // Sets the final success to transmit to the air
@@ -549,6 +560,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhaseStartTime = simTime() + timeComSinkPhase1;
                 initTimeComSink1 = simTime();
                 scheduleAt(nextPhaseStartTime, beginPhases);
+
                 pktsFromThisAnchor = packetsQueue.length();
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
                 randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);

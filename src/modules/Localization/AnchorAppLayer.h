@@ -51,6 +51,7 @@ protected:
 	double parentSuccess;				// Saves the effectiveness received from the anchor servicing this anchor
 	int meanWindow;						// Sets the length of the circular mean window of latest anchor's ratios of messages sent_OK/to_be_sent
 	int meanIndex;						// Current index of the circular window
+	int testthisanchor;
 	double* formerSuccess;				// Mean window buffer to where are sent the former anchor ratios of messages sent_OK/to_be_sent
 	double successToTx;					// Saves the calculated effectiveness for the AN, which is broadcasted during SYNC phases
 

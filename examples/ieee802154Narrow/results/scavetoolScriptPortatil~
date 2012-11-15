@@ -5,6 +5,8 @@ scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**no*dup
 
 scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**packets**) AND name(**sent**) AND name(**mobile**) AND name(**node*0**)" -O ./ScavetoolPortatil/SendFromMN.csv -F csv *.sca -V
 
+scavetool scalar -p "module(**anchor**) AND name(**Number**) AND name(**packets**) AND name(**sent**) AND name(**mobile**) AND name(**node*0**)" -O ./ScavetoolPortatil/SendFromMN-AN.csv -F csv *.sca -V
+
 scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**packets**) AND name(**sent**) AND name(**anchor8**)" -O ./ScavetoolPortatil/SendFromAN-8.csv -F csv *.sca -V
 
 scavetool scalar -p "module(**computer**) AND name(**Number**) AND name(**packets**) AND name(**sent**) AND name(**anchor12**)" -O ./ScavetoolPortatil/SendFromAN-12.csv -F csv *.sca -V
@@ -23,7 +25,8 @@ scavetool scalar -p "module(**anchor[8]**) AND name(**packets**) AND name(**App*
 scavetool scalar -p "module(**anchor[8]**) AND name(**Number**) AND name(**AN**) AND name(**Reports**) AND name(**ACK**)" -O ./ScavetoolPortatil/repAck-8.csv -F csv *.sca -V 
 scavetool scalar -p "NOT(**really**) AND module(**anchor[8]**) AND (Number*of*Reports*received*in*AN*)" -O ./ScavetoolPortatil/received-8.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[8]**) AND name(**Number**) AND name(**from*this*anchor**)" -O ./ScavetoolPortatil/pktFromThisAnchor-8.csv -F csv *.sca -V
-scavetool scalar -p "module(**anchor[8]**) AND name(**Number**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-8.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[8]**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-8.csv -F csv *.sca -V
+
 
 scavetool scalar -p "module(**anchor[12]**) AND name(**Number**) AND name(**ack-ComSink1**)" -O ./ScavetoolPortatil/NoAck-12.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[12]**) AND name(**Number**) AND name(**CAF**) AND name(**ComSink1**)" -O ./ScavetoolPortatil/caf-12.csv -F csv *.sca -V
@@ -32,7 +35,8 @@ scavetool scalar -p "module(**anchor[12]**) AND name(**packets**) AND name(**App
 scavetool scalar -p "module(**anchor[12]**) AND name(**Number**) AND name(**AN**) AND name(**Reports**) AND name(**ACK**)" -O ./ScavetoolPortatil/repAck-12.csv -F csv *.sca -V 
 scavetool scalar -p "NOT(**really**) AND module(**anchor[12]**) AND (Number*of*Reports*received*in*AN*)" -O ./ScavetoolPortatil/received-12.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[12]**) AND name(**Number**) AND name(**from*this*anchor**)" -O ./ScavetoolPortatil/pktFromThisAnchor-12.csv -F csv *.sca -V
-scavetool scalar -p "module(**anchor[12]**) AND name(**Number**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-12.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[12]**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-12.csv -F csv *.sca -V
+
 
 scavetool scalar -p "module(**anchor[16]**) AND name(**Number**) AND name(**ack-ComSink1**)" -O ./ScavetoolPortatil/NoAck-16.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[16]**) AND name(**Number**) AND name(**CAF**) AND name(**ComSink1**)" -O ./ScavetoolPortatil/caf-16.csv -F csv *.sca -V
@@ -41,7 +45,8 @@ scavetool scalar -p "module(**anchor[16]**) AND name(**packets**) AND name(**App
 scavetool scalar -p "module(**anchor[16]**) AND name(**Number**) AND name(**AN**) AND name(**Reports**) AND name(**ACK**)" -O ./ScavetoolPortatil/repAck-16.csv -F csv *.sca -V 
 scavetool scalar -p "NOT(**really**) AND module(**anchor[16]**) AND (Number*of*Reports*received*in*AN*)" -O ./ScavetoolPortatil/received-16.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[16]**) AND name(**Number**) AND name(**from*this*anchor**)" -O ./ScavetoolPortatil/pktFromThisAnchor-16.csv -F csv *.sca -V
-scavetool scalar -p "module(**anchor[16]**) AND name(**Number**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-16.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[16]**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-16.csv -F csv *.sca -V
+
 
 scavetool scalar -p "module(**anchor[20]**) AND name(**Number**) AND name(**ack-ComSink1**)" -O ./ScavetoolPortatil/NoAck-20.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[20]**) AND name(**Number**) AND name(**CAF**) AND name(**ComSink1**)" -O ./ScavetoolPortatil/caf-20.csv -F csv *.sca -V
@@ -50,4 +55,4 @@ scavetool scalar -p "module(**anchor[20]**) AND name(**packets**) AND name(**App
 scavetool scalar -p "module(**anchor[20]**) AND name(**Number**) AND name(**AN**) AND name(**Reports**) AND name(**ACK**)" -O ./ScavetoolPortatil/repAck-20.csv -F csv *.sca -V 
 scavetool scalar -p "NOT(**really**) AND module(**anchor[20]**) AND (Number*of*Reports*received*in*AN*)" -O ./ScavetoolPortatil/received-20.csv -F csv *.sca -V
 scavetool scalar -p "module(**anchor[20]**) AND name(**Number**) AND name(**from*this*anchor**)" -O ./ScavetoolPortatil/pktFromThisAnchor-20.csv -F csv *.sca -V
-scavetool scalar -p "module(**anchor[20]**) AND name(**Number**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-20.csv -F csv *.sca -V
+scavetool scalar -p "module(**anchor[20]**) AND name(**Effectiveness**)" -O ./ScavetoolPortatil/Effectiveness-20.csv -F csv *.sca -V

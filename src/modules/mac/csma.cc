@@ -220,6 +220,8 @@ csma::~csma() {
     cancelAndDelete(ccaTimer);
     cancelAndDelete(sifsTimer);
     cancelAndDelete(rxAckTimer);
+    cancelAndDelete(ccaSamplerTimer);
+    cancelAndDelete(LifsCheckQueue);
     if (ackMessage)
         delete ackMessage;
     MacQueue::iterator it;
