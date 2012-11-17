@@ -623,6 +623,7 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                             pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
                             pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
                             pkt->setCSMA(true);
+                            int testvar = pkt->getCreatedIn();
                             if(!receivedId[pkt->getCreatedIn()*10000 + pkt->getId()]) { // Checks if the packet was already received to only count it once
                                 fromNode[pkt->getFromNode()]++;
                                 fromAnchor[pkt->getCreatedIn()]++;
@@ -1334,16 +1335,17 @@ void ComputerAppLayer::finish()
         recordScalar(buffer, minDelayRequest[i]);
     }*/
 
-    for(int i = 0; i < numberOfNodes; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Number of packets sent from mobile node %d", i);
-        recordScalar(buffer, fromNode[i]);
-    }
+    recordScalar("Number of packets sent from mobile node 0", fromNode[0]);
+//    for(int i = 0; i < numberOfNodes; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of packets sent from mobile node %d", i);
+//        recordScalar(buffer, fromNode[i]);
+//    }
     for(int i = 0; i < numberOfAnchors; i++) {
         char buffer[100] = "";
         sprintf(buffer, "Number of packets sent from anchor%d", i);
         recordScalar(buffer, fromAnchor[i]);
     }
 
-    free(packetsResend);
+ //   free(packetsResend);
 }

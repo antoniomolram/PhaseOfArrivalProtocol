@@ -65,6 +65,12 @@ protected:
 	double duplicatedPktCounter;
 	int nbCafInComSink1;
 	int nbNoAckInComsink1;
+	int slotPointer;                       // point to the actual availble slot in the COMSINK
+	int myNumberofSlots;
+	int numBasicSlots;                    // total basic slot number in the comsink
+	int* sharedSlots;                     // Anchors that can trasnmit in the same slot
+	int* txBasicSlots;                    // Assigned basic slot to each AN
+	int* numSlotsXAN;                    // number o basic slots per anchor. This value is asigned following a fibonacci serie, taking in to account the anchor hop
 	int *packetsResend;                  // Packets that were successfully resend.
 	int* firstMNBroadcasTime;             // Vector to save the order in which arrive the first broadcasst from MN.
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
@@ -75,12 +81,12 @@ protected:
     int pktsFromThisAnchor;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
-    bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
+ //   bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
     simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
-
-
+    simtime_t durationBasicComSinkSlot;
+    simtime_t endSlotTime;
 public:
 	virtual ~AnchorAppLayer();
 

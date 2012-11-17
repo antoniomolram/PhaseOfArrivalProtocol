@@ -88,6 +88,471 @@ void AnchorAppLayer::initialize(int stage)
         if((anchNum == 3) || (anchNum == 8) || (anchNum == 9))
             hops = 1;
 
+        // Strategy: Fibonacci slots
+        slotPointer = 0;
+        numBasicSlots = 0;
+        int fiboVectorAnchors[] = {1,2,3,5,1,1,2,3,5,5,1,2,3,3,3,1,2,2,2,2,1,1,1,1,1}; // define the number of basics slot that each anchor have
+        int transmissionOrder[] = {0,5,10,15,20,21,22,23,24,1,6,11,16,17,18,19,4,2,7,12,13,14,3,8,9};
+        int pointerVec;
+
+        numSlotsXAN =  (int*)calloc(sizeof(int), numberOfAnchors);
+        for (int i=0;i<numberOfAnchors;i++)
+        {
+            numSlotsXAN[i] = fiboVectorAnchors[i];
+        }
+        for(int i=0;i<numberOfAnchors;i++)
+        {
+            numBasicSlots = numBasicSlots + fiboVectorAnchors[i];
+        }
+        int testvar;
+        switch(getParentModule()->getIndex())
+        {
+        case 0:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 0;
+            sharedSlots[1] = 15;
+
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 1:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 1;
+            sharedSlots[1] = 16;
+            sharedSlots[2] = 19;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    testvar = transmissionOrder[pointerVec];
+                    testvar = fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+                EV<<"size: "<<sizeof(txBasicSlots)/sizeof(int)<<endl;
+                EV<<"BasicSlot: "<<txBasicSlots[i]<<endl;
+            }
+            break;
+
+        case 2:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 17;
+            sharedSlots[1] = 2;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 3:
+            sharedSlots = (int*)calloc(sizeof(int), 4);
+            txBasicSlots = (int*)calloc(sizeof(int), 4);
+            myNumberofSlots = 4;
+            sharedSlots[0] = 0;
+            sharedSlots[1] = 15;
+            sharedSlots[2] = 18;
+            sharedSlots[3] = 3;
+            for(int i=0; i<4; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 4:
+            sharedSlots = (int*)calloc(sizeof(int), 4);
+            txBasicSlots = (int*)calloc(sizeof(int), 4);
+            myNumberofSlots = 4;
+            sharedSlots[0] = 1;
+            sharedSlots[1] = 16;
+            sharedSlots[2] = 19;
+            sharedSlots[3] = 4;
+            for(int i=0; i<4; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 5:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 5;
+            sharedSlots[1] = 20;
+            sharedSlots[2] = 23;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 6:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 21;
+            sharedSlots[1] = 24;
+            sharedSlots[2] = 6;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 7:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 22;
+            sharedSlots[1] = 7;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 8:
+            sharedSlots = (int*)calloc(sizeof(int), 4);
+            txBasicSlots = (int*)calloc(sizeof(int), 4);
+            myNumberofSlots = 4;
+            sharedSlots[0] = 5;
+            sharedSlots[1] = 20;
+            sharedSlots[2] = 23;
+            sharedSlots[3] = 8;
+            for(int i=0; i<4; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 9:
+            sharedSlots = (int*)calloc(sizeof(int), 4);
+            txBasicSlots = (int*)calloc(sizeof(int), 4);
+            myNumberofSlots = 4;
+            sharedSlots[0] = 21;
+            sharedSlots[1] = 24;
+            sharedSlots[2] = 6;
+            sharedSlots[3] = 9;
+            for(int i=0; i<4; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 10:
+            sharedSlots = (int*)calloc(sizeof(int), 1);
+            txBasicSlots = (int*)calloc(sizeof(int), 1);
+            myNumberofSlots = 1;
+            sharedSlots[0] = 10;
+            for(int i=0; i<1; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 11:
+            sharedSlots = (int*)calloc(sizeof(int), 1);
+            txBasicSlots = (int*)calloc(sizeof(int), 1);
+            myNumberofSlots = 1;
+            sharedSlots[0] = 11;
+            for(int i=0; i<1; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 12:
+            sharedSlots = (int*)calloc(sizeof(int), 1);
+            txBasicSlots = (int*)calloc(sizeof(int), 1);
+            myNumberofSlots = 1;
+            sharedSlots[0] = 12;
+            for(int i=0; i<1; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 13:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 10;
+            sharedSlots[1] = 13;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 14:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 11;
+            sharedSlots[1] = 14;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 15:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 0;
+            sharedSlots[1] = 15;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 16:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 1;
+            sharedSlots[1] = 16;
+            sharedSlots[2] = 19;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 17:
+            sharedSlots = (int*)calloc(sizeof(int), 1);
+            txBasicSlots = (int*)calloc(sizeof(int), 1);
+            myNumberofSlots = 1;
+            sharedSlots[0] = 17;
+            for(int i=0; i<1; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 18:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 0;
+            sharedSlots[1] = 15;
+            sharedSlots[2] = 18;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 19:
+            sharedSlots = (int*)calloc(sizeof(int), 3);
+            txBasicSlots = (int*)calloc(sizeof(int), 3);
+            myNumberofSlots = 3;
+            sharedSlots[0] = 1;
+            sharedSlots[1] = 16;
+            sharedSlots[2] = 19;
+            for(int i=0; i<3; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 20:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 20;
+            sharedSlots[1] = 23;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 21:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 21;
+            sharedSlots[1] = 24;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 22:
+            sharedSlots = (int*)calloc(sizeof(int), 1);
+            txBasicSlots = (int*)calloc(sizeof(int), 1);
+            myNumberofSlots = 1;
+            sharedSlots[0] = 22;
+            for(int i=0; i<1; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 23:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 20;
+            sharedSlots[1] = 23;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        case 24:
+            sharedSlots = (int*)calloc(sizeof(int), 2);
+            txBasicSlots = (int*)calloc(sizeof(int), 2);
+            myNumberofSlots = 2;
+            sharedSlots[0] = 21;
+            sharedSlots[1] = 24;
+            for(int i=0; i<2; i++)
+            {
+                pointerVec = 0;
+                while(transmissionOrder[pointerVec] != sharedSlots[i])
+                {
+                    txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
+                    pointerVec++;
+                }
+            }
+            break;
+
+        }
+
+        for(int i=0;i<myNumberofSlots;i++)
+        {
+            EV<<"BasicSlots:"<<txBasicSlots[i]<<endl;
+        }
+
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
@@ -273,12 +738,12 @@ void AnchorAppLayer::finish()
 	recordScalar("Number of no ack-ComSink1",nbNoAckInComsink1);
 	recordScalar("Number of packets from this anchor",pktsFromThisAnchor);
 	recordScalar("Effectiveness in each anchor",successToTx);
-
-	for(int i = 0; i < numberOfNodes; i++) {
-		char buffer[100] = "";
-		sprintf(buffer, "Number of packets sent from mobile node %d", i);
-		recordScalar(buffer, fromNode[i]);
-	}
+	recordScalar("Number of packets sent from mobile node 0", fromNode[0]);
+//	for(int i = 0; i < numberOfNodes; i++) {
+//		char buffer[100] = "";
+//		sprintf(buffer, "Number of packets sent from mobile node %d", i);
+//		recordScalar(buffer, fromNode[i]);
+//	}
 	//free(packetsResend);
 }
 
@@ -322,36 +787,47 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
             {
                 if (packetsQueue.length() > 0) { // If there are messages to send
-                    if(!blockAppTransmissions)
-                    {
-                        ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
-                        msg->setCreatedIn(getParentModule()->getIndex());
-                        EV << "BLOCK, sending Packet with origin: " << msg->getCreatedIn() <<"this origin:"<<getParentModule()->getIndex()<< endl;
-                        EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
-                        macDeviceFree = false; // Mark the MAC as occupied
-                        if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
-                            msg->setTimestampAnchorTX(simTime().dbl());
-                            msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
+                    ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
+                   // msg->setCreatedIn(getParentModule()->getIndex());
+                    // In slotted ComSink1 mode the
+                    msg->setKind(REPORT_WITHOUT_CSMA);
+                    msg->setName("REPORT_WITHOUT_CSMA");
+                    msg->setCSMA(false);
+                    EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
+                    macDeviceFree = false; // Mark the MAC as occupied
+                    if(msg->getTimestampAnchorTX() == 0) { // Save the sending times if the message in enrouted for the first time
+                        msg->setTimestampAnchorTX(simTime().dbl());
+                        msg->setTimestampComRelated(simTime().dbl() - comsinkPhaseStartTime);
+                    }
+                    //Counts the number of packets sent from the anchor depending to its type
+                    if(msg->getWasBroadcast())
+                        broadSent[msg->getPriority()]++;
+                    else if(msg->getWasReport())
+                        reportSent[msg->getPriority()]++;
+                    else if(msg->getWasRequest())
+                        requestSent++;
+                    transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+                    sendDown(msg);
+
+                    EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
+                    if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
+                        // Schedule the next queue element in the next random time
+                        EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
+                        if(simTime() + 0.004 < endSlotTime) // A transmission takes 2ms if there is time for another transmission, it will be scheduled
+                        {
+                            scheduleAt(simTime() + 0.002,checkQueue);
                         }
-                        //Counts the number of packets sent from the anchor depending to its type
-                        if(msg->getWasBroadcast())
-                            broadSent[msg->getPriority()]++;
-                        else if(msg->getWasReport())
-                            reportSent[msg->getPriority()]++;
-                        else if(msg->getWasRequest())
-                            requestSent++;
-                        transfersQueue.insert(msg->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-                        sendDown(msg);
-                        // Block transmission from App Layer until arrive control msg for this msg.
-                        blockAppTransmissions = true;
-                        stepTimeComSink1End = stepTimeComSink1End + stepTimeComSink1;
-                        EV <<"Msg with App ID: " << msg->getEncapsulationTreeId() << endl;
-                        if (packetsQueue.length() > 0) { // We have to check again if the queue has still elements after taking the element previously
-                            // Schedule the next queue element in the next random time
-                            queueElementCounter++;
-                            EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-                            EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
+                        else
+                        {
+                            if(slotPointer < myNumberofSlots-1)
+                            {
+                                slotPointer++;
+                                EV<<"SlotPointer: "<<slotPointer<<endl;
+                                EV<<"NUEVO SLOT: "<<txBasicSlots[slotPointer]*durationBasicComSinkSlot<<endl;
+                                endSlotTime = initTimeComSink1 + (txBasicSlots[slotPointer]*durationBasicComSinkSlot) + (numSlotsXAN[sharedSlots[slotPointer]]*durationBasicComSinkSlot);
+                                scheduleAt(initTimeComSink1 + (txBasicSlots[slotPointer]*durationBasicComSinkSlot), checkQueue);
+
+                            }
                         }
                     }
                 }
@@ -361,7 +837,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         case BEGIN_PHASE:
             // Empty the transmission Queue
             EV << "APP PACKETQUEUE with: " << packetsQueue.length() << " elements in phase change" << endl;
-            blockAppTransmissions = false;
           //  remPktApp = packetsQueue.length();
             if (!transfersQueue.empty()) {
                 EV << "Emptying the transfer queue with " << transfersQueue.length() << " elements in phase change" << endl;
@@ -562,37 +1037,12 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
 
                 pktsFromThisAnchor = packetsQueue.length();
-                // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
-                randomQueueTime = (simtime_t*)calloc(sizeof(simtime_t), maxQueueElements);
-                if (packetsQueue.length() > 0) { // Only if the Queue has elements we do calculate all the intermediate times
-                    stepTimeComSink1 = (timeComSinkPhase1 - guardTimeComSinkPhase) / packetsQueue.length();
-                    // Changing the random transmit method in order to achive a behavior like in the real network
-                    blockAppTransmissions = false;
-                    if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                        stepTimeComSink1 = 0.05;
-                    stepTimeComSink1End = simTime();// + stepTimeComSink1;
-
-                    EV << "Estimating the next transmission time: " << endl;
-                    EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
-                    EV << "End of the stepComSink1: "<< stepTimeComSink1End << endl;
-                    EV << "NextPhaseStartTime: "<< nextPhaseStartTime << endl;
-                    EV << "GuardTime: "<< guardTimeComSinkPhase << endl;
-                    EV << "stepComSinkPhase "<< stepTimeComSink1<< endl;
-
-                    for (int i = 0; i < packetsQueue.length(); i++) {
-                        randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                        EV << "Time " << i << ": " << randomQueueTime[i] << endl;
-                    }
-                    numPckToSent = packetsQueue.length();
-                    queueElementCounter = 0; // Reset the index to know which random time from vector to use
-
-                    EV << "Still " << packetsQueue.length() << " elements in the Queue." << endl;
-                    EV << "Random Transmission number " << queueElementCounter + 1 << " at : " << randomQueueTime[queueElementCounter] << " s" << endl;
-
-                    scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-                } else {
-                    EV << "Queue empty, Anchor has nothing to communicate this full phase (period)." << endl;
-                }
+                //durationComSinkSlot = durationComSinkSlot * fiboVector[numMaxHops - hops]; //Mod Fibonacci
+                EV<< "Asignación de slots para tranmistir en la comSink" << endl;
+                EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
+                durationBasicComSinkSlot = (timeComSinkPhase1 - guardTimeComSinkPhase)/numBasicSlots;
+                endSlotTime = simTime() + (txBasicSlots[slotPointer]*durationBasicComSinkSlot) + (numSlotsXAN[sharedSlots[slotPointer]]*durationBasicComSinkSlot);
+                scheduleAt(simTime() + (txBasicSlots[slotPointer]*durationBasicComSinkSlot), checkQueue);
 
                 break;
             case AppLayer::SYNC_PHASE_3:
@@ -902,14 +1352,32 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            sendDown(buffer);
 	                        } else {                                                                                            // Else, the received packet is directly
 	                            macDeviceFree = false;                                                                          // routed
-	                            transfersQueue.insert(pkt->dup());
+	                            packetsQueue.insert(pkt->dup());
 	                            if(pkt->getWasBroadcast())
 	                                broadSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasReport())
 	                                reportSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
-	                            sendDown(pkt);
+	                            if(!checkQueue->isScheduled())
+	                            {
+                                   while(initTimeComSink1+(txBasicSlots[slotPointer]*durationBasicComSinkSlot) < simTime() )
+                                   {
+                                       EV<<"SlotPointer TX: "<<slotPointer<<endl;
+                                       if(slotPointer<myNumberofSlots)
+                                           slotPointer++;
+                                       else
+                                       {
+                                           slotPointer++;
+                                           break;
+                                       }
+                                   }
+                                   if(slotPointer < myNumberofSlots)
+                                   {
+                                       scheduleAt(initTimeComSink1 + (txBasicSlots[slotPointer]*durationBasicComSinkSlot), checkQueue);
+                                       endSlotTime = simTime() + (txBasicSlots[slotPointer]*durationBasicComSinkSlot) + (numSlotsXAN[sharedSlots[slotPointer]]*durationBasicComSinkSlot);
+                                   }
+                               }
 	                        }
 	                    } else { // There is no priority; message directly sent to MAC
 	                        macDeviceFree = false;
@@ -920,7 +1388,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                            reportSent[pkt->getPriority()]++;
 	                        else if(pkt->getWasRequest())
 	                            requestSent++;
-	                        sendDown(pkt);
+	            //            sendDown(pkt);
 	                    }
 	                    break;
 				    }
@@ -981,7 +1449,6 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                 if(pkt->getCreatedIn() == getParentModule()->getIndex())
                 {
                     EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
-                    blockAppTransmissions = false;
                     if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
                     {
                         EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
@@ -1053,7 +1520,6 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                 if(pkt->getCreatedIn() == getParentModule()->getIndex())
                 {
                     EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
-                    blockAppTransmissions = false;
                     if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
                     {
                         EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
@@ -1110,7 +1576,6 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
         if(pkt->getCreatedIn() == getParentModule()->getIndex())
         {
             EV << "Dropped Queue full packet was make here. UNBLOCK transmissions"<< endl;
-            blockAppTransmissions = false;
             if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
             {
                 EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
@@ -1155,44 +1620,6 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 		EV << "Message correctly transmitted, received the ACK." << endl;
 		nbReportsWithACK++;
 
-		// Check
-		if(phase == COM_SINK_PHASE_1)
-		{
-            EV << "Packet was made in: "<<pkt->getCreatedIn()<<"this index: "<<getParentModule()->getIndex()<<endl;
-            if(pkt->getCreatedIn() == getParentModule()->getIndex())
-            {
-                txPktsCreatedInApp++;
-                EV << "Packet transmitted was make here. UNBLOCK transmissions"<< endl;
-                blockAppTransmissions = false;
-                if(simTime() < (nextPhaseStartTime - guardTimeComSinkPhase))
-                {
-                    EV << "Packets to transmit: "<<packetsQueue.length()<< endl;
-                    if(packetsQueue.length()>0)
-                    {
-                        EV << "Time now: "<<simTime()<<"EndComSink1Step"<<stepTimeComSink1End<< endl;
-                        if(simTime() > stepTimeComSink1End)
-                        {
-                            EV << "timeComSinkPhase1: "<<timeComSinkPhase1<<" initTimeComSink1 "<<initTimeComSink1<<
-                                    "guardTimeComSinkPhase: "<<guardTimeComSinkPhase<<endl;
-                            stepTimeComSink1 = (timeComSinkPhase1 - (simTime() - initTimeComSink1) - guardTimeComSinkPhase) / (packetsQueue.length());
-                            EV << "stepTimeComSink1: "<<stepTimeComSink1<<endl;
-                            if(stepTimeComSink1 < 0.05) // if stepTimeComSink1 < 50 ms
-                                stepTimeComSink1 = 0.05;
-                            for (int i = 0; i < packetsQueue.length(); i++) {
-                                randomQueueTime[i] = simTime() + (i * stepTimeComSink1) + uniform(0,(0.8*stepTimeComSink1), 0);
-                                EV << "Time " << i << ": " << randomQueueTime[i] << endl;
-                            }
-                            stepTimeComSink1End = simTime() + stepTimeComSink1;
-                            numPckToSent = packetsQueue.length();
-                            queueElementCounter = 0;
-                            if (checkQueue->isScheduled())
-                               cancelEvent(checkQueue);
-                            scheduleAt(randomQueueTime[queueElementCounter], checkQueue);
-                        }
-                    }
-                }
-            }
-        }
 		if(pkt->getWasBroadcast())
 			broadSentOK[pkt->getPriority()]++;
 		else if(pkt->getWasReport())
