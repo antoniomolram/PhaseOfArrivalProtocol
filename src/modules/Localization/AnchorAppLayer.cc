@@ -24,7 +24,12 @@ void AnchorAppLayer::initialize(int stage)
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
 
 		/* Modified by Victor */
+
 		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
+		for(int i =0; i<numberOfNodes;i++)
+		{
+		    firstMNBroadcasTime[i]=-1; // -1 indicates that there is no mobile node index at position i
+		}
 		duplicatedPktCounter = 0;
 		txPktsCreatedInApp = 0;
 		remPktApp = 0;
@@ -91,6 +96,9 @@ void AnchorAppLayer::initialize(int stage)
 	    backoffDroppedVec.setName("Dropped Packets in AN - Max MAC BackOff tries");
 	    reportsWithAckVec.setName("Number of AN Reports with ACK");
 	    pktsFromThisAnchor.setName("Number of packets from this anchor");
+	    pktFromNode0Vec.setName("Number of packets sent from mobile node 0");
+	    successToTxVec.setName("Effectiveness in each anchor");
+
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
 
@@ -883,6 +891,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 noAckDroppedVec.record(nbPacketDroppedNoACK);
                 backoffDroppedVec.record(nbPacketDroppedBackOff);
                 reportsWithAckVec.record(nbReportsWithACK);
+                pktFromNode0Vec.record(fromNode[0]);
+                successToTxVec.record(successToTx);
+                fromNode[0] = 0;
                 numPckToSentByPeriod = 0;
                 nbPacketDroppedNoACK = 0;
                 nbPacketDroppedBackOff = 0;
@@ -992,10 +1003,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
 
                 for (int i = 0; i < numberOfNodes; i++) {
-                    if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
+                    if (firstMNBroadcasTime[i] > -1) { // If the AN has received at least one Broadcast
                         ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
                         //pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
-                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
+                      //  pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
+                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[firstMNBroadcasTime[i]]*8));
                         pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
                         pkt->setDestAddr(pkt->getRealDestAddr());
                         pkt->setSrcAddr(myNetwAddr);
@@ -1011,6 +1023,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         //broadNew[broadPriority]++;
                         fromNode[i]++;
                         broadNew[broadPriority[i]]++;
+                        firstMNBroadcasTime[i] = -1;
                         pkt->setId(numPck);
                         pkt->setCreatedIn(getParentModule()->getIndex());
                         //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
@@ -1026,11 +1039,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                             delete pkt;
                         }
                     }
+                    else{
+                        break;
+                    }
                 }
                 broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
                 broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
                 broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
-                firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
+         //       firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
                 firtsBCCounter = 0;
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
@@ -1343,6 +1359,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	    		{
 	    		    firstMNBroadcasTime[firtsBCCounter] = indexBroadcast;
 	    		    firtsBCCounter++;
+
 	    		}
 				broadcastCounter[indexBroadcast]++;
 	    		broadPriority[indexBroadcast] = pkt->getPriority();

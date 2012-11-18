@@ -191,6 +191,11 @@ void ComputerAppLayer::initialize(int stage)
 		receivedPacketsVec.setName("received-packets-per-period");
 		noRepPacketsVec.setName("received-no-repeated-packets-per-period");
 		pktFromNode0Vec.setName("Number of packets sent from mobile node 0");
+		pktFromAN8Vec.setName("Number of packets sent from anchor 8");
+		pktFromAN12Vec.setName("Number of packets sent from anchor 12");
+		pktFromAN16Vec.setName("Number of packets sent from anchor 16");
+		pktFromAN20Vec.setName("Number of packets sent from anchor 20");
+
 		receivedPacketsPerPeriod = 0;
 		nbReportsNoDupPerPeriod = 0;
 		// Necessary variables for the queue initialization
@@ -216,6 +221,8 @@ void ComputerAppLayer::initialize(int stage)
 
 		fromNode = (int*)calloc(sizeof(int), numberOfNodes);
 		memset(fromNode, 0, sizeof(int)*numberOfNodes);
+
+		fromAnchor = (int*)calloc(sizeof(int), numberOfAnchors);
 
 		receivedId = (bool*)calloc(sizeof(bool), numberOfAnchors*10000);
 		for(int i = 0; i < numberOfAnchors*10000; i++)
@@ -425,9 +432,18 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 	        numPckToSentByPeriod = 0;
 	        receivedPacketsVec.record(receivedPacketsPerPeriod);
 	        noRepPacketsVec.record(nbReportsNoDupPerPeriod);
+	        pktFromAN8Vec.record(fromAnchor[8]);
+	        pktFromAN12Vec.record(fromAnchor[12]);
+	        pktFromAN16Vec.record(fromAnchor[16]);
+	        pktFromAN20Vec.record(fromAnchor[20]);
 	        pktFromNode0Vec.record(fromNode[0]);
+
 	        receivedPacketsPerPeriod = 0;
 	        nbReportsNoDupPerPeriod = 0;
+	        fromAnchor[8] = 0;
+	        fromAnchor[12] = 0;
+	        fromAnchor[16] = 0;
+	        fromAnchor[20] = 0;
 	        fromNode[0] = 0;
 		}
 		if (!transfersQueue.empty()) {
@@ -629,6 +645,7 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                             pkt->setCSMA(true);
                             if(!receivedId[pkt->getCreatedIn()*10000 + pkt->getId()]) { // Checks if the packet was already received to only count it once
                                 fromNode[pkt->getFromNode()]++;
+                                fromAnchor[pkt->getCreatedIn()]++;
                                 receivedId[pkt->getCreatedIn()*10000 + pkt->getId()] = true;
                             }
 
@@ -1337,11 +1354,15 @@ void ComputerAppLayer::finish()
         recordScalar(buffer, minDelayRequest[i]);
     }*/
 
-    for(int i = 0; i < numberOfNodes; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Number of packets sent from mobile node %d", i);
-        recordScalar(buffer, fromNode[i]);
-    }
-
+//    for(int i = 0; i < numberOfNodes; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of packets sent from mobile node %d", i);
+//        recordScalar(buffer, fromNode[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of packets sent from anchor%d", i);
+//        recordScalar(buffer, fromAnchor[i]);
+//    }
     free(packetsResend);
 }

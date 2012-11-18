@@ -102,6 +102,8 @@ protected:
 	bool* receivedId;					// Vector to control if a particular packet from an anchor has been received
 
     // Modified by Victor
+
+	int *fromAnchor;                   // Vector to count the amount of packets received from each anchor
 	double duplicatedPktCounter;
 	bool appDuplicateFilter;
     int *packetsResend;            // Packets that were successfully resend.
@@ -112,6 +114,12 @@ protected:
     cOutVector receivedPacketsVec;
     cOutVector noRepPacketsVec;
     cOutVector pktFromNode0Vec;
+    cOutVector pktFromAN8Vec;
+    cOutVector pktFromAN12Vec;
+    cOutVector pktFromAN16Vec;
+    cOutVector pktFromAN20Vec;
+
+
 
 
 public:
