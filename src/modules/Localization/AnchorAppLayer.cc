@@ -27,6 +27,10 @@ void AnchorAppLayer::initialize(int stage)
 		nbCafInComSink1 = 0;
 		nbNoAckInComsink1 = 0;
 		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
+        for(int i =0; i<numberOfNodes;i++)
+        {
+            firstMNBroadcasTime[i]=-1; // -1 indicates that there is no mobile node index at position i
+        }
 		duplicatedPktCounter = 0;
 		txPktsCreatedInApp = 0;
 		remPktApp = 0;
@@ -314,7 +318,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     if(!blockAppTransmissions)
                     {
                         ApplPkt* msg = check_and_cast<ApplPkt*>((cMessage *)packetsQueue.pop());
-                        msg->setCreatedIn(getParentModule()->getIndex());
+                       // msg->setCreatedIn(getParentModule()->getIndex());
                         EV << "BLOCK, sending Packet with origin: " << msg->getCreatedIn() <<"this origin:"<<getParentModule()->getIndex()<< endl;
                         EV << "Sending packet from the Queue to Anchor with addr. " << msg->getDestAddr() << endl;
                         macDeviceFree = false; // Mark the MAC as occupied
@@ -481,62 +485,69 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 break;
             case AppLayer::SYNC_PHASE_2:
-                phase = AppLayer::SYNC_PHASE_2;
-                nextPhase = AppLayer::COM_SINK_PHASE_1;
-                nextPhaseStartTime = simTime() + timeSyncPhase;
-                scheduleAt(nextPhaseStartTime, beginPhases);
+                 phase = AppLayer::SYNC_PHASE_2;
+                 nextPhase = AppLayer::COM_SINK_PHASE_1;
+                 nextPhaseStartTime = simTime() + timeSyncPhase;
+                 scheduleAt(nextPhaseStartTime, beginPhases);
 
-                for (int i = 0; i < numberOfNodes; i++) {
-                    if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
-                        ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
-                        //pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
-                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
-                        pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
-                        pkt->setDestAddr(pkt->getRealDestAddr());
-                        pkt->setSrcAddr(myNetwAddr);
-                        pkt->setRealSrcAddr(getParentModule()->getParentModule()->getSubmodule("node", i)->findSubmodule("nic"));
-                        pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
-                        pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
-                        pkt->setCSMA(true);
-                        pkt->setPriority(broadPriority[firstMNBroadcasTime[i]]);
-                        pkt->setNodeMode(broadNodeMode[firstMNBroadcasTime[i]]);
-                        pkt->setFromNode(firstMNBroadcasTime[i]);
-                        pkt->setTimeOfLife(1);
-                        pkt->setWasBroadcast(true);
-                        //broadNew[broadPriority]++;
-                        fromNode[i]++;
-                        broadNew[broadPriority[i]]++;
-                        pkt->setId(numPck);
-                        pkt->setCreatedIn(getParentModule()->getIndex());
-                        //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
-                        numPck++;
-                        EV << "PAQUETE DE MN " << pkt->getFromNode() << endl;
-                        if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for this packet
-                            EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
-                            EV << "Packet size of packet " << i <<pkt->getBitLength()<< endl;
-                        } else {
-                            EV << "Queue full, discarding packet" << endl;
-                            broadPckQueue[broadPriority[i]]++;
-                            nbPacketDroppedAppQueueFull++;
-                            delete pkt;
-                        }
-                    }
-                }
-                broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
-                broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
-                broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
-                firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
-                firtsBCCounter = 0;
-                // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
-                if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
-                    nextPhaseStart = simTime();
-                    scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
-                    EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
-                    scheduledSlot++;
-                } else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
-                    scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
-                }
-                break;
+                 for(int i=0;i<numberOfNodes;i++)
+                     EV<<"firstMNBroadcast: "<<firstMNBroadcasTime[i]<<endl;
+
+                 for (int i = 0; i < numberOfNodes; i++) {
+                     if (firstMNBroadcasTime[i] > -1) { // If the AN has received at least one Broadcast
+                         ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
+                         //pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
+                         pkt->setBitLength(PktLengthMN3 + (broadcastCounter[firstMNBroadcasTime[i]]*8));
+                         pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
+                         pkt->setDestAddr(pkt->getRealDestAddr());
+                         pkt->setSrcAddr(myNetwAddr);
+                         pkt->setRealSrcAddr(getParentModule()->getParentModule()->getSubmodule("node", i)->findSubmodule("nic"));
+                         pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
+                         pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
+                         pkt->setCSMA(true);
+                         pkt->setPriority(broadPriority[firstMNBroadcasTime[i]]);
+                         pkt->setNodeMode(broadNodeMode[firstMNBroadcasTime[i]]);
+                         pkt->setFromNode(firstMNBroadcasTime[i]);
+                         pkt->setTimeOfLife(1);
+                         pkt->setWasBroadcast(true);
+                         //broadNew[broadPriority]++;
+                         fromNode[i]++;
+                         broadNew[broadPriority[i]]++;
+                         firstMNBroadcasTime[i] = -1;
+                         pkt->setId(numPck);
+                         pkt->setCreatedIn(getParentModule()->getIndex());
+                         //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
+                         numPck++;
+                         EV << "PAQUETE DE MN " << pkt->getFromNode() << endl;
+                         if (packetsQueue.insertElem(pkt)) { // There is still place in the queue for this packet
+                             EV << "Enqueing broadcast RSSI values from Mobile Node " << i << endl;
+                             EV << "Packet size of packet " << i <<pkt->getBitLength()<< endl;
+                         } else {
+                             EV << "Queue full, discarding packet" << endl;
+                             broadPckQueue[broadPriority[i]]++;
+                             nbPacketDroppedAppQueueFull++;
+                             delete pkt;
+                         }
+                     }
+                     else{
+                         break;
+                     }
+                 }
+                 broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
+                 broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
+                 broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
+             //    firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
+                 firtsBCCounter = 0;
+                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
+                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
+                     nextPhaseStart = simTime();
+                     scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), delayTimer);
+                     EV << "Time for next Sync Packet " << nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime) << endl;
+                     scheduledSlot++;
+                 } else if (phaseRepetitionNumber != 0) { // If sync phase with random transmissions
+                     scheduleAt(simTime() + uniform(0, syncFirstMaxRandomTime, 0), delayTimer);
+                 }
+                 break;
             case AppLayer::COM_SINK_PHASE_1:
                 phase = AppLayer::COM_SINK_PHASE_1;
                 nextPhase = AppLayer::SYNC_PHASE_3;
