@@ -716,11 +716,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         if(myTimeList.currentTime)
                         {
                             assert(myTimeList.currentTime);
-                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && myTimeList.currentTime->nextTime)
+                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
                             {
                                 assert(myTimeList.currentTime);
-                                nbCurrentAvailableTime--;
-                                myTimeList.getnextTime();
+                                 nbCurrentAvailableTime--;
+                                 if(myTimeList.currentTime->nextTime)
+                                     myTimeList.getnextTime();
+                                 else
+                                     break;
                             }
                         }
                         EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
@@ -739,11 +742,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     if(myTimeList.currentTime)
                     {
                         assert(myTimeList.currentTime);
-                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && myTimeList.currentTime->nextTime)
+                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
                         {
                             assert(myTimeList.currentTime);
-                            nbCurrentAvailableTime--;
-                            myTimeList.getnextTime();
+                             nbCurrentAvailableTime--;
+                             if(myTimeList.currentTime->nextTime)
+                                 myTimeList.getnextTime();
+                             else
+                                 break;
                         }
                     }
                     EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
