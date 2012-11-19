@@ -743,11 +743,31 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     subComSink1Counter++;
                     scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
 
-                    if(!checkQueue->isScheduled() && packetsQueue.length()>0)
+//                    if(!checkQueue->isScheduled() && packetsQueue.length()>0)
+//                    {
+// //                       EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+//                        myTimeList.printTimes();
+//                        scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
+//                    }
+                    if(!checkQueue->isScheduled())
                     {
- //                       EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
+                        if(myTimeList.currentTime)
+                        {
+                            assert(myTimeList.currentTime);
+                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                            {
+                                assert(myTimeList.currentTime);
+                                nbCurrentAvailableTime--;
+                                if(myTimeList.currentTime->nextTime)
+                                    myTimeList.getnextTime();
+                                else
+                                    break;
+                            }
+                        }
+           //             EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
                         myTimeList.printTimes();
-                        scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
+                        if(packetsQueue.length()>0)
+                            scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
                     }
                 }
             }
@@ -760,15 +780,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     if(myTimeList.currentTime)
                     {
                         assert(myTimeList.currentTime);
-                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && myTimeList.currentTime->nextTime)
+                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
                         {
                             assert(myTimeList.currentTime);
+                            nbCurrentAvailableTime--;
                             if(myTimeList.currentTime->nextTime)
-                            {
                                 myTimeList.getnextTime();
-                                nbCurrentAvailableTime--;
-                                EV<<"POSIBLEMENTE DOS EVENTOS AL MISMO TIEMPO"<<endl;
-                            }
+                            else
+                                break;
                         }
                     }
        //             EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
