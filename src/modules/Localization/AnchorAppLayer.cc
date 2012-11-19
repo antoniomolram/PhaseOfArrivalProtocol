@@ -258,7 +258,7 @@ void AnchorAppLayer::comSinkStrategyInit()
             }
         }
         else{
-            myNumberOfHopSlotsA = (nbTotalHops/2) +1;
+            myNumberOfHopSlotsA = (nbTotalHops/2)+1;
             hopSlots2TransmitA = (int*)calloc(sizeof(int), myNumberOfHopSlotsA);
             int k = 1;
             for(int i=0;i<myNumberOfHopSlotsA;i++)
@@ -311,7 +311,10 @@ void AnchorAppLayer::comSinkStrategyInit()
     {
         for(int j=0;j<myNumberOfHopSlotsA;j++)
         {
-            TxComSinkPktMatrix[i][hopSlots2TransmitA[j]-1] = (baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
+            if(i == nbSubComSink1Slots-1 && j>0 && (hops == 3 || hops == 4) )
+                TxComSinkPktMatrix[i][hopSlots2TransmitA[j]-1] = 0;
+            else
+                TxComSinkPktMatrix[i][hopSlots2TransmitA[j]-1] = (baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
         }
     }
     for(int i=0;i<nbSubComSink1Slots;i++)
@@ -752,19 +755,26 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 hopSlotsCounter++;
                 scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
 
-                if(!checkQueue->isScheduled() && packetsQueue.length()>0)
+                if(!checkQueue->isScheduled())
                 {
-                    if(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                    if(myTimeList.currentTime)
                     {
-                        if(myTimeList.currentTime->nextTime)
+                        assert(myTimeList.currentTime);
+                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && myTimeList.currentTime->nextTime)
                         {
-                      //      myTimeList.getnextTime();
-                            EV<<"POSIBLEMENTE DOS EVENTOS AL MISMO TIEMPO"<<endl;
+                            assert(myTimeList.currentTime);
+                            if(myTimeList.currentTime->nextTime)
+                            {
+                                myTimeList.getnextTime();
+                                nbCurrentAvailableTime--;
+                                EV<<"POSIBLEMENTE DOS EVENTOS AL MISMO TIEMPO"<<endl;
+                            }
                         }
                     }
        //             EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
                     myTimeList.printTimes();
-                    scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
+                    if(packetsQueue.length()>0)
+                        scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
                 }
             }
 
