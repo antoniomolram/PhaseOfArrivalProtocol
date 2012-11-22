@@ -720,7 +720,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                             {
                                 assert(myTimeList.currentTime);
                                 if(myTimeList.currentTime->succesIndicator > 1)
-                                    updateSuccessTimeList(false);
+                                    myTimeList.currentTime->succesIndicator--;
                                 nbCurrentAvailableTime--;
                                 if(myTimeList.currentTime->nextTime)
                                 {
@@ -751,7 +751,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         {
                             assert(myTimeList.currentTime);
                             if(myTimeList.currentTime->succesIndicator > 1)
-                                updateSuccessTimeList(false);
+                                myTimeList.currentTime->succesIndicator--;
                             nbCurrentAvailableTime--;
                             if(myTimeList.currentTime->nextTime)
                             {
