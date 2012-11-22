@@ -658,6 +658,7 @@ void AnchorAppLayer::updateSuccessTimeList(bool success)
                 EV<<"Time with 0 success. Time deleted. Total times: "<<nbTotalAvailableTime<<endl;
             }
             waitingRespondList.deleteTime(waitingRespondList.firstTime->transmitTime);
+
         }
     }
 }
@@ -726,6 +727,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 
  //           EV<<"CURRENT: "<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
             EV<<"Tiempos disponibles: "<<nbCurrentAvailableTime<<endl;
+            testVar1 = getParentModule()->getIndex();
             for(int i=0;i<nbSubComSink1Slots;i++)
             {
                 for(int j=0;j<nbTotalHops;j++)
@@ -754,12 +756,17 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         if(myTimeList.currentTime)
                         {
                             assert(myTimeList.currentTime);
-                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && nbCurrentAvailableTime > 0)
                             {
                                 assert(myTimeList.currentTime);
                                 nbCurrentAvailableTime--;
+                                if(myTimeList.currentTime->succesIndicator > 1)
+                                    updateSuccessTimeList(false);
                                 if(myTimeList.currentTime->nextTime)
+                                {
+                                    assert(myTimeList.currentTime->nextTime);
                                     myTimeList.getnextTime();
+                                }
                                 else
                                     break;
                             }
@@ -780,12 +787,17 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     if(myTimeList.currentTime)
                     {
                         assert(myTimeList.currentTime);
-                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && nbCurrentAvailableTime > 0 )
                         {
                             assert(myTimeList.currentTime);
+                            if(myTimeList.currentTime->succesIndicator > 1)
+                                updateSuccessTimeList(false);
                             nbCurrentAvailableTime--;
                             if(myTimeList.currentTime->nextTime)
+                            {
+                                assert(myTimeList.currentTime->nextTime);
                                 myTimeList.getnextTime();
+                            }
                             else
                                 break;
                         }
