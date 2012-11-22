@@ -716,14 +716,19 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         if(myTimeList.currentTime)
                         {
                             assert(myTimeList.currentTime);
-                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                            while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && nbCurrentAvailableTime > 0 )
                             {
                                 assert(myTimeList.currentTime);
-                                 nbCurrentAvailableTime--;
-                                 if(myTimeList.currentTime->nextTime)
-                                     myTimeList.getnextTime();
-                                 else
-                                     break;
+                                if(myTimeList.currentTime->succesIndicator > 1)
+                                    updateSuccessTimeList(false);
+                                nbCurrentAvailableTime--;
+                                if(myTimeList.currentTime->nextTime)
+                                {
+                                    assert(myTimeList.currentTime->nextTime);
+                                    myTimeList.getnextTime();
+                                }
+                                else
+                                    break;
                             }
                         }
                         EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
@@ -742,14 +747,19 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     if(myTimeList.currentTime)
                     {
                         assert(myTimeList.currentTime);
-                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime())
+                        while(periodIniTime + myTimeList.currentTime->transmitTime < simTime() && nbCurrentAvailableTime > 0 )
                         {
                             assert(myTimeList.currentTime);
-                             nbCurrentAvailableTime--;
-                             if(myTimeList.currentTime->nextTime)
-                                 myTimeList.getnextTime();
-                             else
-                                 break;
+                            if(myTimeList.currentTime->succesIndicator > 1)
+                                updateSuccessTimeList(false);
+                            nbCurrentAvailableTime--;
+                            if(myTimeList.currentTime->nextTime)
+                            {
+                                assert(myTimeList.currentTime->nextTime);
+                                myTimeList.getnextTime();
+                            }
+                            else
+                                break;
                         }
                     }
                     EV<<"B"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
