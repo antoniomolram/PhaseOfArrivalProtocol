@@ -91,7 +91,8 @@ void AnchorAppLayer::initialize(int stage)
         // Strategy: Fibonacci slots
         slotPointer = 0;
         numBasicSlots = 0;
-        int fiboVectorAnchors[] = {1,2,3,5,1,1,2,3,5,5,1,2,3,3,3,1,2,2,2,2,1,1,1,1,1}; // define the number of basics slot that each anchor have
+  //      int fiboVectorAnchors[] = {1,2,3,5,1,1,2,3,5,5,1,2,3,3,3,1,2,2,2,2,1,1,1,1,1}; // define the number of basics slot that each anchor have
+        int fiboVectorAnchors[] = {1,2,8,21,1,1,2,3,144,21,1,2,21,3,3,1,3,3,2,2,1,1,1,1,1};
         int transmissionOrder[] = {0,5,10,15,20,21,22,23,24,1,6,11,16,17,18,19,4,2,7,12,13,14,3,8,9};
         int pointerVec;
 
