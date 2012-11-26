@@ -26,7 +26,11 @@ void AnchorAppLayer::initialize(int stage)
 		/* Modified by Victor */
 		nbCafInComSink1 = 0;
 		nbNoAckInComsink1 = 0;
-		firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
+        firstMNBroadcasTime = (int*)calloc(sizeof(int), numberOfNodes);
+        for(int i =0; i<numberOfNodes;i++)
+        {
+            firstMNBroadcasTime[i]=-1; // -1 indicates that there is no mobile node index at position i
+        }
 		duplicatedPktCounter = 0;
 		txPktsCreatedInApp = 0;
 		remPktApp = 0;
@@ -503,16 +507,17 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 scheduleAt(nextPhaseStartTime, beginPhases);
 
                 for (int i = 0; i < numberOfNodes; i++) {
-                    if (broadcastCounter[i] > 0) { // If the AN has received at least one Broadcast
+                    if (firstMNBroadcasTime[i] > -1) { // If the AN has received at least one Broadcast
                         ApplPkt *pkt = new ApplPkt("Report with CSMA", REPORT_WITH_CSMA);
                         //pkt->setBitLength(bcastMixANPacketLength + priorityLengthAddition + (broadcastCounter[i]*8));// plus 1 byte per Broadcast received
-                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
+                      //  pkt->setBitLength(PktLengthMN3 + (broadcastCounter[i]*8));
+                        pkt->setBitLength(PktLengthMN3 + (broadcastCounter[firstMNBroadcasTime[i]]*8));
                         pkt->setRealDestAddr(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));
                         pkt->setDestAddr(pkt->getRealDestAddr());
                         pkt->setSrcAddr(myNetwAddr);
                         pkt->setRealSrcAddr(getParentModule()->getParentModule()->getSubmodule("node", i)->findSubmodule("nic"));
-                        pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
-                        pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
+                        pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
+                        pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
                         pkt->setCSMA(true);
                         pkt->setPriority(broadPriority[firstMNBroadcasTime[i]]);
                         pkt->setNodeMode(broadNodeMode[firstMNBroadcasTime[i]]);
@@ -522,6 +527,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                         //broadNew[broadPriority]++;
                         fromNode[i]++;
                         broadNew[broadPriority[i]]++;
+                        firstMNBroadcasTime[i] = -1;
                         pkt->setId(numPck);
                         pkt->setCreatedIn(getParentModule()->getIndex());
                         //regPck[pkt->getCreatedIn()*10000 + pkt->getId()]++;
@@ -537,11 +543,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                             delete pkt;
                         }
                     }
+                    else{
+                        break;
+                    }
                 }
                 broadcastCounter = (int*)calloc(sizeof(int), numberOfNodes); // Reset the counter of broadcast a AN received from Mobile Nodes
                 broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
                 broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
-                firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
+         //       firstMNBroadcasTime = (int*)calloc(sizeof(simtime_t), numberOfNodes);
                 firtsBCCounter = 0;
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
