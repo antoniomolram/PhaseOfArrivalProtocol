@@ -198,7 +198,7 @@ void TimeList::handleFineTimeError(simtime_t adjusTime, simtime_t transmitTime)
             updateSuccess(adjusTime, true);
         EV<<"FINE ERROR-CURRENT A: "<<currentTime->transmitTime<<endl;
         EV<<"FINE ERROR-CURRENT H: "<<aux->transmitTime<<endl;
-        if(this->currentTime->transmitTime < adjusTime)
+        if(this->currentTime->transmitTime < adjusTime && currentTime->nextTime)
         {
             assert(currentTime->nextTime);
             this->getnextTime();
