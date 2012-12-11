@@ -63,10 +63,10 @@ protected:
 	// Modified by Victor
 
 	double duplicatedPktCounter;
-	int nbCafInComSink1;
-	int nbNoAckInComsink1;
+	int nbCafInComSink1;                 // Number of dropped due to Backoff in the COM_SINK_1
+	int nbNoAckInComsink1;               // Number of dropped due to no ack in the COM_SINK_1
 	int *packetsResend;                  // Packets that were successfully resend.
-	int* firstMNBroadcasTime;             // Vector to save the order in which arrive the first broadcasst from MN.
+	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcasst from MN.
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
@@ -76,9 +76,9 @@ protected:
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
-    simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
+    simtime_t randomTimeComsink1;         // Random time to transmit in COM_SINK_1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
-    simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
+    simtime_t initTimeComSink1;           // Save the time when the COM_SINK_1 began
 
 
 public:
