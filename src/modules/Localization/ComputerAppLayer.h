@@ -104,20 +104,20 @@ protected:
     // Modified by Victor
 
 	int *fromAnchor;                   // Vector to count the amount of packets received from each anchor
-	double duplicatedPktCounter;
-	bool appDuplicateFilter;
-    int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    int receivedPacketsPerPeriod;
-    int nbReportsNoDupPerPeriod;
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
-    cOutVector receivedPacketsVec;
-    cOutVector noRepPacketsVec;
-    cOutVector pktFromNode0Vec;
-    cOutVector pktFromAN8Vec;
-    cOutVector pktFromAN12Vec;
-    cOutVector pktFromAN16Vec;
-    cOutVector pktFromAN20Vec;
+	double duplicatedPktCounter;       // Counter of repeated packets received
+	bool appDuplicateFilter;           // Flag to allow repeated packets filtering in the App layer
+    int *packetsResend;                // Packets that were successfully resent.
+    int numPckToSentByPeriod;          // Saves the number of packets originally in queue and the received to route by period
+    int receivedPacketsPerPeriod;      // Number of received packets per period
+    int nbReportsNoDupPerPeriod;       // Number of no repeated packets received per period
+    bool pktRepeated;                  // Flag to indicate if a packet is repeated
+    cOutVector receivedPacketsVec;     // Vector to save simulation results: received packets per period
+    cOutVector noRepPacketsVec;        // Vector to save simulation results: no repeated received packets per period
+    cOutVector pktFromNode0Vec;        // Vector to save simulation results: received packets sent by mobile node 0
+    cOutVector pktFromAN8Vec;          // Vector to save simulation results:received packets sent by anchor 8
+    cOutVector pktFromAN12Vec;         // Vector to save simulation results:received packets sent by anchor 12
+    cOutVector pktFromAN16Vec;         // Vector to save simulation results:received packets sent by anchor 16
+    cOutVector pktFromAN20Vec;         // Vector to save simulation results:received packets sent by anchor 20
 
 
 
