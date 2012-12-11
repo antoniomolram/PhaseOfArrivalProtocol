@@ -102,14 +102,14 @@ protected:
 	bool* receivedId;					// Vector to control if a particular packet from an anchor has been received
 
     // Modified by Victor
-	double duplicatedPktCounter;
-	bool appDuplicateFilter;
-    int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
-    int* fromAnchor;
-    int receivedPacketsPerPeriod;
-    int nbReportsNoDupPerPeriod;
+	double duplicatedPktCounter;        // Number of received repeated packets
+	bool appDuplicateFilter;            // Flag to allow filtering in the App layer
+    int *packetsResend;                 // Packets that were successfully resent.
+    int numPckToSentByPeriod;           // Saves the number of packets originally in queue and the received to route by period
+    bool pktRepeated;                   // Flag to indicate if a packet is repeated
+    int* fromAnchor;                    // Vector to save the number of packets received sent by each anchor
+    int receivedPacketsPerPeriod;       // Number of total received packets
+    int nbReportsNoDupPerPeriod;        // Number of received no repeated packets
 
 
 public:

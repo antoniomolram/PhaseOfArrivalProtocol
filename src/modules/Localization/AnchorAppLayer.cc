@@ -69,14 +69,6 @@ void AnchorAppLayer::initialize(int stage)
 
 		int anchNum = getParentModule()->getIndex();
 		// Sets the amount of hops between the current anchor and the coordinator
-		//      if((anchNum == 0) || (anchNum == 8) || (anchNum == 9))
-		//          hops = 4;
-		//      if((anchNum == 1) || (anchNum == 2) || (anchNum == 6) || (anchNum == 7))
-		//          hops = 3;
-		//      if((anchNum == 3) || (anchNum == 5))
-		//          hops = 2;
-		//      if((anchNum == 4))
-		//          hops = 1;
 
         if((anchNum == 0) || (anchNum == 5) || (anchNum == 10) || (anchNum == 15) || (anchNum == 20) || (anchNum == 21) || (anchNum == 22) ||
             (anchNum == 23) || (anchNum == 24))
@@ -92,8 +84,8 @@ void AnchorAppLayer::initialize(int stage)
         slotPointer = 0;
         numBasicSlots = 0;
   //      int fiboVectorAnchors[] = {1,2,3,5,1,1,2,3,5,5,1,2,3,3,3,1,2,2,2,2,1,1,1,1,1}; // define the number of basics slot that each anchor have
-        int fiboVectorAnchors[] = {1,2,8,21,1,1,2,3,144,21,1,2,21,3,3,1,3,3,2,2,1,1,1,1,1};
-        int transmissionOrder[] = {0,5,10,15,20,21,22,23,24,1,6,11,16,17,18,19,4,2,7,12,13,14,3,8,9};
+        int fiboVectorAnchors[] = {1,2,8,21,1,1,2,3,144,21,1,2,21,3,3,1,3,3,2,2,1,1,1,1,1}; // define the number of basics slot that each anchor have
+        int transmissionOrder[] = {0,5,10,15,20,21,22,23,24,1,6,11,16,17,18,19,4,2,7,12,13,14,3,8,9}; // Define the transmission order.
         int pointerVec;
 
         numSlotsXAN =  (int*)calloc(sizeof(int), numberOfAnchors);
@@ -105,7 +97,6 @@ void AnchorAppLayer::initialize(int stage)
         {
             numBasicSlots = numBasicSlots + fiboVectorAnchors[i];
         }
-        int testvar;
         switch(getParentModule()->getIndex())
         {
         case 0:
@@ -138,8 +129,6 @@ void AnchorAppLayer::initialize(int stage)
                 pointerVec = 0;
                 while(transmissionOrder[pointerVec] != sharedSlots[i])
                 {
-                    testvar = transmissionOrder[pointerVec];
-                    testvar = fiboVectorAnchors[transmissionOrder[pointerVec]];
                     txBasicSlots[i] = txBasicSlots[i] + fiboVectorAnchors[transmissionOrder[pointerVec]];
                     pointerVec++;
                 }
@@ -937,11 +926,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 meanIndex = meanIndex % meanWindow;
                 successToTx = 0;
                 // Calculates the mean of the successes of the last periods
-                int testvar;
                 testthisanchor = getParentModule()->getIndex();
                 for(int i = 0; i < meanWindow; i++) {
                     EV << "Former successes for me were: " << formerSuccess[i] << endl;
-                    testvar = formerSuccess[i];
                     successToTx = successToTx + formerSuccess[i];
                 }
                 successToTx = (successToTx / meanWindow) * parentSuccess; // Sets the final success to transmit to the air
