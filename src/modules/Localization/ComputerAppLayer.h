@@ -102,17 +102,16 @@ protected:
 	bool* receivedId;					// Vector to control if a particular packet from an anchor has been received
 
     // Modified by Victor
-	double duplicatedPktCounter;
-	bool appDuplicateFilter;
-    int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    int receivedPacketsPerPeriod;
-    int nbReportsNoDupPerPeriod;
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
-    cOutVector receivedPacketsVec;
-    cOutVector noRepPacketsVec;
-    cOutVector pktFromNode0Vec;
-
+	double duplicatedPktCounter;        // Counter of repeated packets received
+	bool appDuplicateFilter;            // Flag to indicate if a packet is repeated
+    int *packetsResend;                 // Packets that were successfully resent.
+    int numPckToSentByPeriod;           // Saves the number of packets originally in queue and the received to route by period
+    int receivedPacketsPerPeriod;       // Number of received packets per period
+    int nbReportsNoDupPerPeriod;        // Number of no repeated received packets per period
+    bool pktRepeated;                   // Flag to indicate if a packet is repeated
+    cOutVector receivedPacketsVec;       // Vector to save simulation results: Number of received packets per period
+    cOutVector noRepPacketsVec;          // Vector to save simulation results: Number of no repeated received  packets per period
+    cOutVector pktFromNode0Vec;          // Vector to save simulation results: Number of received packets from mobile node 0 per period
 
 public:
 	virtual ~ComputerAppLayer();

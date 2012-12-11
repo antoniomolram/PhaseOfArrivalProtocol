@@ -147,7 +147,6 @@ void AnchorAppLayer::initialize(int stage)
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
 		int Brothers[] = {0,1,1,1,0,1,1,1,1,1};
 		numberOfBrothers = Brothers[getParentModule()->getIndex()]+1; // Number of brothers include also this Anchor
-		comSinkSendTimeStamp = 0;
 		comSinkStrategyInit();
 	}
 }
@@ -324,7 +323,6 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     simtime_t posibleTime;
     int tries = 4;
     int negMaxPkts;
-    testVar1 = getParentModule()->getIndex();
     EV<<"Allocating a received Packet"<<endl;
 
     if(subComSink1Counter == nbSubComSink1Slots && hopSlotsCounter == hopSlots2TransmitA[myNumberOfHopSlotsA]){
@@ -332,7 +330,6 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
         return false;
     }
     int myNextHop = 0;
-    testVar1 = hopSlots2TransmitA[myNumberOfHopSlotsA-1];
     switch(kindOfAllocation)
     {
     case time4newPacket:
@@ -344,7 +341,6 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
         else
         {
             while(hopSlotsCounter >= hopSlots2TransmitA[myNextHop]){ // IGUAL
-                testVar2 = hopSlots2TransmitA[myNextHop];
                 myNextHop++;
             }
             hopSlotsCounterAux = hopSlots2TransmitA[myNextHop];
@@ -354,31 +350,8 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
     case time4oldPacket:
         if(subComSink1Counter < nbSubComSink1Slots)
         {
-          //  myNextHop = myNumberOfHopSlotsA * uniform(0,1,0);
             myNextHop = 0;
-//            nbAvailableTimes = TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[0]];
-//            for(int i=0;i<myNumberOfHopSlotsA;i++)
-//            {
-//                if(nbAvailableTimes < TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[i]-1])
-//                {
-//                    nbAvailableTimes = TxComSinkPktMatrix[subComSink1Counter][hopSlots2TransmitA[i]-1];
-//                    myNextHop = hopSlots2TransmitA[i]-1;
-//                }
-//            }
             subComSink1CounterAux = subComSink1Counter+1;
-//            if(hopSlotsCounter >= hopSlots2TransmitA[myNumberOfHopSlotsA-1])// IGUAL
-//            {
-//                myNextHop = hopSlots2TransmitA[0];
-//               subComSink1CounterAux = subComSink1Counter+1;
-//            }
-//            else
-//            {
-//                while(hopSlotsCounter >= hopSlots2TransmitA[myNextHop]){ // IGUAL
-//                    testVar2 = hopSlots2TransmitA[myNextHop];
-//                    myNextHop++;
-//                }
-//                subComSink1CounterAux = subComSink1Counter;
-//            }
         }
         else{
             EV<<"No more available time in this COMSINK1 phase"<<endl;
@@ -412,8 +385,6 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
         {
             for(int j=myNextHop;j<myNumberOfHopSlotsA;j++)
             {
-                testVar2 = hopSlots2TransmitA[j];
-                testVar1 = TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1];
                 negMaxPkts = (-1)*0.1*(baseSlotTime.dbl()*hopSlotsDistributionVector[hopSlots2TransmitA[j]])/(0.002*numberOfBrothers);
                 if(TxComSinkPktMatrix[i-1][hopSlots2TransmitA[j]-1] > 0)
                 {
@@ -461,11 +432,7 @@ bool AnchorAppLayer::pktAllocator(int kindOfAllocation){
                         if((myTimeList.currentTime->transmitTime + periodIniTime)< simTime() )
                         {
                             EV<<"NUEVO: "<<myTimeList.currentTime->transmitTime<<endl;
-                            testVar1 = getParentModule()->getIndex();
-                            testTime1 = myTimeList.currentTime->transmitTime;
-                            testTime2 = myTimeList.firstTime->transmitTime;
                             myTimeList.insertTime(posibleTime,maxHopSlot-1,maxSubComSinK-1);
-                            testTime1 = myTimeList.currentTime->transmitTime;
                             assert(myTimeList.currentTime->nextTime);
                             myTimeList.getnextTime();
                         }
@@ -515,7 +482,6 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
    {
         for(int i=0;i<myNumberOfHopSlotsA;i++)
         {
-            testVar1 = hopSlotsDistributionVector[hopSlots2TransmitA[i]];
             if(pktProSlot[i] < TxComSinkPktMatrix[subComSink1][hopSlots2TransmitA[i]-1])
             {
                 if(pkts2Alloc >= hopSlotsDistributionVector[hopSlots2TransmitA[i]])
@@ -569,11 +535,8 @@ void AnchorAppLayer::firstPktAllocation(int nbOfPkt, int subComSink1)
               {
                   if(packetsQueue.length()>0)
                   {
-                      testVar1= hopSlots2TransmitA[k];
-                      testTime = uniform(0,(stepHopSlot-0.002));
                       time2transmit = simTime() + (i * stepHopSlot) + uniform(0,(stepHopSlot-0.002), 0) + (subComSink1Time * subComSink1) - periodIniTime;
                       EV<<"FIRSTPKTALLOCATOR: "<<time2transmit<<endl;
-                      testTime = time2transmit;
                       for(int j=1;j<hopSlots2TransmitA[k];j++)
                       {
                           time2transmit = time2transmit + baseSlotTime*hopSlotsDistributionVector[j];
@@ -625,9 +588,6 @@ void AnchorAppLayer::updateSuccessTimeList(bool success)
             if(myTimeList.updateSuccess(waitingRespondList.firstTime->transmitTime, success))
                 EV<<"Success decreased!"<<endl;
             else{
-                testVar1 = waitingRespondList.firstTime->subComSink1;
-                testVar2 = TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot];
-             //   assert(TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]);
                 TxComSinkPktMatrix[waitingRespondList.firstTime->subComSink1][waitingRespondList.firstTime->hopSlot]++;
                 if(myTimeList.currentTime->transmitTime == waitingRespondList.firstTime->transmitTime)
                 {
@@ -649,7 +609,7 @@ void AnchorAppLayer::updateSuccessTimeList(bool success)
 
 void AnchorAppLayer::optimalTimeSearch()
 {
-    perTime2Change = 0.05; // percentage
+    float perTime2Change = 0.05; // percentage
     int nbTime2change;
     nbTime2change = nbCurrentAvailableTime * perTime2Change;
     for(int i=0;i<nbTime2change;i++)
@@ -705,12 +665,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     subComSink1Counter++;
                     scheduleAt(simTime()+(baseSlotTime*hopSlotsDistributionVector[hopSlotsCounter]), hopSlotTimer);
 
-//                    if(!checkQueue->isScheduled() && packetsQueue.length()>0)
-//                    {
-//                        EV<<"A"<<", "<<myTimeList.currentTime->transmitTime<<" periodInitTime: "<<periodIniTime<<endl;
-//                        myTimeList.printTimes();
-//                        scheduleAt(periodIniTime + myTimeList.currentTime->transmitTime,checkQueue);
-//                    }
                     if(!checkQueue->isScheduled())
                     {
                         if(myTimeList.currentTime)
@@ -1072,7 +1026,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 // At the beginning of the Com Sink 1 the Anchor checks its queue to transmit the elements and calculate all the random transmission times
                 nbCurrentAvailableTime = nbTotalAvailableTime;
                 availablePktsProHopSlot = new int [myNumberOfHopSlotsA];
-                usedPkts = new int [myNumberOfHopSlotsA];
                 pktProHopSlot=0;
                 totalPktpProSubComSink1=0;
                 EV<<"COMSINK1 INIT: "<< packetsQueue.length()<<endl;
@@ -1084,8 +1037,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 {
                     if(myTimeList.firstTime == NULL)
                       {
-                          testVar1 = packetsQueue.length();
-                          timePointer = 0;
                           for(int i=0; i<myNumberOfHopSlotsA;i++)
                           {
                               // Calculate the number of packets available for this anchor in the first subComSink1
@@ -1470,7 +1421,6 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	                                reportSent[pkt->getPriority()]++;
 	                            else if(pkt->getWasRequest())
 	                                requestSent++;
-	                            testVar1 = getParentModule()->getIndex();
 	                            for(int i=0;i<myNumberOfHopSlotsA;i++)
 	                            {
 	                                if(hopSlotsCounter == hopSlots2TransmitA[i])
@@ -1730,19 +1680,9 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	case BaseMacLayer::TX_OVER:
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
     	pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-    	testVar1 = getParentModule()->getIndex();
+
 
     	if(phase == COM_SINK_PHASE_1){
-//            for(int i=0;i<myNumberOfHopSlotsA;i++)
-//            {
-//                if(hopSlotsCounter == hopSlots2TransmitA[i])
-//                {
-//                    transmitHopSlot = true;
-//                    i = myNumberOfHopSlotsA+1;
-//                }
-//                else
-//                    transmitHopSlot = false;
-//            }
             EV<<"Waitlist"<<endl;
     	    waitingRespondList.printTimes();
     	    if(waitingRespondList.firstTime != NULL)
@@ -1755,8 +1695,6 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
                     {
                         EV<<"My list"<<endl;
                         myTimeList.printTimes();
-                        testVar1 = getParentModule()->getIndex();
-                        testTime = simTime()-0.0017-periodIniTime;
                         myTimeList.handleFineTimeError((simTime()-0.0018-periodIniTime),waitingRespondList.firstTime->transmitTime);
                         EV<<"Time just ajusted, new time: "<<simTime()-0.0018-periodIniTime<<", old time: "<<waitingRespondList.firstTime->transmitTime<<endl;
                         EV<<"My list"<<endl;

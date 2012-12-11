@@ -58,72 +58,58 @@ protected:
 
 	// Modified by Victor
 
-	double duplicatedPktCounter;
-	cMessage *hopSlotTimer;
-	cMessage *delayTimer;                // Pointer to the event we use to schedule all the sync packets in the sync phases
-	cMessage *checkQueue;                // Variable to schedule the events to process the Queue elements
-	int* packetsResend;                  // Packets that were successfully resend.
-	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcasst from MN.
-	int* hopSlots2TransmitA;              // Vector with the hopslots that each anchor has to transmit
+    cMessage *hopSlotTimer;              // pointer to the event we use to schedule all the slots in the anchor
+    cMessage *delayTimer;                // Pointer to the event we use to schedule all the sync packets in the sync phases
+    cMessage *checkQueue;                // Variable to schedule the events to process the Queue elements
+    int* packetsResend;                  // Packets that were successfully resent.
+    int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcast from MN.
+    int* hopSlots2TransmitA;              // Vector with the hopslots that each anchor has to transmit
     int* hopSlots2TransmitB;              // Vector with the hopslots that each anchor has to transmit
-	int** TxComSinkPktMatrix;             // Matrix to save the hop that this anchor has for each subComSink slot.
-	int* hopSlotsDistributionVector;
-	int* availablePktsProHopSlot;
-	int* usedPkts;
-	int pktProHopSlot;
-	int totalPktpProSubComSink1;
-	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
+    int** TxComSinkPktMatrix;             // Matrix to save the hop that this anchor has for each subComSink slot.
+    int* hopSlotsDistributionVector;      // Vector with the slots duration taking into account the way to assign the size of each slot: equal, sequential or fibonacci
+    int* availablePktsProHopSlot;         // Number of possible packets to send in one slot
+    int pktProHopSlot;                    // Number of packets to be allocated pro HopSlot
+    int duplicatedPktCounter;             // Counter of repeated packets received
+    int totalPktpProSubComSink1;          // Number of packets to be allocated in ones subdivioson of the COM_SINK_1 phase
+    int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
     int txPktsCreatedInApp;              // Save the number of packets created in this AN
     int remPktApp;                       // SAve the number the packets that were not send.
-    int nbSubComSink1Slots;              // Number of equal parts in which the Comsink will be divided
-    int subComSink1Counter;
+    int nbSubComSink1Slots;              // Number of equal parts in which the COM_SINK_1 will be divided
+    int subComSink1Counter;              // Counter of the number of COM_SINK_1 subdivision
     int nbTotalHops;                     // Number of hops that the network has.
     int hopSlotsCounter;                 // Number of hopSlots that have been used.
-    int myNumberOfHopSlotsA;              // Save the number of hopSlots for this Anchor
-    int myNumberOfHopSlotsB;
-    int numberOfBrothers;
-    int timePointer;
-    int testVar1;
-    int testVar2;
-    int maxHopPkt;
-    int nextSubComSinkPkts;
-    int nbOfPkts2allocate;
-    int maxPktinHopSlot;
-    int hopSlotStamp;
-    int subComSink1Stamp;
-    int nbTotalAvailableTime;
-    int nbCurrentAvailableTime;
-    float perTime2Change;
+    int myNumberOfHopSlotsA;             // Save the number of hopSlots for this Anchor
+    int myNumberOfHopSlotsB;             // Save the number of hopSlots for this Anchor
+    int numberOfBrothers;                // Number of Anchors that have the same parent anchor as this anchor
+    int nextSubComSinkPkts;              // Number of packets to be allocated in the second COM_SINK_1 subdivision at the beginnig of the COM_SINK_1 phase
+    int nbTotalAvailableTime;            // Total number of times in the time list
+    int nbCurrentAvailableTime;          // Number of available times in the time list.
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
-    bool appDuplicateFilter;             // Flag to allow filtering in the App layer
+    bool appDuplicateFilter;             // Flag to allow repeated packets filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
     bool insertedSlots;                  // Decide if two slots of the same hop can be scheduled together
-    bool transmitHopSlot;
+    bool transmitHopSlot;                // Flag to indicate if the anchor is transmitting in the current slot
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
     simtime_t initTimeComSink1;           // Save the time when the ComSink1 began
     simtime_t baseSlotTime;               // Minimal time Unit that may receive a Anchor in the comsink1 to transmit a packet.
     simtime_t subComSink1Time;            // Duration of a RepetitionComSink1Slot
     simtime_t hopSlotTime;                // Time that have the Anchors of a specific hop to transmit
-    simtime_t comSinkSendTimeStamp;
     simtime_t stepHopSlot;
-    simtime_t testTime;
-    simtime_t testTime1;
-    simtime_t testTime2;
-    simtime_t periodIniTime;
-    std::string hopSlotsDistributionMethod;
-    TimeList myTimeList;
-    TimeList* timeListAlloc;                 // Save the time that was already assigned to a packet.
-    TimeList waitingRespondList;
-    cOutVector successTimeVec;
-    cOutVector timeVec;
-    cOutVector noAckDroppedVec;
-    cOutVector backoffDroppedVec;
-    cOutVector reportsWithAckVec;
+    simtime_t periodIniTime;              // Save the tme when the last period began
+    std::string hopSlotsDistributionMethod; // Method to assign the size of the slots: equal, sequential or fibonacci
+    TimeList myTimeList;                    // Time list
+    TimeList waitingRespondList;            // Save the times that already were used until the anchor knows if the transmission was successful or not
 
-    enum allocationType{                     // Phases of the Full Phase or Period
+    cOutVector successTimeVec;              // Vector to save simulation results: list of time
+    cOutVector timeVec;                     // Vector to save simulation results: success indicator of each time in the time list
+    cOutVector noAckDroppedVec;             // Vector to save simulation results: dropped packets due to no Ack per period
+    cOutVector backoffDroppedVec;           // Vector to save simulation results: dropped packets due to backoff per period
+    cOutVector reportsWithAckVec;           // Vector to save simulation results: number of sent packets with ack
+
+    enum allocationType{                    // Type of packet to be allocated
 
         time4newPacket = 1,
         time4oldPacket,
