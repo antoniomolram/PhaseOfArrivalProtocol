@@ -102,15 +102,15 @@ protected:
 	bool* receivedId;					// Vector to control if a particular packet from an anchor has been received
 
     // Modified by Victor
-	double duplicatedPktCounter;
-	bool appDuplicateFilter;
-    int *packetsResend;            // Packets that were successfully resend.
-    int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
-    bool pktRepeated;                     // Flag to indicate if a packet is repeated
-    int numMaxHops;
-    int slotsInComSink1;
-    int slotsInComSink1Counter;
-    int *fiboVector;
+	double duplicatedPktCounter;          // Counter of repeated packets received
+	bool appDuplicateFilter;              // Flag to indicate if a packet is repeated
+	bool pktRepeated;                     // Flag to indicate if a packet is repeated
+    int *packetsResend;                   // Packets that were successfully resent.
+    int numPckToSentByPeriod;             // Saves the number of packets originally in queue and the received to route by period
+    int numMaxHops;                       // Number of hop in the network
+    int slotsInComSink1;                  // Number of slots that each anchor has.
+    int slotsInComSink1Counter;           // Number of slots that each anchor has used.
+    int *fiboVector;                      // Vector with the slot size following the Fibonacci series.
 
 public:
 	virtual ~ComputerAppLayer();

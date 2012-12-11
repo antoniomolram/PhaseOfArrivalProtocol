@@ -67,22 +67,18 @@ protected:
 
 	double duplicatedPktCounter;
 	cMessage *delayComSinkSlottedPkt;    // Pointer to the event we use to schedule all the sync packets in the sync phases
-	int transmissionSlot;
-	int totalSlots;
-    int comSinkRound;           // How many times will repeated the slots
-    simtime_t durationComSinkSlot;
-    simtime_t roundComSink1Time;
-    simtime_t endComSinkSlotTime;
-    simtime_t nextSubComSinkSlotTime;
-    int scheduledComSinkSlot;            // Count the number of assigned slots in de comSink
-    int myNumberOfSlots;
-    int comSinkRoundCounter;
-    int *fiboVector;
-    int numMaxHops;
-	int nbCafInComSink1;
-	int nbNoAckInComsink1;
-	int *packetsResend;                  // Packets that were successfully resend.
-	int* firstMNBroadcasTime;             // Vector to save the order in which arrive the first broadcasst from MN.
+	int transmissionSlot;                // Save the transmission slot for this anchor
+	int totalSlots;                      // Save the total of slots
+    int comSinkRound;                    // How many times will repeated the slots
+    int scheduledComSinkSlot;            // Count the number of assigned slots in the comSink
+    int myNumberOfSlots;                 // Number of the slot that this anchor has to transmit
+    int comSinkRoundCounter;             // Number of COM_SINK_1 subdivisions that has been used
+    int *fiboVector;                     // Vector with the slot size following the Fibonacci series.
+    int numMaxHops;                      // Number of hop in the network
+	int nbCafInComSink1;                 // Number of dropped packets due to CAF in the COM_SINK_1 phase
+	int nbNoAckInComsink1;               // Number of dropped packets due to no ack in the COM_SINK_1 phase
+	int *packetsResend;                  // Packets that were successfully resent.
+	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcast from MN.
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
@@ -93,8 +89,11 @@ protected:
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
     simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
-    simtime_t initTimeComSink1;              // Save the time when the ComSink1 began
-
+    simtime_t initTimeComSink1;           // Save the time when the ComSink1 began
+    simtime_t durationComSinkSlot;        // Duration of the COM_SINK_1 subdivision
+    simtime_t roundComSink1Time;          // Duration of he slot in the
+    simtime_t endComSinkSlotTime;         // End of the slot
+    simtime_t nextSubComSinkSlotTime;     // Begin of the next slot
 
 
 public:

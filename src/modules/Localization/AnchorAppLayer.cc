@@ -196,7 +196,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
            } else { // Calculate the first time of the next slot period
                scheduledComSinkSlot = 0; // Reset of the scheduled slots in this slot period (when more than one slot per Anchor)
                if (comSinkRoundCounter < comSinkRound) {
-                   comSinkRoundCounter++; // Increments the mini sync phases covered from a total of syncPacketsPerSyncPhase
+                   comSinkRoundCounter++;
                    nextSubComSinkSlotTime = nextSubComSinkSlotTime + roundComSink1Time;
                    scheduleAt(nextSubComSinkSlotTime - (anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]), delayComSinkSlottedPkt);
                    EV << "Time for next Sync Packet " << (nextSubComSinkSlotTime - anchor->transmisionSlotComSink1[scheduledComSinkSlot] * durationComSinkSlot) - (durationComSinkSlot * fiboVector[numMaxHops - hops]) << endl;
@@ -469,7 +469,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 
             roundComSink1Time = (timeComSinkPhase1-guardTimeComSinkPhase) / comSinkRound;
             durationComSinkSlot = roundComSink1Time / totalSlots; //Mod Fibonacci
-            //durationComSinkSlot = durationComSinkSlot * fiboVector[numMaxHops - hops]; //Mod Fibonacci
             EV<< "Asignación de slots para tranmistir en la comSink" << endl;
             EV << "Transmitting the " << packetsQueue.length() << " elements of the queue in the following moments." << endl;
             scheduledComSinkSlot = 0;
