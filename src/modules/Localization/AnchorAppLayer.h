@@ -51,6 +51,7 @@ protected:
 	double parentSuccess;				// Saves the effectiveness received from the anchor servicing this anchor
 	int meanWindow;						// Sets the length of the circular mean window of latest anchor's ratios of messages sent_OK/to_be_sent
 	int meanIndex;						// Current index of the circular window
+	int testthisanchor;
 	double* formerSuccess;				// Mean window buffer to where are sent the former anchor ratios of messages sent_OK/to_be_sent
 	double successToTx;					// Saves the calculated effectiveness for the AN, which is broadcasted during SYNC phases
 
@@ -61,22 +62,23 @@ protected:
 
 	// Modified by Victor
 
-	double duplicatedPktCounter;        // Counter of repeated packets received
-	int nbCafInComSink1;                 // Number of dropped packets  due to Caf in the COM_SINK_1
-	int nbNoAckInComsink1;               // Number of dropped packets  due to no ack in the COM_SINK_1
-	int *packetsResend;                  // Packets that were successfully resent.
-	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcast from MN.
+	double duplicatedPktCounter;
+	int nbCafInComSink1;                 // Number of dropped due to Backoff in the COM_SINK_1
+	int nbNoAckInComsink1;               // Number of dropped due to no ack in the COM_SINK_1
+	int *packetsResend;                  // Packets that were successfully resend.
+	int* firstMNBroadcasTime;            // Vector to save the order in which arrive the first broadcasst from MN.
 	int firtsBCCounter;                  // Count how many nodes have send their first broadcast
     int numPckToSentByPeriod;            // Saves the number of packets originally in queue and the received to route by period
     int PktLengthMN3;                    // Packet length of the message from Mobile Nodes.
     int txPktsCreatedInApp;              // Save the number of packets created in this AN
     int remPktApp;                       // SAve the number the packets that were not send.
+    int pktsFromThisAnchor;
     bool pktRepeated;                    // Flag to indicate if a packet is repeated
     bool appDuplicateFilter;             // Flag to allow filtering in the App layer
     bool blockAppTransmissions;          // Variable to block the transmission in App Layer until arrive a control msg of the last send packet
-    simtime_t randomTimeComsink1;         // Random time to transmit in ComSink1
+    simtime_t randomTimeComsink1;         // Random time to transmit in COM_SINK_1
     simtime_t stepTimeComSink1End;        // Save the Time when finish the stepTimeComSink1
-    simtime_t initTimeComSink1;           // Save the time when the ComSink1 began
+    simtime_t initTimeComSink1;           // Save the time when the COM_SINK_1 began
 
 
 public:

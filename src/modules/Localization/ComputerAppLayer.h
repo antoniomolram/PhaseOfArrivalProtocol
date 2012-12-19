@@ -107,6 +107,10 @@ protected:
     int *packetsResend;            // Packets that were successfully resend.
     int numPckToSentByPeriod;        // Saves the number of packets originally in queue and the received to route by period
     bool pktRepeated;                     // Flag to indicate if a packet is repeated
+    int* fromAnchor;
+    int receivedPacketsPerPeriod;
+    int nbReportsNoDupPerPeriod;
+
 
 public:
 	virtual ~ComputerAppLayer();
