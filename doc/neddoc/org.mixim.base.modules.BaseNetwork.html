@@ -1,0 +1,405 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>BaseNetwork</i></h2>
+<b>Package:</b> org.mixim.base.modules<br/><b>File: <a href="src-base-modules-BaseNetwork.ned.html">src/base/modules/BaseNetwork.ned</a></b><br/><p>(no description)</p><img src="org.mixim.base.modules.BaseNetwork-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="157,28,250,70">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="IWorldUtility" alt="IWorldUtility" coords="270,28,298,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseNetwork-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.base.modules.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="72,5,171,32">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="Module Interface IWorldUtility" alt="" coords="5,80,96,107">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="Module Interface IConnectionManager" alt="" coords="120,80,264,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseNetwork-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.examples.baseNetwork.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="920,5,1019,32">
+<area shape="rect" href="org.mixim.examples.analogueModels.AnalogueModels.html" title="Network AnalogueModels" alt="" coords="5,80,125,107">
+<area shape="rect" href="org.mixim.examples.BaseMoBANNetwork.BaseMoBANNetwork.html" title="Network BaseMoBANNetwork" alt="" coords="149,80,296,107">
+<area shape="rect" href="org.mixim.examples.bmac.BMACExampleNetwork.html" title="Network BMACExampleNetwork" alt="" coords="320,80,480,107">
+<area shape="rect" href="org.mixim.examples.CSMAMac.CSMAMacExampleNetwork.html" title="Network CSMAMacExampleNetwork" alt="" coords="504,80,688,107">
+<area shape="rect" href="org.mixim.tests.ExtTestNetwork.html" title="Network ExtTestNetwork" alt="" coords="712,80,827,107">
+<area shape="rect" href="org.mixim.examples.ieee802154a.ieee802154a.html" title="Network ieee802154a" alt="" coords="851,80,949,107">
+<area shape="rect" href="org.mixim.examples.ieee802154Narrow.ieee802154Narrow.html" title="Network ieee802154Narrow" alt="" coords="973,80,1107,107">
+<area shape="rect" href="org.mixim.examples.lmac.LMACExampleNetwork.html" title="Network LMACExampleNetwork" alt="" coords="1131,80,1288,107">
+<area shape="rect" href="org.mixim.examples.Mac80211.Mac80211ExampleNet.html" title="Network Mac80211ExampleNet" alt="" coords="1312,80,1467,107">
+<area shape="rect" href="org.mixim.examples.multiConnectionManager.MultiConnectionManager.html" title="Network MultiConnectionManager" alt="" coords="1491,80,1659,107">
+<area shape="rect" href="org.mixim.tests.power.Nic80211Test.Nic80211PowerTest.html" title="Network Nic80211PowerTest" alt="" coords="1683,80,1824,107">
+<area shape="rect" href="org.mixim.examples.WSNRouting.WSNRouting.html" title="Network WSNRouting" alt="" coords="1848,80,1947,107">
+</map>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use <a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.BaseMoBANNetwork.BaseMoBANNetwork.html">BaseMoBANNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This network is exactly the same as baseNetwork existing among the examples of MiXiM, but the desired number of MoBAN coordinator modules have been added.
+Some nodes of type BaseNode use <a href="org.mixim.modules.mobility.MoBANLocal.html">MoBANLocal</a> module as their mobility module. Then those nodes will be considered as WBAN nodes. 
+Those node have a parameter named "coordinatorIndex" that determines to which WBAN (coordinator) the node belongs.  </p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.baseNetwork.BaseNetwork.html">BaseNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows the basic structure of an network using MiXiM.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.bmac.BMACExampleNetwork.html">BMACExampleNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.CSMAMac.CSMAMacExampleNetwork.html">CSMAMacExampleNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use MiXiMs CSMA protocol implementation.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.ExtTestNetwork.html">ExtTestNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Basis definition of test networks which are common to MiXiM 
+network definition.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.ieee802154a.ieee802154a.html">ieee802154a</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example illustrates the use of the IEEE 802.15.4A UWB-IR
+simulation model implemented in MiXiM.
+The omnetpp.ini files comprises two scenarios. Both scenarios
+involve only two hosts.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.ieee802154Narrow.ieee802154Narrow.html">ieee802154Narrow</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use MiXiMs implementation of the ieee802154
+narrow band protocol.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.lmac.LMACExampleNetwork.html">LMACExampleNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.Mac80211.Mac80211ExampleNet.html">Mac80211ExampleNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use MiXiMs 802.11 protocol implementation. </p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.multiConnectionManager.MultiConnectionManager.html">MultiConnectionManager</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use multiple ConnectionManagers in your simulation. </p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.Nic80211Test.Nic80211PowerTest.html">Nic80211PowerTest</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.WSNRouting.WSNRouting.html">WSNRouting</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to simulate wireless sensor networks.
+Three different routing protocols are considered, for different traffic 
+types:
+convergecast, with Wiseroute;
+network-level broadcast, with flooding;
+and probabilistic broadcast.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>x size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>y size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>z size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>cmType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.connectionManager.ConnectionManager"</td>
+   <td>
+<p>connection manager to use</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>wuType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.modules.BaseWorldUtility"</td>
+   <td>
+<p>world utility to use</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white;bgp=0,0</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// x size of the area the nodes are in (in meters)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// y size of the area the nodes are in (in meters)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// z size of the area the nodes are in (in meters)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">cmType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.base.connectionManager.ConnectionManager&quot;</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// connection manager to use
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">wuType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.base.modules.BaseWorldUtility&quot;</span><span style="color: #000000; ">);            </span><span style="color: #808080; font-style: italic; ">// world utility to use
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white;bgp=0,0&quot;</span><span style="color: #000000; ">);
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">connectionManager</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">cmType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IConnectionManager</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=201,0;i=abstract/multicast;is=s&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">world</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">wuType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IWorldUtility</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=280,0;i=misc/globe;is=s&quot;</span><span style="color: #000000; ">);
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

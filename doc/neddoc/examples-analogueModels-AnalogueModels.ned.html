@@ -1,0 +1,95 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>examples/analogueModels/AnalogueModels.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use <a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">examples</span><span style="color: #000000; ">.</span><span style="color: #000000; ">analogueModels</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+//This example shows how to use AnalogueModels.
+//
+//It contains the following modules/classes:
+//
+//RandomFreqTimeModel:
+//An AnalogueModel implementation which defines random attunation values
+//in time and frequency using the MultiDimMapping.
+//
+//RandomFrequencyOnlyModel:
+//An AnalogueModel implementation which defines random attenuation values
+//in the frequency domain by using the MultiDimMapping class.
+//Since every mapping represented by the Mapping interface of MiXiM has to be
+//defined over time this shows how to &quot;simulate&quot; mappings which arent't 
+//defined over time.
+//
+//ThresholdDecider:
+//A quick and dirty implementation of a very verbose Decider. It is only
+//used for a better illustration of how the AnalogueModels affect the signal
+//during runtime and shouldn't be used as a template for an actual Decider.
+//
+//SamplePhyLayer:
+//A PhyLayer subclass which knows how to initialize our own AnalogueModels
+//and Decider.
+//
+//SimpleMacLayer:
+//A very basic implementation of a Mac layer without using the actual
+//BaseMacLayer. This is only to keep the example independent from the 
+//BaseMacLayer, normally you whould just use the BaseMacLayer.
+//
+//
+//The network itself consists of only two host which keep ping-pong-ing
+//messages between each other.
+//
+//The simulation has the following run configurations:
+//
+//- &quot;General&quot; 		- infinite ping-pong-ing without simulation of propagation delay
+//- &quot;WithPropDelay&quot;	- same with simulation of propagation delay
+//- &quot;PerfTest&quot;		- meant to be used when called with CmdEnv for some performance
+//			 		  testing (time limited)
+//	
+//
+//See the comments in the source for more details.
+//
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">AnalogueModels</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=139,106;b=42,42,rect,red;i=device/wifilaptop&quot;</span><span style="color: #000000; ">);
+
+        }
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

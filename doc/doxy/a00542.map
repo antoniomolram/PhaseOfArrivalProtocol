@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00028.html" title="Extends BaseModule by several methods which provide access to the battery module..." alt="" coords="45,5,152,32"/>
+<area shape="rect" href="$a00001.html" title="ChannelMobilityAccessType" alt="" coords="5,56,192,83"/>
+<area shape="rect" href="$a00027.html" title="Provides information and utility methods for the whole simulation." alt="" coords="40,107,157,133"/>
+<area shape="rect" href="$a00177.html" title="Helper function to initialize signal change identifier on use and not on initializing..." alt="" coords="41,157,156,184"/>
+<area shape="rect" href="$a00015.html" title="Module to control the channel and handle all connection related stuff." alt="" coords="13,208,184,235"/>
+</map>

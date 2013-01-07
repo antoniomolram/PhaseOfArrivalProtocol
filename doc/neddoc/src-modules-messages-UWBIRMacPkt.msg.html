@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Msg File <i>src/modules/messages/UWBIRMacPkt.msg</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="UWBIRMacPkt.html">UWBIRMacPkt</a>
+   </td>
+   <td>
+<i>message</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//**************************************************************************
+// * file:        UWBIRMacPkt.msg
+// *
+// * author:      Jerome Rousselot
+// *
+// * copyright:   (C) 2008 CSEM SA, Neuchatel, Switzerland.
+// *
+// *              This program is free software; you can redistribute it 
+// *              and/or modify it under the terms of the GNU General Public 
+// *              License as published by the Free Software Foundation; either
+// *              version 2 of the License, or (at your option) any later 
+// *              version.
+// *              For further information see file COPYING 
+// *              in the top level directory
+// **************************************************************************
+// * part of:     framework implementation developed by tkn
+// * description: - 
+// **************************************************************************/
+</span><span style="color: #000000; ">
+
+
+</span><span style="color: #800000; font-weight: bold; ">cplusplus</span><span style="color: #000000; "> {{
+#</span><span style="color: #000000; ">include</span><span style="color: #000000; "> &lt;</span><span style="color: #000000; ">MacPkt_m</span><span style="color: #000000; ">.</span><span style="color: #000000; ">h</span><span style="color: #000000; ">&gt;
+}}
+
+
+</span><span style="color: #800000; font-weight: bold; ">class</span><span style="color: #000000; "> </span><span style="color: #000000; ">MacPkt</span><span style="color: #000000; ">;
+
+
+</span><span style="color: #800000; font-weight: bold; ">message</span><span style="color: #000000; "> </span><span style="color: #000000; ">UWBIRMacPkt</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">MacPkt</span><span style="color: #000000; ">
+{
+    </span><span style="color: #000000; font-weight: bold; ">@customize</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+    </span><span style="color: #000080; font-weight: bold; ">abstract</span><span style="color: #000000; "> </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">bitValues</span><span style="color: #000000; ">[];
+    </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">nbSymbols</span><span style="color: #000000; ">;
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

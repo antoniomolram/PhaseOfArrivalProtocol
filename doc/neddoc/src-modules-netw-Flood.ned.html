@@ -1,0 +1,91 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/netw/Flood.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.Flood.html">Flood</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>A simple flooding protocol for network-level broadcast.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">netw</span><span style="color: #000000; ">;
+</span><span style="color: #808080; font-style: italic; ">//***************************************************************************
+// * file:        Flood.ned
+// *
+// * author:      Daniel Willkomm
+// *		  
+// *
+// * copyright:   (C) 2004 Telecommunication Networks Group (TKN) at
+// *              Technische Universitaet Berlin, Germany.
+// *
+// *              This program is free software; you can redistribute it 
+// *              and/or modify it under the terms of the GNU General Public 
+// *              License as published by the Free Software Foundation; either
+// *              version 2 of the License, or (at your option) any later 
+// *              version.
+// *              For further information see file COPYING 
+// *              in the top level directory
+// *
+// ***************************************************************************
+// * part of:     framework implementation developed by tkn
+// * description: a simple flooding protocol
+// *              the user can decide whether to use plain flooding or not
+// ***************************************************************************
+</span><span style="color: #000000; ">
+
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">// A simple flooding protocol for network-level broadcast.
+//
+// This implementation uses plain flooding, i.e. it &quot;remembers&quot;
+// (stores) already broadcasted messages in a list and does not
+// rebroadcast them again, if it gets another copy of that message.
+//
+// The maximum number of entries for that list can be defined in the
+// .ini file (@ref bcMaxEntries) as well as the time after which an entry
+// is deleted (@ref bcDelTime).
+//
+// If you prefere a memory-less version you should set to false the 
+// &lt;verbatim&gt;plainFlooding&lt;/verbatim&gt; bool parameter.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> Daniel Willkomm
+//
+// ported to Mixim 2.0 by Theodoros Kapourniotis
+//
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">Flood</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+</span><span style="color: #808080; font-style: italic; ">//        bool debug = default(false); // debug switch
+//        double headerLength; // length of the network header
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">plainFlooding</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// flag whether to use plain flooding
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// Max number of entries in the list of already broadcasted messages
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">bcMaxEntries</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">100</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// Time after which an entry for an already broadcasted msg can be deleted
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">bcDelTime</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">100</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">defaultTtl</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">10</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// Default time-to-live (ttl) used for this module expressed in  number of hops.
+</span><span style="color: #000000; ">        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;i=block/fork&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">Flood</span><span style="color: #000000; ">);
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

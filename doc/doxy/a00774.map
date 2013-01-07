@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00170.html" title="Abstract subclass of ConstMapping which can be used as base for any ConstMapping..." alt="" coords="5,5,152,32"/>
+<area shape="rect" href="$a00175.html" title="Basic implementation of a SimplePathlossModel that uses SimplePathlossConstMapping..." alt="" coords="176,5,323,32"/>
+</map>

@@ -1,0 +1,382 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Compound Module <i>PowerTrippleTestHost</i></h2>
+<b>Package:</b> org.mixim.tests.power.deviceTestAll<br/><b>File: <a href="tests-power-deviceTestAll-SimpleHost.ned.html">tests/power/deviceTestAll/SimpleHost.ned</a></b><br/>
+<p>Empty host with three devices for simple power test.</p>
+<img src="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.power.battery.SimpleBattery.html" title="SimpleBattery" alt="SimpleBattery" coords="27,60,71,118">
+<area shape="rect" href="org.mixim.modules.power.battery.BatteryStats.html" title="BatteryStats" alt="BatteryStats" coords="105,60,161,118">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="DeviceDutySimple" alt="DeviceDutySimple" coords="23,126,71,169">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDuty.html" title="DeviceDuty" alt="DeviceDuty" coords="100,126,166,169">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="DeviceDutySimple" alt="DeviceDutySimple" coords="186,126,238,169">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost.html" title="Compound Module PowerTrippleTestHost" alt="" coords="40,80,192,107">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDuty.html" title="Simple Module DeviceDuty" alt="" coords="5,155,93,181">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="Simple Module DeviceDutySimple" alt="" coords="117,155,248,181">
+<area shape="rect" href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html" title="Network PowerDeviceTestAllNet" alt="" coords="36,5,196,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost.html" title="Compound Module PowerTrippleTestHost" alt="" coords="5,80,157,107">
+<area shape="rect" href="org.mixim.tests.power.PowerTestNode.html" title="Compound Module PowerTestNode" alt="" coords="23,5,140,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.PowerTestNode.html">PowerTestNode</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Networks:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html">PowerDeviceTestAllNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Combines <a href="org.mixim.tests.power.deviceTestMulti.PowerDeviceTestMultiNet.html">PowerDeviceTestMultiNet</a> and <a href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html">PowerDeviceTestAllNet</a>. Uses three instances of
+the <a href="org.mixim.tests.power.utils.DeviceDuty.html">DeviceDuty</a> and <a href="org.mixim.tests.power.utils.DeviceDutySimple.html">DeviceDutySimple</a> devices, one of which has no
+continuous CURRENT draw, only discrete ENERGY draw from the Battery.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=250,153,$color;bgp=10,10</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.nominal</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.capacity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.voltage</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal voltage</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.resolution</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>capacity is updated at least every resolution time</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishDelta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>if &gt; 0, capacity is published to the BB each publishTime 
+interval</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>number of modules that will draw energy from the 
+battery</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.numDevices</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>1</td>
+   <td>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.detail</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>write per-activity and per-device statistics to omnetpp.sca
+(if false, only total energy and lifetime are written)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.timeSeries</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>subscribe to battery status and record time series
+data in omnetpp.vec (resolution depends on battery's 
+publishDelta)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">firstDevice</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">firstDevice</a>.period</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">firstDevice</a>.dutyCycle</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">firstDevice</a>.current</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">firstDevice</a>.wakeup</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.period</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.dutyCycle0</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.current0</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.gap</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.dutyCycle1</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.current1</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDuty.html">secondDevice</a>.wakeup</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">thirdDevice</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">thirdDevice</a>.period</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">thirdDevice</a>.dutyCycle</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">thirdDevice</a>.current</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">thirdDevice</a>.wakeup</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Empty host with three devices for simple power test. 
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTrippleTestHost</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTestNode</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=250,153,$color;bgp=10,10&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">numDevices</span><span style="color: #000000; "> = </span><span style="color: #008000; ">3</span><span style="color: #000000; ">;
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">firstDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=45,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">secondDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDuty</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=131,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">thirdDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=210,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

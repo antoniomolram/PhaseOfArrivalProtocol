@@ -1,0 +1,174 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>PowerTestNetwork</i></h2>
+<b>Package:</b> org.mixim.tests.power<br/><b>File: <a href="tests-power-PowerTestNetwork.ned.html">tests/power/PowerTestNetwork.ned</a></b><br/>
+<p>Base test network for power (battery) tests.</p>
+<img src="org.mixim.tests.power.PowerTestNetwork-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.PowerTestNetwork-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.power.PowerTestNetwork.html" title="Network PowerTestNetwork" alt="" coords="5,5,139,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.PowerTestNetwork-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.power.PowerTestNetwork.html" title="Network PowerTestNetwork" alt="" coords="316,80,449,107">
+<area shape="rect" href="org.mixim.tests.power.deviceTestAccts.PowerDeviceTestAcctsNet.html" title="Network PowerDeviceTestAcctsNet" alt="" coords="5,155,184,181">
+<area shape="rect" href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html" title="Network PowerDeviceTestAllNet" alt="" coords="208,155,368,181">
+<area shape="rect" href="org.mixim.tests.power.deviceTestMulti.PowerDeviceTestMultiNet.html" title="Network PowerDeviceTestMultiNet" alt="" coords="392,155,565,181">
+<area shape="rect" href="org.mixim.tests.power.deviceTest.PowerDeviceTestNet.html" title="Network PowerDeviceTestNet" alt="" coords="589,155,736,181">
+<area shape="rect" href="org.mixim.tests.BaseTestNetwork.html" title="Network BaseTestNetwork" alt="" coords="320,5,445,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.BaseTestNetwork.html">BaseTestNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Basis definition of test networks.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTestAccts.PowerDeviceTestAcctsNet.html">PowerDeviceTestAcctsNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Test uses the two-phase DutyCycle device, which
+assigns each of the two ON periods to a different activity.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html">PowerDeviceTestAllNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Combines <a href="org.mixim.tests.power.deviceTestMulti.PowerDeviceTestMultiNet.html">PowerDeviceTestMultiNet</a> and <a href="org.mixim.tests.power.deviceTestAll.PowerDeviceTestAllNet.html">PowerDeviceTestAllNet</a>. Uses three instances of
+the <a href="org.mixim.tests.power.utils.DeviceDuty.html">DeviceDuty</a> and <a href="org.mixim.tests.power.utils.DeviceDutySimple.html">DeviceDutySimple</a> devices, one of which has no
+continuous CURRENT draw, only discrete ENERGY draw from the Battery.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTestMulti.PowerDeviceTestMultiNet.html">PowerDeviceTestMultiNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>The test host now has two DutyCycleSimple devices,
+each with different parameters.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTest.PowerDeviceTestNet.html">PowerDeviceTestNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Fundamental test case, used for basic unit testing. The Host includes
+only the Battery and the DutyCycleSimple device.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Base test network for power (battery) tests.
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTestNetwork</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseTestNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; ">;
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; ">;
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

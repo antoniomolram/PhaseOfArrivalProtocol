@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/Mixim2.2.1-vcmB/examples/ieee802154Narrow/results/Red8012154-*.vec"/>
+    <inputs name="/Mixim2.2.1-vcmB/examples/ieee802154Narrow/results/Red8012154-*.sca"/>
+  </inputs>
+  <datasets>
+    <datasets name="One-run">
+      <items xsi:type="scave:Add" filterPattern="name(&quot;*Number of Reports received in AN*&quot;)"/>
+      <items xsi:type="scave:Add" filterPattern="module(*.computer[0].*) AND name(&quot;*Number of Reports received in Comp*&quot;)"/>
+      <items xsi:type="scave:BarChart" name="One-run"/>
+    </datasets>
+  </datasets>
+  <chartSheets>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.2"/>
+  </chartSheets>
+</scave:Analysis>

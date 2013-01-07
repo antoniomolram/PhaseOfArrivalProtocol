@@ -1,0 +1,6 @@
+<area shape="rect" href="org.mixim.tests.blackboard.BasicHost.html" title="Compound Module BasicHost" alt="" coords="207,80,287,107">
+<area shape="rect" href="org.mixim.tests.blackboard.StateVisualize.html" title="Simple Module StateVisualize" alt="" coords="5,155,109,181">
+<area shape="rect" href="org.mixim.tests.blackboard.TestStateSub.html" title="Simple Module TestStateSub" alt="" coords="133,155,235,181">
+<area shape="rect" href="org.mixim.tests.blackboard.StateChanger.html" title="Simple Module StateChanger" alt="" coords="259,155,363,181">
+<area shape="rect" href="org.mixim.tests.blackboard.StateView.html" title="Simple Module StateView" alt="" coords="387,155,467,181">
+<area shape="rect" href="org.mixim.tests.blackboard.sim.html" title="Network sim" alt="" coords="211,5,283,32">

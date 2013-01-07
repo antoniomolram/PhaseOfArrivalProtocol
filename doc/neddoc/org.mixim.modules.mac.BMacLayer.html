@@ -1,0 +1,323 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>BMacLayer</i></h2>
+<b>Package:</b> org.mixim.modules.mac<br/><b>File: <a href="src-modules-mac-BMacLayer.ned.html">src/modules/mac/BMacLayer.ned</a></b><br/><p><a href="../doxy/a00033.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>Implementation of B-MAC (called also Berkeley MAC, Low Power Listening or 
+LPL).
+See C++ documentation for details.</p>
+<img src="org.mixim.modules.mac.BMacLayer-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.mac.BMacLayer.html" title="BMacLayer" alt="BMacLayer" coords="0,30,97,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.mac.BMacLayer-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.mac.BMacLayer.html" title="Simple Module BMacLayer" alt="" coords="5,5,93,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.mac.BMacLayer-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.mac.BMacLayer.html" title="Simple Module BMacLayer" alt="" coords="16,80,104,107">
+<area shape="rect" href="org.mixim.base.modules.BaseMacLayer.html" title="Simple Module BaseMacLayer" alt="" coords="5,5,115,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseMacLayer.html">BaseMacLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Base module for every mac layer module</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>headerLength</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the MAC packet header (in bits)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>address</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"auto"</td>
+   <td>
+<p>MAC address as hex string (12 hex digits), or
+"auto". "auto" values will be replaced by
+a generated MAC address in init stage 1.</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>collect statistics?</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>slotDuration</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1s</td>
+   <td>
+<p>BMAC specific parameters
+how long is one slot?</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>checkInterval</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0.01s</td>
+   <td>
+<p>how long is the check interval (CCA)?</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>queueLength</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>20</td>
+   <td>
+   </td>
+</tr>
+<tr class="local">
+   <td>animation</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>should we animate the nodes with colors depending on their state or 
+not?</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>bitrate</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>19200 bps</td>
+   <td>
+<p>bit rate</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>txPower</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>50 mW</td>
+   <td>
+<p>tx power [mW]</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>useMACAcks</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>should mac send and expect acknowledgments?</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>macMaxFrameRetries</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>3</td>
+   <td>
+<p>maximum number of frame retransmission
+only used when usage of MAC acks is enabled</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>class</td>
+   <td><i>BMacLayer</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>upperLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to uppe layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to lower layer</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+// Implementation of B-MAC (called also Berkeley MAC, Low Power Listening or 
+// LPL).
+// See C++ documentation for details.
+//
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">BMacLayer</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseMacLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">BMacLayer</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// debug switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">debug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">//collect statistics?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">stats</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">// BMAC specific parameters
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// how long is one slot?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">slotDuration</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">// how long is the check interval (CCA)?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">checkInterval</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">01</span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+
+		</span><span style="color: #808080; font-style: italic; ">// size of the MAC queue (maximum number of packets in Tx buffer)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">queueLength</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">20</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">// should we animate the nodes with colors depending on their state or 
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// not?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">animation</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">// bit rate 
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">bitrate</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bps</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">19200</span><span style="color: #000000; "> </span><span style="color: #000000; ">bps</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">//tx power [mW]
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">txPower</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">mW</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">50</span><span style="color: #000000; "> </span><span style="color: #000000; ">mW</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">//should mac send and expect acknowledgments?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">useMACAcks</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// maximum number of frame retransmission
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// only used when usage of MAC acks is enabled
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macMaxFrameRetries</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

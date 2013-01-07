@@ -1,0 +1,305 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Compound Module <i>BasicHost</i></h2>
+<b>Package:</b> org.mixim.tests.connectionManager<br/><b>File: <a href="tests-connectionManager-BasicHost.ned.html">tests/connectionManager/BasicHost.ned</a></b><br/>
+<p>The BasicHost is a compound module that implements a very
+simple host. It only consists of basic modules and is the
+most basic host you can create for the MF</p>
+<p><b>Author:</b> Daniel Willkomm</p>
+<img src="org.mixim.tests.connectionManager.BasicHost-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="StationaryMobility" alt="StationaryMobility" coords="115,160,151,198">
+<area shape="rect" href="org.mixim.tests.connectionManager.TestNic.html" title="TestNic" alt="TestNic" coords="46,191,82,239">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.BasicHost-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.BasicHost.html" title="Compound Module BasicHost" alt="" coords="111,80,191,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.TestNic.html" title="Compound Module TestNic" alt="" coords="5,155,77,181">
+<area shape="rect" href="ned.IdealChannel.html" title="Channel IdealChannel" alt="" coords="101,155,200,181">
+<area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="Simple Module StationaryMobility" alt="" coords="224,155,349,181">
+<area shape="rect" href="org.mixim.tests.connectionManager.ConnectionManagerTestNet.html" title="Network ConnectionManagerTestNet" alt="" coords="57,5,244,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.BasicHost-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.BasicHost.html" title="Compound Module BasicHost" alt="" coords="5,80,85,107">
+<area shape="rect" href="org.mixim.tests.TestNode.html" title="Compound Module TestNode" alt="" coords="7,5,84,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.TestNode.html">TestNode</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Basis definition for all test nodes.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Networks:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.connectionManager.ConnectionManagerTestNet.html">ConnectionManagerTestNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Test network for <a href="org.mixim.base.connectionManager.ConnectionManager.html">ConnectionManager</a>.</p>
+<p><b>Author:</b> Karl Wessel</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>phyLayer</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td></td>
+   <td>
+<p>physical layer type</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=180,200,white,,;bgp=10,10</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>radioIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for the core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min x position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min y position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min z position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max x position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max y position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max z position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinX, constraintAreaMaxX)</td>
+   <td>
+<p>initial x coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinY, constraintAreaMaxY)</td>
+   <td>
+<p>initial y coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinZ, constraintAreaMaxZ)</td>
+   <td>
+<p>initial z coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initFromDisplayString</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>initial position will be read from display string</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.TestNic.html">nic</a>.<a href="org.mixim.tests.connectionManager.ITestPhyLayer.html">phy</a>.usePropagationDelay</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>Should transmission delay be simulated?</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// The BasicHost is a compound module that implements a very
+// simple host. It only consists of basic modules and is the
+// most basic host you can create for the MF
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> Daniel Willkomm
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">BasicHost</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">TestNode</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">phyLayer</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">//physical layer type
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=180,200,white,,;bgp=10,10&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">gates</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">input</span><span style="color: #000000; "> </span><span style="color: #000000; ">radioIn</span><span style="color: #000000; ">;
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">mobility</span><span style="color: #000000; ">: </span><span style="color: #000000; ">StationaryMobility</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=130,130;i=cogwheel2&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">: </span><span style="color: #000000; ">TestNic</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">phyLayerType</span><span style="color: #000000; "> = </span><span style="color: #000000; ">phyLayer</span><span style="color: #000000; ">;
+
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;b=32,30;p=60,166;i=iface&quot;</span><span style="color: #000000; ">);
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; ">:
+
+        </span><span style="color: #000000; ">radioIn</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">--&gt;</span><span style="color: #000000; "> </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">radioIn</span><span style="color: #000000; ">;
+
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

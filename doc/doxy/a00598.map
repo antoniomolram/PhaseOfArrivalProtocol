@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00151.html" title="Physical layer that models an Ultra Wideband Impulse Radio wireless communication..." alt="" coords="780,147,900,173"/>
+<area shape="rect" href="$a00067.html" title="The basic Decider class." alt="" coords="237,5,304,32"/>
+<area shape="rect" href="$a00055.html" title="Represents a not changeable mapping (mathematical function) from domain with at least..." alt="" coords="5,83,112,109"/>
+<area shape="rect" href="$a00168.html" title="The signal class stores the physical representation of the signal of an AirFrame..." alt="" coords="241,120,300,147"/>
+<area shape="rect" href="$a00177.html" title="Helper function to initialize signal change identifier on use and not on initializing..." alt="" coords="213,171,328,197"/>
+<area shape="rect" href="$a00200.html" title="Class that keeps track of the number of packets sent." alt="" coords="219,221,323,248"/>
+<area shape="rect" href="$a00049.html" title="currently unused" alt="" coords="199,272,343,299"/>
+</map>

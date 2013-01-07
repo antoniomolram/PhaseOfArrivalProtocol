@@ -1,0 +1,6 @@
+<area shape="rect" href="org.mixim.base.phyLayer.BasePhyLayer.html" title="Simple Module BasePhyLayer" alt="" coords="188,80,295,107">
+<area shape="rect" href="org.mixim.modules.phy.PhyLayer.html" title="Simple Module PhyLayer" alt="" coords="5,155,83,181">
+<area shape="rect" href="org.mixim.modules.phy.PhyLayerUWBIR.html" title="Simple Module PhyLayerUWBIR" alt="" coords="107,155,229,181">
+<area shape="rect" href="org.mixim.examples.analogueModels.SamplePhyLayer.html" title="Simple Module SamplePhyLayer" alt="" coords="253,155,376,181">
+<area shape="rect" href="org.mixim.tests.basePhyLayer.TestPhyLayer.html" title="Simple Module TestPhyLayer" alt="" coords="400,155,504,181">
+<area shape="rect" href="org.mixim.base.phyLayer.IWirelessPhy.html" title="Module Interface IWirelessPhy" alt="" coords="192,5,291,32">

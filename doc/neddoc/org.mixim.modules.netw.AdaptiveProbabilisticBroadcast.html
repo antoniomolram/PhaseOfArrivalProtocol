@@ -1,0 +1,293 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>AdaptiveProbabilisticBroadcast</i></h2>
+<b>Package:</b> org.mixim.modules.netw<br/><b>File: <a href="src-modules-netw-AdaptiveProbabilisticBroadcast.ned.html">src/modules/netw/AdaptiveProbabilisticBroadcast.ned</a></b><br/><p><a href="../doxy/a00002.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast, with adaptive parameters.</p>
+<p>This protocol performs network-level broadcast using a probabilistic mechanism.
+This method reduces the number of packets sent on the channel (reducing the
+broadcast storm problem) at the risk of some nodes not receiving the data.
+It is particularly interesting for mobile networks.
+This version of probabilistic broadcast automatically adapts transmission
+probabilities depending on the estimated number of neighbours.
+timeInNeighboursTable is its unique parameter, and sets the time
+during which the node remembers a neighbour. It is particularly important
+in mobile networks: in that case, the faster the nodes, the smaller the
+timeInNeighboursTable parameter.</p>
+<img src="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast.html" title="AdaptiveProbabilisticBroadcast" alt="AdaptiveProbabilisticBroadcast" coords="0,30,187,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast.html" title="Simple Module AdaptiveProbabilisticBroadcast" alt="" coords="5,5,211,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.netw.AdaptiveProbabilisticBroadcast.html" title="Simple Module AdaptiveProbabilisticBroadcast" alt="" coords="5,80,211,107">
+<area shape="rect" href="org.mixim.modules.netw.ProbabilisticBroadcast.html" title="Simple Module ProbabilisticBroadcast" alt="" coords="32,5,184,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.ProbabilisticBroadcast.html">ProbabilisticBroadcast</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug and trace switches</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>trace</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr class="inherited">
+   <td>bcperiod</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>2 s</td>
+   <td>
+<p>period between two probabilistic broadcast attempts</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>beta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0.8</td>
+   <td>
+<p>probability of broadcast for each attempt</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>maxNbBcast</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1</td>
+   <td>
+<p>maximal number of broadcast attempts for each packet.</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>maxFirstBcastBackoff</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1 s</td>
+   <td>
+<p>maximal back-off before first broadcast attempt [seconds].
+if don't want to use this parameter, simply set it
+to a value that is greater than bcperiod.</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeToLive</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>10 s</td>
+   <td>   </td>
+</tr>
+<tr class="inherited">
+   <td>timeInQueueAfterDeath</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>60 s</td>
+   <td>
+<p>How many seconds the message should be kept in queue after its died.
+That way the message is known if the node receives one of its
+copy that isn't dead because of TTL de-synchronization due to
+MAC backoff, propagation delay and clock drift.</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>timeInNeighboursTable</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>60 s</td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>class</td>
+   <td><i>AdaptiveProbabilisticBroadcast</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>upperLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to uppe layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to lower layer</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast, with adaptive parameters.
+//
+// This protocol performs network-level broadcast using a probabilistic mechanism.
+// This method reduces the number of packets sent on the channel (reducing the
+// broadcast storm problem) at the risk of some nodes not receiving the data.
+// It is particularly interesting for mobile networks.
+// This version of probabilistic broadcast automatically adapts transmission
+// probabilities depending on the estimated number of neighbours.
+// timeInNeighboursTable is its unique parameter, and sets the time
+// during which the node remembers a neighbour. It is particularly important
+// in mobile networks: in that case, the faster the nodes, the smaller the
+// timeInNeighboursTable parameter.
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">AdaptiveProbabilisticBroadcast</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">ProbabilisticBroadcast</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">AdaptiveProbabilisticBroadcast</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">timeInNeighboursTable</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">60</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

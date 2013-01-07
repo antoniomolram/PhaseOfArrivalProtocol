@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00022.html" title="A very simple MAC module template which provides de&#45; and encapsulation of messages..." alt="" coords="83,96,192,123"/>
+<area shape="rect" href="$a00119.html" title="Defines the methods provided by the phy to the mac layer." alt="" coords="5,5,141,32"/>
+<area shape="rect" href="$a00144.html" title="Class that keeps track of the number of packets sent." alt="" coords="216,96,277,123"/>
+</map>

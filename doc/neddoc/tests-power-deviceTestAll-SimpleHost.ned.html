@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>tests/power/deviceTestAll/SimpleHost.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost.html">PowerTrippleTestHost</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Empty host with three devices for simple power test.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #0000ff; font-style: italic; ">//# Energy Framework for Omnet++, version 0.9
+//#
+//# Author:  Laura Marie Feeney 
+//# 
+//# Copyright 2009 Swedish Institute of Computer Science.  
+//# 
+//# This software is provided `as is' and without any express or implied
+//# warranties, including, but not limited to, the implied warranties of
+//# merchantability and fitness for a particular purpose.
+//#
+//######################################################################
+</span><span style="color: #808080; font-style: italic; ">// empty host to test energy framework.  see README.txt for details.
+</span><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">tests</span><span style="color: #000000; ">.</span><span style="color: #000000; ">power</span><span style="color: #000000; ">.</span><span style="color: #000000; ">deviceTestAll</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">tests</span><span style="color: #000000; ">.</span><span style="color: #000000; ">power</span><span style="color: #000000; ">.</span><span style="color: #000000; ">utils</span><span style="color: #000000; ">.</span><span style="color: #000000; ">DeviceDuty</span><span style="color: #000000; ">;
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">tests</span><span style="color: #000000; ">.</span><span style="color: #000000; ">power</span><span style="color: #000000; ">.</span><span style="color: #000000; ">utils</span><span style="color: #000000; ">.</span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; ">;
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">tests</span><span style="color: #000000; ">.</span><span style="color: #000000; ">power</span><span style="color: #000000; ">.</span><span style="color: #000000; ">PowerTestNode</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">// Empty host with three devices for simple power test. 
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTrippleTestHost</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTestNode</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=250,153,$color;bgp=10,10&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">numDevices</span><span style="color: #000000; "> = </span><span style="color: #008000; ">3</span><span style="color: #000000; ">;
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">firstDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=45,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">secondDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDuty</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=131,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">thirdDevice</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=210,98;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

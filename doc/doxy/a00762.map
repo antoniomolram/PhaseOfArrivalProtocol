@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00121.html" title="Represents a changeable mapping (mathematical function) from at least time to Argument::mapped_type..." alt="" coords="53,96,125,123"/>
+<area shape="rect" href="$a00055.html" title="Represents a not changeable mapping (mathematical function) from domain with at least..." alt="" coords="76,5,183,32"/>
+<area shape="rect" href="$a00047.html" title="Defines it values by concatenating one or more Mappings to a reference Mapping." alt="" coords="149,96,371,123"/>
+</map>

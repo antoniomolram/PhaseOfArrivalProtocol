@@ -1,0 +1,89 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>examples/multiConnectionManager/MultiConnectionManager.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.multiConnectionManager.MultiConnectionManager.html">MultiConnectionManager</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use multiple ConnectionManagers in your simulation. </p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">examples</span><span style="color: #000000; ">.</span><span style="color: #000000; ">multiConnectionManager</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">connectionManager</span><span style="color: #000000; ">.</span><span style="color: #000000; ">ConnectionManager</span><span style="color: #000000; ">;
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+//This example shows how to use multiple ConnectionManagers in your simulation. 
+//
+//The network contains two independent ConnectionManagers: &quot;ISMChannel&quot; and &quot;GSMChannel&quot;.
+//There also is its own list of hosts for each channel &quot;ISMNode&quot; and &quot;GSMNode&quot;.
+//Both types of hosts use BurstApplLayer &lt;-&gt; BaseNetwLayer &lt;-&gt; CSMAMacLayer &lt;-&gt; 
+//PhyLayer as network stack. Whereas the PhyLayer uses &quot;SimplePathlossModel&quot; 
+//as AnalogueModel and &quot;SNRThresholdDecider&quot; as Decider.
+//
+//The channel a host uses is defined in its NICs &quot;connectionManagerName&quot; parameter.
+//
+//Since the settings for the SimplePathlossModel differ for the GSM- and ISM-Nodes
+//there are two seperate &lt;config&gt;.xml for them (GSMmodels.xml and ISMmodels.xml).
+//
+//The omnetpp.ini contains the following run configurations:
+//
+//- Config1 - Three hosts which use the same ConnectionManager. No propagation delay.
+//- Config2 - Same as Config1 but with propagation delay.
+//- Config3 - Two hosts using the GSMChannel ConnectionManager and two host using
+//		  	  the ISMChannel ConnectionManager. No propagation delay.
+//- Config4 - Same as Config3 but with propagation delay.
+//- General - Same as Config3
+//
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">MultiConnectionManager</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numGSMHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of weak hosts in the network
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numISMHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of strong hosts in the network
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">ISMChannel</span><span style="color: #000000; ">: </span><span style="color: #000000; ">ConnectionManager</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=121,0;i=abstract/multicast;is=s&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">GSMNode</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numGSMHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numGSMHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=70,91;b=42,42,rect,red;i=device/palm&quot;</span><span style="color: #000000; ">);
+
+        }
+        </span><span style="color: #000000; ">ISMNode</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numISMHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numISMHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=202,91;b=42,42,rect,green;i=device/wifilaptop&quot;</span><span style="color: #000000; ">);
+
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+                         </span><span style="color: #808080; font-style: italic; ">// all connections and gates are to be generated dynamically
+</span><span style="color: #000000; ">
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

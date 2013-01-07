@@ -1,0 +1,432 @@
+file 480934 1354648250                                          
+version 2
+run Red8012154-4-20121204-20:02:27-29926
+attr configname Red8012154
+attr datetime 20121204-20:02:27
+attr experiment Red8012154
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=4
+attr measurement ""
+attr network ieee802154Narrow
+attr processid 29926
+attr repetition 4
+attr replication #4
+attr resultdir results
+attr runnumber 4
+attr seedset 4
+
+vector 290  ieee802154Narrow.anchor[0].appl  "Number of packets from this anchor"  TV
+vector 296  ieee802154Narrow.anchor[1].appl  "Number of packets from this anchor"  TV
+vector 302  ieee802154Narrow.anchor[2].appl  "Number of packets from this anchor"  TV
+vector 308  ieee802154Narrow.anchor[3].appl  "Number of packets from this anchor"  TV
+vector 314  ieee802154Narrow.anchor[4].appl  "Number of packets from this anchor"  TV
+vector 320  ieee802154Narrow.anchor[5].appl  "Number of packets from this anchor"  TV
+vector 326  ieee802154Narrow.anchor[6].appl  "Number of packets from this anchor"  TV
+vector 332  ieee802154Narrow.anchor[7].appl  "Number of packets from this anchor"  TV
+vector 338  ieee802154Narrow.anchor[8].appl  "Number of packets from this anchor"  TV
+vector 344  ieee802154Narrow.anchor[9].appl  "Number of packets from this anchor"  TV
+vector 350  ieee802154Narrow.anchor[10].appl  "Number of packets from this anchor"  TV
+vector 356  ieee802154Narrow.anchor[11].appl  "Number of packets from this anchor"  TV
+vector 362  ieee802154Narrow.anchor[12].appl  "Number of packets from this anchor"  TV
+vector 368  ieee802154Narrow.anchor[13].appl  "Number of packets from this anchor"  TV
+vector 374  ieee802154Narrow.anchor[14].appl  "Number of packets from this anchor"  TV
+vector 380  ieee802154Narrow.anchor[15].appl  "Number of packets from this anchor"  TV
+vector 386  ieee802154Narrow.anchor[16].appl  "Number of packets from this anchor"  TV
+vector 392  ieee802154Narrow.anchor[17].appl  "Number of packets from this anchor"  TV
+vector 398  ieee802154Narrow.anchor[18].appl  "Number of packets from this anchor"  TV
+vector 404  ieee802154Narrow.anchor[19].appl  "Number of packets from this anchor"  TV
+vector 410  ieee802154Narrow.anchor[20].appl  "Number of packets from this anchor"  TV
+vector 416  ieee802154Narrow.anchor[21].appl  "Number of packets from this anchor"  TV
+vector 422  ieee802154Narrow.anchor[22].appl  "Number of packets from this anchor"  TV
+vector 428  ieee802154Narrow.anchor[23].appl  "Number of packets from this anchor"  TV
+vector 434  ieee802154Narrow.anchor[24].appl  "Number of packets from this anchor"  TV
+vector 287  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 288  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 289  ieee802154Narrow.anchor[0].appl  "Number of AN Reports with ACK"  TV
+vector 291  ieee802154Narrow.anchor[0].appl  "Number of packets sent from mobile node 0"  TV
+vector 292  ieee802154Narrow.anchor[0].appl  "Effectiveness in each anchor"  TV
+vector 293  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 294  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 295  ieee802154Narrow.anchor[1].appl  "Number of AN Reports with ACK"  TV
+vector 297  ieee802154Narrow.anchor[1].appl  "Number of packets sent from mobile node 0"  TV
+vector 298  ieee802154Narrow.anchor[1].appl  "Effectiveness in each anchor"  TV
+vector 299  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 300  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 301  ieee802154Narrow.anchor[2].appl  "Number of AN Reports with ACK"  TV
+vector 303  ieee802154Narrow.anchor[2].appl  "Number of packets sent from mobile node 0"  TV
+vector 304  ieee802154Narrow.anchor[2].appl  "Effectiveness in each anchor"  TV
+vector 305  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 306  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 307  ieee802154Narrow.anchor[3].appl  "Number of AN Reports with ACK"  TV
+vector 309  ieee802154Narrow.anchor[3].appl  "Number of packets sent from mobile node 0"  TV
+vector 310  ieee802154Narrow.anchor[3].appl  "Effectiveness in each anchor"  TV
+vector 311  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 312  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 313  ieee802154Narrow.anchor[4].appl  "Number of AN Reports with ACK"  TV
+vector 315  ieee802154Narrow.anchor[4].appl  "Number of packets sent from mobile node 0"  TV
+vector 316  ieee802154Narrow.anchor[4].appl  "Effectiveness in each anchor"  TV
+vector 317  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 318  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 319  ieee802154Narrow.anchor[5].appl  "Number of AN Reports with ACK"  TV
+vector 321  ieee802154Narrow.anchor[5].appl  "Number of packets sent from mobile node 0"  TV
+vector 322  ieee802154Narrow.anchor[5].appl  "Effectiveness in each anchor"  TV
+vector 323  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 324  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 325  ieee802154Narrow.anchor[6].appl  "Number of AN Reports with ACK"  TV
+vector 327  ieee802154Narrow.anchor[6].appl  "Number of packets sent from mobile node 0"  TV
+vector 328  ieee802154Narrow.anchor[6].appl  "Effectiveness in each anchor"  TV
+vector 329  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 330  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 331  ieee802154Narrow.anchor[7].appl  "Number of AN Reports with ACK"  TV
+vector 333  ieee802154Narrow.anchor[7].appl  "Number of packets sent from mobile node 0"  TV
+vector 334  ieee802154Narrow.anchor[7].appl  "Effectiveness in each anchor"  TV
+vector 335  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 336  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 337  ieee802154Narrow.anchor[8].appl  "Number of AN Reports with ACK"  TV
+vector 339  ieee802154Narrow.anchor[8].appl  "Number of packets sent from mobile node 0"  TV
+vector 340  ieee802154Narrow.anchor[8].appl  "Effectiveness in each anchor"  TV
+vector 341  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 342  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 343  ieee802154Narrow.anchor[9].appl  "Number of AN Reports with ACK"  TV
+vector 345  ieee802154Narrow.anchor[9].appl  "Number of packets sent from mobile node 0"  TV
+vector 346  ieee802154Narrow.anchor[9].appl  "Effectiveness in each anchor"  TV
+vector 347  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 348  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 349  ieee802154Narrow.anchor[10].appl  "Number of AN Reports with ACK"  TV
+vector 351  ieee802154Narrow.anchor[10].appl  "Number of packets sent from mobile node 0"  TV
+vector 352  ieee802154Narrow.anchor[10].appl  "Effectiveness in each anchor"  TV
+vector 353  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 354  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 355  ieee802154Narrow.anchor[11].appl  "Number of AN Reports with ACK"  TV
+vector 357  ieee802154Narrow.anchor[11].appl  "Number of packets sent from mobile node 0"  TV
+vector 358  ieee802154Narrow.anchor[11].appl  "Effectiveness in each anchor"  TV
+vector 359  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 360  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 361  ieee802154Narrow.anchor[12].appl  "Number of AN Reports with ACK"  TV
+vector 363  ieee802154Narrow.anchor[12].appl  "Number of packets sent from mobile node 0"  TV
+vector 364  ieee802154Narrow.anchor[12].appl  "Effectiveness in each anchor"  TV
+vector 365  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 366  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 367  ieee802154Narrow.anchor[13].appl  "Number of AN Reports with ACK"  TV
+vector 369  ieee802154Narrow.anchor[13].appl  "Number of packets sent from mobile node 0"  TV
+vector 370  ieee802154Narrow.anchor[13].appl  "Effectiveness in each anchor"  TV
+vector 371  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 372  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 373  ieee802154Narrow.anchor[14].appl  "Number of AN Reports with ACK"  TV
+vector 375  ieee802154Narrow.anchor[14].appl  "Number of packets sent from mobile node 0"  TV
+vector 376  ieee802154Narrow.anchor[14].appl  "Effectiveness in each anchor"  TV
+vector 377  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 378  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 379  ieee802154Narrow.anchor[15].appl  "Number of AN Reports with ACK"  TV
+vector 381  ieee802154Narrow.anchor[15].appl  "Number of packets sent from mobile node 0"  TV
+vector 382  ieee802154Narrow.anchor[15].appl  "Effectiveness in each anchor"  TV
+vector 383  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 384  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 385  ieee802154Narrow.anchor[16].appl  "Number of AN Reports with ACK"  TV
+vector 387  ieee802154Narrow.anchor[16].appl  "Number of packets sent from mobile node 0"  TV
+vector 388  ieee802154Narrow.anchor[16].appl  "Effectiveness in each anchor"  TV
+vector 389  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 390  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 391  ieee802154Narrow.anchor[17].appl  "Number of AN Reports with ACK"  TV
+vector 393  ieee802154Narrow.anchor[17].appl  "Number of packets sent from mobile node 0"  TV
+vector 394  ieee802154Narrow.anchor[17].appl  "Effectiveness in each anchor"  TV
+vector 395  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 396  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 397  ieee802154Narrow.anchor[18].appl  "Number of AN Reports with ACK"  TV
+vector 399  ieee802154Narrow.anchor[18].appl  "Number of packets sent from mobile node 0"  TV
+vector 400  ieee802154Narrow.anchor[18].appl  "Effectiveness in each anchor"  TV
+vector 401  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 402  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 403  ieee802154Narrow.anchor[19].appl  "Number of AN Reports with ACK"  TV
+vector 405  ieee802154Narrow.anchor[19].appl  "Number of packets sent from mobile node 0"  TV
+vector 406  ieee802154Narrow.anchor[19].appl  "Effectiveness in each anchor"  TV
+vector 407  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 408  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 409  ieee802154Narrow.anchor[20].appl  "Number of AN Reports with ACK"  TV
+vector 411  ieee802154Narrow.anchor[20].appl  "Number of packets sent from mobile node 0"  TV
+vector 412  ieee802154Narrow.anchor[20].appl  "Effectiveness in each anchor"  TV
+vector 413  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 414  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 415  ieee802154Narrow.anchor[21].appl  "Number of AN Reports with ACK"  TV
+vector 417  ieee802154Narrow.anchor[21].appl  "Number of packets sent from mobile node 0"  TV
+vector 418  ieee802154Narrow.anchor[21].appl  "Effectiveness in each anchor"  TV
+vector 419  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 420  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 421  ieee802154Narrow.anchor[22].appl  "Number of AN Reports with ACK"  TV
+vector 423  ieee802154Narrow.anchor[22].appl  "Number of packets sent from mobile node 0"  TV
+vector 424  ieee802154Narrow.anchor[22].appl  "Effectiveness in each anchor"  TV
+vector 425  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 426  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 427  ieee802154Narrow.anchor[23].appl  "Number of AN Reports with ACK"  TV
+vector 429  ieee802154Narrow.anchor[23].appl  "Number of packets sent from mobile node 0"  TV
+vector 430  ieee802154Narrow.anchor[23].appl  "Effectiveness in each anchor"  TV
+vector 431  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - No ACK received"  TV
+vector 432  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+vector 433  ieee802154Narrow.anchor[24].appl  "Number of AN Reports with ACK"  TV
+vector 435  ieee802154Narrow.anchor[24].appl  "Number of packets sent from mobile node 0"  TV
+vector 436  ieee802154Narrow.anchor[24].appl  "Effectiveness in each anchor"  TV
+vector 437  ieee802154Narrow.computer[0].appl  received-packets-per-period  TV
+vector 438  ieee802154Narrow.computer[0].appl  received-no-repeated-packets-per-period  TV
+vector 440  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 8"  TV
+vector 441  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 12"  TV
+vector 442  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 16"  TV
+vector 443  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 20"  TV
+vector 439  ieee802154Narrow.computer[0].appl  "Number of packets sent from mobile node 0"  TV
+vector 444  ieee802154Narrow.anchor[0].appl  ""  TV
+vector 445  ieee802154Narrow.anchor[0].appl  ""  TV
+vector 446  ieee802154Narrow.anchor[1].appl  ""  TV
+vector 447  ieee802154Narrow.anchor[1].appl  ""  TV
+vector 448  ieee802154Narrow.anchor[2].appl  ""  TV
+vector 449  ieee802154Narrow.anchor[2].appl  ""  TV
+vector 450  ieee802154Narrow.anchor[3].appl  ""  TV
+vector 451  ieee802154Narrow.anchor[3].appl  ""  TV
+vector 452  ieee802154Narrow.anchor[4].appl  ""  TV
+vector 453  ieee802154Narrow.anchor[4].appl  ""  TV
+vector 454  ieee802154Narrow.anchor[5].appl  ""  TV
+vector 455  ieee802154Narrow.anchor[5].appl  ""  TV
+vector 456  ieee802154Narrow.anchor[6].appl  ""  TV
+vector 457  ieee802154Narrow.anchor[6].appl  ""  TV
+vector 458  ieee802154Narrow.anchor[7].appl  ""  TV
+vector 459  ieee802154Narrow.anchor[7].appl  ""  TV
+vector 460  ieee802154Narrow.anchor[8].appl  ""  TV
+vector 461  ieee802154Narrow.anchor[8].appl  ""  TV
+vector 462  ieee802154Narrow.anchor[9].appl  ""  TV
+vector 463  ieee802154Narrow.anchor[9].appl  ""  TV
+vector 464  ieee802154Narrow.anchor[10].appl  ""  TV
+vector 465  ieee802154Narrow.anchor[10].appl  ""  TV
+vector 466  ieee802154Narrow.anchor[11].appl  ""  TV
+vector 467  ieee802154Narrow.anchor[11].appl  ""  TV
+vector 468  ieee802154Narrow.anchor[12].appl  ""  TV
+vector 469  ieee802154Narrow.anchor[12].appl  ""  TV
+vector 470  ieee802154Narrow.anchor[13].appl  ""  TV
+vector 471  ieee802154Narrow.anchor[13].appl  ""  TV
+vector 472  ieee802154Narrow.anchor[14].appl  ""  TV
+vector 473  ieee802154Narrow.anchor[14].appl  ""  TV
+vector 474  ieee802154Narrow.anchor[15].appl  ""  TV
+vector 475  ieee802154Narrow.anchor[15].appl  ""  TV
+vector 476  ieee802154Narrow.anchor[16].appl  ""  TV
+vector 477  ieee802154Narrow.anchor[16].appl  ""  TV
+vector 478  ieee802154Narrow.anchor[17].appl  ""  TV
+vector 479  ieee802154Narrow.anchor[17].appl  ""  TV
+vector 480  ieee802154Narrow.anchor[18].appl  ""  TV
+vector 481  ieee802154Narrow.anchor[18].appl  ""  TV
+vector 482  ieee802154Narrow.anchor[19].appl  ""  TV
+vector 483  ieee802154Narrow.anchor[19].appl  ""  TV
+vector 484  ieee802154Narrow.anchor[20].appl  ""  TV
+vector 485  ieee802154Narrow.anchor[20].appl  ""  TV
+vector 486  ieee802154Narrow.anchor[21].appl  ""  TV
+vector 487  ieee802154Narrow.anchor[21].appl  ""  TV
+vector 488  ieee802154Narrow.anchor[22].appl  ""  TV
+vector 489  ieee802154Narrow.anchor[22].appl  ""  TV
+vector 490  ieee802154Narrow.anchor[23].appl  ""  TV
+vector 491  ieee802154Narrow.anchor[23].appl  ""  TV
+vector 492  ieee802154Narrow.anchor[24].appl  ""  TV
+vector 493  ieee802154Narrow.anchor[24].appl  ""  TV
+287	16931 2507 1.86 483.44 200 0 2 2 4
+288	19438 2507 1.86 483.44 200 0 0 0 0
+289	21945 2507 1.86 483.44 200 0 3 130 208
+290	24452 2507 0.82 482.4 200 0 3 130 208
+291	26959 2507 1.86 483.44 200 0 1 26 26
+292	29466 3102 1.86 483.44 200 0.91347407498902 1 198.61034409205 197.27715337633
+293	32568 2507 1.86 483.44 200 0 1 3 3
+294	35075 2507 1.86 483.44 200 0 1 4 4
+295	37582 2507 1.86 483.44 200 0 8 491 1961
+296	40089 2507 0.82 482.4 200 0 6 361 1045
+297	42596 2507 1.86 483.44 200 0 1 45 45
+298	45103 3102 1.86 483.44 200 0.91347407498902 1 198.61034409205 197.27715337633
+299	48205 2507 1.86 483.44 200 0 2 36 38
+300	50712 2507 1.86 483.44 200 0 3 83 133
+301	53219 2642 1.86 483.44 200 5 25 2579 37597
+302	55861 2507 0.82 482.4 200 0 6 553 1989
+303	58368 2507 1.86 483.44 200 0 1 48 48
+304	60875 3102 1.86 483.44 200 0.91347407498902 1 198.61034409205 197.27715337633
+305	63977 2507 1.86 483.44 200 0 9 141 439
+306	66484 2508 1.86 483.44 200 0 13 231 903
+307	68992 2704 1.86 483.44 200 9 25 3225 54669
+308	71696 2507 0.82 482.4 200 0 5 478 1462
+309	74203 2507 1.86 483.44 200 0 1 31 31
+310	76710 3088 1.86 483.44 200 0.94101731601732 1 198.86425469458 197.76188231127
+311	79798 2507 1.86 483.44 200 0 2 2 4
+312	82305 2507 1.86 483.44 200 0 1 1 1
+313	84812 2507 1.86 483.44 200 0 3 188 286
+314	87319 2507 0.82 482.4 200 0 3 188 286
+315	89826 2507 1.86 483.44 200 0 0 0 0
+316	92333 3088 1.86 483.44 200 0.94101731601732 1 198.86425469458 197.76188231127
+317	95421 2507 1.86 483.44 200 0 8 14 84
+318	97928 2507 1.86 483.44 200 0 4 4 16
+319	100435 2507 1.86 483.44 200 0 5 442 1194
+320	102942 2507 0.82 482.4 200 0 5 447 1225
+321	105449 2507 1.86 483.44 200 0 1 32 32
+322	107956 3180 1.86 483.44 200 0.60714285714286 1 196.68597118115 193.96754579478
+323	111136 2507 1.86 483.44 200 0 9 168 526
+324	113643 2507 1.86 483.44 200 0 5 67 133
+325	116150 2550 1.86 483.44 200 4 13 1539 12811
+326	118700 2507 0.82 482.4 200 3 9 1106 6710
+327	121207 2507 1.86 483.44 200 0 1 53 53
+328	123714 3170 1.86 483.44 200 0.86327561327561 1 197.83887522155 195.83337759054
+329	126884 2508 1.86 483.44 200 0 12 270 898
+330	129392 2509 1.86 483.44 200 0 16 410 1864
+331	131901 2705 1.86 483.44 200 9 23 3510 62822
+332	134606 2539 0.82 482.4 200 4 11 1566 12794
+333	137145 2507 1.86 483.44 200 0 1 99 99
+334	139652 4808 1.86 483.44 200 0.52401199141471 1 187.90840825073 178.89365479639
+335	144460 2507 1.86 483.44 200 0 8 136 392
+336	146967 2507 1.86 483.44 200 0 8 358 1226
+337	149474 2707 1.86 483.44 200 33 68 11296 646914
+338	152181 2507 0.82 482.4 200 1 9 1125 6943
+339	154688 2507 1.86 483.44 200 0 1 58 58
+340	157195 4669 1.86 483.44 200 0.8698788299274 1 197.46034889566 195.02090907443
+341	161864 2507 1.86 483.44 200 0 8 119 311
+342	164371 2507 1.86 483.44 200 0 5 185 463
+343	166878 2707 1.86 483.44 200 17 38 4929 124631
+344	169585 2507 0.82 482.4 200 0 5 502 1602
+345	172092 2507 1.86 483.44 200 0 1 25 25
+346	174599 3763 1.86 483.44 200 0.91391304347826 1 198.31466317352 196.67986563826
+347	178362 2507 1.86 483.44 200 0 2 13 17
+348	180869 2507 1.86 483.44 200 0 3 6 12
+349	183376 2507 1.86 483.44 200 1 5 523 1619
+350	185883 2507 0.82 482.4 200 1 5 526 1634
+351	188390 2507 1.86 483.44 200 0 1 14 14
+352	190897 4860 1.86 483.44 200 0.42043866468318 1 182.1891299673 169.37541878206
+353	195757 2508 1.86 483.44 200 0 10 204 596
+354	198265 2507 1.86 483.44 200 0 9 220 670
+355	200772 2652 1.86 483.44 200 7 14 2098 22520
+356	203424 2522 0.82 482.4 200 5 11 1644 13756
+357	205946 2507 1.86 483.44 200 0 1 71 71
+358	208453 4837 1.86 483.44 200 0.50217815843909 1 182.83264604555 170.21843094249
+359	213290 2508 1.86 483.44 200 0 11 324 1098
+360	215798 2513 1.86 483.44 200 0 21 563 3037
+361	218311 2707 1.86 483.44 200 14 41 6652 225118
+362	221018 2661 0.82 482.4 200 6 15 2249 26039
+363	223679 2507 1.86 483.44 200 0 1 112 112
+364	226186 4877 1.86 483.44 200 0.65072687844722 1 189.50192488207 180.91718412763
+365	231063 2507 1.86 483.44 200 0 7 212 600
+366	233570 2509 1.86 483.44 200 0 14 429 1837
+367	236079 2707 1.86 483.44 200 10 25 3228 53572
+368	238786 2543 0.82 482.4 200 4 11 1651 14079
+369	241329 2507 1.86 483.44 200 0 1 76 76
+370	243836 4460 1.86 483.44 200 0.70955513784461 1 190.65628556598 182.63441521231
+371	248296 2507 1.86 483.44 200 0 2 20 26
+372	250803 2507 1.86 483.44 200 0 3 39 71
+373	253310 2514 1.86 483.44 200 1 10 1149 7535
+374	255824 2507 0.82 482.4 200 1 6 639 2399
+375	258331 2507 1.86 483.44 200 0 1 29 29
+376	260838 3770 1.86 483.44 200 0.79876725327812 1 197.62496286628 195.40984512928
+377	264608 2507 1.86 483.44 200 0 2 12 14
+378	267115 2507 1.86 483.44 200 0 1 1 1
+379	269622 2507 1.86 483.44 200 0 5 451 1383
+380	272129 2507 0.82 482.4 200 0 5 452 1388
+381	274636 2507 1.86 483.44 200 0 1 57 57
+382	277143 4956 1.86 483.44 200 0.50448789102937 1 173.74608218199 155.16083380774
+383	282099 2507 1.86 483.44 200 0 9 171 421
+384	284606 2507 1.86 483.44 200 0 7 202 548
+385	287113 2587 1.86 483.44 200 2 15 1756 16602
+386	289700 2509 0.82 482.4 200 3 10 1329 9279
+387	292209 2507 1.86 483.44 200 0 1 94 94
+388	294716 4970 1.86 483.44 200 0.50448789102937 1 173.87243651504 155.27160711143
+389	299686 2507 1.86 483.44 200 0 7 232 624
+390	302193 2507 1.86 483.44 200 0 7 244 744
+391	304700 2697 1.86 483.44 200 8 20 2847 41671
+392	307397 2556 0.82 482.4 200 5 11 1645 14043
+393	309953 2507 1.86 483.44 200 0 1 98 98
+394	312460 4983 1.86 483.44 200 0.59596799897005 1 182.19404681793 168.08030305795
+395	317443 2507 1.86 483.44 200 0 5 83 189
+396	319950 2507 1.86 483.44 200 0 6 52 120
+397	322457 2582 1.86 483.44 200 3 17 1728 16634
+398	325039 2519 0.82 482.4 200 3 11 1227 8085
+399	327558 2507 1.86 483.44 200 0 1 68 68
+400	330065 4452 1.86 483.44 200 0.6968845103831 1 190.3673643162 182.10707952543
+401	334517 2507 1.86 483.44 200 0 1 2 2
+402	337024 2507 1.86 483.44 200 0 1 1 1
+403	339531 2507 1.86 483.44 200 0 7 516 2012
+404	342038 2507 0.82 482.4 200 0 4 355 873
+405	344545 2507 1.86 483.44 200 0 1 14 14
+406	347052 3755 1.86 483.44 200 0.79876725327812 1 197.66350453295 195.48544300254
+407	350807 2507 1.86 483.44 200 0 2 2 4
+408	353314 2507 1.86 483.44 200 0 1 1 1
+409	355821 2507 1.86 483.44 200 0 2 158 220
+410	358328 2507 0.82 482.4 200 0 2 158 220
+411	360835 2507 1.86 483.44 200 0 1 50 50
+412	363342 4955 1.86 483.44 200 0.50448789102937 1 173.97871390012 155.47286699902
+413	368297 2507 1.86 483.44 200 0 1 1 1
+414	370804 2507 1.86 483.44 200 0 1 1 1
+415	373311 2507 1.86 483.44 200 1 5 573 1785
+416	375818 2507 0.82 482.4 200 1 5 573 1785
+417	378325 2507 1.86 483.44 200 0 1 79 79
+418	380832 4968 1.86 483.44 200 0.59596799897005 1 182.24074269536 168.17151430783
+419	385800 2507 1.86 483.44 200 0 4 43 87
+420	388307 2507 1.86 483.44 200 0 3 9 19
+421	390814 2507 1.86 483.44 200 1 7 762 3258
+422	393321 2507 0.82 482.4 200 1 7 775 3397
+423	395828 2507 1.86 483.44 200 0 1 77 77
+424	398335 4983 1.86 483.44 200 0.52147199909879 1 180.45757884029 165.33002578226
+425	403318 2507 1.86 483.44 200 0 4 11 35
+426	405825 2507 1.86 483.44 200 0 2 5 9
+427	408332 2507 1.86 483.44 200 0 6 504 1770
+428	410839 2507 0.82 482.4 200 0 6 507 1799
+429	413346 2507 1.86 483.44 200 0 1 31 31
+430	415853 4443 1.86 483.44 200 0.6678476557838 1 190.05454767864 181.61296077258
+431	420296 2507 1.86 483.44 200 0 0 0 0
+432	422803 2507 1.86 483.44 200 0 0 0 0
+433	425310 2507 1.86 483.44 200 0 4 161 297
+434	427817 2507 0.82 482.4 200 0 4 161 297
+435	430324 2507 1.86 483.44 200 0 1 10 10
+436	432831 3740 1.86 483.44 200 0.79876725327812 1 197.70204619962 195.5610408758
+437	436571 2816 1.86 483.44 200 79 113 19825 1971791
+438	439387 2797 1.86 483.44 200 75 107 19465 1900315
+439	442184 2507 1.86 483.44 200 2 8 1204 7630
+440	444691 2507 1.86 483.44 200 1 9 1125 6943
+441	447198 2658 1.86 483.44 200 5 15 2225 25515
+442	449856 2507 1.86 483.44 200 0 9 1183 7551
+443	452363 2507 1.86 483.44 200 0 2 145 195
+444	454870 46 484 484 2 0.829915674139 0.913832068483 1.743747742622 1.5238490755695
+445	454916 20 484 484 2 1 1 2 2
+446	454936 2038 484 484 89 0.874836674754 1.598524121607 118.09018894638 159.54634486232
+447	456974 890 484 484 89 1 5 109 209
+448	457864 1584 484 484 69 0.825902363681 1.663274070613 91.361781764686 124.76074719942
+449	459448 690 484 484 69 1 5 194 776
+450	460138 1809 484 484 79 0.85282346771 1.773495259042 111.69704628381 162.2177275089
+451	461947 790 484 484 79 1 5 242 1016
+452	462737 46 484 484 2 0.829436730882 0.832145619028 1.66158234991 1.3804316218037
+453	462783 20 484 484 2 1 5 6 26
+454	462803 91 484 484 4 0.90055530165 0.933534420936 3.665218156215 3.3592128606918
+455	462894 40 484 484 4 1 5 16 76
+456	462934 1993 484 484 87 0.869107230939 1.59576924946 116.36648426661 158.11197787819
+457	464927 870 484 484 87 1 5 172 556
+458	465797 527 484 484 23 0.834827261606 1.660049340271 31.622023872897 44.890168391052
+459	466324 230 484 484 23 1 5 101 471
+460	466554 1897 484 484 83 0.842487971534 1.772114357052 115.36443872328 165.37707397854
+461	468451 830 484 484 83 1 5 364 1742
+462	469281 1812 484 484 79 0.983586692653 1.771916577613 112.11445489722 163.16234759992
+463	471093 790 484 484 79 1 5 298 1354
+464	471883 92 484 484 4 0.828484902792 0.945682023309 3.497283304348 3.0671269609811
+465	471975 40 484 484 4 5 5 20 100
+466	472015 366 484 484 16 0.845274431013 1.598134735414 20.405633708131 26.88570997873
+467	472381 160 484 484 16 1 5 67 309
+468	472541 894 484 484 39 0.911334380999 1.665607636529 56.712582057349 83.765108621546
+469	473435 390 484 484 39 1 5 179 863
+470	473825 643 484 484 28 1.060177834232 1.655393909777 36.448903343101 48.597396716823
+471	474468 280 484 484 28 1 5 117 541
+472	474748 1394 484 484 61 0.891327442557 1.663800227133 82.94945968782 115.8596309346
+473	476142 610 484 484 61 1 5 115 371
+474	476752 115 484 484 5 0.895888121208 1.550580471012 5.342979386353 6.0193878165743
+475	476867 50 484 484 5 1 1 5 5
+476	476917 391 484 484 17 0.849555520053 1.595697506422 23.15807233718 32.673100603079
+477	477308 170 484 484 17 1 5 72 330
+478	477478 1054 484 484 46 0.870591632327 1.595441888833 61.31607477185 84.187357902531
+479	478532 460 484 484 46 1 5 131 519
+480	478992 711 484 484 31 0.878460126622 1.597689808492 40.80163838791 55.67106399629
+481	479703 310 484 484 31 1 5 99 415
+482	480013 161 484 484 7 0.847448547807 1.090898916512 6.621166841263 6.311349053317
+483	480174 70 484 484 7 1 5 28 130
+484	480244 46 484 484 2 0.824577424517 1.076061343873 1.90063876839 1.8378359448009
+485	480290 20 484 484 2 1 1 2 2
+486	480310 91 484 484 4 0.820745124517 0.92231202855 3.480300069517 3.0356134520272
+487	480401 40 484 484 4 5 5 20 100
+488	480441 159 484 484 7 0.89577614965 1.313997712654 6.99260287009 7.1201542106485
+489	480600 70 484 484 7 3 5 31 143
+490	480670 115 484 484 5 0.829811921486 0.920173411063 4.401016897517 3.8811010043042
+491	480785 50 484 484 5 5 5 25 125
+492	480835 69 484 484 3 0.827859821486 0.909376604983 2.644020931452 2.3345758321985
+493	480904 30 484 484 3 2 5 12 54

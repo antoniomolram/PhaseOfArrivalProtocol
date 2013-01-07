@@ -1,0 +1,151 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2>Package org.mixim.modules.mac</h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.AlohaMacLayer.html">AlohaMacLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.BMacLayer.html">BMacLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Implementation of B-MAC (called also Berkeley MAC, Low Power Listening or 
+LPL).
+See C++ documentation for details.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.csma.html">csma</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Generic CSMA protocol supporting Mac-ACKs as well as
+constant, linear or exponential backoff times.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.CSMA802154.html">CSMA802154</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>IEEE 802.15.4-2006 non-beacon enabled CSMA protocol
+This model was independently validated on a wireless sensor network testbed.
+For more information, see 
+Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+Modeling and Simulation. </p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.CSMAMacLayer.html">CSMAMacLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>CSMA MAC protocol</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.LMacLayer.html">LMacLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Implementation of L-MAC (Lightweight Medium Access Protocol for
+Wireless Sensor Networks)</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.Mac80211.html">Mac80211</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Implementation of the 802.11b MAC protocol. This module is intended
+to be used in combination with the Decider80211 as decider for the 
+physical layer.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.Mac80211MultiChannel.html">Mac80211MultiChannel</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Extends the the 802.11b MAC protocol by multi channel support meaning
+changing of the channel used for transmission and reception during run-time. 
+This module is intended to be used in combination with the 
+Decider80211MultiChannel as decider for the physical layer.
+See <a href="org.mixim.modules.nic.Nic80211MultiChannel.html">Nic80211MultiChannel</a> for a pre configured NIC using this module.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.UWBIRMac.html">UWBIRMac</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This class provides helper function for MAC modules that use the UWB-IR IEEE 802.15.4A model.
+Just before sending down a packet to the UWBIRPhyLayer, call prepareData(<a href="UWBIRMacPkt.html">UWBIRMacPkt</a>* packet).
+Just after receiving a packet from the UWBIRPhyLayer, call validatePacket(<a href="UWBIRMacPkt.html">UWBIRMacPkt</a>* packet)
+and check the returned bool value to know if the packet could be decoded successfully.</p>
+
+   </td>
+</tr>
+</table>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

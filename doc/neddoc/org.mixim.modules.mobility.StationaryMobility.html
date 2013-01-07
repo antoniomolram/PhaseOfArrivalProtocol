@@ -1,0 +1,253 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>StationaryMobility</i></h2>
+<b>Package:</b> org.mixim.modules.mobility<br/><b>File: <a href="src-modules-mobility-StationaryMobility.ned.html">src/modules/mobility/StationaryMobility.ned</a></b><br/><p><a href="../doxy/a00023.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>Defines a static mobility pattern (means only a position, no movement).</p>
+<p><a href="org.mixim.modules.mobility.StationaryMobility.html">StationaryMobility</a> is a synonym for <a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a>.</p>
+<p><b>Author:</b> Michael Lindig</p>
+<img src="org.mixim.modules.mobility.StationaryMobility-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="StationaryMobility" alt="StationaryMobility" coords="0,30,126,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.mobility.StationaryMobility-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="Simple Module StationaryMobility" alt="" coords="5,80,131,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.BasicHost.html" title="Compound Module BasicHost" alt="" coords="28,5,108,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.mobility.StationaryMobility-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="Simple Module StationaryMobility" alt="" coords="5,80,131,107">
+<area shape="rect" href="org.mixim.tests.baseMobility.BaseMobilityTest.html" title="Simple Module BaseMobilityTest" alt="" coords="7,155,129,181">
+<area shape="rect" href="org.mixim.base.modules.BaseMobility.html" title="Simple Module BaseMobility" alt="" coords="20,5,116,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Module which is responsible for mobility
+related information like position and movement
+<a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a> itself defines a static mobility
+pattern (means only a position, no movement).
+Mobility modules which extend from this module
+will define more complex movement patterns.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.baseMobility.BaseMobilityTest.html">BaseMobilityTest</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>%<a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a> test module.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Used in compound modules:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.connectionManager.BasicHost.html">BasicHost</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>The BasicHost is a compound module that implements a very
+simple host. It only consists of basic modules and is the
+most basic host you can create for the MF</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr class="inherited">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for the core framework</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMinX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min x position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMinY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min y position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMinZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min z position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMaxX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max x position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMaxY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max y position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>constraintAreaMaxZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max z position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinX, constraintAreaMaxX)</td>
+   <td>
+<p>initial x coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinY, constraintAreaMaxY)</td>
+   <td>
+<p>initial y coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinZ, constraintAreaMaxZ)</td>
+   <td>
+<p>initial z coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initFromDisplayString</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>initial position will be read from display string</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>i=block/cogwheel</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+// Defines a static mobility pattern (means only a position, no movement).
+//
+// StationaryMobility is a synonym for BaseMobility.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> Michael Lindig
+//
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">StationaryMobility</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseMobility</span><span style="color: #000000; ">
+{
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

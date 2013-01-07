@@ -1,0 +1,20 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="MoBANCoordinator",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="stepTarget\ntargetPos\nstepSize\nlogicalCenter",fontname="FreeSans"];
+  Node2 [label="Coord",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00062.html",tooltip="Class for storing 3D coordinates."];
+  Node2 -> Node2 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="ZERO",fontname="FreeSans"];
+  Node3 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="world",fontname="FreeSans"];
+  Node3 [label="BaseWorldUtility",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00029.html",tooltip="Provides information and utility methods for the whole simulation."];
+  Node2 -> Node3 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="playgroundSize",fontname="FreeSans"];
+  Node4 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="currentPosture",fontname="FreeSans"];
+  Node4 [label="Posture",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00159.html",tooltip="to store the specification of a posture on the MoBAN mobility model."];
+  Node2 -> Node4 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="nodePs",fontname="FreeSans"];
+  Node5 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="mobilityPattern",fontname="FreeSans"];
+  Node5 [label="MoBANCoordinator::pattern",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00152.html",tooltip="Data type for one instance of mobility pattern."];
+  Node2 -> Node5 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="targetPos",fontname="FreeSans"];
+  Node6 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="transitions",fontname="FreeSans"];
+  Node6 [label="PostureTransition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00160.html",tooltip="Class to provide spatial and temporal correlation in the posture selection process..."];
+}

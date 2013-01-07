@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00122.html" title="Defines an iterator for a Mapping which is able to iterate over the Mapping." alt="" coords="132,83,247,109"/>
+<area shape="rect" href="$a00056.html" title="Defines an const iterator for a ConstMapping which is able to iterate over the Mapping..." alt="" coords="31,5,177,32"/>
+</map>

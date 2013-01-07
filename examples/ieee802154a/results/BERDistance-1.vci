@@ -1,0 +1,43 @@
+file 45838 1347533233                                           
+version 2
+run BERDistance-1-20120717-11:16:20-7531
+attr Channel ghassemzadeh-nlos
+attr Receiver 3dB
+attr configname BERDistance
+attr datetime 20120717-11:16:20
+attr distance 1
+attr experiment BERDistance
+attr inifile omnetpp.ini
+attr iterationvars "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-nlos, $Receiver=3dB"
+attr iterationvars2 "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-nlos, $Receiver=3dB, $repetition=0"
+attr measurement "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-nlos, $Receiver=3dB"
+attr nbPackets 250
+attr network ieee802154a
+attr processid 7531
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 1
+attr seedset 1
+vector 19  ieee802154a.node[0].nic.phy  pathloss  ETV
+19	27049 4121 7 1448 5.000896285199 98.101309005872 96 1.8782993932451e-06 5.426263850202e-05 0.00088940919193825 1.4016444542634e-08
+vector 23  ieee802154a.node[0].stats  maiPER  ETV
+23	31170 7334 8 1456 5.000967785199 98.101840879472 191 0 0.98958333333333 177.55971055733 168.29227844106
+vector 24  ieee802154a.node[0].stats  maiPERnoRS  ETV
+24	38504 7334 8 1456 5.000967785199 98.101840879472 191 0 0.98958333333333 177.55971055733 168.29227844106
+vector 0  ieee802154a.node[0].nic.mac  packetsBER  ETV
+0	1282 2328 15 1456 5.001428158799 98.101840879472 96 0 0.39166666666667 0.39166666666667 0.15340277777778
+vector 1  ieee802154a.node[0].nic.mac  meanPacketBER  ETV
+1	3610 3894 15 1456 5.001428158799 98.101840879472 96 0.0040798611111111 0.39166666666667 2.0158155661259 0.2507478032499
+vector 11  ieee802154a.node[0].nic.mac  successNoRS  ETV
+11	24640 2409 15 1456 5.001428158799 98.101840879472 96 0 1 95 95
+vector 10  ieee802154a.node[0].nic.mac  success  ETV
+10	22231 2409 15 1456 5.001428158799 98.101840879472 96 0 1 95 95
+vector 8  ieee802154a.node[0].nic.mac  ber  ETV
+8	14684 3894 15 1456 5.001428158799 98.101840879472 96 0.0040798611111111 0.39166666666667 2.0158155661259 0.2507478032499
+vector 6  ieee802154a.node[0].nic.mac  packetSuccessRate  ETV
+6	7504 3590 15 1456 5.001428158799 98.101840879472 96 0 0.98958333333333 90.853236852445 87.341045170167
+vector 7  ieee802154a.node[0].nic.mac  packetSuccessRateNoRS  ETV
+7	11094 3590 15 1456 5.001428158799 98.101840879472 96 0 0.98958333333333 90.853236852445 87.341045170167
+vector 9  ieee802154a.node[0].nic.mac  ser  ETV
+9	18578 3653 15 1456 5.001428158799 98.101840879472 96 0.0091145833333333 0.875 4.503417754111 1.2514687781033

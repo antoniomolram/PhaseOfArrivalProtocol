@@ -1,0 +1,4 @@
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="Simple Module DeviceDutySimple" alt="" coords="156,80,287,107">
+<area shape="rect" href="org.mixim.tests.power.deviceTestMulti.PowerDuoTestHost.html" title="Compound Module PowerDuoTestHost" alt="" coords="5,5,141,32">
+<area shape="rect" href="org.mixim.tests.power.deviceTest.PowerTestHost.html" title="Compound Module PowerTestHost" alt="" coords="165,5,277,32">
+<area shape="rect" href="org.mixim.tests.power.deviceTestAll.PowerTrippleTestHost.html" title="Compound Module PowerTrippleTestHost" alt="" coords="301,5,453,32">

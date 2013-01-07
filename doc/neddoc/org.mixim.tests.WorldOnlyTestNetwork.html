@@ -1,0 +1,203 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>WorldOnlyTestNetwork</i></h2>
+<b>Package:</b> org.mixim.tests<br/><b>File: <a href="tests-TestNetwork.ned.html">tests/TestNetwork.ned</a></b><br/>
+<p>Basis definition of test networks which are not common to MiXiM 
+network definition, because of missing connectionManager.</p>
+<img src="org.mixim.tests.WorldOnlyTestNetwork-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.modules.BaseWorldUtility.html" title="BaseWorldUtility" alt="BaseWorldUtility" coords="268,28,296,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.WorldOnlyTestNetwork-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.WorldOnlyTestNetwork.html" title="Network WorldOnlyTestNetwork" alt="" coords="5,5,163,32">
+<area shape="rect" href="org.mixim.base.modules.BaseWorldUtility.html" title="Simple Module BaseWorldUtility" alt="" coords="25,80,143,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.WorldOnlyTestNetwork-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.WorldOnlyTestNetwork.html" title="Network WorldOnlyTestNetwork" alt="" coords="11,80,168,107">
+<area shape="rect" href="org.mixim.tests.baseMobility.bmSim.html" title="Network bmSim" alt="" coords="5,155,77,181">
+<area shape="rect" href="org.mixim.tests.blackboard.sim.html" title="Network sim" alt="" coords="101,155,173,181">
+<area shape="rect" href="org.mixim.tests.BaseTestNetwork.html" title="Network BaseTestNetwork" alt="" coords="27,5,152,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.BaseTestNetwork.html">BaseTestNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Basis definition of test networks.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.baseMobility.bmSim.html">bmSim</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p><a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a> test network.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.blackboard.sim.html">sim</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Test network for blackboard (emit/subscribe) tests.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>parametes for the framework</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>2</td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=0,0</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.modules.BaseWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.BaseWorldUtility.html">world</a>.use2D</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>use a 2-dimensional world?</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Basis definition of test networks which are not common to MiXiM 
+// network definition, because of missing connectionManager.
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">WorldOnlyTestNetwork</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseTestNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #808080; font-style: italic; ">// parametes for the framework
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@prompt</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;Number of hosts:&quot;</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">2</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=0,0&quot;</span><span style="color: #000000; ">);
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">world</span><span style="color: #000000; ">: </span><span style="color: #000000; ">BaseWorldUtility</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeX</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeY</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; "> = </span><span style="color: #000000; ">playgroundSizeZ</span><span style="color: #000000; ">;
+
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=278,0;is=s&quot;</span><span style="color: #000000; ">);
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+    </span><span style="color: #808080; font-style: italic; ">// all connections and gates are to be generated dynamically
+</span><span style="color: #000000; ">}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

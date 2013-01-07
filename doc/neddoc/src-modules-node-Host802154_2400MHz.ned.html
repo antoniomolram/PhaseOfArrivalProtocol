@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/node/Host802154_2400MHz.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.Host802154_2400MHz.html">Host802154_2400MHz</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This NED module defines a host using an IEEE 802.15.4 transceiver at 2.4GHz
+for wireless communications, that can be used to simulate wireless sensor
+networks. </p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">node</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// This NED module defines a host using an IEEE 802.15.4 transceiver at 2.4GHz
+// for wireless communications, that can be used to simulate wireless sensor
+// networks. 
+//
+// For instance, you can use it to compare your own MAC protocol to
+// the 802.15.4 non beacon enabled MAC protocol, or to evaluate IEEE 802.15.4
+// wireless sensor networks. It is also a good starting point to define your
+// own Host file.
+//
+// This model was independently validated on a wireless sensor network testbed.
+// For more information, see 
+// Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+// J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+// G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+// Modeling and Simulation. </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1109/EMS.2009.34&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1109/EMS.2009.34</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&#65533;r&#65533;me Rousselot
+//
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">Host802154_2400MHz</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">WirelessNodeBatteryPlusTran</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; ">applicationType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;SensorApplLayer&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">transportType</span><span style="color: #000000; ">   = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;Aggregation&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">nicType</span><span style="color: #000000; ">         = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;Nic802154_TI_CC2420&quot;</span><span style="color: #000000; ">);  </span><span style="color: #808080; font-style: italic; ">//type of used nic
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">arpType</span><span style="color: #000000; ">         = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.netw.ArpHost&quot;</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000000; ">batteryStats</span><span style="color: #000000; ">.</span><span style="color: #000000; ">detail</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">batteryStats</span><span style="color: #000000; ">.</span><span style="color: #000000; ">timeSeries</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">nominal</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1000</span><span style="color: #000000; "> </span><span style="color: #000000; ">mAh</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">capacity</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">nominal</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">voltage</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; "> </span><span style="color: #000000; ">V</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">resolution</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">60</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">publishDelta</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">publishTime</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">resolution</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">numDevices</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

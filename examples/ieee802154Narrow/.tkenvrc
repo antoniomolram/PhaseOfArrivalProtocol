@@ -1,0 +1,3 @@
+# Partial Tkenv config file -- see $HOME/.tkenvrc as well
+inspector "ieee802154Narrow" "ieee802154Narrow" "2" "607x337+1359+16:normal"
+

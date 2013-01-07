@@ -1,0 +1,421 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Compound Module <i>Host802154_2400MHz</i></h2>
+<b>Package:</b> org.mixim.modules.node<br/><b>File: <a href="src-modules-node-Host802154_2400MHz.ned.html">src/modules/node/Host802154_2400MHz.ned</a></b><br/>
+<p>This NED module defines a host using an IEEE 802.15.4 transceiver at 2.4GHz
+for wireless communications, that can be used to simulate wireless sensor
+networks. </p>
+<p>For instance, you can use it to compare your own MAC protocol to
+the 802.15.4 non beacon enabled MAC protocol, or to evaluate IEEE 802.15.4
+wireless sensor networks. It is also a good starting point to define your
+own Host file.</p>
+<p>This model was independently validated on a wireless sensor network testbed.
+For more information, see 
+Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+Modeling and Simulation. <a href="http://dx.doi.org/10.1109/EMS.2009.34">http://dx.doi.org/10.1109/EMS.2009.34</a>.</p>
+<p><b>Author:</b> J&eacute;r&ocirc;me Rousselot</p>
+<img src="org.mixim.modules.node.Host802154_2400MHz-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.modules.IBaseArp.html" title="IBaseArp" alt="IBaseArp" coords="122,130,166,188">
+<area shape="rect" href="org.mixim.base.modules.IMobility.html" title="IMobility" alt="IMobility" coords="122,60,166,118">
+<area shape="rect" href="org.mixim.modules.nic.IWirelessNicUpperCtrl.html" title="IWirelessNicUpperCtrl" alt="IWirelessNicUpperCtrl" coords="52,410,96,468">
+<area shape="rect" href="org.mixim.base.modules.IBaseNetwLayer.html" title="IBaseNetwLayer" alt="IBaseNetwLayer" coords="52,340,96,398">
+<area shape="rect" href="org.mixim.base.modules.IBaseNetwLayer.html" title="IBaseNetwLayer" alt="IBaseNetwLayer" coords="52,270,96,328">
+<area shape="rect" href="org.mixim.base.modules.IBaseApplLayer.html" title="IBaseApplLayer" alt="IBaseApplLayer" coords="55,67,94,111">
+<area shape="rect" href="org.mixim.modules.power.battery.BatteryStats.html" title="BatteryStats" alt="BatteryStats" coords="114,270,170,328">
+<area shape="rect" href="org.mixim.modules.power.battery.SimpleBattery.html" title="SimpleBattery" alt="SimpleBattery" coords="122,200,166,258">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.node.Host802154_2400MHz-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.node.Host802154_2400MHz.html" title="Compound Module Host802154_2400MHz" alt="" coords="5,5,163,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.node.Host802154_2400MHz-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.node.Host802154_2400MHz.html" title="Compound Module Host802154_2400MHz" alt="" coords="27,80,184,107">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBatteryPlusTran.html" title="Compound Module WirelessNodeBatteryPlusTran" alt="" coords="5,5,205,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.WirelessNodeBatteryPlusTran.html">WirelessNodeBatteryPlusTran</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>networkType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"BaseNetwLayer"</td>
+   <td>
+<p>type of the network layer</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>mobilityType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"ConstSpeedMobility"</td>
+   <td>
+<p>type of the mobility module</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>arpType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.modules.netw.ArpHost"</td>
+   <td>
+<p>type of address resolution module</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>nicType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"Nic802154_TI_CC2420"</td>
+   <td>   </td>
+</tr>
+<tr class="inherited">
+   <td>applicationType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"SensorApplLayer"</td>
+   <td>
+<p>type of the application layer</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>transportType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"Aggregation"</td>
+   <td>
+<p>type of the transport layer</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=210,450,white;i=device/palm;i2=status/battery;b=40,40,rect</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>radioIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>gate for sendDirect</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial x coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial y coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial z coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">tranl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">tranl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseApplLayer.html">appl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the application message header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.detail</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>write per-activity and per-device statistics to omnetpp.sca
+(if false, only total energy and lifetime are written)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.timeSeries</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>subscribe to battery status and record time series
+data in omnetpp.vec (resolution depends on battery's 
+publishDelta)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.nominal</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.capacity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.voltage</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal voltage</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.resolution</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>capacity is updated at least every resolution time</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishDelta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>if &gt; 0, capacity is published to the BB each publishTime 
+interval</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>number of modules that will draw energy from the 
+battery</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.numDevices</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+// This NED module defines a host using an IEEE 802.15.4 transceiver at 2.4GHz
+// for wireless communications, that can be used to simulate wireless sensor
+// networks. 
+//
+// For instance, you can use it to compare your own MAC protocol to
+// the 802.15.4 non beacon enabled MAC protocol, or to evaluate IEEE 802.15.4
+// wireless sensor networks. It is also a good starting point to define your
+// own Host file.
+//
+// This model was independently validated on a wireless sensor network testbed.
+// For more information, see 
+// Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+// J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+// G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+// Modeling and Simulation. </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1109/EMS.2009.34&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1109/EMS.2009.34</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&eacute;r&ocirc;me Rousselot
+//
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">Host802154_2400MHz</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">WirelessNodeBatteryPlusTran</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; ">applicationType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;SensorApplLayer&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">transportType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;Aggregation&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">nicType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;Nic802154_TI_CC2420&quot;</span><span style="color: #000000; ">);  </span><span style="color: #808080; font-style: italic; ">//type of used nic
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">arpType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.netw.ArpHost&quot;</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000000; ">batteryStats</span><span style="color: #000000; ">.</span><span style="color: #000000; ">detail</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">batteryStats</span><span style="color: #000000; ">.</span><span style="color: #000000; ">timeSeries</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">nominal</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1000</span><span style="color: #000000; "> </span><span style="color: #000000; ">mAh</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">capacity</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">nominal</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">voltage</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; "> </span><span style="color: #000000; ">V</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">resolution</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">60</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">publishDelta</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">publishTime</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">resolution</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">battery</span><span style="color: #000000; ">.</span><span style="color: #000000; ">numDevices</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

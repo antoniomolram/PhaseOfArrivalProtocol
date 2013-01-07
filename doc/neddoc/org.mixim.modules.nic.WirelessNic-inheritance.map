@@ -1,0 +1,7 @@
+<area shape="rect" href="org.mixim.modules.nic.WirelessNic.html" title="Compound Module WirelessNic" alt="" coords="207,80,297,107">
+<area shape="rect" href="org.mixim.modules.nic.Nic80211.html" title="Compound Module Nic80211" alt="" coords="5,155,83,181">
+<area shape="rect" href="org.mixim.modules.nic.NicCSMA.html" title="Compound Module NicCSMA" alt="" coords="107,155,184,181">
+<area shape="rect" href="org.mixim.examples.CSMAMac.PhyMacNic.html" title="Compound Module PhyMacNic" alt="" coords="208,155,296,181">
+<area shape="rect" href="org.mixim.tests.basePhyLayer.TestNic.html" title="Compound Module TestNic" alt="" coords="320,155,392,181">
+<area shape="rect" href="org.mixim.modules.nic.WirelessNicBattery.html" title="Compound Module WirelessNicBattery" alt="" coords="416,155,549,181">
+<area shape="rect" href="org.mixim.modules.nic.IWirelessNicUpperCtrl.html" title="Module Interface IWirelessNicUpperCtrl" alt="" coords="176,5,328,32">

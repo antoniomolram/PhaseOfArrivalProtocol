@@ -1,0 +1,4 @@
+<area shape="rect" href="org.mixim.modules.nic.WirelessNic.html" title="Compound Module WirelessNic" alt="" coords="135,5,225,32">
+<area shape="rect" href="org.mixim.base.modules.IWirelessMac.html" title="Module Interface IWirelessMac" alt="" coords="5,80,107,107">
+<area shape="rect" href="ned.IdealChannel.html" title="Channel IdealChannel" alt="" coords="131,80,229,107">
+<area shape="rect" href="org.mixim.base.phyLayer.IWirelessPhy.html" title="Module Interface IWirelessPhy" alt="" coords="253,80,352,107">

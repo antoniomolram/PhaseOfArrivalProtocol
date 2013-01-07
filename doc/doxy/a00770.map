@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00024.html" title="Base class for all simple modules of a host." alt="" coords="5,8,101,35"/>
+<area shape="rect" href="$a00119.html" title="Defines the methods provided by the phy to the mac layer." alt="" coords="125,8,261,35"/>
+<area shape="rect" href="$a00083.html" title="Represents a set of dimensions which is used to define over which dimensions a mapping..." alt="" coords="285,8,389,35"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00024.html" title="Base class for all simple modules of a host." alt="" coords="5,5,101,32"/>
+<area shape="rect" href="$a00200.html" title="Class that keeps track of the number of packets sent." alt="" coords="125,5,229,32"/>
+<area shape="rect" href="$a00144.html" title="Class that keeps track of the number of packets sent." alt="" coords="253,5,315,32"/>
+</map>

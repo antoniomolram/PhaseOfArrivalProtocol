@@ -1,0 +1,390 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>BaseMobility</i></h2>
+<b>Package:</b> org.mixim.base.modules<br/><b>File: <a href="src-base-modules-BaseMobility.ned.html">src/base/modules/BaseMobility.ned</a></b><br/><p><a href="../doxy/a00023.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>Module which is responsible for mobility
+related information like position and movement
+<a href="org.mixim.base.modules.BaseMobility.html">BaseMobility</a> itself defines a static mobility
+pattern (means only a position, no movement).
+Mobility modules which extend from this module
+will define more complex movement patterns.</p>
+<img src="org.mixim.base.modules.BaseMobility-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.modules.BaseMobility.html" title="BaseMobility" alt="BaseMobility" coords="0,30,103,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseMobility-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.base.modules.BaseMobility.html" title="Simple Module BaseMobility" alt="" coords="5,5,101,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseMobility-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.base.modules.BaseMobility.html" title="Simple Module BaseMobility" alt="" coords="781,80,877,107">
+<area shape="rect" href="org.mixim.modules.mobility.ANSimMobility.html" title="Simple Module ANSimMobility" alt="" coords="5,155,112,181">
+<area shape="rect" href="org.mixim.modules.mobility.BonnMotionMobility.html" title="Simple Module BonnMotionMobility" alt="" coords="136,155,272,181">
+<area shape="rect" href="org.mixim.modules.mobility.CircleMobility.html" title="Simple Module CircleMobility" alt="" coords="296,155,395,181">
+<area shape="rect" href="org.mixim.modules.mobility.ConstSpeedMobility.html" title="Simple Module ConstSpeedMobility" alt="" coords="419,155,557,181">
+<area shape="rect" href="org.mixim.modules.mobility.LinearMobility.html" title="Simple Module LinearMobility" alt="" coords="581,155,685,181">
+<area shape="rect" href="org.mixim.modules.mobility.MassMobility.html" title="Simple Module MassMobility" alt="" coords="709,155,808,181">
+<area shape="rect" href="org.mixim.modules.mobility.MoBANCoordinator.html" title="Simple Module MoBANCoordinator" alt="" coords="832,155,968,181">
+<area shape="rect" href="org.mixim.modules.mobility.MoBANLocal.html" title="Simple Module MoBANLocal" alt="" coords="992,155,1091,181">
+<area shape="rect" href="org.mixim.modules.mobility.RectangleMobility.html" title="Simple Module RectangleMobility" alt="" coords="1115,155,1240,181">
+<area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="Simple Module StationaryMobility" alt="" coords="1264,155,1389,181">
+<area shape="rect" href="org.mixim.modules.mobility.TractorMobility.html" title="Simple Module TractorMobility" alt="" coords="1413,155,1523,181">
+<area shape="rect" href="org.mixim.modules.mobility.TurtleMobility.html" title="Simple Module TurtleMobility" alt="" coords="1547,155,1645,181">
+<area shape="rect" href="org.mixim.base.modules.IMobility.html" title="Module Interface IMobility" alt="" coords="793,5,865,32">
+</map>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.ANSimMobility.html">ANSimMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Uses the &lt;position_change&gt; elements of the ANSim tool's
+trace file.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.BonnMotionMobility.html">BonnMotionMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Uses the native file format of BonnMotion (http://www.cs.uni-bonn.de/IV/BonnMotion/).</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.CircleMobility.html">CircleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves the node around a circle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.ConstSpeedMobility.html">ConstSpeedMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Controls all movement related things of a host</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.LinearMobility.html">LinearMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is a linear mobility model with speed, angle and acceleration parameters.
+Angle only changes when the mobile node hits a wall: then it reflects
+off the wall at the same angle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MassMobility.html">MassMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is a random mobility model for a mobile host with a mass. It is the
+one used in "Optimized Smooth Handoffs in Mobile IP" by Perkins &amp; Wang.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MoBANCoordinator.html">MoBANCoordinator</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is the coordinator module of the MoBAN mobility model. It should be instantiated in the top level simulation network in MiXiM, once per WBAN.
+The coordinator module is the main module that provides the group mobility and correlation between nodes in a WBAN.
+In the initialization phase, it reads three user defined input files which are the postures specification file, a configuration file which includes all
+required parameter for specific distributions, and the previously logged mobility pattern, if it is requested to use a logged pattern.
+Note that all WBAN instances may use the same input files if they are exactly in the same situation.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MoBANLocal.html">MoBANLocal</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is the local mobility module of MoBAN. It should be instantiated in each node that belongs to a WBAN. The NED parameter "coordinatorIndex"
+determine to which WBAN (<a href="org.mixim.modules.mobility.MoBANCoordinator.html">MoBANCoordinator</a>) it belongs.
+The current implementation uses the Random Walk Mobility Model (RWMM) for individual (local) movement with a sphere around the node, with given speed
+and sphere radius of the current posture. The reference point of the node it the current posture, the sphere radius, and the speed is given by the
+corresponding coordinator through the blackboard. RWMM determines the location of node at ant time relative to the given reference point.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.RectangleMobility.html">RectangleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves the node around a rectangle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.StationaryMobility.html">StationaryMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Defines a static mobility pattern (means only a position, no movement).</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.TractorMobility.html">TractorMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves a tractor through a field with a certain amount of rows.
+Since the tractor also moves around the field, the tractor travels
+the number of rows PLUS one rows. Consider the following piece of
+ascii-art for rows=2.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.TurtleMobility.html">TurtleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>A LOGO-style movement model, with the script coming from XML. It can be
+useful for describing random as well as deterministic scenarios.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for the core framework</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMinX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min x position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMinY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min y position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMinZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min z position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMaxX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max x position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMaxY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max y position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>constraintAreaMaxZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max z position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinX, constraintAreaMaxX)</td>
+   <td>
+<p>initial x coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinY, constraintAreaMaxY)</td>
+   <td>
+<p>initial y coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinZ, constraintAreaMaxZ)</td>
+   <td>
+<p>initial z coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>initFromDisplayString</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>initial position will be read from display string</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>i=block/cogwheel</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Module which is responsible for mobility
+// related information like position and movement
+// BaseMobility itself defines a static mobility
+// pattern (means only a position, no movement).
+// Mobility modules which extend from this module
+// will define more complex movement patterns.
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseMobility</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IMobility</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">notAffectedByHostState</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">coreDebug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// debug switch for the core framework
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMinX</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(-</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// min x position of the constraint area, unconstrained by default (negative infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMinY</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(-</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// min y position of the constraint area, unconstrained by default (negative infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMinZ</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(-</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// min z position of the constraint area, unconstrained by default (negative infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMaxX</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// max x position of the constraint area, unconstrained by default (positive infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMaxY</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// max y position of the constraint area, unconstrained by default (positive infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">constraintAreaMaxZ</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">m</span><span style="color: #000000; ">/</span><span style="color: #008000; ">0</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// max z position of the constraint area, unconstrained by default (positive infinity)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">initialX</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #800080; font-weight: bold; ">uniform</span><span style="color: #000000; ">(</span><span style="color: #000000; ">constraintAreaMinX</span><span style="color: #000000; ">, </span><span style="color: #000000; ">constraintAreaMaxX</span><span style="color: #000000; ">)); </span><span style="color: #808080; font-style: italic; ">// initial x coordinate of the nodes' position
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">initialY</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #800080; font-weight: bold; ">uniform</span><span style="color: #000000; ">(</span><span style="color: #000000; ">constraintAreaMinY</span><span style="color: #000000; ">, </span><span style="color: #000000; ">constraintAreaMaxY</span><span style="color: #000000; ">)); </span><span style="color: #808080; font-style: italic; ">// initial y coordinate of the nodes' position
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">initialZ</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">m</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #800080; font-weight: bold; ">uniform</span><span style="color: #000000; ">(</span><span style="color: #000000; ">constraintAreaMinZ</span><span style="color: #000000; ">, </span><span style="color: #000000; ">constraintAreaMaxZ</span><span style="color: #000000; ">)); </span><span style="color: #808080; font-style: italic; ">// initial z coordinate of the nodes' position
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">initFromDisplayString</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// initial position will be read from display string
+</span><span style="color: #000000; ">        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;i=block/cogwheel&quot;</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

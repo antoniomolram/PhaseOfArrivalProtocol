@@ -1,0 +1,63 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00001.html" title="AccessModuleWrap\&lt; BaseMobility \&gt;" alt="" coords="196,31,431,57"/>
+<area shape="rect" href="$a00042.html" title="Basic class for all physical layers, please don&#39;t touch!!" alt="" coords="503,31,615,57"/>
+<area shape="rect" href="$a00028.html" title="The BasePhyLayer represents the physical layer of a nic." alt="" coords="723,56,829,83"/>
+<area shape="rect" href="$a00154.html" title="Provides initialisation for several AnalogueModels and Deciders from modules directory..." alt="" coords="952,56,1029,83"/>
+<area shape="rect" href="$a00156.html" title="Physical layer that models an Ultra Wideband Impulse Radio wireless communication..." alt="" coords="931,5,1051,32"/>
+<area shape="rect" href="$a00155.html" title="Extends PhyLayer by adding power consumption for tx, rx and idle." alt="" coords="1157,81,1277,108"/>
+<area shape="rect" href="$a00173.html" title="Simple PhyLayer sub class which is just responsible for creating and initialising..." alt="" coords="1157,31,1277,57"/>
+<area shape="rect" href="$a00003.html" title="Interface for modules which assign L2 and L3 addresses for modules." alt="" coords="5,563,147,589"/>
+<area shape="rect" href="$a00012.html" title="A class to convert integer layer addresses." alt="" coords="279,512,348,539"/>
+<area shape="rect" href="$a00015.html" title="A class to convert integer layer addresses." alt="" coords="277,563,349,589"/>
+<area shape="rect" href="$a00013.html" title="Interface every Address resolution protocol (ARP) module has to implement." alt="" coords="29,512,123,539"/>
+<area shape="rect" href="$a00026.html" title="Base class for all simple modules of a host." alt="" coords="28,765,124,792"/>
+<area shape="rect" href="$a00016.html" title="Base class for any power source." alt="" coords="267,664,360,691"/>
+<area shape="rect" href="$a00030.html" title="Extends BaseModule by several methods which provide access to the battery module..." alt="" coords="260,613,367,640"/>
+<area shape="rect" href="$a00032.html" title="collects and formates statistical data from the battery" alt="" coords="267,715,360,741"/>
+<area shape="rect" href="$a00157.html" title="phyPER" alt="" coords="279,765,348,792"/>
+<area shape="rect" href="$a00170.html" title="RepeatTimerCore" alt="" coords="251,816,376,843"/>
+<area shape="rect" href="$a00179.html" title="A simple Mac layer implementation which only shows how to create Signals, send them..." alt="" coords="255,867,372,893"/>
+<area shape="rect" href="$a00180.html" title="This is an implementation of a simple network layer which provides only some simple..." alt="" coords="252,917,375,944"/>
+<area shape="rect" href="$a00187.html" title="TestApplication" alt="" coords="257,968,369,995"/>
+<area shape="rect" href="$a00195.html" title="TimerCore" alt="" coords="272,1019,355,1045"/>
+<area shape="rect" href="$a00176.html" title="A simple linear model of battery consumption." alt="" coords="507,892,611,919"/>
+<area shape="rect" href="$a00023.html" title="A very simple layer template." alt="" coords="516,335,601,361"/>
+<area shape="rect" href="$a00025.html" title="Base module for all mobility modules." alt="" coords="511,841,607,868"/>
+<area shape="rect" href="$a00004.html" title="this class aggregates the packets received from the application layer and separates..." alt="" coords="729,335,823,361"/>
+<area shape="rect" href="$a00014.html" title="Base class for the application layer." alt="" coords="721,385,831,412"/>
+<area shape="rect" href="$a00024.html" title="A very simple MAC module template which provides de&#45; and encapsulation of messages..." alt="" coords="721,512,831,539"/>
+<area shape="rect" href="$a00027.html" title="Base class for the network layer." alt="" coords="719,183,833,209"/>
+<area shape="rect" href="$a00141.html" title="A module to generate traffic for the NIC, used for testing purposes." alt="" coords="695,233,857,260"/>
+<area shape="rect" href="$a00174.html" title="Test class for the application layer." alt="" coords="715,284,837,311"/>
+<area shape="rect" href="$a00188.html" title="Test class for the application layer." alt="" coords="937,360,1044,387"/>
+<area shape="rect" href="$a00199.html" title="A module to generate a certain rate of traffic." alt="" coords="949,309,1032,336"/>
+<area shape="rect" href="$a00040.html" title="Application layer to test lower layer implementations." alt="" coords="1161,360,1273,387"/>
+<area shape="rect" href="$a00041.html" title="Application layer to test lower layer implementations." alt="" coords="1369,360,1521,387"/>
+<area shape="rect" href="$a00035.html" title="Implementation of B&#45;MAC (called also Berkeley MAC, Low Power Listening or LPL)." alt="" coords="947,461,1035,488"/>
+<area shape="rect" href="$a00064.html" title="Generic CSMA Mac&#45;Layer." alt="" coords="964,512,1017,539"/>
+<area shape="rect" href="$a00066.html" title="MAC module which provides non&#45;persistent CSMA." alt="" coords="932,563,1049,589"/>
+<area shape="rect" href="$a00118.html" title="Implementation of L&#45;MAC (Lightweight Medium Access Protocol for Wireless Sensor Networks..." alt="" coords="948,613,1033,640"/>
+<area shape="rect" href="$a00120.html" title="An implementation of the 802.11b MAC." alt="" coords="949,664,1032,691"/>
+<area shape="rect" href="$a00205.html" title="This class provides helper function for MAC modules that use the UWB&#45;IR IEEE 802..." alt="" coords="945,411,1036,437"/>
+<area shape="rect" href="$a00065.html" title="Extends &quot;csma&quot; module by some statistics send up to the upper layer." alt="" coords="1167,512,1268,539"/>
+<area shape="rect" href="$a00121.html" title="Adds multi channel support to Mac80211." alt="" coords="1137,664,1297,691"/>
+<area shape="rect" href="$a00006.html" title="this class implements a basic Aloha MAC protocol for an UWB&#45;IR IEEE 802.15.4A transceiver..." alt="" coords="1160,411,1275,437"/>
+<area shape="rect" href="$a00087.html" title="Placeholder module that simply &quot;translates&quot; netwControlInfo to macControlInfo..." alt="" coords="940,259,1041,285"/>
+<area shape="rect" href="$a00092.html" title="A simple flooding protocol." alt="" coords="964,107,1017,133"/>
+<area shape="rect" href="$a00161.html" title="This class offers a data dissemination service using probabilistic broadcast. Each..." alt="" coords="915,157,1067,184"/>
+<area shape="rect" href="$a00209.html" title="Wiseroute is a simple loop&#45;free routing algorithm that builds a routing tree from..." alt="" coords="947,208,1035,235"/>
+<area shape="rect" href="$a00002.html" title="This class extends ProbabilisticBroadcast by adding an algorithm which adapts broadcasting..." alt="" coords="1116,157,1319,184"/>
+<area shape="rect" href="$a00045.html" title="Circle movement model. See NED file for more info." alt="" coords="727,968,825,995"/>
+<area shape="rect" href="$a00059.html" title="Controls all movement related things of a host." alt="" coords="707,1019,845,1045"/>
+<area shape="rect" href="$a00115.html" title="Linear movement model. See NED file for more info." alt="" coords="725,1069,827,1096"/>
+<area shape="rect" href="$a00116.html" title="Base class for mobility models where movement consists of a sequence of linear movements..." alt="" coords="687,715,865,741"/>
+<area shape="rect" href="$a00129.html" title="Models the mobility of with mass, making random motions. See NED file for more info..." alt="" coords="728,765,824,792"/>
+<area shape="rect" href="$a00131.html" title="This is the local mobility module of MoBAN. It should be instantiated in each node..." alt="" coords="728,816,824,843"/>
+<area shape="rect" href="$a00168.html" title="Rectangle movement model. See NED file for more info." alt="" coords="713,867,839,893"/>
+<area shape="rect" href="$a00198.html" title="Tractor movement model. See NED file for more info." alt="" coords="723,917,829,944"/>
+<area shape="rect" href="$a00008.html" title="Uses the &lt;position_change&gt; elements of the ANSim tool&#39;s trace file. See..." alt="" coords="937,715,1044,741"/>
+<area shape="rect" href="$a00038.html" title="Uses the BonnMotion native file format. See NED file for more info." alt="" coords="923,765,1059,792"/>
+<area shape="rect" href="$a00202.html" title="LOGO&#45;style movement model, with the script coming from XML. See NED file for more..." alt="" coords="941,816,1040,843"/>
+<area shape="rect" href="$a00077.html" title="This class is the interface for a Decider to the BasePhyLayer." alt="" coords="480,81,637,108"/>
+<area shape="rect" href="$a00124.html" title="Defines the methods provided by the phy to the mac layer." alt="" coords="491,132,627,159"/>
+</map>

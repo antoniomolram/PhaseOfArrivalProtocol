@@ -1,0 +1,84 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/phy/PhyLayerUWBIR.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.phy.PhyLayerUWBIR.html">PhyLayerUWBIR</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>A physical layer that models an Ultra Wideband Impulse Radio wireless communication system.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">phy</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">phyLayer</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BasePhyLayer</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// A physical layer that models an Ultra Wideband Impulse Radio wireless communication system.
+//
+// This class loads channel models and delivers frames to an UWB Decider. It is independent of the modulation technique,
+// as long as the frames are represented using the same approach as in IEEE802154A.h (Maximum Pulse Amplitude Estimation).
+//
+// Several channel models are possible: Ghassemzadeh-LOS, Ghassemadeh-NLOS (see UWBIRStochasticPathlossModel.h)
+// and the IEEE 802.15.4A UWB channel models that use the default power delay profile (see UWBIRIEEE802154APathlossModel.h).
+//
+// Currently, an energy detection receiver is modeled in UWBIRED.h.
+// Several synchronization logics have been implemented in derived classes:
+// see DeciderUWBIREDSync.h and and DeciderUWBIREDSyncOnAddress.h.
+//
+// To add a novel receiver (e.g. coherent demodulation), either derive UWBIRED or write a new one,
+// then add functionality in this module to load the new decider.
+// The same procedure applies for new channel models.
+//
+// To change the modulation, see UWBIRMac.h, IEEE802154A.h and UWBIRED.h.
+//
+// To implement optional modes of IEEE802154A, see IEEE802154A.h.
+//
+// Citation of the following publication is appreciated if you use the MiXiM UWB PHY model
+// for a publication of your own.
+// J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no. 1-2 82-112.
+//
+// For more information, see also:
+//
+// [1] J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no.
+// 1-2 82-112. </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1177/0037549710377767&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1177/0037549710377767</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [2] J. Rousselot, Ultra Low Power Communication Protocols for UWB
+// Impulse Radio Wireless Sensor Networks. EPFL Thesis 4720, 2010. 
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://infoscience.epfl.ch/record/147987&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://infoscience.epfl.ch/record/147987</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [3] J. Rousselot, J.-D. Decotignie, A High-Precision Ultra Wideband Impulse Radio Physical Layer Model
+// for Network Simulation. Second International Omnet++ Workshop,Simu'TOOLS, Rome, March 2009.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://portal.acm.org/citation.cfm?id=1537714&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://portal.acm.org/citation.cfm?id=1537714</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&eacute;r&ocirc;me Rousselot
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">PhyLayerUWBIR</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BasePhyLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">PhyLayerUWBIR</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;i=device/antennatower&quot;</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

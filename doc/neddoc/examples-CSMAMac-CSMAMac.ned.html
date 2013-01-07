@@ -1,0 +1,75 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>examples/CSMAMac/CSMAMac.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.CSMAMac.CSMAMacExampleNetwork.html">CSMAMacExampleNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>This example shows how to use MiXiMs CSMA protocol implementation.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">examples</span><span style="color: #000000; ">.</span><span style="color: #000000; ">CSMAMac</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+//This example shows how to use MiXiMs CSMA protocol implementation.
+//
+//The network consists of a number of hosts which represent some kind of switches
+//and a number of hosts which represent clients. At first they build up their
+//routing tables by sending, forwarding (only switches), receiving and
+//evaluating &quot;Hello World&quot; messages. After that phase the clients start randomly
+//&quot;jabbering&quot; with other hosts and the switches only forward the &quot;Jabber&quot;
+//messages to their destination.
+//
+//The phy layer uses only &quot;SimplePathlossModel&quot; as AnalogueModel and 
+//&quot;SNRThresholdDecider&quot; as Decider.
+//
+//The omnetpp.ini contains the following configurations:
+//
+//- &quot;General&quot; 			- three clients in range of each other, no switch, no 
+//						  propagation	delay
+//- &quot;WithoutPropDelay&quot; 	- four clients and two switches whereas the switches are
+//						  in range of each other and the clients are in range of at
+//						  least one switch, no propagation delay
+//- &quot;WithPropDelay&quot;		- same but with propagation delay
+//- &quot;CollissionMac&quot;		- same configuration but the parameters for the CSMAMacLayer
+//						  lead to more collisions
+//- &quot;Perftest&quot;			- used with CmdEnv for performance testing (time limited)
+//
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">CSMAMacExampleNetwork</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=148,94;b=42,42,rect,yellow;i=device/wifilaptop&quot;</span><span style="color: #000000; ">);
+
+        }
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

@@ -1,0 +1,293 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>BaseNetwLayer</i></h2>
+<b>Package:</b> org.mixim.base.modules<br/><b>File: <a href="src-base-modules-BaseNetwLayer.ned.html">src/base/modules/BaseNetwLayer.ned</a></b><br/><p><a href="../doxy/a00025.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>Base module for every network layer module</p>
+<img src="org.mixim.base.modules.BaseNetwLayer-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.modules.BaseNetwLayer.html" title="BaseNetwLayer" alt="BaseNetwLayer" coords="0,30,119,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseNetwLayer-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.base.modules.BaseNetwLayer.html" title="Simple Module BaseNetwLayer" alt="" coords="5,5,120,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.modules.BaseNetwLayer-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.base.modules.BaseNetwLayer.html" title="Simple Module BaseNetwLayer" alt="" coords="435,80,549,107">
+<area shape="rect" href="org.mixim.modules.netw.DummyRoute.html" title="Simple Module DummyRoute" alt="" coords="5,155,107,181">
+<area shape="rect" href="org.mixim.modules.netw.Flood.html" title="Simple Module Flood" alt="" coords="131,155,203,181">
+<area shape="rect" href="org.mixim.examples.ieee802154Narrow.NetworkStackTrafficGen.html" title="Simple Module NetworkStackTrafficGen" alt="" coords="227,155,392,181">
+<area shape="rect" href="org.mixim.modules.netw.ProbabilisticBroadcast.html" title="Simple Module ProbabilisticBroadcast" alt="" coords="416,155,568,181">
+<area shape="rect" href="org.mixim.examples.CSMAMac.SimpleNetwLayer.html" title="Simple Module SimpleNetwLayer" alt="" coords="592,155,717,181">
+<area shape="rect" href="org.mixim.tests.nicTest.TestApp.html" title="Simple Module TestApp" alt="" coords="741,155,813,181">
+<area shape="rect" href="org.mixim.modules.netw.WiseRoute.html" title="Simple Module WiseRoute" alt="" coords="837,155,923,181">
+<area shape="rect" href="org.mixim.base.modules.BaseLayer.html" title="Simple Module BaseLayer" alt="" coords="387,5,472,32">
+<area shape="rect" href="org.mixim.base.modules.IBaseNetwLayer.html" title="Module Interface IBaseNetwLayer" alt="" coords="496,5,613,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseLayer.html">BaseLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Base module for all layer modules. Defines the in and out gates</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.DummyRoute.html">DummyRoute</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Placeholder module that simply "translates" netwControlInfo to macControlInfo.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.Flood.html">Flood</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>A simple flooding protocol for network-level broadcast.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.ieee802154Narrow.NetworkStackTrafficGen.html">NetworkStackTrafficGen</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>TODO auto-generated module</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.ProbabilisticBroadcast.html">ProbabilisticBroadcast</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.CSMAMac.SimpleNetwLayer.html">SimpleNetwLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.nicTest.TestApp.html">TestApp</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.WiseRoute.html">WiseRoute</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Wiseroute is a simple loop-free routing algorithm that
+builds a routing tree from a central network point, designed
+for sensor networks and convergecast traffic.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+   </td>
+</tr>
+<tr class="local">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>class</td>
+   <td><i>BaseNetwLayer</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>upperLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to uppe layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to upper layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from lower layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>lowerControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to lower layer</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Base module for every network layer module
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseLayer</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IBaseNetwLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">coreDebug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// debug switch for core framework
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">stats</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// stats switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">headerLength</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bit</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// length of the network packet header (in bits)
+</span><span style="color: #000000; ">}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

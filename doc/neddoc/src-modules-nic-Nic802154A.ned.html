@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/nic/Nic802154A.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.nic.Nic802154A.html">Nic802154A</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This NIC interface simulates an IEEE 802.15.4A UWB PHY
+transceiver. The MAC does not attempt to be standard 
+compliant. </p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">nic</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// This NIC interface simulates an IEEE 802.15.4A UWB PHY
+// transceiver. The MAC does not attempt to be standard 
+// compliant. 
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&eacute;r&ocirc;me Rousselot
+//
+// See the following publications for more information:
+// [1] An Ultra-Wideband Impulse Radio PHY Layer Model for Network Simulation,
+// J. Rousselot, J.-D. Decotignie. Simulation: Transactions of the Society
+// for Computer Simulation, vol. 87 no. 1-2 pp.82-112, January 2011.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1177/0037549710377767&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1177/0037549710377767</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">
+// [2] A High-Precision Ultra Wideband Impulse Radio Physical Layer Model
+// for Network Simulation, J. Rousselot, J.-D. Decotignie,
+// Second International Omnet++ Workshop,Simu'TOOLS, Rome, 6 Mar 09.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://portal.acm.org/citation.cfm?id=1537714&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://portal.acm.org/citation.cfm?id=1537714</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">
+// [3] Ultra Low Power Communication Protocols for UWB Impulse Radio Wireless Sensor Networks,
+// J. Rousselot. EPFL thesis 4720, 2010.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://infoscience.epfl.ch/record/147987&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://infoscience.epfl.ch/record/147987</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; "> 
+//
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">Nic802154A</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">WirelessNicBattery</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">macType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;AlohaMacLayer&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">phyType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;PhyLayerUWBIR&quot;</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #808080; font-style: italic; ">// power consumption from boards (at 3.3V)
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">sleepCurrent</span><span style="color: #000000; "> = .</span><span style="color: #008000; ">00303</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// 0.021 &micro;A
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">rxCurrent</span><span style="color: #000000; ">  = </span><span style="color: #008000; ">9</span><span style="color: #000000; ">.</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">txCurrent</span><span style="color: #000000; "> = </span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">303</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">setupRxCurrent</span><span style="color: #000000; "> = </span><span style="color: #008000; ">9</span><span style="color: #000000; ">.</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">setupTxCurrent</span><span style="color: #000000; "> = </span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">303</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">rxTxCurrent</span><span style="color: #000000; "> = </span><span style="color: #008000; ">9</span><span style="color: #000000; ">.</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">; 
+        </span><span style="color: #000000; ">txRxCurrent</span><span style="color: #000000; "> = </span><span style="color: #008000; ">9</span><span style="color: #000000; ">.</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">; 
+        </span><span style="color: #000000; ">decodingCurrentDelta</span><span style="color: #000000; "> = </span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">0</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">//not used
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">syncCurrent</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">mA</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">30</span><span style="color: #000000; ">.</span><span style="color: #008000; ">3</span><span style="color: #000000; "> </span><span style="color: #000000; ">mA</span><span style="color: #000000; ">);
+
+        </span><span style="color: #000000; ">phy</span><span style="color: #000000; ">.</span><span style="color: #000000; ">initialRadioState</span><span style="color: #000000; "> = </span><span style="color: #008000; ">4</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// initializes radio state to SYNC
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">mac</span><span style="color: #000000; ">.</span><span style="color: #000000; ">maxRetries</span><span style="color: #000000; "> = </span><span style="color: #008000; ">3</span><span style="color: #000000; ">;
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

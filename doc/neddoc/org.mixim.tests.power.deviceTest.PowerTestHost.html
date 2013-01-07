@@ -1,0 +1,279 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Compound Module <i>PowerTestHost</i></h2>
+<b>Package:</b> org.mixim.tests.power.deviceTest<br/><b>File: <a href="tests-power-deviceTest-SimpleHost.ned.html">tests/power/deviceTest/SimpleHost.ned</a></b><br/>
+<p>Empty host for simple power test.</p>
+<img src="org.mixim.tests.power.deviceTest.PowerTestHost-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.power.battery.SimpleBattery.html" title="SimpleBattery" alt="SimpleBattery" coords="27,60,71,118">
+<area shape="rect" href="org.mixim.modules.power.battery.BatteryStats.html" title="BatteryStats" alt="BatteryStats" coords="105,60,161,118">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="DeviceDutySimple" alt="DeviceDutySimple" coords="32,148,66,191">
+<area shape="rect" href="org.mixim.tests.power.utils.Subscriber.html" title="Subscriber" alt="Subscriber" coords="110,141,157,199">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.deviceTest.PowerTestHost-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.power.deviceTest.PowerTestHost.html" title="Compound Module PowerTestHost" alt="" coords="57,80,169,107">
+<area shape="rect" href="org.mixim.tests.power.utils.Subscriber.html" title="Simple Module Subscriber" alt="" coords="5,155,91,181">
+<area shape="rect" href="org.mixim.tests.power.utils.DeviceDutySimple.html" title="Simple Module DeviceDutySimple" alt="" coords="115,155,245,181">
+<area shape="rect" href="org.mixim.tests.power.deviceTest.PowerDeviceTestNet.html" title="Network PowerDeviceTestNet" alt="" coords="40,5,187,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.power.deviceTest.PowerTestHost-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.power.deviceTest.PowerTestHost.html" title="Compound Module PowerTestHost" alt="" coords="8,80,120,107">
+<area shape="rect" href="org.mixim.tests.power.PowerTestNode.html" title="Compound Module PowerTestNode" alt="" coords="5,5,123,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.PowerTestNode.html">PowerTestNode</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Networks:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.power.deviceTest.PowerDeviceTestNet.html">PowerDeviceTestNet</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Fundamental test case, used for basic unit testing. The Host includes
+only the Battery and the DutyCycleSimple device.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=190,171,$color;bgp=10,10</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.nominal</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.capacity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.voltage</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal voltage</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.resolution</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>capacity is updated at least every resolution time</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishDelta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>if &gt; 0, capacity is published to the BB each publishTime 
+interval</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>number of modules that will draw energy from the 
+battery</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.numDevices</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>1</td>
+   <td>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.detail</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>write per-activity and per-device statistics to omnetpp.sca
+(if false, only total energy and lifetime are written)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.timeSeries</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>subscribe to battery status and record time series
+data in omnetpp.vec (resolution depends on battery's 
+publishDelta)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">device</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">device</a>.period</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">device</a>.dutyCycle</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">device</a>.current</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.DeviceDutySimple.html">device</a>.wakeup</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.power.utils.Subscriber.html">subscriber</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Empty host for simple power test. 
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTestHost</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">PowerTestNode</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=190,171,$color;bgp=10,10&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">device</span><span style="color: #000000; ">: </span><span style="color: #000000; ">DeviceDutySimple</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=45,120;b=30,25&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">subscriber</span><span style="color: #000000; ">: </span><span style="color: #000000; ">Subscriber</span><span style="color: #000000; "> {
+            </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=131,121&quot;</span><span style="color: #000000; ">);
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; ">:
+
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

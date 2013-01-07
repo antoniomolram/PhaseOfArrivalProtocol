@@ -1,0 +1,1444 @@
+version 2
+run Red8012154-0-20130107-10:43:26-6902
+attr configname Red8012154
+attr datetime 20130107-10:43:26
+attr experiment Red8012154
+attr inifile omnetpp.ini
+attr iterationvars $0=5
+attr iterationvars2 "$0=5, $repetition=0"
+attr measurement $0=5
+attr network ieee802154Narrow
+attr processid 6902
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+
+scalar ieee802154Narrow.anchor[0].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[0].batteryStats 	total 	1493.1460990906
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[0].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[0].batteryStats 	"Mean power consumption" 	61.700252028536
+attr unit  mW
+scalar ieee802154Narrow.anchor[0].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	8
+scalar ieee802154Narrow.anchor[0].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[0].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of AN Reports with ACK" 	9
+scalar ieee802154Narrow.anchor[0].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[0].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of transmitted packets created in this AN" 	9
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of CAF in ComSink1" 	6
+scalar ieee802154Narrow.anchor[0].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[0].appl 	"Effectiveness in each anchor" 	0.91666666666667
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[0].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbTxFrames 	43
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbRxFrames 	190
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbDroppedFrames 	8
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbMissedAcks 	4
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbRecvdAcks 	9
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbBackoffs 	19
+scalar ieee802154Narrow.anchor[0].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[0].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[0].nic.phy 	nbFramesWithInterference 	5
+scalar ieee802154Narrow.anchor[0].nic.phy 	nbFramesWithoutInterference 	320
+scalar ieee802154Narrow.anchor[0].nic.phy 	nbFramesWithInterferenceDropped 	5
+scalar ieee802154Narrow.anchor[0].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[1].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[1].batteryStats 	total 	1485.3830554485
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[1].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[1].batteryStats 	"Mean power consumption" 	61.379465101179
+attr unit  mW
+scalar ieee802154Narrow.anchor[1].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[1].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	15
+scalar ieee802154Narrow.anchor[1].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[1].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Number of AN Reports with ACK" 	29
+scalar ieee802154Narrow.anchor[1].appl 	"Number of Broadcasts received in AN" 	185
+scalar ieee802154Narrow.anchor[1].appl 	"Number of Reports received in AN" 	13
+scalar ieee802154Narrow.anchor[1].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Number of app duplicated packets" 	3
+scalar ieee802154Narrow.anchor[1].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Number of CAF in ComSink1" 	12
+scalar ieee802154Narrow.anchor[1].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[1].appl 	"Effectiveness in each anchor" 	0.91666666666667
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[1].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbTxFrames 	66
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbRxFrames 	348
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbDroppedFrames 	15
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbMissedAcks 	7
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbRecvdAcks 	29
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbTxAcks 	13
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[1].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbBackoffs 	50
+scalar ieee802154Narrow.anchor[1].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[1].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[1].nic.phy 	nbFramesWithInterference 	13
+scalar ieee802154Narrow.anchor[1].nic.phy 	nbFramesWithoutInterference 	660
+scalar ieee802154Narrow.anchor[1].nic.phy 	nbFramesWithInterferenceDropped 	10
+scalar ieee802154Narrow.anchor[1].nic.phy 	nbFramesWithoutInterferenceDropped 	8
+scalar ieee802154Narrow.anchor[2].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[2].batteryStats 	total 	1482.3400514126
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[2].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[2].batteryStats 	"Mean power consumption" 	61.253721132751
+attr unit  mW
+scalar ieee802154Narrow.anchor[2].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	11
+scalar ieee802154Narrow.anchor[2].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[2].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of AN Reports with ACK" 	78
+scalar ieee802154Narrow.anchor[2].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[2].appl 	"Number of Reports received in AN" 	71
+scalar ieee802154Narrow.anchor[2].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of app duplicated packets" 	2
+scalar ieee802154Narrow.anchor[2].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of CAF in ComSink1" 	11
+scalar ieee802154Narrow.anchor[2].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[2].appl 	"Effectiveness in each anchor" 	1
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[2].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbTxFrames 	116
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbRxFrames 	315
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbDroppedFrames 	11
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbMissedAcks 	8
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbRecvdAcks 	78
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbTxAcks 	71
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[2].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbBackoffs 	102
+scalar ieee802154Narrow.anchor[2].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[2].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[2].nic.phy 	nbFramesWithInterference 	14
+scalar ieee802154Narrow.anchor[2].nic.phy 	nbFramesWithoutInterference 	793
+scalar ieee802154Narrow.anchor[2].nic.phy 	nbFramesWithInterferenceDropped 	14
+scalar ieee802154Narrow.anchor[2].nic.phy 	nbFramesWithoutInterferenceDropped 	3
+scalar ieee802154Narrow.anchor[3].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[3].batteryStats 	total 	1480.5391378403
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[3].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[3].batteryStats 	"Mean power consumption" 	61.17930321654
+attr unit  mW
+scalar ieee802154Narrow.anchor[3].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	19
+scalar ieee802154Narrow.anchor[3].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of AN Reports with ACK" 	88
+scalar ieee802154Narrow.anchor[3].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[3].appl 	"Number of Reports received in AN" 	81
+scalar ieee802154Narrow.anchor[3].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of app duplicated packets" 	2
+scalar ieee802154Narrow.anchor[3].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of CAF in ComSink1" 	17
+scalar ieee802154Narrow.anchor[3].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Effectiveness in each anchor" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[3].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbTxFrames 	126
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbRxFrames 	327
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbDroppedFrames 	19
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbMissedAcks 	8
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbRecvdAcks 	88
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbTxAcks 	81
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[3].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbBackoffs 	113
+scalar ieee802154Narrow.anchor[3].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[3].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[3].nic.phy 	nbFramesWithInterference 	25
+scalar ieee802154Narrow.anchor[3].nic.phy 	nbFramesWithoutInterference 	1096
+scalar ieee802154Narrow.anchor[3].nic.phy 	nbFramesWithInterferenceDropped 	23
+scalar ieee802154Narrow.anchor[3].nic.phy 	nbFramesWithoutInterferenceDropped 	6
+scalar ieee802154Narrow.anchor[4].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[4].batteryStats 	total 	1486.0563716888
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[4].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[4].batteryStats 	"Mean power consumption" 	61.407288086316
+attr unit  mW
+scalar ieee802154Narrow.anchor[4].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	2
+scalar ieee802154Narrow.anchor[4].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Effectiveness in each anchor" 	1
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[4].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbRxFrames 	90
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbDroppedFrames 	2
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbBackoffs 	2
+scalar ieee802154Narrow.anchor[4].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[4].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[4].nic.phy 	nbFramesWithInterference 	15
+scalar ieee802154Narrow.anchor[4].nic.phy 	nbFramesWithoutInterference 	901
+scalar ieee802154Narrow.anchor[4].nic.phy 	nbFramesWithInterferenceDropped 	15
+scalar ieee802154Narrow.anchor[4].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[5].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[5].batteryStats 	total 	1488.8608515263
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[5].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[5].batteryStats 	"Mean power consumption" 	61.523175682903
+attr unit  mW
+scalar ieee802154Narrow.anchor[5].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	7
+scalar ieee802154Narrow.anchor[5].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of AN Reports with ACK" 	20
+scalar ieee802154Narrow.anchor[5].appl 	"Number of Broadcasts received in AN" 	185
+scalar ieee802154Narrow.anchor[5].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of CAF in ComSink1" 	6
+scalar ieee802154Narrow.anchor[5].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[5].appl 	"Effectiveness in each anchor" 	0.97222222222222
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[5].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbTxFrames 	55
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbRxFrames 	335
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbDroppedFrames 	7
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbMissedAcks 	5
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbRecvdAcks 	20
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbBackoffs 	31
+scalar ieee802154Narrow.anchor[5].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[5].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[5].nic.phy 	nbFramesWithInterference 	9
+scalar ieee802154Narrow.anchor[5].nic.phy 	nbFramesWithoutInterference 	500
+scalar ieee802154Narrow.anchor[5].nic.phy 	nbFramesWithInterferenceDropped 	8
+scalar ieee802154Narrow.anchor[5].nic.phy 	nbFramesWithoutInterferenceDropped 	4
+scalar ieee802154Narrow.anchor[6].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[6].batteryStats 	total 	1481.0862579346
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[6].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[6].batteryStats 	"Mean power consumption" 	61.2019114849
+attr unit  mW
+scalar ieee802154Narrow.anchor[6].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[6].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	8
+scalar ieee802154Narrow.anchor[6].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[6].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of AN Reports with ACK" 	39
+scalar ieee802154Narrow.anchor[6].appl 	"Number of Broadcasts received in AN" 	187
+scalar ieee802154Narrow.anchor[6].appl 	"Number of Reports received in AN" 	20
+scalar ieee802154Narrow.anchor[6].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of transmitted packets created in this AN" 	19
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of CAF in ComSink1" 	7
+scalar ieee802154Narrow.anchor[6].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[6].appl 	"Effectiveness in each anchor" 	1
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[6].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbTxFrames 	76
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbRxFrames 	445
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbDroppedFrames 	8
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbMissedAcks 	7
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbRecvdAcks 	39
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbTxAcks 	20
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[6].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbBackoffs 	54
+scalar ieee802154Narrow.anchor[6].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[6].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[6].nic.phy 	nbFramesWithInterference 	21
+scalar ieee802154Narrow.anchor[6].nic.phy 	nbFramesWithoutInterference 	804
+scalar ieee802154Narrow.anchor[6].nic.phy 	nbFramesWithInterferenceDropped 	17
+scalar ieee802154Narrow.anchor[6].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[7].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[7].batteryStats 	total 	1471.9169135094
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[7].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[7].batteryStats 	"Mean power consumption" 	60.823012954933
+attr unit  mW
+scalar ieee802154Narrow.anchor[7].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[7].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	6
+scalar ieee802154Narrow.anchor[7].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Number of AN Reports with ACK" 	50
+scalar ieee802154Narrow.anchor[7].appl 	"Number of Broadcasts received in AN" 	260
+scalar ieee802154Narrow.anchor[7].appl 	"Number of Reports received in AN" 	20
+scalar ieee802154Narrow.anchor[7].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Number of transmitted packets created in this AN" 	30
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Number of CAF in ComSink1" 	5
+scalar ieee802154Narrow.anchor[7].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets from this anchor" 	3
+scalar ieee802154Narrow.anchor[7].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets sent from mobile node 2" 	10
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[7].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbTxFrames 	84
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbRxFrames 	508
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbDroppedFrames 	6
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbMissedAcks 	4
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbRecvdAcks 	50
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbTxAcks 	20
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[7].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbBackoffs 	61
+scalar ieee802154Narrow.anchor[7].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[7].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[7].nic.phy 	nbFramesWithInterference 	66
+scalar ieee802154Narrow.anchor[7].nic.phy 	nbFramesWithoutInterference 	1211
+scalar ieee802154Narrow.anchor[7].nic.phy 	nbFramesWithInterferenceDropped 	56
+scalar ieee802154Narrow.anchor[7].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[8].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[8].batteryStats 	total 	1471.3294992447
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[8].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[8].batteryStats 	"Mean power consumption" 	60.79873963821
+attr unit  mW
+scalar ieee802154Narrow.anchor[8].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	21
+scalar ieee802154Narrow.anchor[8].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Erased Packets in AN - No more BackOff retries" 	1
+scalar ieee802154Narrow.anchor[8].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Number of AN Reports with ACK" 	109
+scalar ieee802154Narrow.anchor[8].appl 	"Number of Broadcasts received in AN" 	271
+scalar ieee802154Narrow.anchor[8].appl 	"Number of Reports received in AN" 	82
+scalar ieee802154Narrow.anchor[8].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Number of app duplicated packets" 	2
+scalar ieee802154Narrow.anchor[8].appl 	"Number of transmitted packets created in this AN" 	30
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Number of CAF in ComSink1" 	20
+scalar ieee802154Narrow.anchor[8].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets from this anchor" 	3
+scalar ieee802154Narrow.anchor[8].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets sent from mobile node 2" 	10
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[8].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbTxFrames 	152
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbRxFrames 	583
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbDroppedFrames 	21
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbMissedAcks 	13
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbRecvdAcks 	109
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbTxAcks 	82
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[8].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbBackoffs 	145
+scalar ieee802154Narrow.anchor[8].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[8].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[8].nic.phy 	nbFramesWithInterference 	70
+scalar ieee802154Narrow.anchor[8].nic.phy 	nbFramesWithoutInterference 	1437
+scalar ieee802154Narrow.anchor[8].nic.phy 	nbFramesWithInterferenceDropped 	64
+scalar ieee802154Narrow.anchor[8].nic.phy 	nbFramesWithoutInterferenceDropped 	8
+scalar ieee802154Narrow.anchor[9].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[9].batteryStats 	total 	1480.4572882652
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[9].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[9].batteryStats 	"Mean power consumption" 	61.175921002695
+attr unit  mW
+scalar ieee802154Narrow.anchor[9].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[9].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	18
+scalar ieee802154Narrow.anchor[9].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Erased Packets in AN - No more BackOff retries" 	2
+scalar ieee802154Narrow.anchor[9].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Number of AN Reports with ACK" 	86
+scalar ieee802154Narrow.anchor[9].appl 	"Number of Broadcasts received in AN" 	200
+scalar ieee802154Narrow.anchor[9].appl 	"Number of Reports received in AN" 	72
+scalar ieee802154Narrow.anchor[9].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Number of app duplicated packets" 	4
+scalar ieee802154Narrow.anchor[9].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Number of CAF in ComSink1" 	15
+scalar ieee802154Narrow.anchor[9].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[9].appl 	"Effectiveness in each anchor" 	0.96875
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[9].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbTxFrames 	123
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbRxFrames 	422
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbDroppedFrames 	18
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbMissedAcks 	7
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbRecvdAcks 	86
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbTxAcks 	72
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[9].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbBackoffs 	109
+scalar ieee802154Narrow.anchor[9].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[9].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[9].nic.phy 	nbFramesWithInterference 	18
+scalar ieee802154Narrow.anchor[9].nic.phy 	nbFramesWithoutInterference 	1107
+scalar ieee802154Narrow.anchor[9].nic.phy 	nbFramesWithInterferenceDropped 	16
+scalar ieee802154Narrow.anchor[9].nic.phy 	nbFramesWithoutInterferenceDropped 	13
+scalar ieee802154Narrow.anchor[10].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[10].batteryStats 	total 	1491.7602880001
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[10].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[10].batteryStats 	"Mean power consumption" 	61.642987107442
+attr unit  mW
+scalar ieee802154Narrow.anchor[10].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	2
+scalar ieee802154Narrow.anchor[10].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of AN Reports with ACK" 	10
+scalar ieee802154Narrow.anchor[10].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[10].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of CAF in ComSink1" 	1
+scalar ieee802154Narrow.anchor[10].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[10].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[10].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbTxFrames 	40
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbRxFrames 	250
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbDroppedFrames 	2
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbRecvdAcks 	10
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbBackoffs 	11
+scalar ieee802154Narrow.anchor[10].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[10].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[10].nic.phy 	nbFramesWithInterference 	0
+scalar ieee802154Narrow.anchor[10].nic.phy 	nbFramesWithoutInterference 	381
+scalar ieee802154Narrow.anchor[10].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[10].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[11].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[11].batteryStats 	total 	1486.7873873711
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[11].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[11].batteryStats 	"Mean power consumption" 	61.437495345912
+attr unit  mW
+scalar ieee802154Narrow.anchor[11].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	4
+scalar ieee802154Narrow.anchor[11].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of AN Reports with ACK" 	20
+scalar ieee802154Narrow.anchor[11].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[11].appl 	"Number of Reports received in AN" 	10
+scalar ieee802154Narrow.anchor[11].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of CAF in ComSink1" 	4
+scalar ieee802154Narrow.anchor[11].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[11].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[11].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbTxFrames 	50
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbRxFrames 	344
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbDroppedFrames 	4
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbRecvdAcks 	20
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbTxAcks 	10
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbBackoffs 	25
+scalar ieee802154Narrow.anchor[11].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[11].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[11].nic.phy 	nbFramesWithInterference 	5
+scalar ieee802154Narrow.anchor[11].nic.phy 	nbFramesWithoutInterference 	563
+scalar ieee802154Narrow.anchor[11].nic.phy 	nbFramesWithInterferenceDropped 	5
+scalar ieee802154Narrow.anchor[11].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[12].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[12].batteryStats 	total 	1479.777015686
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[12].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[12].batteryStats 	"Mean power consumption" 	61.147810565539
+attr unit  mW
+scalar ieee802154Narrow.anchor[12].appl 	"Dropped Packets in AN - No ACK received" 	2
+scalar ieee802154Narrow.anchor[12].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	7
+scalar ieee802154Narrow.anchor[12].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of AN Reports with ACK" 	30
+scalar ieee802154Narrow.anchor[12].appl 	"Number of Broadcasts received in AN" 	190
+scalar ieee802154Narrow.anchor[12].appl 	"Number of Reports received in AN" 	10
+scalar ieee802154Narrow.anchor[12].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of CAF in ComSink1" 	6
+scalar ieee802154Narrow.anchor[12].appl 	"Number of no ack-ComSink1" 	2
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[12].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[12].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbTxFrames 	68
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbRxFrames 	426
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbDroppedFrames 	7
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbMissedAcks 	8
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbRecvdAcks 	30
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbTxAcks 	10
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[12].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbBackoffs 	45
+scalar ieee802154Narrow.anchor[12].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[12].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[12].nic.phy 	nbFramesWithInterference 	18
+scalar ieee802154Narrow.anchor[12].nic.phy 	nbFramesWithoutInterference 	876
+scalar ieee802154Narrow.anchor[12].nic.phy 	nbFramesWithInterferenceDropped 	17
+scalar ieee802154Narrow.anchor[12].nic.phy 	nbFramesWithoutInterferenceDropped 	2
+scalar ieee802154Narrow.anchor[13].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[13].batteryStats 	total 	1477.4748601913
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[13].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[13].batteryStats 	"Mean power consumption" 	61.052680173196
+attr unit  mW
+scalar ieee802154Narrow.anchor[13].appl 	"Dropped Packets in AN - No ACK received" 	1
+scalar ieee802154Narrow.anchor[13].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	6
+scalar ieee802154Narrow.anchor[13].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of AN Reports with ACK" 	40
+scalar ieee802154Narrow.anchor[13].appl 	"Number of Broadcasts received in AN" 	200
+scalar ieee802154Narrow.anchor[13].appl 	"Number of Reports received in AN" 	20
+scalar ieee802154Narrow.anchor[13].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of CAF in ComSink1" 	3
+scalar ieee802154Narrow.anchor[13].appl 	"Number of no ack-ComSink1" 	1
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[13].appl 	"Effectiveness in each anchor" 	0.96875
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[13].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbTxFrames 	76
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbRxFrames 	444
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbDroppedFrames 	6
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbMissedAcks 	6
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbRecvdAcks 	40
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbTxAcks 	20
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[13].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbBackoffs 	51
+scalar ieee802154Narrow.anchor[13].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[13].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[13].nic.phy 	nbFramesWithInterference 	24
+scalar ieee802154Narrow.anchor[13].nic.phy 	nbFramesWithoutInterference 	965
+scalar ieee802154Narrow.anchor[13].nic.phy 	nbFramesWithInterferenceDropped 	22
+scalar ieee802154Narrow.anchor[13].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[14].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[14].batteryStats 	total 	1482.4645164013
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[14].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[14].batteryStats 	"Mean power consumption" 	61.258864314103
+attr unit  mW
+scalar ieee802154Narrow.anchor[14].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	22
+scalar ieee802154Narrow.anchor[14].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Erased Packets in AN - No more BackOff retries" 	3
+scalar ieee802154Narrow.anchor[14].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of AN Reports with ACK" 	27
+scalar ieee802154Narrow.anchor[14].appl 	"Number of Broadcasts received in AN" 	200
+scalar ieee802154Narrow.anchor[14].appl 	"Number of Reports received in AN" 	10
+scalar ieee802154Narrow.anchor[14].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of transmitted packets created in this AN" 	18
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of CAF in ComSink1" 	19
+scalar ieee802154Narrow.anchor[14].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[14].appl 	"Effectiveness in each anchor" 	0.80729166666667
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[14].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbTxFrames 	68
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbRxFrames 	360
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbDroppedFrames 	22
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbMissedAcks 	11
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbRecvdAcks 	27
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbTxAcks 	10
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[14].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbBackoffs 	61
+scalar ieee802154Narrow.anchor[14].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[14].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[14].nic.phy 	nbFramesWithInterference 	8
+scalar ieee802154Narrow.anchor[14].nic.phy 	nbFramesWithoutInterference 	802
+scalar ieee802154Narrow.anchor[14].nic.phy 	nbFramesWithInterferenceDropped 	7
+scalar ieee802154Narrow.anchor[14].nic.phy 	nbFramesWithoutInterferenceDropped 	2
+scalar ieee802154Narrow.anchor[15].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[15].batteryStats 	total 	1496.1418302059
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[15].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[15].batteryStats 	"Mean power consumption" 	61.824042570492
+attr unit  mW
+scalar ieee802154Narrow.anchor[15].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	1
+scalar ieee802154Narrow.anchor[15].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[15].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbRxFrames 	150
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbDroppedFrames 	1
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbBackoffs 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[15].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[15].nic.phy 	nbFramesWithInterference 	0
+scalar ieee802154Narrow.anchor[15].nic.phy 	nbFramesWithoutInterference 	200
+scalar ieee802154Narrow.anchor[15].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[15].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[16].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[16].batteryStats 	total 	1490.8158640862
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[16].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[16].batteryStats 	"Mean power consumption" 	61.603961325874
+attr unit  mW
+scalar ieee802154Narrow.anchor[16].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	3
+scalar ieee802154Narrow.anchor[16].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of AN Reports with ACK" 	10
+scalar ieee802154Narrow.anchor[16].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[16].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[16].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[16].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbTxFrames 	40
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbRxFrames 	328
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbDroppedFrames 	3
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbRecvdAcks 	10
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbBackoffs 	11
+scalar ieee802154Narrow.anchor[16].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[16].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[16].nic.phy 	nbFramesWithInterference 	6
+scalar ieee802154Narrow.anchor[16].nic.phy 	nbFramesWithoutInterference 	416
+scalar ieee802154Narrow.anchor[16].nic.phy 	nbFramesWithInterferenceDropped 	6
+scalar ieee802154Narrow.anchor[16].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[17].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[17].batteryStats 	total 	1490.795889616
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[17].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[17].batteryStats 	"Mean power consumption" 	61.603135934546
+attr unit  mW
+scalar ieee802154Narrow.anchor[17].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	4
+scalar ieee802154Narrow.anchor[17].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[17].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbRxFrames 	223
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbDroppedFrames 	4
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbBackoffs 	4
+scalar ieee802154Narrow.anchor[17].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[17].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[17].nic.phy 	nbFramesWithInterference 	9
+scalar ieee802154Narrow.anchor[17].nic.phy 	nbFramesWithoutInterference 	397
+scalar ieee802154Narrow.anchor[17].nic.phy 	nbFramesWithInterferenceDropped 	8
+scalar ieee802154Narrow.anchor[17].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[18].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[18].batteryStats 	total 	1486.3752200603
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[18].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[18].batteryStats 	"Mean power consumption" 	61.420463638857
+attr unit  mW
+scalar ieee802154Narrow.anchor[18].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	2
+scalar ieee802154Narrow.anchor[18].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of AN Reports with ACK" 	20
+scalar ieee802154Narrow.anchor[18].appl 	"Number of Broadcasts received in AN" 	200
+scalar ieee802154Narrow.anchor[18].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of transmitted packets created in this AN" 	20
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of CAF in ComSink1" 	1
+scalar ieee802154Narrow.anchor[18].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets from this anchor" 	2
+scalar ieee802154Narrow.anchor[18].appl 	"Effectiveness in each anchor" 	0.96875
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets sent from mobile node 1" 	10
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[18].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbTxFrames 	51
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbRxFrames 	414
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbDroppedFrames 	2
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbMissedAcks 	1
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbRecvdAcks 	20
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbBackoffs 	22
+scalar ieee802154Narrow.anchor[18].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[18].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[18].nic.phy 	nbFramesWithInterference 	13
+scalar ieee802154Narrow.anchor[18].nic.phy 	nbFramesWithoutInterference 	588
+scalar ieee802154Narrow.anchor[18].nic.phy 	nbFramesWithInterferenceDropped 	13
+scalar ieee802154Narrow.anchor[18].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[19].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[19].batteryStats 	total 	1491.557066679
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[19].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[19].batteryStats 	"Mean power consumption" 	61.63458953219
+attr unit  mW
+scalar ieee802154Narrow.anchor[19].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	4
+scalar ieee802154Narrow.anchor[19].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of AN Reports with ACK" 	10
+scalar ieee802154Narrow.anchor[19].appl 	"Number of Broadcasts received in AN" 	100
+scalar ieee802154Narrow.anchor[19].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of transmitted packets created in this AN" 	10
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of CAF in ComSink1" 	1
+scalar ieee802154Narrow.anchor[19].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets from this anchor" 	1
+scalar ieee802154Narrow.anchor[19].appl 	"Effectiveness in each anchor" 	0.80729166666667
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets sent from mobile node 0" 	1
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[19].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbTxFrames 	42
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbRxFrames 	250
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbDroppedFrames 	4
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbMissedAcks 	2
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbRecvdAcks 	10
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbBackoffs 	14
+scalar ieee802154Narrow.anchor[19].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[19].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[19].nic.phy 	nbFramesWithInterference 	0
+scalar ieee802154Narrow.anchor[19].nic.phy 	nbFramesWithoutInterference 	385
+scalar ieee802154Narrow.anchor[19].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[19].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[20].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[20].batteryStats 	total 	1498.6821506023
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[20].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[20].batteryStats 	"Mean power consumption" 	61.9290144877
+attr unit  mW
+scalar ieee802154Narrow.anchor[20].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	4
+scalar ieee802154Narrow.anchor[20].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[20].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbRxFrames 	90
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbDroppedFrames 	4
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbBackoffs 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[20].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[20].nic.phy 	nbFramesWithInterference 	0
+scalar ieee802154Narrow.anchor[20].nic.phy 	nbFramesWithoutInterference 	100
+scalar ieee802154Narrow.anchor[20].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[20].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[21].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[21].batteryStats 	total 	1497.2554037571
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[21].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[21].batteryStats 	"Mean power consumption" 	61.870058006492
+attr unit  mW
+scalar ieee802154Narrow.anchor[21].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	1
+scalar ieee802154Narrow.anchor[21].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[21].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbRxFrames 	147
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbDroppedFrames 	1
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbBackoffs 	4
+scalar ieee802154Narrow.anchor[21].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[21].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[21].nic.phy 	nbFramesWithInterference 	1
+scalar ieee802154Narrow.anchor[21].nic.phy 	nbFramesWithoutInterference 	158
+scalar ieee802154Narrow.anchor[21].nic.phy 	nbFramesWithInterferenceDropped 	1
+scalar ieee802154Narrow.anchor[21].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[22].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[22].batteryStats 	total 	1496.5464417934
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[22].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[22].batteryStats 	"Mean power consumption" 	61.84076205758
+attr unit  mW
+scalar ieee802154Narrow.anchor[22].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	5
+scalar ieee802154Narrow.anchor[22].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Effectiveness in each anchor" 	0.97727272727273
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[22].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbRxFrames 	146
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbDroppedFrames 	5
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbBackoffs 	5
+scalar ieee802154Narrow.anchor[22].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[22].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[22].nic.phy 	nbFramesWithInterference 	2
+scalar ieee802154Narrow.anchor[22].nic.phy 	nbFramesWithoutInterference 	177
+scalar ieee802154Narrow.anchor[22].nic.phy 	nbFramesWithInterferenceDropped 	2
+scalar ieee802154Narrow.anchor[22].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[23].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[23].batteryStats 	total 	1496.5771687031
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[23].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[23].batteryStats 	"Mean power consumption" 	61.84203176459
+attr unit  mW
+scalar ieee802154Narrow.anchor[23].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	1
+scalar ieee802154Narrow.anchor[23].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Effectiveness in each anchor" 	0.96875
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[23].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbRxFrames 	138
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbDroppedFrames 	1
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbBackoffs 	3
+scalar ieee802154Narrow.anchor[23].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[23].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[23].nic.phy 	nbFramesWithInterference 	6
+scalar ieee802154Narrow.anchor[23].nic.phy 	nbFramesWithoutInterference 	171
+scalar ieee802154Narrow.anchor[23].nic.phy 	nbFramesWithInterferenceDropped 	6
+scalar ieee802154Narrow.anchor[23].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[24].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[24].batteryStats 	total 	1497.9046952724
+attr unit  mW-s
+scalar ieee802154Narrow.anchor[24].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.anchor[24].batteryStats 	"Mean power consumption" 	61.896888234399
+attr unit  mW
+scalar ieee802154Narrow.anchor[24].appl 	"Dropped Packets in AN - No ACK received" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Dropped Packets in AN - Max MAC BackOff tries" 	2
+scalar ieee802154Narrow.anchor[24].appl 	"Dropped Packets in AN - App Queue Full" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Dropped Packets in AN - Mac Queue Full" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Dropped Packets in AN - No Time in the Phase" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Erased Packets in AN - No more BackOff retries" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Erased Packets in AN - No more No ACK retries" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Erased Packets in AN - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of AN Reports with ACK" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of Broadcasts received in AN" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of Reports received in AN" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of Reports really for me received in AN" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of app duplicated packets" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of transmitted packets created in this AN" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets in App Queue at the end of the ComSink1" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of CAF in ComSink1" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of no ack-ComSink1" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets from this anchor" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Effectiveness in each anchor" 	0.80729166666667
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets sent from mobile node 0" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets sent from mobile node 1" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets sent from mobile node 2" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets sent from mobile node 3" 	0
+scalar ieee802154Narrow.anchor[24].appl 	"Number of packets sent from mobile node 4" 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbTxFrames 	30
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbRxFrames 	90
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbDroppedFrames 	2
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbBackoffs 	1
+scalar ieee802154Narrow.anchor[24].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.anchor[24].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.anchor[24].nic.phy 	nbFramesWithInterference 	0
+scalar ieee802154Narrow.anchor[24].nic.phy 	nbFramesWithoutInterference 	123
+scalar ieee802154Narrow.anchor[24].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar ieee802154Narrow.anchor[24].nic.phy 	nbFramesWithoutInterferenceDropped 	0
+scalar ieee802154Narrow.node[0].energy 	"Total Time" 	23.7
+scalar ieee802154Narrow.node[0].energy 	"Total Transition time" 	0.187912
+scalar ieee802154Narrow.node[0].energy 	"Total Sleep Time" 	23.4631187
+scalar ieee802154Narrow.node[0].energy 	"Total Tx Time" 	0.09
+scalar ieee802154Narrow.node[0].energy 	"Total Rx Time" 	0
+scalar ieee802154Narrow.node[0].energy 	"Total Idle Time" 	-0.18548
+scalar ieee802154Narrow.node[0].energy 	"Total CCA Time" 	0.01408
+scalar ieee802154Narrow.node[0].energy 	"Total BackOff Time" 	0.1303693
+scalar ieee802154Narrow.node[0].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.node[0].batteryStats 	total 	14.194579601288
+attr unit  mW-s
+scalar ieee802154Narrow.node[0].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.node[0].batteryStats 	"Mean power consumption" 	0.58655287608627
+attr unit  mW
+scalar ieee802154Narrow.node[0].nic.mac 	nbTxFrames 	100
+scalar ieee802154Narrow.node[0].nic.mac 	nbRxFrames 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.node[0].nic.mac 	meanBackoff 	0.0011927272727273
+scalar ieee802154Narrow.node[0].nic.mac 	nbBackoffs 	110
+scalar ieee802154Narrow.node[0].nic.mac 	backoffDurations 	0.1312
+scalar ieee802154Narrow.node[0].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.node[0].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.node[0].nic.phy 	nbFramesWithInterference 	10
+scalar ieee802154Narrow.node[0].nic.phy 	nbFramesWithoutInterference 	776
+scalar ieee802154Narrow.node[0].nic.phy 	nbFramesWithInterferenceDropped 	10
+scalar ieee802154Narrow.node[0].nic.phy 	nbFramesWithoutInterferenceDropped 	771
+scalar ieee802154Narrow.node[1].energy 	"Total Time" 	23.7
+scalar ieee802154Narrow.node[1].energy 	"Total Transition time" 	0.184536
+scalar ieee802154Narrow.node[1].energy 	"Total Sleep Time" 	23.4579989
+scalar ieee802154Narrow.node[1].energy 	"Total Tx Time" 	0.09
+scalar ieee802154Narrow.node[1].energy 	"Total Rx Time" 	0
+scalar ieee802154Narrow.node[1].energy 	"Total Idle Time" 	-0.1782
+scalar ieee802154Narrow.node[1].energy 	"Total CCA Time" 	0.01408
+scalar ieee802154Narrow.node[1].energy 	"Total BackOff Time" 	0.1315851
+scalar ieee802154Narrow.node[1].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.node[1].batteryStats 	total 	14.599579572678
+attr unit  mW-s
+scalar ieee802154Narrow.node[1].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.node[1].batteryStats 	"Mean power consumption" 	0.60328841209412
+attr unit  mW
+scalar ieee802154Narrow.node[1].nic.mac 	nbTxFrames 	100
+scalar ieee802154Narrow.node[1].nic.mac 	nbRxFrames 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.node[1].nic.mac 	meanBackoff 	0.0012392727272727
+scalar ieee802154Narrow.node[1].nic.mac 	nbBackoffs 	110
+scalar ieee802154Narrow.node[1].nic.mac 	backoffDurations 	0.13632
+scalar ieee802154Narrow.node[1].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.node[1].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.node[1].nic.phy 	nbFramesWithInterference 	13
+scalar ieee802154Narrow.node[1].nic.phy 	nbFramesWithoutInterference 	786
+scalar ieee802154Narrow.node[1].nic.phy 	nbFramesWithInterferenceDropped 	13
+scalar ieee802154Narrow.node[1].nic.phy 	nbFramesWithoutInterferenceDropped 	786
+scalar ieee802154Narrow.node[2].energy 	"Total Time" 	23.7
+scalar ieee802154Narrow.node[2].energy 	"Total Transition time" 	0.186224
+scalar ieee802154Narrow.node[2].energy 	"Total Sleep Time" 	23.4609427
+scalar ieee802154Narrow.node[2].energy 	"Total Tx Time" 	0.09
+scalar ieee802154Narrow.node[2].energy 	"Total Rx Time" 	0
+scalar ieee802154Narrow.node[2].energy 	"Total Idle Time" 	-0.182
+scalar ieee802154Narrow.node[2].energy 	"Total CCA Time" 	0.013696
+scalar ieee802154Narrow.node[2].energy 	"Total BackOff Time" 	0.1311373
+scalar ieee802154Narrow.node[2].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.node[2].batteryStats 	total 	14.347564458847
+attr unit  mW-s
+scalar ieee802154Narrow.node[2].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.node[2].batteryStats 	"Mean power consumption" 	0.59287456441517
+attr unit  mW
+scalar ieee802154Narrow.node[2].nic.mac 	nbTxFrames 	100
+scalar ieee802154Narrow.node[2].nic.mac 	nbRxFrames 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.node[2].nic.mac 	meanBackoff 	0.0012500934579439
+scalar ieee802154Narrow.node[2].nic.mac 	nbBackoffs 	107
+scalar ieee802154Narrow.node[2].nic.mac 	backoffDurations 	0.13376
+scalar ieee802154Narrow.node[2].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.node[2].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.node[2].nic.phy 	nbFramesWithInterference 	17
+scalar ieee802154Narrow.node[2].nic.phy 	nbFramesWithoutInterference 	903
+scalar ieee802154Narrow.node[2].nic.phy 	nbFramesWithInterferenceDropped 	17
+scalar ieee802154Narrow.node[2].nic.phy 	nbFramesWithoutInterferenceDropped 	900
+scalar ieee802154Narrow.node[3].energy 	"Total Time" 	23.7
+scalar ieee802154Narrow.node[3].energy 	"Total Transition time" 	0.184536
+scalar ieee802154Narrow.node[3].energy 	"Total Sleep Time" 	23.4681748
+scalar ieee802154Narrow.node[3].energy 	"Total Tx Time" 	0.09
+scalar ieee802154Narrow.node[3].energy 	"Total Rx Time" 	0
+scalar ieee802154Narrow.node[3].energy 	"Total Idle Time" 	-0.17884
+scalar ieee802154Narrow.node[3].energy 	"Total CCA Time" 	0.013184
+scalar ieee802154Narrow.node[3].energy 	"Total BackOff Time" 	0.1229452
+scalar ieee802154Narrow.node[3].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.node[3].batteryStats 	total 	13.968266487122
+attr unit  mW-s
+scalar ieee802154Narrow.node[3].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.node[3].batteryStats 	"Mean power consumption" 	0.57720109450916
+attr unit  mW
+scalar ieee802154Narrow.node[3].nic.mac 	nbTxFrames 	100
+scalar ieee802154Narrow.node[3].nic.mac 	nbRxFrames 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.node[3].nic.mac 	meanBackoff 	0.0012333980582524
+scalar ieee802154Narrow.node[3].nic.mac 	nbBackoffs 	103
+scalar ieee802154Narrow.node[3].nic.mac 	backoffDurations 	0.12704
+scalar ieee802154Narrow.node[3].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.node[3].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.node[3].nic.phy 	nbFramesWithInterference 	5
+scalar ieee802154Narrow.node[3].nic.phy 	nbFramesWithoutInterference 	263
+scalar ieee802154Narrow.node[3].nic.phy 	nbFramesWithInterferenceDropped 	5
+scalar ieee802154Narrow.node[3].nic.phy 	nbFramesWithoutInterferenceDropped 	263
+scalar ieee802154Narrow.node[4].energy 	"Total Time" 	23.7
+scalar ieee802154Narrow.node[4].energy 	"Total Transition time" 	0.184536
+scalar ieee802154Narrow.node[4].energy 	"Total Sleep Time" 	23.4600467
+scalar ieee802154Narrow.node[4].energy 	"Total Tx Time" 	0.09
+scalar ieee802154Narrow.node[4].energy 	"Total Rx Time" 	0
+scalar ieee802154Narrow.node[4].energy 	"Total Idle Time" 	-0.17756
+scalar ieee802154Narrow.node[4].energy 	"Total CCA Time" 	0.013952
+scalar ieee802154Narrow.node[4].energy 	"Total BackOff Time" 	0.1290253
+scalar ieee802154Narrow.node[4].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.node[4].batteryStats 	total 	14.47253203392
+attr unit  mW-s
+scalar ieee802154Narrow.node[4].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.node[4].batteryStats 	"Mean power consumption" 	0.59803851379836
+attr unit  mW
+scalar ieee802154Narrow.node[4].nic.mac 	nbTxFrames 	100
+scalar ieee802154Narrow.node[4].nic.mac 	nbRxFrames 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbTxAcks 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbDuplicates 	0
+scalar ieee802154Narrow.node[4].nic.mac 	meanBackoff 	0.0012330275229358
+scalar ieee802154Narrow.node[4].nic.mac 	nbBackoffs 	109
+scalar ieee802154Narrow.node[4].nic.mac 	backoffDurations 	0.1344
+scalar ieee802154Narrow.node[4].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.node[4].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.node[4].nic.phy 	nbFramesWithInterference 	3
+scalar ieee802154Narrow.node[4].nic.phy 	nbFramesWithoutInterference 	467
+scalar ieee802154Narrow.node[4].nic.phy 	nbFramesWithInterferenceDropped 	3
+scalar ieee802154Narrow.node[4].nic.phy 	nbFramesWithoutInterferenceDropped 	467
+scalar ieee802154Narrow.computer[0].batteryStats 	nominal 	1187988120
+attr unit  mW-s
+scalar ieee802154Narrow.computer[0].batteryStats 	total 	1486.38879776
+attr unit  mW-s
+scalar ieee802154Narrow.computer[0].batteryStats 	lifetime 	-1
+attr unit  s
+scalar ieee802154Narrow.computer[0].batteryStats 	"Mean power consumption" 	61.421024700827
+attr unit  mW
+scalar ieee802154Narrow.computer[0].appl 	"Dropped Packets in Comp - No ACK received" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Dropped Packets in Comp - Max MAC BackOff tries" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Dropped Packets in Comp - App Queue Full" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Dropped Packets in Comp - Mac Queue Full" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Dropped Packets in Comp - No Time in the Phase" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Erased Packets in Comp - No more BackOff retries" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Erased Packets in Comp - No more No ACK retries" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Erased Packets in Comp - No more MAC Queue Full retries" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of Comp Reports with ACK" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of Reports received in Comp" 	294
+scalar ieee802154Narrow.computer[0].appl 	"Number of Reports really for me received in Comp" 	294
+scalar ieee802154Narrow.computer[0].appl 	"Number of app duplicated packets" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of no duplicated reports" 	284
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from mobile node 0" 	5
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from mobile node 1" 	49
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from mobile node 2" 	69
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from mobile node 3" 	39
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from mobile node 4" 	70
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor0" 	9
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor1" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor2" 	9
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor3" 	10
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor4" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor5" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor6" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor7" 	30
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor8" 	30
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor9" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor10" 	10
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor11" 	10
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor12" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor13" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor14" 	18
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor15" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor16" 	10
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor17" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor18" 	20
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor19" 	8
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor20" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor21" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor22" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor23" 	0
+scalar ieee802154Narrow.computer[0].appl 	"Number of packets sent from anchor24" 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbTxFrames 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbRxFrames 	414
+scalar ieee802154Narrow.computer[0].nic.mac 	nbDroppedFrames 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbMissedAcks 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbRecvdAcks 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbTxAcks 	295
+scalar ieee802154Narrow.computer[0].nic.mac 	nbDuplicates 	1
+scalar ieee802154Narrow.computer[0].nic.mac 	meanBackoff 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbBackoffs 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	backoffDurations 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbDroppedFromMACQueueNoTimeInPhase 	0
+scalar ieee802154Narrow.computer[0].nic.mac 	nbDroppedMACNoTimeBeforePhaseEnd 	0
+scalar ieee802154Narrow.computer[0].nic.phy 	nbFramesWithInterference 	10
+scalar ieee802154Narrow.computer[0].nic.phy 	nbFramesWithoutInterference 	646
+scalar ieee802154Narrow.computer[0].nic.phy 	nbFramesWithInterferenceDropped 	10
+scalar ieee802154Narrow.computer[0].nic.phy 	nbFramesWithoutInterferenceDropped 	5

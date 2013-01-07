@@ -1,0 +1,406 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>PhyLayerUWBIR</i></h2>
+<b>Package:</b> org.mixim.modules.phy<br/><b>File: <a href="src-modules-phy-PhyLayerUWBIR.ned.html">src/modules/phy/PhyLayerUWBIR.ned</a></b><br/><p><a href="../doxy/a00151.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>A physical layer that models an Ultra Wideband Impulse Radio wireless communication system.</p>
+<p>This class loads channel models and delivers frames to an UWB Decider. It is independent of the modulation technique,
+as long as the frames are represented using the same approach as in IEEE802154A.h (Maximum Pulse Amplitude Estimation).</p>
+<p>Several channel models are possible: Ghassemzadeh-LOS, Ghassemadeh-NLOS (see UWBIRStochasticPathlossModel.h)
+and the IEEE 802.15.4A UWB channel models that use the default power delay profile (see UWBIRIEEE802154APathlossModel.h).</p>
+<p>Currently, an energy detection receiver is modeled in UWBIRED.h.
+Several synchronization logics have been implemented in derived classes:
+see DeciderUWBIREDSync.h and and DeciderUWBIREDSyncOnAddress.h.</p>
+<p>To add a novel receiver (e.g. coherent demodulation), either derive UWBIRED or write a new one,
+then add functionality in this module to load the new decider.
+The same procedure applies for new channel models.</p>
+<p>To change the modulation, see <a href="org.mixim.modules.mac.UWBIRMac.html">UWBIRMac</a>.h, IEEE802154A.h and UWBIRED.h.</p>
+<p>To implement optional modes of IEEE802154A, see IEEE802154A.h.</p>
+<p>Citation of the following publication is appreciated if you use the MiXiM UWB PHY model
+for a publication of your own.
+J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+layer model for network simulation. SIMULATION January 2011 vol. 87 no. 1-2 82-112.</p>
+<p>For more information, see also:</p>
+<p>[1] J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+layer model for network simulation. SIMULATION January 2011 vol. 87 no.
+1-2 82-112. <a href="http://dx.doi.org/10.1177/0037549710377767">http://dx.doi.org/10.1177/0037549710377767</a>.</p>
+<p>[2] J. Rousselot, Ultra Low Power Communication Protocols for UWB
+Impulse Radio Wireless Sensor Networks. EPFL Thesis 4720, 2010. 
+<a href="http://infoscience.epfl.ch/record/147987">http://infoscience.epfl.ch/record/147987</a>.</p>
+<p>[3] J. Rousselot, J.-D. Decotignie, A High-Precision Ultra Wideband Impulse Radio Physical Layer Model
+for Network Simulation. Second International Omnet++ Workshop,Simu'TOOLS, Rome, March 2009.
+<a href="http://portal.acm.org/citation.cfm?id=1537714">http://portal.acm.org/citation.cfm?id=1537714</a>.</p>
+<p><b>Author:</b> J&eacute;r&ocirc;me Rousselot</p>
+<img src="org.mixim.modules.phy.PhyLayerUWBIR-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.phy.PhyLayerUWBIR.html" title="PhyLayerUWBIR" alt="PhyLayerUWBIR" coords="0,30,124,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.phy.PhyLayerUWBIR-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.phy.PhyLayerUWBIR.html" title="Simple Module PhyLayerUWBIR" alt="" coords="5,5,128,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.phy.PhyLayerUWBIR-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.phy.PhyLayerUWBIR.html" title="Simple Module PhyLayerUWBIR" alt="" coords="5,80,128,107">
+<area shape="rect" href="org.mixim.base.phyLayer.BasePhyLayer.html" title="Simple Module BasePhyLayer" alt="" coords="13,5,120,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.phyLayer.BasePhyLayer.html">BasePhyLayer</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Basic physical layer module.
+See the class "<a href="org.mixim.base.phyLayer.BasePhyLayer.html">BasePhyLayer</a>" documentation.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>recordStats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>enable/disable tracking of statistics (eg. cOutvectors)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>defines the length of the phy header (/preamble)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>usePropagationDelay</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>Should transmission delay be simulated?</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>thermalNoise</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>the strength of the thermal noise [dBm]</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>useThermalNoise</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>should thermal noise be considered?</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>analogueModels</td>
+   <td>
+      <i>xml</i>
+   </td>
+   <td></td>
+   <td>
+<p>Specification of the analogue models to use and their parameters</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>decider</td>
+   <td>
+      <i>xml</i>
+   </td>
+   <td></td>
+   <td>
+<p>Specification of the decider to use and its parameters</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>sensitivity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>The sensitivity of the physical layer [dBm]</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>maxTXPower</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>The maximum transimission power of the physical layer [mW]</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeRXToTX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeRXToSleep</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Elapsed time to switch from receive to sleep state</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeTXToRX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Elapsed time to switch from send to receive state</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeTXToSleep</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Elapsed time to switch from send to sleep state</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeSleepToRX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Elapsed time to switch from sleep to receive state</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>timeSleepToTX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Elapsed time to switch from sleep to send state</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initialRadioState</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>State the radio is initially in (0=RX, 1=TX, 2=Sleep)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>radioMinAtt</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1.0</td>
+   <td>
+<p>radios gain factor (attenuation) while receiving</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>radioMaxAtt</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0.0</td>
+   <td>
+<p>radios gain factor (attenuation) while not receiving</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>nbRadioChannels</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>1</td>
+   <td>
+<p>Number of available radio channels. Defaults to single channel radio.</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>initialRadioChannel</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>0</td>
+   <td>
+<p>Initial radio channel.</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>class</td>
+   <td><i>PhyLayerUWBIR</i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>i=device/antennatower</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>upperLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from the MAC layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to the MAC layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>control from the MAC layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>upperControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>control to the MAC layer</p>
+</td>
+</tr>
+<tr class="inherited">
+   <td>radioIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>for sendDirect from other physical layers</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+// A physical layer that models an Ultra Wideband Impulse Radio wireless communication system.
+//
+// This class loads channel models and delivers frames to an UWB Decider. It is independent of the modulation technique,
+// as long as the frames are represented using the same approach as in IEEE802154A.h (Maximum Pulse Amplitude Estimation).
+//
+// Several channel models are possible: Ghassemzadeh-LOS, Ghassemadeh-NLOS (see UWBIRStochasticPathlossModel.h)
+// and the IEEE 802.15.4A UWB channel models that use the default power delay profile (see UWBIRIEEE802154APathlossModel.h).
+//
+// Currently, an energy detection receiver is modeled in UWBIRED.h.
+// Several synchronization logics have been implemented in derived classes:
+// see DeciderUWBIREDSync.h and and DeciderUWBIREDSyncOnAddress.h.
+//
+// To add a novel receiver (e.g. coherent demodulation), either derive UWBIRED or write a new one,
+// then add functionality in this module to load the new decider.
+// The same procedure applies for new channel models.
+//
+// To change the modulation, see UWBIRMac.h, IEEE802154A.h and UWBIRED.h.
+//
+// To implement optional modes of IEEE802154A, see IEEE802154A.h.
+//
+// Citation of the following publication is appreciated if you use the MiXiM UWB PHY model
+// for a publication of your own.
+// J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no. 1-2 82-112.
+//
+// For more information, see also:
+//
+// [1] J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no.
+// 1-2 82-112. </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1177/0037549710377767&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1177/0037549710377767</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [2] J. Rousselot, Ultra Low Power Communication Protocols for UWB
+// Impulse Radio Wireless Sensor Networks. EPFL Thesis 4720, 2010. 
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://infoscience.epfl.ch/record/147987&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://infoscience.epfl.ch/record/147987</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [3] J. Rousselot, J.-D. Decotignie, A High-Precision Ultra Wideband Impulse Radio Physical Layer Model
+// for Network Simulation. Second International Omnet++ Workshop,Simu'TOOLS, Rome, March 2009.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://portal.acm.org/citation.cfm?id=1537714&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://portal.acm.org/citation.cfm?id=1537714</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&eacute;r&ocirc;me Rousselot
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">PhyLayerUWBIR</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BasePhyLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">PhyLayerUWBIR</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;i=device/antennatower&quot;</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

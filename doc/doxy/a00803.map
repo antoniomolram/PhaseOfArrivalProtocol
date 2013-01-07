@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00007.html" title="Interface for the analogue models of the physical layer." alt="" coords="96,5,211,32"/>
+<area shape="rect" href="$a00055.html" title="Represents a not changeable mapping (mathematical function) from domain with at least..." alt="" coords="100,56,207,83"/>
+<area shape="rect" href="$a00186.html" title="TimeMapping\&lt; Linear \&gt;" alt="" coords="73,107,233,133"/>
+<area shape="rect" href="$a00122.html" title="Defines an iterator for a Mapping which is able to iterate over the Mapping." alt="" coords="96,157,211,184"/>
+<area shape="rect" href="$a00009.html" title="Defines an argument for a mapping." alt="" coords="113,208,193,235"/>
+<area shape="rect" href="$a00045.html" title="UWBIRIEEE802154APathlossModel::CMconfig" alt="" coords="7,268,300,295"/>
+</map>

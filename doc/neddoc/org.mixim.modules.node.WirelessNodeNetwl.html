@@ -1,0 +1,290 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Compound Module <i>WirelessNodeNetwl</i></h2>
+<b>Package:</b> org.mixim.modules.node<br/><b>File: <a href="src-modules-node-WirelessNode.ned.html">src/modules/node/WirelessNode.ned</a></b><br/><p>(no description)</p><img src="org.mixim.modules.node.WirelessNodeNetwl-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.modules.IBaseArp.html" title="IBaseArp" alt="IBaseArp" coords="122,120,166,178">
+<area shape="rect" href="org.mixim.base.modules.IMobility.html" title="IMobility" alt="IMobility" coords="122,50,166,108">
+<area shape="rect" href="org.mixim.modules.nic.IWirelessNicUpperCtrl.html" title="IWirelessNicUpperCtrl" alt="IWirelessNicUpperCtrl" coords="52,400,96,458">
+<area shape="rect" href="org.mixim.base.modules.IBaseNetwLayer.html" title="IBaseNetwLayer" alt="IBaseNetwLayer" coords="52,330,96,388">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.node.WirelessNodeNetwl-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.node.WirelessNodeNetwl.html" title="Compound Module WirelessNodeNetwl" alt="" coords="304,5,440,32">
+<area shape="rect" href="org.mixim.base.modules.IBaseNetwLayer.html" title="Module Interface IBaseNetwLayer" alt="" coords="5,80,123,107">
+<area shape="rect" href="org.mixim.modules.nic.IWirelessNicUpperCtrl.html" title="Module Interface IWirelessNicUpperCtrl" alt="" coords="147,80,299,107">
+<area shape="rect" href="ned.IdealChannel.html" title="Channel IdealChannel" alt="" coords="323,80,421,107">
+<area shape="rect" href="org.mixim.base.modules.IMobility.html" title="Module Interface IMobility" alt="" coords="445,80,517,107">
+<area shape="rect" href="org.mixim.base.modules.IBaseArp.html" title="Module Interface IBaseArp" alt="" coords="541,80,616,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.node.WirelessNodeNetwl-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.node.WirelessNodeNetwl.html" title="Compound Module WirelessNodeNetwl" alt="" coords="151,5,287,32">
+<area shape="rect" href="org.mixim.examples.CSMAMac.PhyMacHost.html" title="Compound Module PhyMacHost" alt="" coords="5,80,101,107">
+<area shape="rect" href="org.mixim.tests.nicTest.TestHost.html" title="Compound Module TestHost" alt="" coords="125,80,200,107">
+<area shape="rect" href="org.mixim.modules.node.WirelessNode.html" title="Compound Module WirelessNode" alt="" coords="224,80,328,107">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBatteryNetwl.html" title="Compound Module WirelessNodeBatteryNetwl" alt="" coords="352,80,531,107">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodePlusTran.html" title="Compound Module WirelessNodePlusTran" alt="" coords="555,80,712,107">
+</map>
+<h3 class="subtitle">Known subclasses:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.examples.CSMAMac.PhyMacHost.html">PhyMacHost</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.basePhyLayer.TestHost.html">TestHost</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.nicTest.TestHost.html">TestHost</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.WirelessNode.html">WirelessNode</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Standard host module for a wireless MiXiM host with configurable NIC, and OSI 
+layers, and mobility module.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.WirelessNodeBatteryNetwl.html">WirelessNodeBatteryNetwl</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.WirelessNodePlusTran.html">WirelessNodePlusTran</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>networkType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"BaseNetwLayer"</td>
+   <td>
+<p>type of the network layer</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>mobilityType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"ConstSpeedMobility"</td>
+   <td>
+<p>type of the mobility module</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>arpType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"BaseArp"</td>
+   <td>
+<p>type of address resolution module</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>nicType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td></td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=210,450,white;i=device/palm;b=40,40,rect</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>radioIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>gate for sendDirect</p>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial x coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial y coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial z coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">WirelessNodeNetwl</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">networkType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;BaseNetwLayer&quot;</span><span style="color: #000000; ">);       </span><span style="color: #808080; font-style: italic; ">//type of the network layer
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">mobilityType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;ConstSpeedMobility&quot;</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">//type of the mobility module
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">arpType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;BaseArp&quot;</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">//type of address resolution module
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">nicType</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=210,450,white;i=device/palm;b=40,40,rect&quot;</span><span style="color: #000000; ">);
+
+    </span><span style="color: #800000; font-weight: bold; ">gates</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">input</span><span style="color: #000000; "> </span><span style="color: #000000; ">radioIn</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// gate for sendDirect
+</span><span style="color: #000000; ">
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">arp</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">arpType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IBaseArp</span><span style="color: #000000; "> {
+            </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=140,100;i=block/network2&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">mobility</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">mobilityType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IMobility</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=140,30;i=block/cogwheel&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">nicType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IWirelessNicUpperCtrl</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=70,380;i=block/wrxtx,#008000&quot;</span><span style="color: #000000; ">);
+        }
+        </span><span style="color: #808080; font-style: italic; ">// OSI network layer
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">netwl</span><span style="color: #000000; ">: &lt;</span><span style="color: #000000; ">networkType</span><span style="color: #000000; ">&gt; </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IBaseNetwLayer</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=70,310;i=block/layer&quot;</span><span style="color: #000000; ">);
+        }
+
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">upperLayerOut</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">--&gt;</span><span style="color: #000000; "> </span><span style="color: #000000; ">netwl</span><span style="color: #000000; ">.</span><span style="color: #000000; ">lowerLayerIn</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">upperLayerIn</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">&lt;--</span><span style="color: #000000; "> </span><span style="color: #000000; ">netwl</span><span style="color: #000000; ">.</span><span style="color: #000000; ">lowerLayerOut</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">upperControlOut</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">--&gt;</span><span style="color: #000000; "> { </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;ls=red;m=m,70,0,70,0&quot;</span><span style="color: #000000; ">); } </span><span style="color: #800000; font-weight: bold; ">--&gt;</span><span style="color: #000000; "> </span><span style="color: #000000; ">netwl</span><span style="color: #000000; ">.</span><span style="color: #000000; ">lowerControlIn</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">upperControlIn</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">&lt;--</span><span style="color: #000000; "> { </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;ls=red;m=m,70,0,70,0&quot;</span><span style="color: #000000; ">); } </span><span style="color: #800000; font-weight: bold; ">&lt;--</span><span style="color: #000000; "> </span><span style="color: #000000; ">netwl</span><span style="color: #000000; ">.</span><span style="color: #000000; ">lowerControlOut</span><span style="color: #000000; ">;
+
+        </span><span style="color: #000000; ">radioIn</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">--&gt;</span><span style="color: #000000; "> </span><span style="color: #000000; ">nic</span><span style="color: #000000; ">.</span><span style="color: #000000; ">radioIn</span><span style="color: #000000; ">;
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

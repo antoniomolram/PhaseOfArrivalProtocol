@@ -1,0 +1,90 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/netw/ProbabilisticBroadcast.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.ProbabilisticBroadcast.html">ProbabilisticBroadcast</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//***************************************************************************
+// file:        ProbabilisticBroadcast.ned
+//
+// author:      Damien Piguet
+// 
+// copyright:   (C) 2008-2010 CSEM SA, Neuch&acirc;tel, Switzerland.
+//
+// description: Multi-hop ad-hoc data dissemination protocol based on
+//              probabilistic broadcast: depending on application
+//              parameters and network status, each packet will
+//              go through a number of transmission attempts, each
+//              with a certain probability. How number of transmissions
+//              attempts and probability of forwarding are computed will
+//              be derived from the simulations of this protocol. 
+//**************************************************************************
+</span><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">netw</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">// Multi-hop ad-hoc data dissemination protocol based on probabilistic broadcast.
+//
+// This protocol performs network-level broadcast using a probabilistic mechanism.
+// This method reduces the number of packets sent on the channel (reducing the
+// broadcast storm problem) at the risk of some nodes not receiving the data.
+// It is particularly interesting for mobile networks.
+// Parameter maxNbBcast sets the maximum number of broadcast transmissions of a packet,
+// parameter beta gives the transmission probability for each attempt,
+// parameter bcperiod sets the time between two transmission attempts.
+// Parameter maxFirstBcastBackoff sets a backoff window before first transmission attempt,
+// and parameter timeInQueueAfterDeath sets the time during which a node remembers
+// a packet whose time to live (TTL) expired, avoiding retransmitting it in case it comes back
+// in the network because of some problem.
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">ProbabilisticBroadcast</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">ProbabilisticBroadcast</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// debug and trace switches
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">debug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">trace</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// period between two probabilistic broadcast attempts
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">bcperiod</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">2</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// probability of broadcast for each attempt
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #800080; font-weight: bold; ">beta</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">( </span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">8</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// maximal number of broadcast attempts for each packet.
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">maxNbBcast</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// maximal back-off before first broadcast attempt [seconds].
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// if don't want to use this parameter, simply set it
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// to a value that is greater than bcperiod.
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">maxFirstBcastBackoff</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">timeToLive</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; "> (</span><span style="color: #008000; ">10</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// How many seconds the message should be kept in queue after its died.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// That way the message is known if the node receives one of its
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// copy that isn't dead because of TTL de-synchronization due to
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// MAC backoff, propagation delay and clock drift.
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">timeInQueueAfterDeath</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">60</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

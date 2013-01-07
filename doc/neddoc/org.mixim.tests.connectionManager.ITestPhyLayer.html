@@ -1,0 +1,79 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Module Interface <i>ITestPhyLayer</i></h2>
+<b>Package:</b> org.mixim.tests.connectionManager<br/><b>File: <a href="tests-connectionManager-CMPhyLayer.ned.html">tests/connectionManager/CMPhyLayer.ned</a></b><br/>
+<p>Common phy layer test interface.</p>
+<img src="org.mixim.tests.connectionManager.ITestPhyLayer-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.tests.connectionManager.ITestPhyLayer.html" title="ITestPhyLayer" alt="ITestPhyLayer" coords="0,30,160,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.ITestPhyLayer-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.ITestPhyLayer.html" title="Module Interface ITestPhyLayer" alt="" coords="5,80,112,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.TestNic.html" title="Compound Module TestNic" alt="" coords="23,5,95,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.ITestPhyLayer-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.ITestPhyLayer.html" title="Module Interface ITestPhyLayer" alt="" coords="371,5,477,32">
+<area shape="rect" href="org.mixim.tests.connectionManager.ConnectedBCNodePhyLayer.html" title="Simple Module ConnectedBCNodePhyLayer" alt="" coords="5,80,197,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.ConnectedRNodePhyLayer.html" title="Simple Module ConnectedRNodePhyLayer" alt="" coords="221,80,405,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.NotConnectedBCNodePhyLayer.html" title="Simple Module NotConnectedBCNodePhyLayer" alt="" coords="429,80,643,107">
+<area shape="rect" href="org.mixim.tests.connectionManager.NotConnectedRNodePhyLayer.html" title="Simple Module NotConnectedRNodePhyLayer" alt="" coords="667,80,869,107">
+</map>
+<h3 class="subtitle">Used in compound modules:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.connectionManager.TestNic.html">TestNic</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>usePropagationDelay</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>Should transmission delay be simulated?</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Common phy layer test interface.
+</span><span style="color: #800000; font-weight: bold; ">moduleinterface</span><span style="color: #000000; "> </span><span style="color: #000000; ">ITestPhyLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">usePropagationDelay</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">//Should transmission delay be simulated?
+</span><span style="color: #000000; ">    </span><span style="color: #800000; font-weight: bold; ">gates</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">input</span><span style="color: #000000; "> </span><span style="color: #000000; ">radioIn</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// for sendDirect
+</span><span style="color: #000000; ">}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

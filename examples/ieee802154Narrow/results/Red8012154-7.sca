@@ -1,0 +1,17 @@
+version 2
+run Red8012154-7-20121204-20:02:44-29962
+attr configname Red8012154
+attr datetime 20121204-20:02:44
+attr experiment Red8012154
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=7
+attr measurement ""
+attr network ieee802154Narrow
+attr processid 29962
+attr repetition 7
+attr replication #7
+attr resultdir results
+attr runnumber 7
+attr seedset 7
+

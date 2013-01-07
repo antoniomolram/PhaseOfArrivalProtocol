@@ -1,0 +1,11 @@
+<area shape="rect" href="org.mixim.base.modules.BaseMacLayer.html" title="Simple Module BaseMacLayer" alt="" coords="396,80,505,107">
+<area shape="rect" href="org.mixim.modules.mac.BMacLayer.html" title="Simple Module BMacLayer" alt="" coords="5,155,93,181">
+<area shape="rect" href="org.mixim.modules.mac.csma.html" title="Simple Module csma" alt="" coords="117,155,189,181">
+<area shape="rect" href="org.mixim.modules.mac.CSMAMacLayer.html" title="Simple Module CSMAMacLayer" alt="" coords="213,155,331,181">
+<area shape="rect" href="org.mixim.modules.mac.LMacLayer.html" title="Simple Module LMacLayer" alt="" coords="355,155,440,181">
+<area shape="rect" href="org.mixim.modules.mac.Mac80211.html" title="Simple Module Mac80211" alt="" coords="464,155,547,181">
+<area shape="rect" href="org.mixim.examples.analogueModels.SimpleMacLayer.html" title="Simple Module SimpleMacLayer" alt="" coords="571,155,691,181">
+<area shape="rect" href="org.mixim.tests.basePhyLayer.TestMacLayer.html" title="Simple Module TestMacLayer" alt="" coords="715,155,819,181">
+<area shape="rect" href="org.mixim.modules.mac.UWBIRMac.html" title="Simple Module UWBIRMac" alt="" coords="843,155,933,181">
+<area shape="rect" href="org.mixim.base.modules.BaseLayer.html" title="Simple Module BaseLayer" alt="" coords="349,5,435,32">
+<area shape="rect" href="org.mixim.base.modules.IWirelessMac.html" title="Module Interface IWirelessMac" alt="" coords="459,5,560,32">

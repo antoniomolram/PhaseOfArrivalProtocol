@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00062.html" title="Class for storing 3D coordinates." alt="" coords="199,5,255,32"/>
+<area shape="rect" href="$a00027.html" title="Provides information and utility methods for the whole simulation." alt="" coords="111,115,228,141"/>
+<area shape="rect" href="$a00154.html" title="to store the specification of a posture on the MoBAN mobility model." alt="" coords="252,115,319,141"/>
+<area shape="rect" href="$a00147.html" title="Data type for one instance of mobility pattern." alt="" coords="343,115,524,141"/>
+<area shape="rect" href="$a00155.html" title="Class to provide spatial and temporal correlation in the posture selection process..." alt="" coords="548,115,673,141"/>
+</map>

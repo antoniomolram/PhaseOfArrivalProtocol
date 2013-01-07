@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00028.html" title="Extends BaseModule by several methods which provide access to the battery module..." alt="" coords="5,131,112,157"/>
+<area shape="rect" href="$a00127.html" title="Class to store object position and movement." alt="" coords="295,131,348,157"/>
+<area shape="rect" href="$a00062.html" title="Class for storing 3D coordinates." alt="" coords="293,5,349,32"/>
+<area shape="rect" href="$a00027.html" title="Provides information and utility methods for the whole simulation." alt="" coords="372,131,489,157"/>
+<area shape="rect" href="$a00177.html" title="Helper function to initialize signal change identifier on use and not on initializing..." alt="" coords="513,131,628,157"/>
+</map>

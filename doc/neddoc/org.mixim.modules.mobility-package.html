@@ -1,0 +1,189 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2>Package org.mixim.modules.mobility</h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.ANSimMobility.html">ANSimMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Uses the &lt;position_change&gt; elements of the ANSim tool's
+trace file.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.BonnMotionMobility.html">BonnMotionMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Uses the native file format of BonnMotion (http://www.cs.uni-bonn.de/IV/BonnMotion/).</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.CircleMobility.html">CircleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves the node around a circle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.ConstSpeedMobility.html">ConstSpeedMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Controls all movement related things of a host</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.LinearMobility.html">LinearMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is a linear mobility model with speed, angle and acceleration parameters.
+Angle only changes when the mobile node hits a wall: then it reflects
+off the wall at the same angle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MassMobility.html">MassMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is a random mobility model for a mobile host with a mass. It is the
+one used in "Optimized Smooth Handoffs in Mobile IP" by Perkins &amp; Wang.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MoBANCoordinator.html">MoBANCoordinator</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is the coordinator module of the MoBAN mobility model. It should be instantiated in the top level simulation network in MiXiM, once per WBAN.
+The coordinator module is the main module that provides the group mobility and correlation between nodes in a WBAN.
+In the initialization phase, it reads three user defined input files which are the postures specification file, a configuration file which includes all
+required parameter for specific distributions, and the previously logged mobility pattern, if it is requested to use a logged pattern.
+Note that all WBAN instances may use the same input files if they are exactly in the same situation.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.MoBANLocal.html">MoBANLocal</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This is the local mobility module of MoBAN. It should be instantiated in each node that belongs to a WBAN. The NED parameter "coordinatorIndex"
+determine to which WBAN (<a href="org.mixim.modules.mobility.MoBANCoordinator.html">MoBANCoordinator</a>) it belongs.
+The current implementation uses the Random Walk Mobility Model (RWMM) for individual (local) movement with a sphere around the node, with given speed
+and sphere radius of the current posture. The reference point of the node it the current posture, the sphere radius, and the speed is given by the
+corresponding coordinator through the blackboard. RWMM determines the location of node at ant time relative to the given reference point.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.RectangleMobility.html">RectangleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves the node around a rectangle.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.StationaryMobility.html">StationaryMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Defines a static mobility pattern (means only a position, no movement).</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.TractorMobility.html">TractorMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Moves a tractor through a field with a certain amount of rows.
+Since the tractor also moves around the field, the tractor travels
+the number of rows PLUS one rows. Consider the following piece of
+ascii-art for rows=2.</p>
+
+   </td>
+</tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mobility.TurtleMobility.html">TurtleMobility</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>A LOGO-style movement model, with the script coming from XML. It can be
+useful for describing random as well as deterministic scenarios.</p>
+
+   </td>
+</tr>
+</table>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00007.html" title="Interface for the analogue models of the physical layer." alt="" coords="5,8,120,35"/>
+<area shape="rect" href="$a00083.html" title="Represents a set of dimensions which is used to define over which dimensions a mapping..." alt="" coords="144,8,248,35"/>
+<area shape="rect" href="$a00082.html" title="Specifies a dimension for mappings (like time, frequency, etc.)." alt="" coords="395,8,477,35"/>
+</map>

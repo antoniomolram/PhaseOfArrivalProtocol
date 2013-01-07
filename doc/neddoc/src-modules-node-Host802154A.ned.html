@@ -1,0 +1,75 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/node/Host802154A.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.node.Host802154A.html">Host802154A</a>
+   </td>
+   <td>
+<i>compound&nbsp;module</i>
+   </td>
+   <td>
+
+<p>This host NED module models a host using an IEEE 802.15.4A correlation receiver.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">node</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">utility</span><span style="color: #000000; ">.</span><span style="color: #000000; ">phyPER</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// This host NED module models a host using an IEEE 802.15.4A correlation receiver.
+// 
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> J&#65533;r&#65533;me Rousselot
+// 
+// Citation of the following publication is appreciated if you use the MiXiM UWB PHY model
+// for a publication of your own.
+// J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no. 1-2 82-112.
+//
+// For more information, see also:
+//
+// [1] J. Rousselot, J.-D. Decotignie, An ultra-wideband impulse radio PHY
+// layer model for network simulation. SIMULATION January 2011 vol. 87 no.
+// 1-2 82-112. </span><span style="color: #800000; ">&lt;a href=&quot;http://dx.doi.org/10.1177/0037549710377767&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://dx.doi.org/10.1177/0037549710377767</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [2] J. Rousselot, Ultra Low Power Communication Protocols for UWB
+// Impulse Radio Wireless Sensor Networks. EPFL Thesis 4720, 2010. 
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://infoscience.epfl.ch/record/147987&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://infoscience.epfl.ch/record/147987</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+// [3] J. Rousselot, J.-D. Decotignie, A High-Precision Ultra Wideband Impulse Radio Physical Layer Model
+// for Network Simulation. Second International Omnet++ Workshop,Simu'TOOLS, Rome, March 2009.
+// </span><span style="color: #800000; ">&lt;a href=&quot;http://portal.acm.org/citation.cfm?id=1537714&quot;&gt;</span><span style="color: #808080; font-style: italic; ">http://portal.acm.org/citation.cfm?id=1537714</span><span style="color: #800000; ">&lt;/a&gt;</span><span style="color: #808080; font-style: italic; ">.
+//
+</span><span style="color: #800000; font-weight: bold; ">module</span><span style="color: #000000; "> </span><span style="color: #000000; ">Host802154A</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">WirelessNodeBattery</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">applicationType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.application.TestApplication&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">arpType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.netw.ArpHost&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">nicType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.nic.Nic802154A&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">networkType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;org.mixim.modules.netw.DummyRoute&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">stats</span><span style="color: #000000; ">: </span><span style="color: #000000; ">phyPER</span><span style="color: #000000; "> {
+            </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=140,310&quot;</span><span style="color: #000000; ">);
+        }
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

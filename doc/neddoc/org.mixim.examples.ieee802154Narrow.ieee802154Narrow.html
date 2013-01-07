@@ -1,0 +1,543 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>ieee802154Narrow</i></h2>
+<b>Package:</b> org.mixim.examples.ieee802154Narrow<br/><b>File: <a href="examples-ieee802154Narrow-ieee802154Narrow.ned.html">examples/ieee802154Narrow/ieee802154Narrow.ned</a></b><br/>
+<p>This example shows how to use MiXiMs implementation of the ieee802154
+narrow band protocol.</p>
+<p>The network consist of the "<a href="org.mixim.examples.ieee802154Narrow.WorldUtilityStats.html">WorldUtilityStats</a>" which extends from 
+<a href="org.mixim.base.modules.BaseWorldUtility.html">BaseWorldUtility</a> to collect some global statistics as well as the 
+usual <a href="org.mixim.base.connectionManager.ConnectionManager.html">ConnectionManager</a> and a number of host.
+The hosts contain a special Traffic generation layer which lies 
+directly above the NIC which moreover consist of the "<a href="org.mixim.modules.mac.csma.html">csma</a>"-mac 
+layer module and the <a href="org.mixim.modules.phy.PhyLayer.html">PhyLayer</a>. The <a href="org.mixim.modules.phy.PhyLayer.html">PhyLayer</a> uses "Decider802154Narrow"
+as a decider.</p>
+<p>There are three "Test"s which try to show the characteristics of the
+used <a href="org.mixim.modules.mac.csma.html">csma</a> mac layer. For each of these tests exists a "runTestX.sh" 
+script as well as a "TestX.anf" file which execute the configurations 
+necessary to produce the result-files for the according "*.anf" file.
+So you can take a look at the result of these tests by calling the 
+"runTestX.sh" script and then opening the according "TestX.anf" file.</p>
+<p><hr/>
+Test 1</p>
+<p>This configuration produces the usage statistics of the channel for 
+different parameters. Usage statistics means how much of the 
+channels possible maximum capacity is used at which amount of generated
+traffic.</p>
+<p>The results of this tests are visualized by "Test1.anf" and show plots 
+of the generated traffic against the received traffic where both values
+are normalized against bitrate and simulation time.
+If everything was fine this should plot 5 lines which converge with
+different speeds to a channel usage of about 0.8 (depending on the used 
+parameters).
+You also might see strange outliers in a few of these lines. These seem
+to be caused by wrong reading of the output scalars. The outliers are not
+present in the actual output scalars. You can read and plot the output 
+scalars using matlab to verify this.</p>
+<p><hr/>
+Test 2</p>
+<p>These test configurations are meant to show the effect of MAC-ACKS on the
+usage of the channel with increasing distance between the hosts.
+Test2-C further shows the effect of the hidden station problem on CSMA.</p>
+<p>The results can be visualized by "Test2.anf" and show plots of channel 
+usage at different distances.
+The graph shows three lines plotting the channel usage against the distance
+between the nodes. You should see that channel usage begins to decrease
+rapidly around a distance of 170 metres. Whereas the run with MAC-Acks 
+enabled should begin decreasing later than the run without.
+The third line shows the performance in the hidden station scenario. It
+should show a huge performance decrease at a distance around 120 metres.
+This is the point where the two senders are not in range of each other
+anymore and begin to interfere each others transmissions to the receiver.</p>
+<p><hr/>
+Test 3</p>
+<p>This tests is meant to show that CSMA uses exponential backoffs. This is 
+done by increasing the number of hosts in the network exponentially.
+While the average backoff duration of each hosts should increase
+exponentially, the average number of backoffs should increase linearly.</p>
+<p>The results of this tests are visualized by "Test3.anf".
+It should show four bar charts displaying the following parameters for 
+each run.</p>
+  <ul><li>Chart 1 - average number of transmitted frames per node.
+			  These bars should be between 5 and 10 frames per node.</li>
+  <li>Chart 2 - average number of backoffs per node.
+			  These bars should increase almost linear with each run. This results
+			  from the exponential backoffs.</li>
+  <li>Chart 3 - average time spent in backoff per node.
+			  These bars should increase exponential with each run.</li>
+  <li>Chart 4 - amount of nodes present.
+			  These bars should increase exponential 2, 4, 8, 16, 32, ...</li></ul>
+<img src="org.mixim.examples.ieee802154Narrow.ieee802154Narrow-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="157,28,250,70">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="IWorldUtility" alt="IWorldUtility" coords="270,28,298,70">
+<area shape="rect" href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html" title="PhyMacHost" alt="PhyMacHost" coords="110,113,188,179">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.ieee802154Narrow.ieee802154Narrow-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.examples.ieee802154Narrow.ieee802154Narrow.html" title="Network ieee802154Narrow" alt="" coords="5,5,139,32">
+<area shape="rect" href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html" title="Compound Module PhyMacHost" alt="" coords="24,80,120,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.ieee802154Narrow.ieee802154Narrow-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.examples.ieee802154Narrow.ieee802154Narrow.html" title="Network ieee802154Narrow" alt="" coords="5,80,139,107">
+<area shape="rect" href="org.mixim.base.modules.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="23,5,121,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseNetwork.html">BaseNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>x size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>y size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>z size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>cmType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.connectionManager.ConnectionManager"</td>
+   <td>
+<p>connection manager to use</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>wuType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"WorldUtilityStats"</td>
+   <td>
+<p>world utility to use</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial x coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial y coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial z coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.detail</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>write per-activity and per-device statistics to omnetpp.sca
+(if false, only total energy and lifetime are written)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.timeSeries</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>subscribe to battery status and record time series
+data in omnetpp.vec (resolution depends on battery's 
+publishDelta)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.nominal</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.capacity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.voltage</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal voltage</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.resolution</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>capacity is updated at least every resolution time</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishDelta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>if &gt; 0, capacity is published to the BB each publishTime 
+interval</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>number of modules that will draw energy from the 
+battery</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.ieee802154Narrow.PhyMacHost.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.numDevices</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+//This example shows how to use MiXiMs implementation of the ieee802154
+//narrow band protocol.
+//
+//The network consist of the &quot;WorldUtilityStats&quot; which extends from 
+//BaseWorldUtility to collect some global statistics as well as the 
+//usual ConnectionManager and a number of host.
+//The hosts contain a special Traffic generation layer which lies 
+//directly above the NIC which moreover consist of the &quot;csma&quot;-mac 
+//layer module and the PhyLayer. The PhyLayer uses &quot;Decider802154Narrow&quot;
+//as a decider.
+//
+//There are three &quot;Test&quot;s which try to show the characteristics of the
+//used csma mac layer. For each of these tests exists a &quot;runTestX.sh&quot; 
+//script as well as a &quot;TestX.anf&quot; file which execute the configurations 
+//necessary to produce the result-files for the according &quot;*.anf&quot; file.
+//So you can take a look at the result of these tests by calling the 
+//&quot;runTestX.sh&quot; script and then opening the according &quot;TestX.anf&quot; file.
+//
+//------------------------------
+//Test 1
+//
+//This configuration produces the usage statistics of the channel for 
+//different parameters. Usage statistics means how much of the 
+//channels possible maximum capacity is used at which amount of generated
+//traffic.
+//
+//The results of this tests are visualized by &quot;Test1.anf&quot; and show plots 
+//of the generated traffic against the received traffic where both values
+//are normalized against bitrate and simulation time.
+//If everything was fine this should plot 5 lines which converge with
+//different speeds to a channel usage of about 0.8 (depending on the used 
+//parameters).
+//You also might see strange outliers in a few of these lines. These seem
+//to be caused by wrong reading of the output scalars. The outliers are not
+//present in the actual output scalars. You can read and plot the output 
+//scalars using matlab to verify this.
+//
+//------------------------------
+//Test 2
+//
+//These test configurations are meant to show the effect of MAC-ACKS on the
+//usage of the channel with increasing distance between the hosts.
+//Test2-C further shows the effect of the hidden station problem on CSMA.
+//
+//The results can be visualized by &quot;Test2.anf&quot; and show plots of channel 
+//usage at different distances.
+//The graph shows three lines plotting the channel usage against the distance
+//between the nodes. You should see that channel usage begins to decrease
+//rapidly around a distance of 170 metres. Whereas the run with MAC-Acks 
+//enabled should begin decreasing later than the run without.
+//The third line shows the performance in the hidden station scenario. It
+//should show a huge performance decrease at a distance around 120 metres.
+//This is the point where the two senders are not in range of each other
+//anymore and begin to interfere each others transmissions to the receiver.
+//
+//-----------------------------
+//Test 3
+//
+//This tests is meant to show that CSMA uses exponential backoffs. This is 
+//done by increasing the number of hosts in the network exponentially.
+//While the average backoff duration of each hosts should increase
+//exponentially, the average number of backoffs should increase linearly.
+//
+//The results of this tests are visualized by &quot;Test3.anf&quot;.
+//It should show four bar charts displaying the following parameters for 
+//each run.
+//- Chart 1 - average number of transmitted frames per node.
+//			  These bars should be between 5 and 10 frames per node.
+//- Chart 2 - average number of backoffs per node.
+//			  These bars should increase almost linear with each run. This results
+//			  from the exponential backoffs.
+//- Chart 3 - average time spent in backoff per node.
+//			  These bars should increase exponential with each run.
+//- Chart 4 - amount of nodes present.
+//			  These bars should increase exponential 2, 4, 8, 16, 32, ...
+//
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">ieee802154Narrow</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">wuType</span><span style="color: #000000; "> = </span><span style="color: #008000; ">&quot;WorldUtilityStats&quot;</span><span style="color: #000000; ">;
+
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=147,100;b=42,42,rect,yellow;i=device/wifilaptop&quot;</span><span style="color: #000000; ">);
+
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+                         </span><span style="color: #808080; font-style: italic; ">// all connections and gates are to be generated dynamically
+</span><span style="color: #000000; ">
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

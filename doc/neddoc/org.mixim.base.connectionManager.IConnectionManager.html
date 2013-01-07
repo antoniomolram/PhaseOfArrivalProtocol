@@ -1,0 +1,135 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Module Interface <i>IConnectionManager</i></h2>
+<b>Package:</b> org.mixim.base.connectionManager<br/><b>File: <a href="src-base-connectionManager-ConnectionManager.ned.html">src/base/connectionManager/ConnectionManager.ned</a></b><br/>
+<p>Generic ConnectionMananger interface definition.</p>
+<img src="org.mixim.base.connectionManager.IConnectionManager-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="0,30,192,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.connectionManager.IConnectionManager-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="Module Interface IConnectionManager" alt="" coords="5,80,149,107">
+<area shape="rect" href="org.mixim.base.modules.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="28,5,127,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.base.connectionManager.IConnectionManager-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="Module Interface IConnectionManager" alt="" coords="5,5,149,32">
+<area shape="rect" href="org.mixim.base.connectionManager.ConnectionManager.html" title="Simple Module ConnectionManager" alt="" coords="7,80,148,107">
+</map>
+<h3 class="subtitle">Networks:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseNetwork.html">BaseNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Generic ConnectionMananger interface definition.
+</span><span style="color: #800000; font-weight: bold; ">moduleinterface</span><span style="color: #000000; "> </span><span style="color: #000000; ">IConnectionManager</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #808080; font-style: italic; ">// debug switch for core framework
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">coreDebug</span><span style="color: #000000; ">;
+        </span><span style="color: #808080; font-style: italic; ">// send directly to the node or create separate gates for every connection
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">sendDirect</span><span style="color: #000000; ">;
+        </span><span style="color: #808080; font-style: italic; ">// maximum sending power used for this network [mW]
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">pMax</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">mW</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// minimum signal attenuation threshold [dBm]
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">sat</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">dBm</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// minimum path loss coefficient
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">alpha</span><span style="color: #000000; ">;
+        </span><span style="color: #808080; font-style: italic; ">// minimum carrier frequency of the channel [Hz]
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">carrierFrequency</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">Hz</span><span style="color: #000000; ">);
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

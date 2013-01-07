@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00028.html" title="Extends BaseModule by several methods which provide access to the battery module..." alt="" coords="5,5,112,32"/>
+<area shape="rect" href="$a00177.html" title="Helper function to initialize signal change identifier on use and not on initializing..." alt="" coords="136,5,251,32"/>
+<area shape="rect" href="$a00146.html" title="PassedMessage" alt="" coords="309,5,429,32"/>
+</map>

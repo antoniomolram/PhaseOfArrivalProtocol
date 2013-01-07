@@ -1,0 +1,5 @@
+<area shape="rect" href="org.mixim.modules.power.battery.BatteryStats.html" title="Simple Module BatteryStats" alt="" coords="267,80,360,107">
+<area shape="rect" href="org.mixim.tests.power.PowerTestNode.html" title="Compound Module PowerTestNode" alt="" coords="5,5,123,32">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBattery.html" title="Compound Module WirelessNodeBattery" alt="" coords="147,5,293,32">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBatteryNetwl.html" title="Compound Module WirelessNodeBatteryNetwl" alt="" coords="317,5,496,32">
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBatteryPlusTran.html" title="Compound Module WirelessNodeBatteryPlusTran" alt="" coords="520,5,720,32">

@@ -1,0 +1,366 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>ConnectionManagerTestNet</i></h2>
+<b>Package:</b> org.mixim.tests.connectionManager<br/><b>File: <a href="tests-connectionManager-Network.ned.html">tests/connectionManager/Network.ned</a></b><br/>
+<p>Test network for <a href="org.mixim.base.connectionManager.ConnectionManager.html">ConnectionManager</a>.</p>
+<p><b>Author:</b> Karl Wessel</p>
+<img src="org.mixim.tests.connectionManager.ConnectionManagerTestNet-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="157,28,250,70">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="IWorldUtility" alt="IWorldUtility" coords="270,28,298,70">
+<area shape="rect" href="org.mixim.tests.connectionManager.BasicHost.html" title="BasicHost" alt="BasicHost" coords="13,76,91,123">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.ConnectionManagerTestNet-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.ConnectionManagerTestNet.html" title="Network ConnectionManagerTestNet" alt="" coords="5,5,192,32">
+<area shape="rect" href="org.mixim.tests.connectionManager.BasicHost.html" title="Compound Module BasicHost" alt="" coords="59,80,139,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.tests.connectionManager.ConnectionManagerTestNet-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.tests.connectionManager.ConnectionManagerTestNet.html" title="Network ConnectionManagerTestNet" alt="" coords="5,80,192,107">
+<area shape="rect" href="org.mixim.tests.ExtTestNetwork.html" title="Network ExtTestNetwork" alt="" coords="41,5,156,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.tests.ExtTestNetwork.html">ExtTestNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+
+<p>Basis definition of test networks which are common to MiXiM 
+network definition.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>x size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>y size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>z size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>cmType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.tests.connectionManager.TestCM"</td>
+   <td>
+<p>connection manager to use</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>wuType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.modules.BaseWorldUtility"</td>
+   <td>
+<p>world utility to use</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white;bgp=0,0</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch for the core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min x position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min y position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMinZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>-1m/0</td>
+   <td>
+<p>min z position of the constraint area, unconstrained by default (negative infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max x position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max y position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.constraintAreaMaxZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1m/0</td>
+   <td>
+<p>max z position of the constraint area, unconstrained by default (positive infinity)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinX, constraintAreaMaxX)</td>
+   <td>
+<p>initial x coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinY, constraintAreaMaxY)</td>
+   <td>
+<p>initial y coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>uniform(constraintAreaMinZ, constraintAreaMaxZ)</td>
+   <td>
+<p>initial z coordinate of the nodes' position</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.modules.mobility.StationaryMobility.html">mobility</a>.initFromDisplayString</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>initial position will be read from display string</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.tests.connectionManager.BasicHost.html">node</a>.<a href="org.mixim.tests.connectionManager.TestNic.html">nic</a>.<a href="org.mixim.tests.connectionManager.ITestPhyLayer.html">phy</a>.usePropagationDelay</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>Should transmission delay be simulated?</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// Test network for ConnectionManager.
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> Karl Wessel
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">ConnectionManagerTestNet</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">ExtTestNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">cmType</span><span style="color: #000000; "> = </span><span style="color: #008000; ">&quot;org.mixim.tests.connectionManager.TestCM&quot;</span><span style="color: #000000; ">;
+
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">BasicHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=50,50;i=laptop&quot;</span><span style="color: #000000; ">);
+        }
+    </span><span style="color: #800000; font-weight: bold; ">connections</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">allowunconnected</span><span style="color: #000000; ">:
+                         </span><span style="color: #808080; font-style: italic; ">// all connections and gates are to be generated dynamically
+</span><span style="color: #000000; ">
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

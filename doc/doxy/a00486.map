@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00011.html" title="Interface every Address resolution protocol (ARP) module has to implement." alt="" coords="5,5,99,32"/>
+<area shape="rect" href="$a00003.html" title="Interface for modules which assign L2 and L3 addresses for modules." alt="" coords="123,5,264,32"/>
+<area shape="rect" href="$a00024.html" title="Base class for all simple modules of a host." alt="" coords="288,5,384,32"/>
+</map>

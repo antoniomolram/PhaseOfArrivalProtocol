@@ -1,0 +1,23 @@
+file 2166 1347533233                                            
+version 2
+run BERDistance-0-20120720-11:59:48-5571
+attr Channel ghassemzadeh-los
+attr Receiver 3dB
+attr configname BERDistance
+attr datetime 20120720-11:59:48
+attr distance 1
+attr experiment BERDistance
+attr inifile omnetpp.ini
+attr iterationvars "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-los, $Receiver=3dB"
+attr iterationvars2 "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-los, $Receiver=3dB, $repetition=0"
+attr measurement "$distance=1, $nbPackets=250, $Channel=ghassemzadeh-los, $Receiver=3dB"
+attr nbPackets 250
+attr network ieee802154a
+attr processid 5571
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+vector 19  ieee802154a.node[0].nic.phy  pathloss  ETV
+19	727 1439 7 345 5.000544883177 44.586064501477 34 1.1183443848108e-05 4.1902702029405e-05 0.00077908196913895 2.0192227971301e-08

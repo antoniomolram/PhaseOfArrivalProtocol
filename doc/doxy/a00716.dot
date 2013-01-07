@@ -1,0 +1,19 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="MultiDimMapping\< Interpolator \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans"];
+  Node2 [label="Mapping",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$a00126.html",tooltip="Represents a changeable mapping (mathematical function) from at least time to Argument::mapped_type..."];
+  Node3 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="wrappedOORMapping",fontname="FreeSans"];
+  Node3 [label="ConstMappingWrapper",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$a00058.html",tooltip="Wraps an ConstMapping into a Mapping interface."];
+  Node2 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans"];
+  Node4 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="entries",fontname="FreeSans"];
+  Node4 [label="InterpolateableMap\< Interpolator\< std::map\< argument_value_t, Mapping * \> \> \>",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$a00102.html"];
+  Node5 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="outOfRangeMapping",fontname="FreeSans"];
+  Node5 [label="ConstantSimpleConstMapping",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$a00052.html",tooltip="Represents a constant mathematical mapping (f(x) = c)."];
+  Node6 -> Node1 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="myDimension",fontname="FreeSans"];
+  Node6 [label="Dimension",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$a00083.html",tooltip="Specifies a dimension for mappings (like time, frequency, etc.)."];
+  Node6 -> Node6 [dir=back,color="darkorchid3",fontsize="10",style="dashed",label="frequency\ntime",fontname="FreeSans"];
+}

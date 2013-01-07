@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" href="$a00007.html" title="Interface for the analogue models of the physical layer." alt="" coords="5,259,120,285"/>
+<area shape="rect" href="$a00037.html" title="Basic implementation of a BreakpointPathlossModel. This class can be used to implement..." alt="" coords="200,5,371,32"/>
+<area shape="rect" href="$a00096.html" title="TODO: Short description for this AnalogueModel." alt="" coords="232,56,339,83"/>
+<area shape="rect" href="$a00102.html" title="Implements Rayleigh fading after Jakes&#39; model." alt="" coords="237,107,333,133"/>
+<area shape="rect" href="$a00114.html" title="Channel state implementing log&#45;normal shadowing." alt="" coords="211,157,360,184"/>
+<area shape="rect" href="$a00148.html" title="This class applies a parameterized packet error rate to incoming packets. This allows..." alt="" coords="244,208,327,235"/>
+<area shape="rect" href="$a00159.html" title="This special AnalogueModel provides filtering of a Signal according to the actual..." alt="" coords="196,259,375,285"/>
+<area shape="rect" href="$a00161.html" title="Sample implementation of an AnalogueModel which uses MultiDimMapping as AttenuationMapping..." alt="" coords="204,309,367,336"/>
+<area shape="rect" href="$a00162.html" title="Sample implementation of an AnalogueModel which uses MultiDimMapping as AttenuationMapping..." alt="" coords="188,360,383,387"/>
+<area shape="rect" href="$a00175.html" title="Basic implementation of a SimplePathlossModel that uses SimplePathlossConstMapping..." alt="" coords="212,411,359,437"/>
+<area shape="rect" href="$a00197.html" title="This class implements the IEEE 802.15.4A Channel Model[1] in the MiXiM omnet++ modeling..." alt="" coords="169,461,401,488"/>
+<area shape="rect" href="$a00201.html" title="This AnalogueModel models implements the Ghassmezadeh stochastic UWB channel models..." alt="" coords="180,512,391,539"/>
+</map>

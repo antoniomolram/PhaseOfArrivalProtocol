@@ -1,0 +1,358 @@
+E # 0 t 0 m 1 ce -1 msg -1
+SB v 1026 rid BERDistance-0-20120720-11:59:48-5571 b 1000
+KF p -1 c "" s ""
+MC id 1 c cCompoundModule t org.mixim.examples.ieee802154a.ieee802154a n ieee802154a cm 1
+MS id 1 d bgb=$playgroundSizeX,$playgroundSizeY,white;bgp=0,0
+MC id 2 c ConnectionManager t org.mixim.base.connectionManager.ConnectionManager pid 1 n connectionManager
+MS id 2 d is=s;p=201,0;i=abstract/multicast
+MC id 3 c BaseWorldUtility t org.mixim.base.modules.BaseWorldUtility pid 1 n world
+MS id 3 d is=s;p=280,0;i=misc/globe
+MC id 4 c cCompoundModule t org.mixim.modules.node.Host802154A pid 1 n node[0] cm 1
+GC m 4 g 0 n radioIn o 0
+MS id 4 d is=vs;p=50,50;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MC id 5 c cCompoundModule t org.mixim.modules.node.Host802154A pid 1 n node[1] cm 1
+GC m 5 g 0 n radioIn o 0
+MS id 5 d is=vs;p=50,50;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MC id 6 c ArpHost t org.mixim.modules.netw.ArpHost pid 4 n arp
+MS id 6 d p=140,100;i=block/network2
+MC id 7 c ConstSpeedMobility t org.mixim.modules.mobility.ConstSpeedMobility pid 4 n mobility
+MS id 7 d p=140,30;i=block/cogwheel
+MC id 8 c cCompoundModule t org.mixim.modules.nic.Nic802154A pid 4 n nic cm 1
+GC m 8 g 0 n upperLayerIn o 0
+GC m 8 g 3 n upperLayerOut o 1
+GC m 8 g 5 n upperControlOut o 1
+GC m 8 g 6 n upperControlIn o 0
+GC m 8 g 8 n radioIn o 0
+MS id 8 d p=70,380;i=block/wrxtx,#008000
+MC id 9 c DummyRoute t org.mixim.modules.netw.DummyRoute pid 4 n netwl
+GC m 9 g 0 n upperLayerIn o 0
+GC m 9 g 3 n upperLayerOut o 1
+GC m 9 g 4 n upperControlIn o 0
+GC m 9 g 7 n upperControlOut o 1
+GC m 9 g 8 n lowerLayerIn o 0
+GC m 9 g 11 n lowerLayerOut o 1
+GC m 9 g 12 n lowerControlIn o 0
+GC m 9 g 15 n lowerControlOut o 1
+MS id 9 d p=70,310;i=block/layer
+CC sm 8 sg 3 dm 9 dg 8
+CC sm 9 sg 11 dm 8 dg 0
+CC sm 8 sg 5 dm 9 dg 12
+CS sm 8 sg 5 d ls=red;m=m,70,0,70,0
+CC sm 9 sg 15 dm 8 dg 6
+CS sm 9 sg 15 d ls=red;m=m,70,0,70,0
+CC sm 4 sg 0 dm 8 dg 8
+MC id 10 c TestApplication t org.mixim.modules.application.TestApplication pid 4 n appl
+GC m 10 g 0 n lowerLayerIn o 0
+GC m 10 g 3 n lowerLayerOut o 1
+GC m 10 g 4 n lowerControlIn o 0
+GC m 10 g 7 n lowerControlOut o 1
+MS id 10 d p=70,30;i=app
+CC sm 9 sg 3 dm 10 dg 0
+CC sm 10 sg 3 dm 9 dg 0
+CC sm 9 sg 7 dm 10 dg 4
+CS sm 9 sg 7 d ls=red;m=m,70,0,70,0
+CC sm 10 sg 7 dm 9 dg 4
+CS sm 10 sg 7 d ls=red;m=m,70,0,70,0
+MC id 11 c BatteryStats t org.mixim.modules.power.battery.BatteryStats pid 4 n batteryStats
+MS id 11 d p=140,240;i=block/table,#FF8040
+MC id 12 c SimpleBattery t org.mixim.modules.power.battery.SimpleBattery pid 4 n battery
+MS id 12 d p=140,170;i=block/plug,#FF8000
+MC id 13 c phyPER t org.mixim.modules.utility.phyPER pid 4 n stats
+MS id 13 d p=140,310
+MC id 14 c AlohaMacLayer t org.mixim.modules.mac.AlohaMacLayer pid 8 n mac
+GC m 14 g 0 n upperLayerIn o 0
+GC m 14 g 3 n upperLayerOut o 1
+GC m 14 g 4 n upperControlIn o 0
+GC m 14 g 7 n upperControlOut o 1
+GC m 14 g 8 n lowerLayerIn o 0
+GC m 14 g 11 n lowerLayerOut o 1
+GC m 14 g 12 n lowerControlIn o 0
+GC m 14 g 15 n lowerControlOut o 1
+MS id 14 d p=52,51;i=block/layer
+MC id 15 c PhyLayerUWBIR t org.mixim.modules.phy.PhyLayerUWBIR pid 8 n phy
+GC m 15 g 0 n upperLayerIn o 0
+GC m 15 g 3 n upperLayerOut o 1
+GC m 15 g 4 n upperControlIn o 0
+GC m 15 g 7 n upperControlOut o 1
+GC m 15 g 8 n radioIn o 0
+MS id 15 d p=52,125;i=block/process_s
+CC sm 14 sg 3 dm 8 dg 3
+CS sm 14 sg 3 d ls=black;m=m,25,50,25,0
+CC sm 8 sg 0 dm 14 dg 0
+CS sm 8 sg 0 d ls=black;m=m,15,50,15,0
+CC sm 14 sg 7 dm 8 dg 5
+CS sm 14 sg 7 d ls=red;m=m,75,50,75,0
+CC sm 8 sg 6 dm 14 dg 4
+CS sm 8 sg 6 d ls=red;m=m,85,0,85,0
+CC sm 15 sg 3 dm 14 dg 8
+CS sm 15 sg 3 d ls=black;m=m,25,50,25,0
+CC sm 14 sg 11 dm 15 dg 0
+CS sm 14 sg 11 d ls=black;m=m,15,50,15,0
+CC sm 15 sg 7 dm 14 dg 12
+CS sm 15 sg 7 d ls=red;m=m,75,50,75,0
+CC sm 14 sg 15 dm 15 dg 4
+CS sm 14 sg 15 d ls=red;m=m,85,0,85,0
+CC sm 8 sg 8 dm 15 dg 8
+MC id 16 c ArpHost t org.mixim.modules.netw.ArpHost pid 5 n arp
+MS id 16 d p=140,100;i=block/network2
+MC id 17 c ConstSpeedMobility t org.mixim.modules.mobility.ConstSpeedMobility pid 5 n mobility
+MS id 17 d p=140,30;i=block/cogwheel
+MC id 18 c cCompoundModule t org.mixim.modules.nic.Nic802154A pid 5 n nic cm 1
+GC m 18 g 0 n upperLayerIn o 0
+GC m 18 g 3 n upperLayerOut o 1
+GC m 18 g 5 n upperControlOut o 1
+GC m 18 g 6 n upperControlIn o 0
+GC m 18 g 8 n radioIn o 0
+MS id 18 d p=70,380;i=block/wrxtx,#008000
+MC id 19 c DummyRoute t org.mixim.modules.netw.DummyRoute pid 5 n netwl
+GC m 19 g 0 n upperLayerIn o 0
+GC m 19 g 3 n upperLayerOut o 1
+GC m 19 g 4 n upperControlIn o 0
+GC m 19 g 7 n upperControlOut o 1
+GC m 19 g 8 n lowerLayerIn o 0
+GC m 19 g 11 n lowerLayerOut o 1
+GC m 19 g 12 n lowerControlIn o 0
+GC m 19 g 15 n lowerControlOut o 1
+MS id 19 d p=70,310;i=block/layer
+CC sm 18 sg 3 dm 19 dg 8
+CC sm 19 sg 11 dm 18 dg 0
+CC sm 18 sg 5 dm 19 dg 12
+CS sm 18 sg 5 d ls=red;m=m,70,0,70,0
+CC sm 19 sg 15 dm 18 dg 6
+CS sm 19 sg 15 d ls=red;m=m,70,0,70,0
+CC sm 5 sg 0 dm 18 dg 8
+MC id 20 c TestApplication t org.mixim.modules.application.TestApplication pid 5 n appl
+GC m 20 g 0 n lowerLayerIn o 0
+GC m 20 g 3 n lowerLayerOut o 1
+GC m 20 g 4 n lowerControlIn o 0
+GC m 20 g 7 n lowerControlOut o 1
+MS id 20 d p=70,30;i=app
+CC sm 19 sg 3 dm 20 dg 0
+CC sm 20 sg 3 dm 19 dg 0
+CC sm 19 sg 7 dm 20 dg 4
+CS sm 19 sg 7 d ls=red;m=m,70,0,70,0
+CC sm 20 sg 7 dm 19 dg 4
+CS sm 20 sg 7 d ls=red;m=m,70,0,70,0
+MC id 21 c BatteryStats t org.mixim.modules.power.battery.BatteryStats pid 5 n batteryStats
+MS id 21 d p=140,240;i=block/table,#FF8040
+MC id 22 c SimpleBattery t org.mixim.modules.power.battery.SimpleBattery pid 5 n battery
+MS id 22 d p=140,170;i=block/plug,#FF8000
+MC id 23 c phyPER t org.mixim.modules.utility.phyPER pid 5 n stats
+MS id 23 d p=140,310
+MC id 24 c AlohaMacLayer t org.mixim.modules.mac.AlohaMacLayer pid 18 n mac
+GC m 24 g 0 n upperLayerIn o 0
+GC m 24 g 3 n upperLayerOut o 1
+GC m 24 g 4 n upperControlIn o 0
+GC m 24 g 7 n upperControlOut o 1
+GC m 24 g 8 n lowerLayerIn o 0
+GC m 24 g 11 n lowerLayerOut o 1
+GC m 24 g 12 n lowerControlIn o 0
+GC m 24 g 15 n lowerControlOut o 1
+MS id 24 d p=52,51;i=block/layer
+MC id 25 c PhyLayerUWBIR t org.mixim.modules.phy.PhyLayerUWBIR pid 18 n phy
+GC m 25 g 0 n upperLayerIn o 0
+GC m 25 g 3 n upperLayerOut o 1
+GC m 25 g 4 n upperControlIn o 0
+GC m 25 g 7 n upperControlOut o 1
+GC m 25 g 8 n radioIn o 0
+MS id 25 d p=52,125;i=block/process_s
+CC sm 24 sg 3 dm 18 dg 3
+CS sm 24 sg 3 d ls=black;m=m,25,50,25,0
+CC sm 18 sg 0 dm 24 dg 0
+CS sm 18 sg 0 d ls=black;m=m,15,50,15,0
+CC sm 24 sg 7 dm 18 dg 5
+CS sm 24 sg 7 d ls=red;m=m,75,50,75,0
+CC sm 18 sg 6 dm 24 dg 4
+CS sm 18 sg 6 d ls=red;m=m,85,0,85,0
+CC sm 25 sg 3 dm 24 dg 8
+CS sm 25 sg 3 d ls=black;m=m,25,50,25,0
+CC sm 24 sg 11 dm 25 dg 0
+CS sm 24 sg 11 d ls=black;m=m,15,50,15,0
+CC sm 25 sg 7 dm 24 dg 12
+CS sm 25 sg 7 d ls=red;m=m,75,50,75,0
+CC sm 24 sg 15 dm 25 dg 4
+CS sm 24 sg 15 d ls=red;m=m,85,0,85,0
+CC sm 18 sg 8 dm 25 dg 8
+MB sm 1 tm 2 m initialize(0)
+- max interference distance:16764.8
+-  using 1x1x1 grid
+- findDistance is (16764.8,16764.8,16764.8)
+ME
+MB sm 1 tm 3 m initialize(0)
+ME
+MB sm 1 tm 4 m initialize(0)
+ME
+MB sm 1 tm 6 m initialize(0)
+ME
+MB sm 1 tm 7 m initialize(0)
+ME
+MB sm 1 tm 8 m initialize(0)
+ME
+MB sm 1 tm 14 m initialize(0)
+MB sm 14 tm 15 m ""
+ME
+ME
+MB sm 1 tm 15 m initialize(0)
+CM id 0 tid 0 eid 0 etid 0 c cMessage n "radio switching over" k 22001 pe -1
+CM id 1 tid 1 eid 1 etid 1 c cMessage n "transmission over" k 22000 pe -1
+ME
+MB sm 1 tm 9 m initialize(0)
+ME
+MB sm 1 tm 10 m initialize(0)
+ME
+MB sm 1 tm 11 m initialize(0)
+ME
+MB sm 1 tm 12 m initialize(0)
+CM id 2 tid 2 eid 2 etid 2 c cMessage n auto-update pe -1
+BS id 2 tid 2 eid 2 etid 2 c cMessage n auto-update p 500 pe 0
+ES t 10
+ME
+MB sm 1 tm 13 m initialize(0)
+ME
+MB sm 1 tm 5 m initialize(0)
+ME
+MB sm 1 tm 16 m initialize(0)
+ME
+MB sm 1 tm 17 m initialize(0)
+ME
+MB sm 1 tm 18 m initialize(0)
+ME
+MB sm 1 tm 24 m initialize(0)
+MB sm 24 tm 25 m ""
+ME
+ME
+MB sm 1 tm 25 m initialize(0)
+CM id 3 tid 3 eid 3 etid 3 c cMessage n "radio switching over" k 22001 pe -1
+CM id 4 tid 4 eid 4 etid 4 c cMessage n "transmission over" k 22000 pe -1
+ME
+MB sm 1 tm 19 m initialize(0)
+ME
+MB sm 1 tm 20 m initialize(0)
+CM id 5 tid 5 eid 5 etid 5 c cMessage n app-delay-timer pe -1
+BS id 5 tid 5 eid 5 etid 5 c cMessage n app-delay-timer pe 0
+ES t 5.000544883177
+ME
+MB sm 1 tm 21 m initialize(0)
+ME
+MB sm 1 tm 22 m initialize(0)
+CM id 6 tid 6 eid 6 etid 6 c cMessage n auto-update pe -1
+BS id 6 tid 6 eid 6 etid 6 c cMessage n auto-update p 500 pe 0
+ES t 10
+ME
+MB sm 1 tm 23 m initialize(0)
+ME
+MB sm 1 tm 2 m initialize(1)
+ME
+MB sm 1 tm 6 m initialize(1)
+ME
+MB sm 1 tm 7 m initialize(1)
+MS id 4 d is=vs;p=0.00000,50;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MS id 4 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MS id 4 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40,rect
+MS id 4 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40.00000,rect
+MS id 4 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40.00000,rect
+ME
+MB sm 1 tm 14 m initialize(1)
+MB sm 14 tm 15 m ""
+CM id 7 tid 7 eid 7 etid 7 c cMessage n "Radio switching over" k 22001 pe -1
+BS id 7 tid 7 eid 7 etid 7 c cMessage n "Radio switching over" k 22001 pe 0
+SH sm 15 sg 7
+ES t 0
+ME
+ME
+MB sm 1 tm 15 m initialize(1)
+MB sm 15 tm 12 m ""
+ME
+ME
+MB sm 1 tm 9 m initialize(1)
+ME
+MB sm 1 tm 10 m initialize(1)
+ME
+MB sm 1 tm 11 m initialize(1)
+ME
+MB sm 1 tm 12 m initialize(1)
+MB sm 12 tm 6 m ""
+ME
+MB sm 12 tm 7 m ""
+ME
+MB sm 12 tm 14 m ""
+ME
+MB sm 12 tm 9 m ""
+ME
+MB sm 12 tm 10 m ""
+ME
+MB sm 12 tm 11 m ""
+ME
+ME
+MB sm 1 tm 13 m initialize(1)
+ME
+MB sm 1 tm 16 m initialize(1)
+ME
+MB sm 1 tm 17 m initialize(1)
+- nic #18 and #8 are in range
+GC m 5 g 3 n out18-1 o 1
+GC m 18 g 11 n out18-1 o 1
+CC sm 18 sg 11 dm 5 dg 3
+GC m 25 g 11 n out18-1 o 1
+CC sm 25 sg 11 dm 18 dg 11
+GC m 4 g 2 n in8-1 o 0
+GC m 8 g 10 n in8-1 o 0
+CC sm 4 sg 2 dm 8 dg 10
+GC m 15 g 10 n in8-1 o 0
+CC sm 8 sg 10 dm 15 dg 10
+CC sm 5 sg 3 dm 4 dg 2
+GC m 4 g 5 n out8-1 o 1
+GC m 8 g 13 n out8-1 o 1
+CC sm 8 sg 13 dm 4 dg 5
+GC m 15 g 13 n out8-1 o 1
+CC sm 15 sg 13 dm 8 dg 13
+GC m 5 g 4 n in18-1 o 0
+GC m 18 g 12 n in18-1 o 0
+CC sm 5 sg 4 dm 18 dg 12
+GC m 25 g 12 n in18-1 o 0
+CC sm 18 sg 12 dm 25 dg 12
+CC sm 4 sg 5 dm 5 dg 4
+MS id 5 d is=vs;p=0.00000,50;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MS id 5 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40,40,rect
+MS id 5 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40,rect
+MS id 5 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40.00000,rect
+MS id 5 d is=vs;p=0.00000,0.00000;i2=status/battery;bgb=210,450,white;i=device/wifilaptop;b=40.00000,40.00000,rect
+ME
+MB sm 1 tm 24 m initialize(1)
+MB sm 24 tm 25 m ""
+CM id 8 tid 8 eid 8 etid 8 c cMessage n "Radio switching over" k 22001 pe -1
+BS id 8 tid 8 eid 8 etid 8 c cMessage n "Radio switching over" k 22001 pe 0
+SH sm 25 sg 7
+ES t 0
+ME
+ME
+MB sm 1 tm 25 m initialize(1)
+MB sm 25 tm 22 m ""
+ME
+ME
+MB sm 1 tm 19 m initialize(1)
+ME
+MB sm 1 tm 20 m initialize(1)
+ME
+MB sm 1 tm 21 m initialize(1)
+ME
+MB sm 1 tm 22 m initialize(1)
+MB sm 22 tm 16 m ""
+ME
+MB sm 22 tm 17 m ""
+ME
+MB sm 22 tm 24 m ""
+ME
+MB sm 22 tm 19 m ""
+ME
+MB sm 22 tm 20 m ""
+ME
+MB sm 22 tm 21 m ""
+ME
+ME
+MB sm 1 tm 23 m initialize(1)
+ME
+MB sm 1 tm 7 m initialize(2)
+ME
+MB sm 1 tm 17 m initialize(2)
+ME

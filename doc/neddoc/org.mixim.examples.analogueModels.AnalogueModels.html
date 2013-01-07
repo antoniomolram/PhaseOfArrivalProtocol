@@ -1,0 +1,364 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>AnalogueModels</i></h2>
+<b>Package:</b> org.mixim.examples.analogueModels<br/><b>File: <a href="examples-analogueModels-AnalogueModels.ned.html">examples/analogueModels/AnalogueModels.ned</a></b><br/>
+<p>This example shows how to use <a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>.</p>
+<p>It contains the following modules/classes:</p>
+<p>RandomFreqTimeModel:
+An AnalogueModel implementation which defines random attunation values
+in time and frequency using the MultiDimMapping.</p>
+<p>RandomFrequencyOnlyModel:
+An AnalogueModel implementation which defines random attenuation values
+in the frequency domain by using the MultiDimMapping class.
+Since every mapping represented by the Mapping interface of MiXiM has to be
+defined over time this shows how to "simulate" mappings which arent't 
+defined over time.</p>
+<p>ThresholdDecider:
+A quick and dirty implementation of a very verbose Decider. It is only
+used for a better illustration of how the <a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a> affect the signal
+during runtime and shouldn't be used as a template for an actual Decider.</p>
+<p><a href="org.mixim.examples.analogueModels.SamplePhyLayer.html">SamplePhyLayer</a>:
+A <a href="org.mixim.modules.phy.PhyLayer.html">PhyLayer</a> subclass which knows how to initialize our own <a href="org.mixim.examples.analogueModels.AnalogueModels.html">AnalogueModels</a>
+and Decider.</p>
+<p><a href="org.mixim.examples.analogueModels.SimpleMacLayer.html">SimpleMacLayer</a>:
+A very basic implementation of a Mac layer without using the actual
+<a href="org.mixim.base.modules.BaseMacLayer.html">BaseMacLayer</a>. This is only to keep the example independent from the 
+<a href="org.mixim.base.modules.BaseMacLayer.html">BaseMacLayer</a>, normally you whould just use the <a href="org.mixim.base.modules.BaseMacLayer.html">BaseMacLayer</a>.</p>
+<p>The network itself consists of only two host which keep ping-pong-ing
+messages between each other.</p>
+<p>The simulation has the following run configurations:</p>
+  <ul><li>"General" 		- infinite ping-pong-ing without simulation of propagation delay</li>
+  <li>"WithPropDelay"	- same with simulation of propagation delay</li>
+  <li>"PerfTest"		- meant to be used when called with CmdEnv for some performance
+			 		  testing (time limited)</li></ul>
+<p>See the comments in the source for more details.</p>
+<img src="org.mixim.examples.analogueModels.AnalogueModels-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="157,28,250,70">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="IWorldUtility" alt="IWorldUtility" coords="270,28,298,70">
+<area shape="rect" href="org.mixim.examples.analogueModels.PhyMacHost.html" title="PhyMacHost" alt="PhyMacHost" coords="102,125,180,185">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.analogueModels.AnalogueModels-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.examples.analogueModels.AnalogueModels.html" title="Network AnalogueModels" alt="" coords="5,5,125,32">
+<area shape="rect" href="org.mixim.examples.analogueModels.PhyMacHost.html" title="Compound Module PhyMacHost" alt="" coords="17,80,113,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.analogueModels.AnalogueModels-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.examples.analogueModels.AnalogueModels.html" title="Network AnalogueModels" alt="" coords="5,80,125,107">
+<area shape="rect" href="org.mixim.base.modules.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="16,5,115,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseNetwork.html">BaseNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>x size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>y size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>z size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>cmType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.connectionManager.ConnectionManager"</td>
+   <td>
+<p>connection manager to use</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>wuType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.modules.BaseWorldUtility"</td>
+   <td>
+<p>world utility to use</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50</i></td>
+   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial x coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial y coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial z coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.examples.analogueModels.PhyMacHost.html">node</a>.<a href="org.mixim.base.modules.IBaseApplLayer.html">appl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the application message header (in bits)</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+//This example shows how to use AnalogueModels.
+//
+//It contains the following modules/classes:
+//
+//RandomFreqTimeModel:
+//An AnalogueModel implementation which defines random attunation values
+//in time and frequency using the MultiDimMapping.
+//
+//RandomFrequencyOnlyModel:
+//An AnalogueModel implementation which defines random attenuation values
+//in the frequency domain by using the MultiDimMapping class.
+//Since every mapping represented by the Mapping interface of MiXiM has to be
+//defined over time this shows how to &quot;simulate&quot; mappings which arent't 
+//defined over time.
+//
+//ThresholdDecider:
+//A quick and dirty implementation of a very verbose Decider. It is only
+//used for a better illustration of how the AnalogueModels affect the signal
+//during runtime and shouldn't be used as a template for an actual Decider.
+//
+//SamplePhyLayer:
+//A PhyLayer subclass which knows how to initialize our own AnalogueModels
+//and Decider.
+//
+//SimpleMacLayer:
+//A very basic implementation of a Mac layer without using the actual
+//BaseMacLayer. This is only to keep the example independent from the 
+//BaseMacLayer, normally you whould just use the BaseMacLayer.
+//
+//
+//The network itself consists of only two host which keep ping-pong-ing
+//messages between each other.
+//
+//The simulation has the following run configurations:
+//
+//- &quot;General&quot; 		- infinite ping-pong-ing without simulation of propagation delay
+//- &quot;WithPropDelay&quot;	- same with simulation of propagation delay
+//- &quot;PerfTest&quot;		- meant to be used when called with CmdEnv for some performance
+//			 		  testing (time limited)
+//	
+//
+//See the comments in the source for more details.
+//
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">AnalogueModels</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;bgb=$playgroundSizeX,$playgroundSizeY,white,,;bgp=10,50&quot;</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">PhyMacHost</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=139,106;b=42,42,rect,red;i=device/wifilaptop&quot;</span><span style="color: #000000; ">);
+
+        }
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

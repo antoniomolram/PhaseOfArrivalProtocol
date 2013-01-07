@@ -1,0 +1,101 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/netw/WiseRoute.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.netw.WiseRoute.html">WiseRoute</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Wiseroute is a simple loop-free routing algorithm that
+builds a routing tree from a central network point, designed
+for sensor networks and convergecast traffic.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">netw</span><span style="color: #000000; ">;
+</span><span style="color: #808080; font-style: italic; ">//***************************************************************************
+// file:        WiseRoute.ned
+//
+// author:      Damien Piguet, Jerome Rousselot
+// 
+// copyright:   (C) 2007-2009 CSEM SA, Neuchatel, Switzerland.
+//
+// description: Implementation of the routing protocol of WiseStack.
+//
+// *              This program is free software; you can redistribute it 
+// *              and/or modify it under the terms of the GNU General Public 
+// *              License as published by the Free Software Foundation; either
+// *              version 2 of the License, or (at your option) any later 
+// *              version.
+// *              For further information see file COPYING 
+// *              in the top level directory
+// *
+// * Funding: This work was partially financed by the European Commission under the  
+// * Framework 6 IST Project &quot;Wirelessly Accessible Sensor Populations&quot;  
+// * (WASP) under contract IST-034963.
+// ***************************************************************************
+// * ported to Mixim 2.0.1 by Theodoros Kapourniotis
+// * last modification: 06/02/11
+// **************************************************************************/
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">// Wiseroute is a simple loop-free routing algorithm that
+// builds a routing tree from a central network point, designed
+// for sensor networks and convergecast traffic.
+//
+// The sink (the device at the center of the network) broadcasts
+// a route building message. Each network node that receives it
+// selects the sink as parent in the routing tree, and rebroadcasts
+// the route building message. This procedure maximizes the probability
+// that all network nodes can join the network, and avoids loops.
+// Parameter sinkAddress gives the sink network address, 
+// rssiThreshold is a threshold to avoid using bad links (with too low
+// RSSI values) for routing, and routeFloodsInterval should be set to
+// zero for all nodes except the sink. Each routeFloodsInterval, the
+// sink restarts the tree building procedure. Set it to a large value
+// if you do not want the tree to be rebuilt.
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">WiseRoute</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #808080; font-style: italic; ">// debug switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">debug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">trace</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+     	</span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">useSimTracer</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+     	
+        </span><span style="color: #808080; font-style: italic; ">// sink node address (integer)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">sinkAddress</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// the sink directs the tree building procedure with periodic floods.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// iterationDelay is the period between two floods.
+</span><span style="color: #000000; ">        
+        
+        </span><span style="color: #808080; font-style: italic; ">// RSSI threshold for route selection
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">rssiThreshold</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">dBm</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(-</span><span style="color: #008000; ">50</span><span style="color: #000000; "> </span><span style="color: #000000; ">dBm</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #808080; font-style: italic; ">// If set to zero, this node does not initiates route tree building.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// If set to a value larger than zero, this nodes periodically initiates route tree building.
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">routeFloodsInterval</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;i=block/fork&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">WiseRoute</span><span style="color: #000000; ">);
+
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

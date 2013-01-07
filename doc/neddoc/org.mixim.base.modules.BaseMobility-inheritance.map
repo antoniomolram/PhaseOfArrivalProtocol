@@ -1,0 +1,14 @@
+<area shape="rect" href="org.mixim.base.modules.BaseMobility.html" title="Simple Module BaseMobility" alt="" coords="781,80,877,107">
+<area shape="rect" href="org.mixim.modules.mobility.ANSimMobility.html" title="Simple Module ANSimMobility" alt="" coords="5,155,112,181">
+<area shape="rect" href="org.mixim.modules.mobility.BonnMotionMobility.html" title="Simple Module BonnMotionMobility" alt="" coords="136,155,272,181">
+<area shape="rect" href="org.mixim.modules.mobility.CircleMobility.html" title="Simple Module CircleMobility" alt="" coords="296,155,395,181">
+<area shape="rect" href="org.mixim.modules.mobility.ConstSpeedMobility.html" title="Simple Module ConstSpeedMobility" alt="" coords="419,155,557,181">
+<area shape="rect" href="org.mixim.modules.mobility.LinearMobility.html" title="Simple Module LinearMobility" alt="" coords="581,155,685,181">
+<area shape="rect" href="org.mixim.modules.mobility.MassMobility.html" title="Simple Module MassMobility" alt="" coords="709,155,808,181">
+<area shape="rect" href="org.mixim.modules.mobility.MoBANCoordinator.html" title="Simple Module MoBANCoordinator" alt="" coords="832,155,968,181">
+<area shape="rect" href="org.mixim.modules.mobility.MoBANLocal.html" title="Simple Module MoBANLocal" alt="" coords="992,155,1091,181">
+<area shape="rect" href="org.mixim.modules.mobility.RectangleMobility.html" title="Simple Module RectangleMobility" alt="" coords="1115,155,1240,181">
+<area shape="rect" href="org.mixim.modules.mobility.StationaryMobility.html" title="Simple Module StationaryMobility" alt="" coords="1264,155,1389,181">
+<area shape="rect" href="org.mixim.modules.mobility.TractorMobility.html" title="Simple Module TractorMobility" alt="" coords="1413,155,1523,181">
+<area shape="rect" href="org.mixim.modules.mobility.TurtleMobility.html" title="Simple Module TurtleMobility" alt="" coords="1547,155,1645,181">
+<area shape="rect" href="org.mixim.base.modules.IMobility.html" title="Module Interface IMobility" alt="" coords="793,5,865,32">

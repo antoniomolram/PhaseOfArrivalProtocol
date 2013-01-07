@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Msg File <i>src/modules/messages/AggrPkt.msg</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="AggrPkt.html">AggrPkt</a>
+   </td>
+   <td>
+<i>message</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #000000; ">
+</span><span style="color: #808080; font-style: italic; ">// This class is used by the transport layer Aggregation
+// to aggregate several packets into one item
+// to deliver to the routing layer.
+</span><span style="color: #000000; ">
+
+</span><span style="color: #800000; font-weight: bold; ">cplusplus</span><span style="color: #000000; "> {{
+#</span><span style="color: #000000; ">include</span><span style="color: #000000; "> </span><span style="color: #008000; ">&quot;ApplPkt_m.h&quot;</span><span style="color: #000000; ">
+</span><span style="color: #000000; ">typedef</span><span style="color: #000000; "> </span><span style="color: #000000; ">ApplPkt</span><span style="color: #000000; ">* </span><span style="color: #000000; ">pApplPkt</span><span style="color: #000000; ">;
+}} 
+
+</span><span style="color: #800000; font-weight: bold; ">class</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">noncobject</span><span style="color: #000000; "> </span><span style="color: #000000; ">pApplPkt</span><span style="color: #000000; ">;
+
+</span><span style="color: #800000; font-weight: bold; ">message</span><span style="color: #000000; "> </span><span style="color: #000000; ">AggrPkt</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">cPacket</span><span style="color: #000000; ">  {
+  </span><span style="color: #000000; font-weight: bold; ">@customize</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+  </span><span style="color: #000080; font-weight: bold; ">abstract</span><span style="color: #000000; "> </span><span style="color: #000000; ">pApplPkt</span><span style="color: #000000; "> </span><span style="color: #000000; ">storedPackets</span><span style="color: #000000; ">[];    </span><span style="color: #808080; font-style: italic; ">//WARNING: omnet++ doesn't want to see pointers here so we declare long instead 
+</span><span style="color: #000000; ">};
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

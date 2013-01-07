@@ -1,0 +1,207 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Simple Module <i>SensorApplLayer</i></h2>
+<b>Package:</b> org.mixim.modules.application<br/><b>File: <a href="src-modules-application-SensorApplLayer.ned.html">src/modules/application/SensorApplLayer.ned</a></b><br/><p><a href="../doxy/a00167.html" target="mainframe"><b>C++ definition</b></a></p>
+
+<p>@brief Application layer to test lower layer implementations. 
+<a href="org.mixim.modules.application.SensorApplLayer.html">SensorApplLayer</a> waits a time initializationTime, then starts sending
+nbPackets (of size headerLength) to host destAddr. The time intervals
+between two packets can follow three distributions: periodic (fixed),
+uniform or exponential.</p>
+<p>@ingroup application</p>
+<p><b>Author:</b> Jerome Rousselot, Amre El-Hoiydi</p>
+<img src="org.mixim.modules.application.SensorApplLayer-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.modules.application.SensorApplLayer.html" title="SensorApplLayer" alt="SensorApplLayer" coords="0,30,124,70">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.application.SensorApplLayer-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.modules.application.SensorApplLayer.html" title="Simple Module SensorApplLayer" alt="" coords="5,5,128,32">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.modules.application.SensorApplLayer-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.modules.application.SensorApplLayer.html" title="Simple Module SensorApplLayer" alt="" coords="5,80,128,107">
+<area shape="rect" href="org.mixim.base.modules.IBaseApplLayer.html" title="Module Interface IBaseApplLayer" alt="" coords="9,5,124,32">
+</map>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>debug switch</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>stats generation switch</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>trace</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>activates detailed logging (per source latencies and vector logging). stats must be true.</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>broadcastPackets</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>send packets in broadcast mode</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>nbPackets</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>0</td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>destAddr</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>0</td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>trafficType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"periodic"</td>
+   <td>
+<p>Can be one of: periodic, uniform or exponential</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>trafficParam</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1 s</td>
+   <td>
+<p>the mean time between two packets</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>initializationTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td>1 min</td>
+   <td>
+<p>minimum time before generation of the first packet</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td>2 byte</td>
+   <td>   </td>
+</tr>
+<tr class="local">
+   <td>notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+</table>
+<h3 class="subtitle">Gates:</h3>
+<table class="gatestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Direction</th>
+      <th class="gatesize">Size</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="local">
+   <td>lowerLayerIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td>
+<p>from network layer</p>
+</td>
+</tr>
+<tr class="local">
+   <td>lowerControlIn</xsl:if></td>
+   <td><i>input</i></td>
+   <td></td>   <td></td>
+</tr>
+<tr class="local">
+   <td>lowerLayerOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td>
+<p>to network layer</p>
+</td>
+</tr>
+<tr class="local">
+   <td>lowerControlOut</xsl:if></td>
+   <td><i>output</i></td>
+   <td></td>   <td></td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">// @brief Application layer to test lower layer implementations. 
+// SensorApplLayer waits a time initializationTime, then starts sending
+// nbPackets (of size headerLength) to host destAddr. The time intervals
+// between two packets can follow three distributions: periodic (fixed),
+// uniform or exponential.
+//
+// @ingroup application
+// </span><span style="color: #000080; ">@author</span><span style="color: #808080; font-style: italic; "> Jerome Rousselot, Amre El-Hoiydi
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">SensorApplLayer</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">like</span><span style="color: #000000; "> </span><span style="color: #000000; ">IBaseApplLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">debug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// debug switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">stats</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);   </span><span style="color: #808080; font-style: italic; ">// stats generation switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">trace</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);  </span><span style="color: #808080; font-style: italic; ">// activates detailed logging (per source latencies and vector logging). stats must be true.
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">broadcastPackets</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// send packets in broadcast mode
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">nbPackets</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">destAddr</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">trafficType</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;periodic&quot;</span><span style="color: #000000; ">);  	</span><span style="color: #808080; font-style: italic; ">// Can be one of: periodic, uniform or exponential
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">trafficParam</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);			</span><span style="color: #808080; font-style: italic; ">// the mean time between two packets
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">initializationTime</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">1</span><span style="color: #000000; "> </span><span style="color: #800080; font-weight: bold; ">min</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// minimum time before generation of the first packet
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">headerLength</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">byte</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">2</span><span style="color: #000000; "> </span><span style="color: #000000; ">byte</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">notAffectedByHostState</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+    </span><span style="color: #800000; font-weight: bold; ">gates</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">input</span><span style="color: #000000; "> </span><span style="color: #000000; ">lowerLayerIn</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// from network layer
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">input</span><span style="color: #000000; "> </span><span style="color: #000000; ">lowerControlIn</span><span style="color: #000000; ">;
+        </span><span style="color: #000080; font-weight: bold; ">output</span><span style="color: #000000; "> </span><span style="color: #000000; ">lowerLayerOut</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// to network layer
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">output</span><span style="color: #000000; "> </span><span style="color: #000000; ">lowerControlOut</span><span style="color: #000000; ">;
+}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

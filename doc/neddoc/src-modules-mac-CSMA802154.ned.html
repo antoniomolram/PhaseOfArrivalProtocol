@@ -1,0 +1,88 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/mac/CSMA802154.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.CSMA802154.html">CSMA802154</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>IEEE 802.15.4-2006 non-beacon enabled CSMA protocol
+This model was independently validated on a wireless sensor network testbed.
+For more information, see 
+Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+Modeling and Simulation. </p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//***************************************************************************
+//* file:        CSMA802154.ned
+//*
+//* author:      Jerome Rousselot, Marc Loebbers
+//* 
+//* copyright:   (C) 2007-2009 CSEM SA, Neuchatel, Switzerland.
+//*		 		 (C) 2004 Telecommunication Networks Group (TKN) at
+//*              Technische Universitaet Berlin, Germany.
+//*
+//*              This program is free software; you can redistribute it
+//*              and/or modify it under the terms of the GNU General Public
+//*              License as published by the Free Software Foundation; either
+//*              version 2 of the License, or (at your option) any later
+//*              version.
+//*              For further information see file COPYING
+//*              in the top level directory
+//*
+//* Funding: This work was partially financed by the European Commission under the  
+//* Framework 6 IST Project &quot;Wirelessly Accessible Sensor Populations&quot;  
+//* (WASP) under contract IST-034963.
+//***************************************************************************
+//* part of:    Modifications to the MF-2 framework by CSEM
+//**************************************************************************/
+</span><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mac</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// IEEE 802.15.4-2006 non-beacon enabled CSMA protocol
+// This model was independently validated on a wireless sensor network testbed.
+// For more information, see 
+// Accurate Timeliness Simulations for Real-Time Wireless Sensor Networks,
+// J. Rousselot, J.-D. Decotignie, M. Aoun, P. van der Stok, R. Serna Oliver,
+// G. Fohler. In Proceedings of the 2009 Third UKSim European Symposium on Computer 
+// Modeling and Simulation. 
+//
+// http://dx.doi.org/10.1109/EMS.2009.34
+// 
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">CSMA802154</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">csma</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">CSMA802154</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #000000; ">headerLength</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bit</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">72</span><span style="color: #000000; "> </span><span style="color: #000000; ">bit</span><span style="color: #000000; ">);
+        </span><span style="color: #000000; ">macMaxCSMABackoffs</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">4</span><span style="color: #000000; ">);  </span><span style="color: #808080; font-style: italic; ">// takes values between 0 and 5  
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">//txPower @unit(mW);
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">useMACAcks</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #000000; ">backoffMethod</span><span style="color: #000000; "> = </span><span style="color: #008000; ">&quot;exponential&quot;</span><span style="color: #000000; ">;
+        </span><span style="color: #000000; ">macMaxBE</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">5</span><span style="color: #000000; ">);	</span><span style="color: #808080; font-style: italic; ">// takes values between 3 and 8
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">macMinBE</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; ">);	</span><span style="color: #808080; font-style: italic; ">// takes values between 0 and macMaxBE
+</span><span style="color: #000000; ">}
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

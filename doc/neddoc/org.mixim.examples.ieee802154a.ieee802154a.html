@@ -1,0 +1,517 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">Network <i>ieee802154a</i></h2>
+<b>Package:</b> org.mixim.examples.ieee802154a<br/><b>File: <a href="examples-ieee802154a-ieee802154a.ned.html">examples/ieee802154a/ieee802154a.ned</a></b><br/>
+<p>This example illustrates the use of the IEEE 802.15.4A UWB-IR
+simulation model implemented in MiXiM.
+The omnetpp.ini files comprises two scenarios. Both scenarios
+involve only two hosts.</p>
+<p>The first scenario, named BERDistance, configures one host to
+sends ($nbPackets) packets to the other. The distance ($distance)
+between the two nodes is changed at each run. This is performed
+for two channel models (Ghassemzadeh-LOS and NLOS) so that the
+difference between a Line of Sight and a Non Line of Sight
+environment can be seen. </p>
+<p>The second scenario is simpler. It only sends one packet at each
+time, and iterates over five channel models: Ghassemzadeh-LOS, 
+Ghassemzadeh-NLOS, CM1, CM2 and CM5.
+It allows to see the simulator representation of the maximum
+pulse amplitude over time, as modified by the various channel
+models.</p>
+<p>To run the scenarios, compile mixim, open a terminal and go to
+examples/ieee80154a. There, type:
+./runBERDistance.sh 
+to execute all runs of the Bit Error Rate over Distance scenario.
+The "run" script expects to find opp_run in the path. Thus, make sure 
+to have $OMNET_PATH/bin in your path. </p>
+<p>You can also try:
+./runChannelPlots.sh
+to execute all runs of the channelPlots scenario.</p>
+<p>The results can be analyzed from within Omnet++. In the
+examples/<a href="org.mixim.examples.ieee802154a.ieee802154a.html">ieee802154a</a> directory, open the files BERDistance.anf
+or channelPlots.anf (depending on the scenario that you ran before).
+At the bottom of the window, switch from the Inputs tab to the Datasets
+tab. In the BERDistance.anf file, you will find a "scatter chart BER_Distance"
+item. Double-click on it to generate the graph.</p>
+<p>In the channelPlots.anf file, there are several graphs. Opening
+"line chart Ghassemzadeh LOS" will show the packet as modified by the 
+Ghassemzadeh LOS channel model. Compare it with "line chart CM2" to see
+the impact of the Power Delay Profile. By default, the view does not allow
+to see the pulse shapes, because of the ultra short duration (2 ns per pulse).
+Zoom repeatedly until you see a triangular shape, by holding down the "Ctrl"
+touch and drawing a zoom box with the mouse around the area to enlarge.</p>
+<p>For more information, please refer to:
+* the Omnet++ documentation at www.omnetpp.org/documentation and the user guide.
+* the MiXiM documentation
+* UWB-IR NED modules documentation and source code.</p>
+<p>Questions should be send to the Omnet++ mailing-list: omnetpp@googlegroups.com.</p>
+<p>acknowledgment 
+<hr/>
+this work was supported (in part) by the National Competence
+Center in Research on Mobile Information and Communication Systems
+NCCR-MICS, a center supported by the Swiss National Science
+Foundation under grant number 5005-67322.</p>
+<img src="org.mixim.examples.ieee802154a.ieee802154a-type.png" ismap="yes" usemap="#type-diagram"/><map name="type-diagram">
+<area shape="rect" href="org.mixim.base.connectionManager.IConnectionManager.html" title="IConnectionManager" alt="IConnectionManager" coords="157,28,250,70">
+<area shape="rect" href="org.mixim.base.modules.IWorldUtility.html" title="IWorldUtility" alt="IWorldUtility" coords="270,28,298,70">
+<area shape="rect" href="org.mixim.modules.node.Host802154A.html" title="Host802154A" alt="Host802154A" coords="13,64,91,128">
+</map>
+<h3 class="subtitle">Usage diagram:</h3>
+<p>The following diagram shows usage relationships between types.
+Unresolved types are missing from the diagram. Click <a href="full-ned-usage-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.ieee802154a.ieee802154a-usage.png" ismap="yes" usemap="#usage-diagram"/><map name="usage-diagram"><area shape="rect" href="org.mixim.examples.ieee802154a.ieee802154a.html" title="Network ieee802154a" alt="" coords="7,5,105,32">
+<area shape="rect" href="org.mixim.modules.node.Host802154A.html" title="Compound Module Host802154A" alt="" coords="5,80,107,107">
+</map>
+<h3 class="subtitle">Inheritance diagram:</h3>
+<p>The following diagram shows inheritance relationships for this type.
+Unresolved types are missing from the diagram. Click <a href="full-ned-inheritance-diagram.html">here</a> to see the full picture.</p>
+<img src="org.mixim.examples.ieee802154a.ieee802154a-inheritance.png" ismap="yes" usemap="#inheritance-diagram"/><map name="inheritance-diagram"><area shape="rect" href="org.mixim.examples.ieee802154a.ieee802154a.html" title="Network ieee802154a" alt="" coords="5,80,104,107">
+<area shape="rect" href="org.mixim.base.modules.BaseNetwork.html" title="Network BaseNetwork" alt="" coords="5,5,104,32">
+</map>
+<h3 class="subtitle">Extends:</h3>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.base.modules.BaseNetwork.html">BaseNetwork</a>
+   </td>
+   <td>
+<i>network</i>
+   </td>
+   <td>
+<i>(no description)</i>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Parameters:</h3>
+<table class="paramstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr class="inherited">
+   <td>playgroundSizeX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>x size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>y size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>playgroundSizeZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>z size of the area the nodes are in (in meters)</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>cmType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.connectionManager.ConnectionManager"</td>
+   <td>
+<p>connection manager to use</p>
+   </td>
+</tr>
+<tr class="inherited">
+   <td>wuType</td>
+   <td>
+      <i>string</i>
+   </td>
+   <td>"org.mixim.base.modules.BaseWorldUtility"</td>
+   <td>
+<p>world utility to use</p>
+   </td>
+</tr>
+<tr class="local">
+   <td>numHosts</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>total number of hosts in the network</p>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Properties:</h3>
+<table class="propertiestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="value">Value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>isNetwork</td>
+   <td><i></i></td>
+   <td></td>
+</tr>
+<tr>
+   <td>display</td>
+   <td><i>bgb=$playgroundSizeX,$playgroundSizeY,white;bgp=0,0</i></td>
+   <td>
+</td>
+</tr>
+</table>
+<h3 class="subtitle">Unassigned submodule parameters:</h3>
+<table class="deepparamstable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="defaultvalue">Default value</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.coreDebug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>debug switch for core framework</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sendDirect</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>send directly to the node or create separate gates for every connection</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.pMax</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>maximum sending power used for this network [mW]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.sat</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum signal attenuation threshold [dBm]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.alpha</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum path loss coefficient</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.connectionManager.IConnectionManager.html">connectionManager</a>.carrierFrequency</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>minimum carrier frequency of the channel [Hz]</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.base.modules.IWorldUtility.html">world</a>.useTorus</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>use the playground as torus?</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialX</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial x coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialY</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial y coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IMobility.html">mobility</a>.initialZ</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>initial z coordinate of the nodes' position (1m/0 = random)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.stats</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td></td>
+   <td>
+<p>stats switch</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IBaseNetwLayer.html">netwl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the network packet header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.base.modules.IBaseApplLayer.html">appl</a>.headerLength</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+<p>length of the application message header (in bits)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.notAffectedByHostState</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.detail</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>true</td>
+   <td>
+<p>write per-activity and per-device statistics to omnetpp.sca
+(if false, only total energy and lifetime are written)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.BatteryStats.html">batteryStats</a>.timeSeries</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>
+<p>subscribe to battery status and record time series
+data in omnetpp.vec (resolution depends on battery's 
+publishDelta)</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.debug</td>
+   <td>
+      <i>bool</i>
+   </td>
+   <td>false</td>
+   <td>   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.nominal</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.capacity</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>battery capacity</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.voltage</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>nominal voltage</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.resolution</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>capacity is updated at least every resolution time</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishDelta</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>if &gt; 0, capacity is published to the BB each publishTime 
+interval</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.publishTime</td>
+   <td>
+      <i>double</i>
+   </td>
+   <td></td>
+   <td>
+<p>number of modules that will draw energy from the 
+battery</p>
+   </td>
+</tr>
+<tr>
+   <td><a href="org.mixim.modules.node.Host802154A.html">node</a>.<a href="org.mixim.modules.power.battery.SimpleBattery.html">battery</a>.numDevices</td>
+   <td>
+      <i>int</i>
+   </td>
+   <td></td>
+   <td>
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #808080; font-style: italic; ">//
+//This example illustrates the use of the IEEE 802.15.4A UWB-IR
+//simulation model implemented in MiXiM.
+//The omnetpp.ini files comprises two scenarios. Both scenarios
+//involve only two hosts.
+//
+//The first scenario, named BERDistance, configures one host to
+//sends ($nbPackets) packets to the other. The distance ($distance)
+//between the two nodes is changed at each run. This is performed
+//for two channel models (Ghassemzadeh-LOS and NLOS) so that the
+//difference between a Line of Sight and a Non Line of Sight
+//environment can be seen. 
+//
+//The second scenario is simpler. It only sends one packet at each
+//time, and iterates over five channel models: Ghassemzadeh-LOS, 
+//Ghassemzadeh-NLOS, CM1, CM2 and CM5.
+//It allows to see the simulator representation of the maximum
+//pulse amplitude over time, as modified by the various channel
+//models.
+//
+//To run the scenarios, compile mixim, open a terminal and go to
+//examples/ieee80154a. There, type:
+//./runBERDistance.sh 
+//to execute all runs of the Bit Error Rate over Distance scenario.
+//The &quot;run&quot; script expects to find opp_run in the path. Thus, make sure 
+//to have $OMNET_PATH/bin in your path. 
+//
+//You can also try:
+//./runChannelPlots.sh
+//to execute all runs of the channelPlots scenario.
+//
+//The results can be analyzed from within Omnet++. In the
+//examples/ieee802154a directory, open the files BERDistance.anf
+//or channelPlots.anf (depending on the scenario that you ran before).
+//At the bottom of the window, switch from the Inputs tab to the Datasets
+//tab. In the BERDistance.anf file, you will find a &quot;scatter chart BER_Distance&quot;
+//item. Double-click on it to generate the graph.
+//
+//In the channelPlots.anf file, there are several graphs. Opening
+//&quot;line chart Ghassemzadeh LOS&quot; will show the packet as modified by the 
+//Ghassemzadeh LOS channel model. Compare it with &quot;line chart CM2&quot; to see
+//the impact of the Power Delay Profile. By default, the view does not allow
+//to see the pulse shapes, because of the ultra short duration (2 ns per pulse).
+//Zoom repeatedly until you see a triangular shape, by holding down the &quot;Ctrl&quot;
+//touch and drawing a zoom box with the mouse around the area to enlarge.
+//
+//For more information, please refer to:
+//* the Omnet++ documentation at www.omnetpp.org/documentation and the user guide.
+//* the MiXiM documentation
+//* UWB-IR NED modules documentation and source code.
+//
+//Questions should be send to the Omnet++ mailing-list: omnetpp@googlegroups.com.
+//
+//acknowledgment 
+//--------------
+//this work was supported (in part) by the National Competence
+//Center in Research on Mobile Information and Communication Systems
+//NCCR-MICS, a center supported by the Swiss National Science
+//Foundation under grant number 5005-67322.
+// 
+</span><span style="color: #800000; font-weight: bold; ">network</span><span style="color: #000000; "> </span><span style="color: #000000; ">ieee802154a</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseNetwork</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">; </span><span style="color: #808080; font-style: italic; ">// total number of hosts in the network
+</span><span style="color: #000000; ">
+    </span><span style="color: #800000; font-weight: bold; ">submodules</span><span style="color: #000000; ">:
+        </span><span style="color: #000000; ">node</span><span style="color: #000000; ">[</span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">]: </span><span style="color: #000000; ">Host802154A</span><span style="color: #000000; "> {
+            </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+                </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; "> = </span><span style="color: #000000; ">numHosts</span><span style="color: #000000; ">;
+                </span><span style="color: #000000; font-weight: bold; ">@display</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;p=50,50;i=device/wifilaptop;is=vs&quot;</span><span style="color: #000000; ">);
+
+        }
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

@@ -1,0 +1,122 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+   </head>
+   <body onload="if (top.frames['componentsframe'] == undefined) { s = window.location.toString(); window.location = 'index.html?p=' + s.substring(s.lastIndexOf('/')+1); }">
+<h2 class="comptitle">NED File <i>src/modules/mac/csma.ned</i></h2>
+<table class="typestable">
+   <tr>
+      <th class="name">Name</th>
+      <th class="type">Type</th>
+      <th class="description">Description</th>
+   </tr>
+<tr>
+   <td>
+<a href="org.mixim.modules.mac.csma.html">csma</a>
+   </td>
+   <td>
+<i>simple&nbsp;module</i>
+   </td>
+   <td>
+
+<p>Generic CSMA protocol supporting Mac-ACKs as well as
+constant, linear or exponential backoff times.</p>
+
+   </td>
+</tr>
+</table>
+<h3 class="subtitle">Source code:</h3>
+<pre class="src"><span style="color: #800000; font-weight: bold; ">package</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mac</span><span style="color: #000000; ">;
+</span><span style="color: #808080; font-style: italic; ">//***************************************************************************
+//* file:        CSMA.ned
+//*
+//* author:      Jerome Rousselot, Marc Loebbers
+//* 
+//* copyright:   (C) 2007-2009 CSEM SA, Neuchatel, Switzerland.
+//*		 		 (C) 2004 Telecommunication Networks Group (TKN) at
+//*              Technische Universitaet Berlin, Germany.
+//*
+//*              This program is free software; you can redistribute it
+//*              and/or modify it under the terms of the GNU General Public
+//*              License as published by the Free Software Foundation; either
+//*              version 2 of the License, or (at your option) any later
+//*              version.
+//*              For further information see file COPYING
+//*              in the top level directory
+//*
+//* Funding: This work was partially financed by the European Commission under the  
+//* Framework 6 IST Project &quot;Wirelessly Accessible Sensor Populations&quot;  
+//* (WASP) under contract IST-034963.
+//***************************************************************************
+//* part of:    Modifications to the MF-2 framework by CSEM
+//**************************************************************************/
+</span><span style="color: #000000; ">
+</span><span style="color: #800000; font-weight: bold; ">import</span><span style="color: #000000; "> </span><span style="color: #000000; ">org</span><span style="color: #000000; ">.</span><span style="color: #000000; ">mixim</span><span style="color: #000000; ">.</span><span style="color: #000000; ">base</span><span style="color: #000000; ">.</span><span style="color: #000000; ">modules</span><span style="color: #000000; ">.</span><span style="color: #000000; ">BaseMacLayer</span><span style="color: #000000; ">;
+
+</span><span style="color: #808080; font-style: italic; ">//
+// Generic CSMA protocol supporting Mac-ACKs as well as
+// constant, linear or exponential backoff times.
+//
+</span><span style="color: #800000; font-weight: bold; ">simple</span><span style="color: #000000; "> </span><span style="color: #000000; ">csma</span><span style="color: #000000; "> </span><span style="color: #800000; font-weight: bold; ">extends</span><span style="color: #000000; "> </span><span style="color: #000000; ">BaseMacLayer</span><span style="color: #000000; ">
+{
+    </span><span style="color: #800000; font-weight: bold; ">parameters</span><span style="color: #000000; ">:
+		</span><span style="color: #000000; font-weight: bold; ">@class</span><span style="color: #000000; ">(</span><span style="color: #000000; ">csma</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// debug switch
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">debug</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">stats</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">true</span><span style="color: #000000; ">);
+        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">trace</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">false</span><span style="color: #000000; ">);
+
+        </span><span style="color: #808080; font-style: italic; ">// length of MAC header
+</span><span style="color: #000000; ">        </span><span style="color: #000000; ">headerLength</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bit</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">72</span><span style="color: #000000; "> </span><span style="color: #000000; ">bit</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// size of the MAC queue (maximum number of packets in Tx buffer)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">queueLength</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">100</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// bit rate 
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">bitrate</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bps</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">250000</span><span style="color: #000000; "> </span><span style="color: #000000; ">bps</span><span style="color: #000000; ">);        
+          
+        </span><span style="color: #808080; font-style: italic; ">// Clear Channel Assessment detection time
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">ccaDetectionTime</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">000128</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// 8 symbols
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// Time to setup radio to reception state
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">rxSetupTime</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// Time to switch radio from Rx to Tx state
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">aTurnaroundTime</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">000192</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);    </span><span style="color: #808080; font-style: italic; ">// 12 symbols
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">//tx power [mW]
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">txPower</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">mW</span><span style="color: #000000; ">);
+        
+        </span><span style="color: #808080; font-style: italic; ">// Send/Expect MAC acks for unicast traffic?
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">bool</span><span style="color: #000000; "> </span><span style="color: #000000; ">useMACAcks</span><span style="color: #000000; ">;
+        </span><span style="color: #808080; font-style: italic; ">// maximum number of frame retransmission
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// only used when usage of MAC acks is enabled
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macMaxFrameRetries</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; ">);        
+        </span><span style="color: #808080; font-style: italic; ">// time to wait for an acknowledgement after transmitting a unicast frame.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// only used when usage of MAC acks is enabled
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macAckWaitDuration</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">00056</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);  </span><span style="color: #808080; font-style: italic; ">// 1+12+10+12 symbols
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// complete MAC ack message length (in bits) 
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// (! headerLength is not added to this)
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// only used when usage of MAC acks is enabled
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">ackLength</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">bit</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">40</span><span style="color: #000000; "> </span><span style="color: #000000; ">bit</span><span style="color: #000000; ">);   
+        </span><span style="color: #808080; font-style: italic; ">// simple interframe space. Time to wait between receiving a frame and acknowledging it.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// Should be bigger than the maximum time for switching between Tx and Rx at the receiver.
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// only used when usage of MAC acks is enabled
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">sifs</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">000192</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">); </span><span style="color: #808080; font-style: italic; ">// 12 symbols
+</span><span style="color: #000000; ">        
+        </span><span style="color: #808080; font-style: italic; ">//backoff method to use: constant, linear or exponential
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">string</span><span style="color: #000000; "> </span><span style="color: #000000; ">backoffMethod</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">&quot;linear&quot;</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// maximum backoffs
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macMaxCSMABackoffs</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">5</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// base unit for all backoff calculations
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">aUnitBackoffPeriod</span><span style="color: #000000; "> </span><span style="color: #000000; font-weight: bold; ">@unit</span><span style="color: #000000; ">(</span><span style="color: #000000; ">s</span><span style="color: #000000; ">) = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">0</span><span style="color: #000000; ">.</span><span style="color: #008000; ">00032</span><span style="color: #000000; "> </span><span style="color: #000000; ">s</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// # of backoff periods of the initial contention window
+</span><span style="color: #000000; ">        </span><span style="color: #808080; font-style: italic; ">// (for linear and constant backoff method only)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">int</span><span style="color: #000000; "> </span><span style="color: #000000; ">contentionWindow</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">2</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// minimum backoff exponent (for exponential backoff method only)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macMinBE</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">3</span><span style="color: #000000; ">);
+        </span><span style="color: #808080; font-style: italic; ">// maximum backoff exponent (for exponential backoff method only)
+</span><span style="color: #000000; ">        </span><span style="color: #000080; font-weight: bold; ">double</span><span style="color: #000000; "> </span><span style="color: #000000; ">macMaxBE</span><span style="color: #000000; "> = </span><span style="color: #800000; font-weight: bold; ">default</span><span style="color: #000000; ">(</span><span style="color: #008000; ">8</span><span style="color: #000000; ">);
+
+}
+
+</span></pre>
+   <hr><p class="footer"><a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top"><img src="by-sa.png"></a> This documentation is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0" target="_top">Creative Commons license</a></p>
+   </body>
+</html>

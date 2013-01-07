@@ -1,0 +1,6 @@
+<area shape="rect" href="org.mixim.modules.node.WirelessNodeBattery.html" title="Compound Module WirelessNodeBattery" alt="" coords="155,80,301,107">
+<area shape="rect" href="org.mixim.modules.node.Host802154A.html" title="Compound Module Host802154A" alt="" coords="5,155,107,181">
+<area shape="rect" href="org.mixim.modules.node.HostBMAC.html" title="Compound Module HostBMAC" alt="" coords="131,155,216,181">
+<area shape="rect" href="org.mixim.modules.node.HostLMAC.html" title="Compound Module HostLMAC" alt="" coords="240,155,325,181">
+<area shape="rect" href="org.mixim.tests.power.Nic80211Test.Nic80211TestHost.html" title="Compound Module Nic80211TestHost" alt="" coords="349,155,480,181">
+<area shape="rect" href="org.mixim.modules.node.WirelessNode.html" title="Compound Module WirelessNode" alt="" coords="176,5,280,32">

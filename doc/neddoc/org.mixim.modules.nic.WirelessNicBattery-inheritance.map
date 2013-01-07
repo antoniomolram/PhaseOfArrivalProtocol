@@ -1,0 +1,9 @@
+<area shape="rect" href="org.mixim.modules.nic.WirelessNicBattery.html" title="Compound Module WirelessNicBattery" alt="" coords="525,80,659,107">
+<area shape="rect" href="org.mixim.modules.nic.Nic80211Battery.html" title="Compound Module Nic80211Battery" alt="" coords="5,155,125,181">
+<area shape="rect" href="org.mixim.modules.nic.Nic80211MultiChannel.html" title="Compound Module Nic80211MultiChannel" alt="" coords="149,155,304,181">
+<area shape="rect" href="org.mixim.modules.nic.Nic802154_TI_CC1100.html" title="Compound Module Nic802154_TI_CC1100" alt="" coords="328,155,488,181">
+<area shape="rect" href="org.mixim.modules.nic.Nic802154_TI_CC2420.html" title="Compound Module Nic802154_TI_CC2420" alt="" coords="512,155,672,181">
+<area shape="rect" href="org.mixim.modules.nic.Nic802154A.html" title="Compound Module Nic802154A" alt="" coords="696,155,789,181">
+<area shape="rect" href="org.mixim.modules.nic.NicBMAC.html" title="Compound Module NicBMAC" alt="" coords="813,155,891,181">
+<area shape="rect" href="org.mixim.modules.nic.NicLMAC.html" title="Compound Module NicLMAC" alt="" coords="915,155,992,181">
+<area shape="rect" href="org.mixim.modules.nic.WirelessNic.html" title="Compound Module WirelessNic" alt="" coords="547,5,637,32">
