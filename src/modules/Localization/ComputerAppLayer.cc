@@ -948,6 +948,15 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 		// Change the phase and prepare the data for the new phase
 		switch (nextPhase)
 		{
+		case AppLayer::RANGING:
+		    EV << "Ranging init" << endl;
+		    EV << "Do nothing in the PC at least right now" << endl;
+		    phase = AppLayer::RANGING;
+            nextPhase = AppLayer::SYNC_PHASE_1;
+            timeRanging=2;
+            nextPhaseStartTime = simTime() + timeRanging;
+            scheduleAt(nextPhaseStartTime, beginPhases);
+		    break;
 		case AppLayer::SYNC_PHASE_1:
 			phase = AppLayer::SYNC_PHASE_1;
 			nextPhase = AppLayer::REPORT_PHASE;
@@ -1006,6 +1015,9 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
 				EV << "Queue empty, computer has nothing to communicate this full phase (period)." << endl;
 			}
 			break;
+		default:
+		    EV << "Unknown phase:" << nextPhase << endl;
+		    break;
 		}
 		break;
 	default:

@@ -35,7 +35,7 @@ protected:
 
 	cMessage *delayTimer;				// Pointer to the event we use to schedule all the sync packets in the sync phases
 	cMessage *checkQueue;				// Variable to schedule the events to process the Queue elements
-	cMessage* MsgPrueba;
+	cMessage* rangingInit;
 
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 
@@ -129,6 +129,8 @@ protected:
 
 	/** @brief Send a broadcast message to lower layer. */
 	virtual void sendBroadcast();
+	/** @brief  State Machine of ranging procedure	 */
+	virtual void ranging(cMessage *msg);
 
 	/** @brief Manage the Mac errors */
 	void errorManagement(cMessage *msg);

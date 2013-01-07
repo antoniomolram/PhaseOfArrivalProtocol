@@ -35,7 +35,10 @@ public:
 		BEGIN_PHASE,					// Event to be executed at the beginning of every phase
 		WAKE_UP,						// Event to wake up the node timeSleepToRX before activity
 		SLEEP,						    // Event to sleep the node
-		MAC_ERROR_MANAGEMENT            // Event to to delay the handle of packets with MAC error.
+		MAC_ERROR_MANAGEMENT,            // Event to to delay the handle of packets with MAC error.
+
+		//Added: RangingInit
+		RANGING_INIT
 	};
 
 	enum PhaseType{						// Phases of the Full Phase or Period
@@ -46,7 +49,11 @@ public:
 		SYNC_PHASE_2,
 		COM_SINK_PHASE_1,
 		SYNC_PHASE_3,
-		COM_SINK_PHASE_2
+		COM_SINK_PHASE_2,
+
+
+		//Added: RangingPhase
+		RANGING
 	};
 
 
@@ -79,6 +86,8 @@ protected:
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase
+	simtime_t timeRanging;              // Added: Duration of RangingPhase
+
 	double phase2VIPPercentage;			// Percentage of the time Phase Report + Phase VIP that the Phase VIP takes
 
 	simtime_t guardTimeReportPhase;		// Guard time to leave at the end of the Report Phase, so the transmissions don't invade next phase

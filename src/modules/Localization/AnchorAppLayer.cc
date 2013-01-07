@@ -162,11 +162,15 @@ void AnchorAppLayer::initialize(int stage)
         // Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
         delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
         delayComSinkSlottedPkt = new cMessage("comSink1-delay-timer",SEND_REPORT_WITHOUT_CSMA );
+
+        //Added: Ranging Message
+        rangingInit = new cMessage("Ranging Init", RANGING_INIT);
     }
 }
 
 AnchorAppLayer::~AnchorAppLayer() {
     cancelAndDelete(delayTimer);
+    cancelAndDelete(rangingInit);
     cancelAndDelete(checkQueue);
     cancelAndDelete(beginPhases);
     packetsQueue.clear();
@@ -182,6 +186,10 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
 {
     switch(msg->getKind())
     {
+    case RANGING_INIT:
+        msg->setKind(0);
+        ranging(msg);
+        break;
     //New SelfMsg for Slot configuration in Comsink phase
     case SEND_REPORT_WITHOUT_CSMA:
         scheduledComSinkSlot++;
@@ -271,22 +279,13 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         }
         break;
     case BEGIN_PHASE:
+        /*
         // Empty the transmission Queue
         if (!transfersQueue.empty()) {
             EV << "Emptying the queue with " << transfersQueue.length() << " elements in phase change" << endl;
             nbPacketDroppedNoTimeApp = nbPacketDroppedNoTimeApp + transfersQueue.length();
             //Flushes the transfersQueue if not empty for a new phase
             //transfersQueue.clear();
-//          while(!transfersQueue.empty()) {
-//              ApplPkt* pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
-//              if(pkt->getWasBroadcast())
-//                  broadNoTime[pkt->getPriority()]++;
-//              else if(pkt->getWasReport())
-//                  reportNoTime[pkt->getPriority()]++;
-//              else if(pkt->getWasRequest())
-//                  requestNoTime++;
-//              delete pkt;
-//          }
 
             //Packets are recovered for a new attempt...
             while(!transfersQueue.empty()) {
@@ -335,8 +334,23 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             }
             numPckToSentByPeriod = 0;
         }
+
+        */
         switch (nextPhase)
         {
+        case AppLayer::RANGING:
+
+            phase = AppLayer::RANGING;
+            nextPhase = AppLayer::SYNC_PHASE_1;
+            timeRanging=2;
+            nextPhaseStartTime = simTime() + timeRanging;
+            scheduleAt(nextPhaseStartTime, beginPhases);
+
+            scheduleAt(simTime(), rangingInit);
+        break;
+
+
+
         case AppLayer::SYNC_PHASE_1:
             phase = AppLayer::SYNC_PHASE_1;
             nextPhase = AppLayer::REPORT_PHASE;
@@ -520,7 +534,6 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         delete msg;
         break;
     }
-
 }
 
 
@@ -995,6 +1008,22 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
     //delete msg;
 }
 
+void AnchorAppLayer::ranging(cMessage *msg){
+    EV<< "Entramos en la función Ranging " << endl;
+    switch(msg->getKind())
+    {
+    case 0:
+        //Implementar envio y recepción de paquetes!
+        sendBroadcast();
+       // ApplPkt *ranging = new ApplPkt
+
+        EV << "Empezamos " << endl;
+
+        break;
+    }
+}
+
+
 void AnchorAppLayer::sendBroadcast()
 {
     // It doesn't matter if we have slotted version or not, CSMA must be disabled, we control random time and retransmission in Appl layer
@@ -1010,7 +1039,6 @@ void AnchorAppLayer::sendBroadcast()
     pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
     pkt->setCSMA(false);
     pkt->setBroadcastedSuccess(successToTx);
-
     EV << "Inserting Broadcast Packet in Transmission Queue" << endl;
     transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
     sendDown(pkt);

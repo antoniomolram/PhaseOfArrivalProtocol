@@ -564,6 +564,17 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 		}
 		switch (nextPhase)
 		{
+		case AppLayer::RANGING:
+		    EV << "Ranging init" << endl;
+		    EV << "Do nothing in the NODE at least right now" << endl;
+            phase = AppLayer::RANGING;
+            nextPhase = AppLayer::SYNC_PHASE_1;
+            timeRanging=2;
+            nextPhaseStartTime = simTime() + timeRanging;
+            scheduleAt(nextPhaseStartTime, beginPhases);
+		    break;
+
+
 		case AppLayer::SYNC_PHASE_1:
 			phase = AppLayer::SYNC_PHASE_1;
 			nextPhase = AppLayer::REPORT_PHASE;
