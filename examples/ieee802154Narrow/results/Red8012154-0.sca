@@ -1,14 +1,14 @@
 version 2
-run Red8012154-0-20130107-10:43:26-6902
+run Red8012154-0-20130108-10:10:03-7810
 attr configname Red8012154
-attr datetime 20130107-10:43:26
+attr datetime 20130108-10:10:03
 attr experiment Red8012154
 attr inifile omnetpp.ini
 attr iterationvars $0=5
 attr iterationvars2 "$0=5, $repetition=0"
 attr measurement $0=5
 attr network ieee802154Narrow
-attr processid 6902
+attr processid 7810
 attr repetition 0
 attr replication #0
 attr resultdir results
