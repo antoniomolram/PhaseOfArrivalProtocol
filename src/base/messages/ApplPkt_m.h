@@ -61,6 +61,9 @@
  * 	double timestampComRelated = 0; 
  * 	
  * 	double broadcastedSuccess = 1;	
+ * 	
+ * 	
+ * 	bool fastTransmision=false;
  * 
  * }
  * </pre>
@@ -98,6 +101,7 @@ class ApplPkt : public ::cPacket
     double timestampAnchorTX_var;
     double timestampComRelated_var;
     double broadcastedSuccess_var;
+    bool fastTransmision_var;
 
   private:
     void copy(const ApplPkt& other);
@@ -178,6 +182,8 @@ class ApplPkt : public ::cPacket
     virtual void setTimestampComRelated(double timestampComRelated);
     virtual double getBroadcastedSuccess() const;
     virtual void setBroadcastedSuccess(double broadcastedSuccess);
+    virtual bool getFastTransmision() const;
+    virtual void setFastTransmision(bool fastTransmision);
 };
 
 inline void doPacking(cCommBuffer *b, ApplPkt& obj) {obj.parsimPack(b);}

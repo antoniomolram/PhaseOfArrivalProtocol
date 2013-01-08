@@ -70,5 +70,8 @@ packet ApplPkt
 	double timestampComRelated = 0; //Variable to save the time when the packet was first sent referred from the start time of Com Sink 1
 	
 	double broadcastedSuccess = 1;	//Variable to broadcast to other anchors the success of an anchor
+	
+	//Added by Antonio
+	bool fastTransmision=false;
 
 }

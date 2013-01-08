@@ -64,6 +64,7 @@ ApplPkt::ApplPkt(const char *name, int kind) : cPacket(name,kind)
     this->timestampAnchorTX_var = 0;
     this->timestampComRelated_var = 0;
     this->broadcastedSuccess_var = 1;
+    this->fastTransmision_var = false;
 }
 
 ApplPkt::ApplPkt(const ApplPkt& other) : cPacket(other)
@@ -115,6 +116,7 @@ void ApplPkt::copy(const ApplPkt& other)
     this->timestampAnchorTX_var = other.timestampAnchorTX_var;
     this->timestampComRelated_var = other.timestampComRelated_var;
     this->broadcastedSuccess_var = other.broadcastedSuccess_var;
+    this->fastTransmision_var = other.fastTransmision_var;
 }
 
 void ApplPkt::parsimPack(cCommBuffer *b)
@@ -150,6 +152,7 @@ void ApplPkt::parsimPack(cCommBuffer *b)
     doPacking(b,this->timestampAnchorTX_var);
     doPacking(b,this->timestampComRelated_var);
     doPacking(b,this->broadcastedSuccess_var);
+    doPacking(b,this->fastTransmision_var);
 }
 
 void ApplPkt::parsimUnpack(cCommBuffer *b)
@@ -185,6 +188,7 @@ void ApplPkt::parsimUnpack(cCommBuffer *b)
     doUnpacking(b,this->timestampAnchorTX_var);
     doUnpacking(b,this->timestampComRelated_var);
     doUnpacking(b,this->broadcastedSuccess_var);
+    doUnpacking(b,this->fastTransmision_var);
 }
 
 LAddress::L3Type& ApplPkt::getDestAddr()
@@ -487,6 +491,16 @@ void ApplPkt::setBroadcastedSuccess(double broadcastedSuccess)
     this->broadcastedSuccess_var = broadcastedSuccess;
 }
 
+bool ApplPkt::getFastTransmision() const
+{
+    return fastTransmision_var;
+}
+
+void ApplPkt::setFastTransmision(bool fastTransmision)
+{
+    this->fastTransmision_var = fastTransmision;
+}
+
 class ApplPktDescriptor : public cClassDescriptor
 {
   public:
@@ -534,7 +548,7 @@ const char *ApplPktDescriptor::getProperty(const char *propertyname) const
 int ApplPktDescriptor::getFieldCount(void *object) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 30+basedesc->getFieldCount(object) : 30;
+    return basedesc ? 31+basedesc->getFieldCount(object) : 31;
 }
 
 unsigned int ApplPktDescriptor::getFieldTypeFlags(void *object, int field) const
@@ -576,8 +590,9 @@ unsigned int ApplPktDescriptor::getFieldTypeFlags(void *object, int field) const
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<30) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<31) ? fieldTypeFlags[field] : 0;
 }
 
 const char *ApplPktDescriptor::getFieldName(void *object, int field) const
@@ -619,8 +634,9 @@ const char *ApplPktDescriptor::getFieldName(void *object, int field) const
         "timestampAnchorTX",
         "timestampComRelated",
         "broadcastedSuccess",
+        "fastTransmision",
     };
-    return (field>=0 && field<30) ? fieldNames[field] : NULL;
+    return (field>=0 && field<31) ? fieldNames[field] : NULL;
 }
 
 int ApplPktDescriptor::findField(void *object, const char *fieldName) const
@@ -657,6 +673,7 @@ int ApplPktDescriptor::findField(void *object, const char *fieldName) const
     if (fieldName[0]=='t' && strcmp(fieldName, "timestampAnchorTX")==0) return base+27;
     if (fieldName[0]=='t' && strcmp(fieldName, "timestampComRelated")==0) return base+28;
     if (fieldName[0]=='b' && strcmp(fieldName, "broadcastedSuccess")==0) return base+29;
+    if (fieldName[0]=='f' && strcmp(fieldName, "fastTransmision")==0) return base+30;
     return basedesc ? basedesc->findField(object, fieldName) : -1;
 }
 
@@ -699,8 +716,9 @@ const char *ApplPktDescriptor::getFieldTypeString(void *object, int field) const
         "double",
         "double",
         "double",
+        "bool",
     };
-    return (field>=0 && field<30) ? fieldTypeStrings[field] : NULL;
+    return (field>=0 && field<31) ? fieldTypeStrings[field] : NULL;
 }
 
 const char *ApplPktDescriptor::getFieldProperty(void *object, int field, const char *propertyname) const
@@ -770,6 +788,7 @@ std::string ApplPktDescriptor::getFieldAsString(void *object, int field, int i) 
         case 27: return double2string(pp->getTimestampAnchorTX());
         case 28: return double2string(pp->getTimestampComRelated());
         case 29: return double2string(pp->getBroadcastedSuccess());
+        case 30: return bool2string(pp->getFastTransmision());
         default: return "";
     }
 }
@@ -812,6 +831,7 @@ bool ApplPktDescriptor::setFieldAsString(void *object, int field, int i, const c
         case 27: pp->setTimestampAnchorTX(string2double(value)); return true;
         case 28: pp->setTimestampComRelated(string2double(value)); return true;
         case 29: pp->setBroadcastedSuccess(string2double(value)); return true;
+        case 30: pp->setFastTransmision(string2bool(value)); return true;
         default: return false;
     }
 }
@@ -855,8 +875,9 @@ const char *ApplPktDescriptor::getFieldStructName(void *object, int field) const
         NULL,
         NULL,
         NULL,
+        NULL,
     };
-    return (field>=0 && field<30) ? fieldStructNames[field] : NULL;
+    return (field>=0 && field<31) ? fieldStructNames[field] : NULL;
 }
 
 void *ApplPktDescriptor::getFieldStructPointer(void *object, int field, int i) const

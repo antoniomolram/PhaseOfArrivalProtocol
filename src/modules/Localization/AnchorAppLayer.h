@@ -30,6 +30,7 @@ protected:
 	int indexBroadcast;					// Number of Mobile Node who sent the broadcast to store the value of Broadcast received in the correct field
 
 	cMessage *delayTimer;				// Pointer to the event we use to schedule all the sync packets in the sync phases
+    cMessage *initRangingProcedure;     // Added by Antonio: Pointer to start ranging procedure.
 	cMessage *checkQueue;				// Variable to schedule the events to process the Queue elements
 	cMessage* MsgPrueba;
 
@@ -114,6 +115,9 @@ protected:
 
 	/** @brief Send a broadcast message to lower layer. */
 	virtual void sendBroadcast();
+
+    /** @brief Ranging procedure */
+    virtual void Ranging(int stat);
 
 	/** @brief Manage the Mac errors */
 	void errorManagement(cMessage *msg);

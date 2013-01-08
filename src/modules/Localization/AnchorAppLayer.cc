@@ -143,12 +143,14 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Broadcast message, slotted or not is without CSMA, we wait the random time in the Appl Layer
 		delayTimer = new cMessage("sync-delay-timer", SEND_SYNC_TIMER_WITHOUT_CSMA);
+        initRangingProcedure = new cMessage("Init ranging procedure", INIT_RANGING);
 
 	}
 }
 
 AnchorAppLayer::~AnchorAppLayer() {
 	cancelAndDelete(delayTimer);
+	cancelAndDelete(initRangingProcedure);
 	cancelAndDelete(checkQueue);
 	cancelAndDelete(beginPhases);
 	packetsQueue.clear();
@@ -284,6 +286,12 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         case MAC_ERROR_MANAGEMENT:
             errorManagement(msg);
         break;
+
+        case INIT_RANGING:
+           Ranging(Init);
+           break;
+
+
         case SEND_SYNC_TIMER_WITHOUT_CSMA:
             sendBroadcast(); // Send the broadcast
             // If we still have full phases to do
@@ -431,6 +439,14 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             }
             switch (nextPhase)
             {
+            case AppLayer::RANGING_PHASE:
+                EV<<"Phase Ranging" << endl;
+                phase = AppLayer::RANGING_PHASE;
+                nextPhase = AppLayer::SYNC_PHASE_1;
+                scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), initRangingProcedure);
+                break;
+
+
             case AppLayer::SYNC_PHASE_1:
                 phase = AppLayer::SYNC_PHASE_1;
                 nextPhase = AppLayer::REPORT_PHASE;
@@ -1210,6 +1226,34 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	delete msg;
 }
 
+void AnchorAppLayer::Ranging(int status){
+    EV << "Ranging Procedure" << endl;
+    ApplPkt *Ranging= new ApplPkt("Generic", RANGE_REQUEST);
+
+    switch (status)
+    {
+        case Init:
+            EV << "Init Ranging" << endl;
+            Ranging->setName("Range request");
+            Ranging->setKind(RANGE_REQUEST);
+            RTBHeader=24;
+            Ranging->setBitLength(RTBHeader);
+            Ranging->setSrcAddr(myNetwAddr);
+            Ranging->setRealSrcAddr(myNetwAddr);
+            Ranging->setDestAddr(destination);
+            Ranging->setFastTransmision(true);
+
+            EV << "Inserting sending Packet in Transmission Queue" << endl;
+            transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+            sendDown(Ranging);
+
+        break;
+
+        default:
+            EV << "WTF! Why!?!" << endl;
+        break;
+    }
+}
 void AnchorAppLayer::sendBroadcast()
 {
 	// It doesn't matter if we have slotted version or not, CSMA must be disabled, we control random time and retransmission in Appl layer

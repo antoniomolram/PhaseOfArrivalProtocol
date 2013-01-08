@@ -1,4 +1,4 @@
-file 478127 1354648513                                          
+file 478127 1357561930                                          
 version 2
 run Red8012154-8-20121204-20:10:50-30021
 attr configname Red8012154
@@ -15,418 +15,417 @@ attr replication #8
 attr resultdir results
 attr runnumber 8
 attr seedset 8
-
 vector 290  ieee802154Narrow.anchor[0].appl  "Number of packets from this anchor"  TV
-vector 296  ieee802154Narrow.anchor[1].appl  "Number of packets from this anchor"  TV
-vector 302  ieee802154Narrow.anchor[2].appl  "Number of packets from this anchor"  TV
-vector 308  ieee802154Narrow.anchor[3].appl  "Number of packets from this anchor"  TV
-vector 314  ieee802154Narrow.anchor[4].appl  "Number of packets from this anchor"  TV
-vector 320  ieee802154Narrow.anchor[5].appl  "Number of packets from this anchor"  TV
-vector 326  ieee802154Narrow.anchor[6].appl  "Number of packets from this anchor"  TV
-vector 332  ieee802154Narrow.anchor[7].appl  "Number of packets from this anchor"  TV
-vector 338  ieee802154Narrow.anchor[8].appl  "Number of packets from this anchor"  TV
-vector 344  ieee802154Narrow.anchor[9].appl  "Number of packets from this anchor"  TV
-vector 350  ieee802154Narrow.anchor[10].appl  "Number of packets from this anchor"  TV
-vector 356  ieee802154Narrow.anchor[11].appl  "Number of packets from this anchor"  TV
-vector 362  ieee802154Narrow.anchor[12].appl  "Number of packets from this anchor"  TV
-vector 368  ieee802154Narrow.anchor[13].appl  "Number of packets from this anchor"  TV
-vector 374  ieee802154Narrow.anchor[14].appl  "Number of packets from this anchor"  TV
-vector 380  ieee802154Narrow.anchor[15].appl  "Number of packets from this anchor"  TV
-vector 386  ieee802154Narrow.anchor[16].appl  "Number of packets from this anchor"  TV
-vector 392  ieee802154Narrow.anchor[17].appl  "Number of packets from this anchor"  TV
-vector 398  ieee802154Narrow.anchor[18].appl  "Number of packets from this anchor"  TV
-vector 404  ieee802154Narrow.anchor[19].appl  "Number of packets from this anchor"  TV
-vector 410  ieee802154Narrow.anchor[20].appl  "Number of packets from this anchor"  TV
-vector 416  ieee802154Narrow.anchor[21].appl  "Number of packets from this anchor"  TV
-vector 422  ieee802154Narrow.anchor[22].appl  "Number of packets from this anchor"  TV
-vector 428  ieee802154Narrow.anchor[23].appl  "Number of packets from this anchor"  TV
-vector 434  ieee802154Narrow.anchor[24].appl  "Number of packets from this anchor"  TV
-vector 287  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 288  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 289  ieee802154Narrow.anchor[0].appl  "Number of AN Reports with ACK"  TV
-vector 291  ieee802154Narrow.anchor[0].appl  "Number of packets sent from mobile node 0"  TV
-vector 292  ieee802154Narrow.anchor[0].appl  "Effectiveness in each anchor"  TV
-vector 293  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 294  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 295  ieee802154Narrow.anchor[1].appl  "Number of AN Reports with ACK"  TV
-vector 297  ieee802154Narrow.anchor[1].appl  "Number of packets sent from mobile node 0"  TV
-vector 298  ieee802154Narrow.anchor[1].appl  "Effectiveness in each anchor"  TV
-vector 299  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 300  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 301  ieee802154Narrow.anchor[2].appl  "Number of AN Reports with ACK"  TV
-vector 303  ieee802154Narrow.anchor[2].appl  "Number of packets sent from mobile node 0"  TV
-vector 304  ieee802154Narrow.anchor[2].appl  "Effectiveness in each anchor"  TV
-vector 305  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 306  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 307  ieee802154Narrow.anchor[3].appl  "Number of AN Reports with ACK"  TV
-vector 309  ieee802154Narrow.anchor[3].appl  "Number of packets sent from mobile node 0"  TV
-vector 310  ieee802154Narrow.anchor[3].appl  "Effectiveness in each anchor"  TV
-vector 311  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 312  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 313  ieee802154Narrow.anchor[4].appl  "Number of AN Reports with ACK"  TV
-vector 315  ieee802154Narrow.anchor[4].appl  "Number of packets sent from mobile node 0"  TV
-vector 316  ieee802154Narrow.anchor[4].appl  "Effectiveness in each anchor"  TV
-vector 317  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 318  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 319  ieee802154Narrow.anchor[5].appl  "Number of AN Reports with ACK"  TV
-vector 321  ieee802154Narrow.anchor[5].appl  "Number of packets sent from mobile node 0"  TV
-vector 322  ieee802154Narrow.anchor[5].appl  "Effectiveness in each anchor"  TV
-vector 323  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 324  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 325  ieee802154Narrow.anchor[6].appl  "Number of AN Reports with ACK"  TV
-vector 327  ieee802154Narrow.anchor[6].appl  "Number of packets sent from mobile node 0"  TV
-vector 328  ieee802154Narrow.anchor[6].appl  "Effectiveness in each anchor"  TV
-vector 329  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 330  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 331  ieee802154Narrow.anchor[7].appl  "Number of AN Reports with ACK"  TV
-vector 333  ieee802154Narrow.anchor[7].appl  "Number of packets sent from mobile node 0"  TV
-vector 334  ieee802154Narrow.anchor[7].appl  "Effectiveness in each anchor"  TV
-vector 335  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 336  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 337  ieee802154Narrow.anchor[8].appl  "Number of AN Reports with ACK"  TV
-vector 339  ieee802154Narrow.anchor[8].appl  "Number of packets sent from mobile node 0"  TV
-vector 340  ieee802154Narrow.anchor[8].appl  "Effectiveness in each anchor"  TV
-vector 341  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 342  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 343  ieee802154Narrow.anchor[9].appl  "Number of AN Reports with ACK"  TV
-vector 345  ieee802154Narrow.anchor[9].appl  "Number of packets sent from mobile node 0"  TV
-vector 346  ieee802154Narrow.anchor[9].appl  "Effectiveness in each anchor"  TV
-vector 347  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 348  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 349  ieee802154Narrow.anchor[10].appl  "Number of AN Reports with ACK"  TV
-vector 351  ieee802154Narrow.anchor[10].appl  "Number of packets sent from mobile node 0"  TV
-vector 352  ieee802154Narrow.anchor[10].appl  "Effectiveness in each anchor"  TV
-vector 353  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 354  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 355  ieee802154Narrow.anchor[11].appl  "Number of AN Reports with ACK"  TV
-vector 357  ieee802154Narrow.anchor[11].appl  "Number of packets sent from mobile node 0"  TV
-vector 358  ieee802154Narrow.anchor[11].appl  "Effectiveness in each anchor"  TV
-vector 359  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 360  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 361  ieee802154Narrow.anchor[12].appl  "Number of AN Reports with ACK"  TV
-vector 363  ieee802154Narrow.anchor[12].appl  "Number of packets sent from mobile node 0"  TV
-vector 364  ieee802154Narrow.anchor[12].appl  "Effectiveness in each anchor"  TV
-vector 365  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 366  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 367  ieee802154Narrow.anchor[13].appl  "Number of AN Reports with ACK"  TV
-vector 369  ieee802154Narrow.anchor[13].appl  "Number of packets sent from mobile node 0"  TV
-vector 370  ieee802154Narrow.anchor[13].appl  "Effectiveness in each anchor"  TV
-vector 371  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 372  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 373  ieee802154Narrow.anchor[14].appl  "Number of AN Reports with ACK"  TV
-vector 375  ieee802154Narrow.anchor[14].appl  "Number of packets sent from mobile node 0"  TV
-vector 376  ieee802154Narrow.anchor[14].appl  "Effectiveness in each anchor"  TV
-vector 377  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 378  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 379  ieee802154Narrow.anchor[15].appl  "Number of AN Reports with ACK"  TV
-vector 381  ieee802154Narrow.anchor[15].appl  "Number of packets sent from mobile node 0"  TV
-vector 382  ieee802154Narrow.anchor[15].appl  "Effectiveness in each anchor"  TV
-vector 383  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 384  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 385  ieee802154Narrow.anchor[16].appl  "Number of AN Reports with ACK"  TV
-vector 387  ieee802154Narrow.anchor[16].appl  "Number of packets sent from mobile node 0"  TV
-vector 388  ieee802154Narrow.anchor[16].appl  "Effectiveness in each anchor"  TV
-vector 389  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 390  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 391  ieee802154Narrow.anchor[17].appl  "Number of AN Reports with ACK"  TV
-vector 393  ieee802154Narrow.anchor[17].appl  "Number of packets sent from mobile node 0"  TV
-vector 394  ieee802154Narrow.anchor[17].appl  "Effectiveness in each anchor"  TV
-vector 395  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 396  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 397  ieee802154Narrow.anchor[18].appl  "Number of AN Reports with ACK"  TV
-vector 399  ieee802154Narrow.anchor[18].appl  "Number of packets sent from mobile node 0"  TV
-vector 400  ieee802154Narrow.anchor[18].appl  "Effectiveness in each anchor"  TV
-vector 401  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 402  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 403  ieee802154Narrow.anchor[19].appl  "Number of AN Reports with ACK"  TV
-vector 405  ieee802154Narrow.anchor[19].appl  "Number of packets sent from mobile node 0"  TV
-vector 406  ieee802154Narrow.anchor[19].appl  "Effectiveness in each anchor"  TV
-vector 407  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 408  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 409  ieee802154Narrow.anchor[20].appl  "Number of AN Reports with ACK"  TV
-vector 411  ieee802154Narrow.anchor[20].appl  "Number of packets sent from mobile node 0"  TV
-vector 412  ieee802154Narrow.anchor[20].appl  "Effectiveness in each anchor"  TV
-vector 413  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 414  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 415  ieee802154Narrow.anchor[21].appl  "Number of AN Reports with ACK"  TV
-vector 417  ieee802154Narrow.anchor[21].appl  "Number of packets sent from mobile node 0"  TV
-vector 418  ieee802154Narrow.anchor[21].appl  "Effectiveness in each anchor"  TV
-vector 419  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 420  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 421  ieee802154Narrow.anchor[22].appl  "Number of AN Reports with ACK"  TV
-vector 423  ieee802154Narrow.anchor[22].appl  "Number of packets sent from mobile node 0"  TV
-vector 424  ieee802154Narrow.anchor[22].appl  "Effectiveness in each anchor"  TV
-vector 425  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 426  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 427  ieee802154Narrow.anchor[23].appl  "Number of AN Reports with ACK"  TV
-vector 429  ieee802154Narrow.anchor[23].appl  "Number of packets sent from mobile node 0"  TV
-vector 430  ieee802154Narrow.anchor[23].appl  "Effectiveness in each anchor"  TV
-vector 431  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - No ACK received"  TV
-vector 432  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
-vector 433  ieee802154Narrow.anchor[24].appl  "Number of AN Reports with ACK"  TV
-vector 435  ieee802154Narrow.anchor[24].appl  "Number of packets sent from mobile node 0"  TV
-vector 436  ieee802154Narrow.anchor[24].appl  "Effectiveness in each anchor"  TV
-vector 437  ieee802154Narrow.computer[0].appl  received-packets-per-period  TV
-vector 438  ieee802154Narrow.computer[0].appl  received-no-repeated-packets-per-period  TV
-vector 440  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 8"  TV
-vector 441  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 12"  TV
-vector 442  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 16"  TV
-vector 443  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 20"  TV
-vector 439  ieee802154Narrow.computer[0].appl  "Number of packets sent from mobile node 0"  TV
-vector 444  ieee802154Narrow.anchor[0].appl  ""  TV
-vector 445  ieee802154Narrow.anchor[0].appl  ""  TV
-vector 446  ieee802154Narrow.anchor[1].appl  ""  TV
-vector 447  ieee802154Narrow.anchor[1].appl  ""  TV
-vector 448  ieee802154Narrow.anchor[2].appl  ""  TV
-vector 449  ieee802154Narrow.anchor[2].appl  ""  TV
-vector 450  ieee802154Narrow.anchor[3].appl  ""  TV
-vector 451  ieee802154Narrow.anchor[3].appl  ""  TV
-vector 452  ieee802154Narrow.anchor[4].appl  ""  TV
-vector 453  ieee802154Narrow.anchor[4].appl  ""  TV
-vector 454  ieee802154Narrow.anchor[5].appl  ""  TV
-vector 455  ieee802154Narrow.anchor[5].appl  ""  TV
-vector 456  ieee802154Narrow.anchor[6].appl  ""  TV
-vector 457  ieee802154Narrow.anchor[6].appl  ""  TV
-vector 458  ieee802154Narrow.anchor[7].appl  ""  TV
-vector 459  ieee802154Narrow.anchor[7].appl  ""  TV
-vector 460  ieee802154Narrow.anchor[8].appl  ""  TV
-vector 461  ieee802154Narrow.anchor[8].appl  ""  TV
-vector 462  ieee802154Narrow.anchor[9].appl  ""  TV
-vector 463  ieee802154Narrow.anchor[9].appl  ""  TV
-vector 464  ieee802154Narrow.anchor[10].appl  ""  TV
-vector 465  ieee802154Narrow.anchor[10].appl  ""  TV
-vector 466  ieee802154Narrow.anchor[11].appl  ""  TV
-vector 467  ieee802154Narrow.anchor[11].appl  ""  TV
-vector 468  ieee802154Narrow.anchor[12].appl  ""  TV
-vector 469  ieee802154Narrow.anchor[12].appl  ""  TV
-vector 470  ieee802154Narrow.anchor[13].appl  ""  TV
-vector 471  ieee802154Narrow.anchor[13].appl  ""  TV
-vector 472  ieee802154Narrow.anchor[14].appl  ""  TV
-vector 473  ieee802154Narrow.anchor[14].appl  ""  TV
-vector 474  ieee802154Narrow.anchor[15].appl  ""  TV
-vector 475  ieee802154Narrow.anchor[15].appl  ""  TV
-vector 476  ieee802154Narrow.anchor[16].appl  ""  TV
-vector 477  ieee802154Narrow.anchor[16].appl  ""  TV
-vector 478  ieee802154Narrow.anchor[17].appl  ""  TV
-vector 479  ieee802154Narrow.anchor[17].appl  ""  TV
-vector 480  ieee802154Narrow.anchor[18].appl  ""  TV
-vector 481  ieee802154Narrow.anchor[18].appl  ""  TV
-vector 482  ieee802154Narrow.anchor[19].appl  ""  TV
-vector 483  ieee802154Narrow.anchor[19].appl  ""  TV
-vector 484  ieee802154Narrow.anchor[20].appl  ""  TV
-vector 485  ieee802154Narrow.anchor[20].appl  ""  TV
-vector 486  ieee802154Narrow.anchor[21].appl  ""  TV
-vector 487  ieee802154Narrow.anchor[21].appl  ""  TV
-vector 488  ieee802154Narrow.anchor[22].appl  ""  TV
-vector 489  ieee802154Narrow.anchor[22].appl  ""  TV
-vector 490  ieee802154Narrow.anchor[23].appl  ""  TV
-vector 491  ieee802154Narrow.anchor[23].appl  ""  TV
-vector 492  ieee802154Narrow.anchor[24].appl  ""  TV
-vector 493  ieee802154Narrow.anchor[24].appl  ""  TV
-287	16931 2507 1.86 483.44 200 0 2 11 15
-288	19438 2507 1.86 483.44 200 0 0 0 0
-289	21945 2507 1.86 483.44 200 0 4 151 361
 290	24452 2507 0.82 482.4 200 0 4 151 361
-291	26959 2507 1.86 483.44 200 0 1 26 26
-292	29466 3353 1.86 483.44 200 0.9011254789272 1 197.89722428972 195.89935538452
-293	32819 2507 1.86 483.44 200 0 3 15 29
-294	35326 2507 1.86 483.44 200 0 2 8 10
-295	37833 2507 1.86 483.44 200 1 9 659 3117
+vector 296  ieee802154Narrow.anchor[1].appl  "Number of packets from this anchor"  TV
 296	40340 2507 0.82 482.4 200 1 5 512 1664
-297	42847 2507 1.86 483.44 200 0 1 65 65
-298	45354 3353 1.86 483.44 200 0.9011254789272 1 197.89722428972 195.89935538452
-299	48707 2507 1.86 483.44 200 0 5 102 192
-300	51214 2507 1.86 483.44 200 0 4 86 144
-301	53721 2704 1.86 483.44 200 9 27 3077 51391
+vector 302  ieee802154Narrow.anchor[2].appl  "Number of packets from this anchor"  TV
 302	56425 2507 0.82 482.4 200 2 7 845 3749
-303	58932 2507 1.86 483.44 200 0 1 34 34
-304	61439 3368 1.86 483.44 200 0.91636515717398 1 198.33725803289 196.74326777924
-305	64807 2507 1.86 483.44 200 0 8 171 451
-306	67314 2507 1.86 483.44 200 0 8 351 1175
-307	69821 2707 1.86 483.44 200 13 31 4110 88514
+vector 308  ieee802154Narrow.anchor[3].appl  "Number of packets from this anchor"  TV
 308	72528 2507 0.82 482.4 200 2 8 781 3213
-309	75035 2507 1.86 483.44 200 0 1 1 1
-310	77542 3368 1.86 483.44 200 0.92927170868347 1 198.37981400455 196.82380529054
-311	80910 2507 1.86 483.44 200 0 3 9 15
-312	83417 2507 1.86 483.44 200 0 1 6 6
-313	85924 2507 1.86 483.44 200 0 4 282 612
+vector 314  ieee802154Narrow.anchor[4].appl  "Number of packets from this anchor"  TV
 314	88431 2507 0.82 482.4 200 0 4 283 615
-315	90938 2507 1.86 483.44 200 0 0 0 0
-316	93445 3367 1.86 483.44 200 0.861328125 1 197.89458981977 195.9224602701
-317	96812 2507 1.86 483.44 200 0 9 10 82
-318	99319 2507 1.86 483.44 200 0 2 2 4
-319	101826 2507 1.86 483.44 200 0 4 424 1242
+vector 320  ieee802154Narrow.anchor[5].appl  "Number of packets from this anchor"  TV
 320	104333 2507 0.82 482.4 200 0 4 427 1261
-321	106840 2507 1.86 483.44 200 0 1 80 80
-322	109347 3494 1.86 483.44 200 0.71691176470588 1 197.20907212191 194.7147405637
-323	112841 2507 1.86 483.44 200 0 4 48 104
-324	115348 2507 1.86 483.44 200 0 5 23 49
-325	117855 2575 1.86 483.44 200 4 12 1573 13535
+vector 326  ieee802154Narrow.anchor[6].appl  "Number of packets from this anchor"  TV
 326	120430 2507 0.82 482.4 200 3 9 1153 7019
-327	122937 2507 1.86 483.44 200 0 1 154 154
-328	125444 3483 1.86 483.44 200 0.87119222689076 1 197.90420438488 195.91197694529
-329	128927 2508 1.86 483.44 200 0 12 245 729
-330	131435 2508 1.86 483.44 200 0 14 361 1327
-331	133943 2707 1.86 483.44 200 15 24 3751 71343
+vector 332  ieee802154Narrow.anchor[7].appl  "Number of packets from this anchor"  TV
 332	136650 2595 0.82 482.4 200 5 12 1793 16589
-333	139245 2507 1.86 483.44 200 0 1 109 109
-334	141752 4621 1.86 483.44 200 0.81985251800282 1 194.69273033879 189.76364986958
-335	146373 2508 1.86 483.44 200 0 11 170 498
-336	148881 2509 1.86 483.44 200 0 18 414 1726
-337	151390 2707 1.86 483.44 200 36 60 10494 553566
+vector 338  ieee802154Narrow.anchor[8].appl  "Number of packets from this anchor"  TV
 338	154097 2511 0.82 482.4 200 5 10 1469 11091
-339	156608 2507 1.86 483.44 200 0 1 31 31
-340	159115 4096 1.86 483.44 200 0.94185115566695 1 198.30831382815 196.65926657708
-341	163211 2507 1.86 483.44 200 0 9 118 294
-342	165718 2507 1.86 483.44 200 0 7 280 852
-343	168225 2707 1.86 483.44 200 16 31 4704 113602
+vector 344  ieee802154Narrow.anchor[9].appl  "Number of packets from this anchor"  TV
 344	170932 2507 0.82 482.4 200 1 6 616 2206
-345	173439 2507 1.86 483.44 200 0 0 0 0
-346	175946 3535 1.86 483.44 200 0.90922619047619 1 198.60125541715 197.24988386539
-347	179481 2507 1.86 483.44 200 0 3 42 80
-348	181988 2507 1.86 483.44 200 0 1 6 6
-349	184495 2507 1.86 483.44 200 0 6 597 2197
+vector 350  ieee802154Narrow.anchor[10].appl  "Number of packets from this anchor"  TV
 350	187002 2507 0.82 482.4 200 0 6 606 2270
-351	189509 2507 1.86 483.44 200 0 1 125 125
-352	192016 4688 1.86 483.44 200 0.74200680272109 1 191.94081072375 184.77890879784
-353	196704 2507 1.86 483.44 200 0 7 183 413
-354	199211 2507 1.86 483.44 200 0 7 165 367
-355	201718 2636 1.86 483.44 200 5 14 2028 21248
+vector 356  ieee802154Narrow.anchor[11].appl  "Number of packets from this anchor"  TV
 356	204354 2517 0.82 482.4 200 5 10 1441 10647
-357	206871 2507 1.86 483.44 200 0 1 187 187
-358	209378 4687 1.86 483.44 200 0.80732566897041 1 193.9045356143 188.32794320559
-359	214065 2507 1.86 483.44 200 0 9 222 602
-360	216572 2509 1.86 483.44 200 0 17 370 1576
-361	219081 2707 1.86 483.44 200 14 34 5282 142548
+vector 362  ieee802154Narrow.anchor[12].appl  "Number of packets from this anchor"  TV
 362	221788 2638 0.82 482.4 200 6 14 2030 21286
-363	224426 2507 1.86 483.44 200 0 1 117 117
-364	226933 4579 1.86 483.44 200 0.72211089924707 1 190.46509413969 182.30230091466
-365	231512 2507 1.86 483.44 200 0 8 162 422
-366	234019 2508 1.86 483.44 200 0 18 330 1394
-367	236527 2701 1.86 483.44 200 8 21 2929 44823
+vector 368  ieee802154Narrow.anchor[13].appl  "Number of packets from this anchor"  TV
 368	239228 2562 0.82 482.4 200 6 13 1642 14098
-369	241790 2507 1.86 483.44 200 0 1 33 33
-370	244297 3749 1.86 483.44 200 0.74653132086168 1 195.19589134562 190.99130714449
-371	248046 2507 1.86 483.44 200 0 4 51 89
-372	250553 2507 1.86 483.44 200 0 6 99 257
-373	253060 2513 1.86 483.44 200 2 11 1160 7624
+vector 374  ieee802154Narrow.anchor[14].appl  "Number of packets from this anchor"  TV
 374	255573 2507 0.82 482.4 200 1 5 642 2208
-375	258080 2507 1.86 483.44 200 0 0 0 0
-376	260587 3564 1.86 483.44 200 0.89583333333333 1 198.17210227862 196.42950132955
-377	264151 2507 1.86 483.44 200 0 1 11 11
-378	266658 2507 1.86 483.44 200 0 0 0 0
-379	269165 2507 1.86 483.44 200 1 4 386 952
+vector 380  ieee802154Narrow.anchor[15].appl  "Number of packets from this anchor"  TV
 380	271672 2507 0.82 482.4 200 1 4 386 952
-381	274179 2507 1.86 483.44 200 0 1 75 75
-382	276686 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
-383	281263 2507 1.86 483.44 200 0 5 129 291
-384	283770 2507 1.86 483.44 200 0 8 155 527
-385	286277 2550 1.86 483.44 200 4 13 1511 12475
+vector 386  ieee802154Narrow.anchor[16].appl  "Number of packets from this anchor"  TV
 386	288827 2507 0.82 482.4 200 2 8 1005 5333
-387	291334 2507 1.86 483.44 200 0 1 115 115
-388	293841 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
-389	298418 2507 1.86 483.44 200 0 8 221 607
-390	300925 2507 1.86 483.44 200 0 6 210 518
-391	303432 2600 1.86 483.44 200 6 16 1967 20637
+vector 392  ieee802154Narrow.anchor[17].appl  "Number of packets from this anchor"  TV
 392	306032 2527 0.82 482.4 200 4 10 1303 9183
-393	308559 2507 1.86 483.44 200 0 1 72 72
-394	311066 4577 1.86 483.44 200 0.71506897304945 1 190.13296584752 181.764182802
-395	315643 2507 1.86 483.44 200 0 7 49 145
-396	318150 2507 1.86 483.44 200 0 4 23 55
-397	320657 2525 1.86 483.44 200 2 11 1350 10012
+vector 398  ieee802154Narrow.anchor[18].appl  "Number of packets from this anchor"  TV
 398	323182 2507 0.82 482.4 200 2 8 1034 5742
-399	325689 2507 1.86 483.44 200 0 1 6 6
-400	328196 3787 1.86 483.44 200 0.67913613217278 1 194.71833591575 190.19617760783
-401	331983 2507 1.86 483.44 200 0 3 17 29
-402	334490 2507 1.86 483.44 200 0 1 1 1
-403	336997 2507 1.86 483.44 200 0 6 520 1956
+vector 404  ieee802154Narrow.anchor[19].appl  "Number of packets from this anchor"  TV
 404	339504 2507 0.82 482.4 200 0 4 401 1073
-405	342011 2507 1.86 483.44 200 0 0 0 0
-406	344518 3572 1.86 483.44 200 0.88072916666667 1 197.97887311196 196.06500832825
-407	348090 2507 1.86 483.44 200 0 0 0 0
-408	350597 2507 1.86 483.44 200 0 0 0 0
-409	353104 2507 1.86 483.44 200 0 2 137 173
+vector 410  ieee802154Narrow.anchor[20].appl  "Number of packets from this anchor"  TV
 410	355611 2507 0.82 482.4 200 0 2 137 173
-411	358118 2507 1.86 483.44 200 0 1 35 35
-412	360625 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
-413	365202 2507 1.86 483.44 200 0 2 8 12
-414	367709 2507 1.86 483.44 200 0 1 5 5
-415	370216 2507 1.86 483.44 200 0 3 298 606
+vector 416  ieee802154Narrow.anchor[21].appl  "Number of packets from this anchor"  TV
 416	372723 2507 0.82 482.4 200 0 3 299 611
-417	375230 2507 1.86 483.44 200 0 1 37 37
-418	377737 4622 1.86 483.44 200 0.71506897304945 1 189.80032695863 181.12794485833
-419	382359 2507 1.86 483.44 200 0 4 4 16
-420	384866 2507 1.86 483.44 200 0 4 4 16
-421	387373 2507 1.86 483.44 200 0 4 370 842
+vector 422  ieee802154Narrow.anchor[22].appl  "Number of packets from this anchor"  TV
 422	389880 2507 0.82 482.4 200 0 4 372 846
-423	392387 2507 1.86 483.44 200 0 0 0 0
-424	394894 4583 1.86 483.44 200 0.67138157894737 1 189.17306087676 180.14835776315
-425	399477 2507 1.86 483.44 200 0 7 8 50
-426	401984 2507 1.86 483.44 200 0 3 3 9
-427	404491 2507 1.86 483.44 200 0 4 321 739
+vector 428  ieee802154Narrow.anchor[23].appl  "Number of packets from this anchor"  TV
 428	406998 2507 0.82 482.4 200 0 4 324 752
-429	409505 2507 1.86 483.44 200 0 0 0 0
-430	412012 3805 1.86 483.44 200 0.54651281335852 1 193.85018597969 188.83134499908
-431	415817 2507 1.86 483.44 200 0 0 0 0
-432	418324 2507 1.86 483.44 200 0 0 0 0
-433	420831 2507 1.86 483.44 200 0 2 120 174
+vector 434  ieee802154Narrow.anchor[24].appl  "Number of packets from this anchor"  TV
 434	423338 2507 0.82 482.4 200 0 2 120 174
+vector 287  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - No ACK received"  TV
+287	16931 2507 1.86 483.44 200 0 2 11 15
+vector 288  ieee802154Narrow.anchor[0].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+288	19438 2507 1.86 483.44 200 0 0 0 0
+vector 289  ieee802154Narrow.anchor[0].appl  "Number of AN Reports with ACK"  TV
+289	21945 2507 1.86 483.44 200 0 4 151 361
+vector 291  ieee802154Narrow.anchor[0].appl  "Number of packets sent from mobile node 0"  TV
+291	26959 2507 1.86 483.44 200 0 1 26 26
+vector 292  ieee802154Narrow.anchor[0].appl  "Effectiveness in each anchor"  TV
+292	29466 3353 1.86 483.44 200 0.9011254789272 1 197.89722428972 195.89935538452
+vector 293  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - No ACK received"  TV
+293	32819 2507 1.86 483.44 200 0 3 15 29
+vector 294  ieee802154Narrow.anchor[1].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+294	35326 2507 1.86 483.44 200 0 2 8 10
+vector 295  ieee802154Narrow.anchor[1].appl  "Number of AN Reports with ACK"  TV
+295	37833 2507 1.86 483.44 200 1 9 659 3117
+vector 297  ieee802154Narrow.anchor[1].appl  "Number of packets sent from mobile node 0"  TV
+297	42847 2507 1.86 483.44 200 0 1 65 65
+vector 298  ieee802154Narrow.anchor[1].appl  "Effectiveness in each anchor"  TV
+298	45354 3353 1.86 483.44 200 0.9011254789272 1 197.89722428972 195.89935538452
+vector 299  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - No ACK received"  TV
+299	48707 2507 1.86 483.44 200 0 5 102 192
+vector 300  ieee802154Narrow.anchor[2].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+300	51214 2507 1.86 483.44 200 0 4 86 144
+vector 301  ieee802154Narrow.anchor[2].appl  "Number of AN Reports with ACK"  TV
+301	53721 2704 1.86 483.44 200 9 27 3077 51391
+vector 303  ieee802154Narrow.anchor[2].appl  "Number of packets sent from mobile node 0"  TV
+303	58932 2507 1.86 483.44 200 0 1 34 34
+vector 304  ieee802154Narrow.anchor[2].appl  "Effectiveness in each anchor"  TV
+304	61439 3368 1.86 483.44 200 0.91636515717398 1 198.33725803289 196.74326777924
+vector 305  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - No ACK received"  TV
+305	64807 2507 1.86 483.44 200 0 8 171 451
+vector 306  ieee802154Narrow.anchor[3].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+306	67314 2507 1.86 483.44 200 0 8 351 1175
+vector 307  ieee802154Narrow.anchor[3].appl  "Number of AN Reports with ACK"  TV
+307	69821 2707 1.86 483.44 200 13 31 4110 88514
+vector 309  ieee802154Narrow.anchor[3].appl  "Number of packets sent from mobile node 0"  TV
+309	75035 2507 1.86 483.44 200 0 1 1 1
+vector 310  ieee802154Narrow.anchor[3].appl  "Effectiveness in each anchor"  TV
+310	77542 3368 1.86 483.44 200 0.92927170868347 1 198.37981400455 196.82380529054
+vector 311  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - No ACK received"  TV
+311	80910 2507 1.86 483.44 200 0 3 9 15
+vector 312  ieee802154Narrow.anchor[4].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+312	83417 2507 1.86 483.44 200 0 1 6 6
+vector 313  ieee802154Narrow.anchor[4].appl  "Number of AN Reports with ACK"  TV
+313	85924 2507 1.86 483.44 200 0 4 282 612
+vector 315  ieee802154Narrow.anchor[4].appl  "Number of packets sent from mobile node 0"  TV
+315	90938 2507 1.86 483.44 200 0 0 0 0
+vector 316  ieee802154Narrow.anchor[4].appl  "Effectiveness in each anchor"  TV
+316	93445 3367 1.86 483.44 200 0.861328125 1 197.89458981977 195.9224602701
+vector 317  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - No ACK received"  TV
+317	96812 2507 1.86 483.44 200 0 9 10 82
+vector 318  ieee802154Narrow.anchor[5].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+318	99319 2507 1.86 483.44 200 0 2 2 4
+vector 319  ieee802154Narrow.anchor[5].appl  "Number of AN Reports with ACK"  TV
+319	101826 2507 1.86 483.44 200 0 4 424 1242
+vector 321  ieee802154Narrow.anchor[5].appl  "Number of packets sent from mobile node 0"  TV
+321	106840 2507 1.86 483.44 200 0 1 80 80
+vector 322  ieee802154Narrow.anchor[5].appl  "Effectiveness in each anchor"  TV
+322	109347 3494 1.86 483.44 200 0.71691176470588 1 197.20907212191 194.7147405637
+vector 323  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - No ACK received"  TV
+323	112841 2507 1.86 483.44 200 0 4 48 104
+vector 324  ieee802154Narrow.anchor[6].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+324	115348 2507 1.86 483.44 200 0 5 23 49
+vector 325  ieee802154Narrow.anchor[6].appl  "Number of AN Reports with ACK"  TV
+325	117855 2575 1.86 483.44 200 4 12 1573 13535
+vector 327  ieee802154Narrow.anchor[6].appl  "Number of packets sent from mobile node 0"  TV
+327	122937 2507 1.86 483.44 200 0 1 154 154
+vector 328  ieee802154Narrow.anchor[6].appl  "Effectiveness in each anchor"  TV
+328	125444 3483 1.86 483.44 200 0.87119222689076 1 197.90420438488 195.91197694529
+vector 329  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - No ACK received"  TV
+329	128927 2508 1.86 483.44 200 0 12 245 729
+vector 330  ieee802154Narrow.anchor[7].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+330	131435 2508 1.86 483.44 200 0 14 361 1327
+vector 331  ieee802154Narrow.anchor[7].appl  "Number of AN Reports with ACK"  TV
+331	133943 2707 1.86 483.44 200 15 24 3751 71343
+vector 333  ieee802154Narrow.anchor[7].appl  "Number of packets sent from mobile node 0"  TV
+333	139245 2507 1.86 483.44 200 0 1 109 109
+vector 334  ieee802154Narrow.anchor[7].appl  "Effectiveness in each anchor"  TV
+334	141752 4621 1.86 483.44 200 0.81985251800282 1 194.69273033879 189.76364986958
+vector 335  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - No ACK received"  TV
+335	146373 2508 1.86 483.44 200 0 11 170 498
+vector 336  ieee802154Narrow.anchor[8].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+336	148881 2509 1.86 483.44 200 0 18 414 1726
+vector 337  ieee802154Narrow.anchor[8].appl  "Number of AN Reports with ACK"  TV
+337	151390 2707 1.86 483.44 200 36 60 10494 553566
+vector 339  ieee802154Narrow.anchor[8].appl  "Number of packets sent from mobile node 0"  TV
+339	156608 2507 1.86 483.44 200 0 1 31 31
+vector 340  ieee802154Narrow.anchor[8].appl  "Effectiveness in each anchor"  TV
+340	159115 4096 1.86 483.44 200 0.94185115566695 1 198.30831382815 196.65926657708
+vector 341  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - No ACK received"  TV
+341	163211 2507 1.86 483.44 200 0 9 118 294
+vector 342  ieee802154Narrow.anchor[9].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+342	165718 2507 1.86 483.44 200 0 7 280 852
+vector 343  ieee802154Narrow.anchor[9].appl  "Number of AN Reports with ACK"  TV
+343	168225 2707 1.86 483.44 200 16 31 4704 113602
+vector 345  ieee802154Narrow.anchor[9].appl  "Number of packets sent from mobile node 0"  TV
+345	173439 2507 1.86 483.44 200 0 0 0 0
+vector 346  ieee802154Narrow.anchor[9].appl  "Effectiveness in each anchor"  TV
+346	175946 3535 1.86 483.44 200 0.90922619047619 1 198.60125541715 197.24988386539
+vector 347  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - No ACK received"  TV
+347	179481 2507 1.86 483.44 200 0 3 42 80
+vector 348  ieee802154Narrow.anchor[10].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+348	181988 2507 1.86 483.44 200 0 1 6 6
+vector 349  ieee802154Narrow.anchor[10].appl  "Number of AN Reports with ACK"  TV
+349	184495 2507 1.86 483.44 200 0 6 597 2197
+vector 351  ieee802154Narrow.anchor[10].appl  "Number of packets sent from mobile node 0"  TV
+351	189509 2507 1.86 483.44 200 0 1 125 125
+vector 352  ieee802154Narrow.anchor[10].appl  "Effectiveness in each anchor"  TV
+352	192016 4688 1.86 483.44 200 0.74200680272109 1 191.94081072375 184.77890879784
+vector 353  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - No ACK received"  TV
+353	196704 2507 1.86 483.44 200 0 7 183 413
+vector 354  ieee802154Narrow.anchor[11].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+354	199211 2507 1.86 483.44 200 0 7 165 367
+vector 355  ieee802154Narrow.anchor[11].appl  "Number of AN Reports with ACK"  TV
+355	201718 2636 1.86 483.44 200 5 14 2028 21248
+vector 357  ieee802154Narrow.anchor[11].appl  "Number of packets sent from mobile node 0"  TV
+357	206871 2507 1.86 483.44 200 0 1 187 187
+vector 358  ieee802154Narrow.anchor[11].appl  "Effectiveness in each anchor"  TV
+358	209378 4687 1.86 483.44 200 0.80732566897041 1 193.9045356143 188.32794320559
+vector 359  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - No ACK received"  TV
+359	214065 2507 1.86 483.44 200 0 9 222 602
+vector 360  ieee802154Narrow.anchor[12].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+360	216572 2509 1.86 483.44 200 0 17 370 1576
+vector 361  ieee802154Narrow.anchor[12].appl  "Number of AN Reports with ACK"  TV
+361	219081 2707 1.86 483.44 200 14 34 5282 142548
+vector 363  ieee802154Narrow.anchor[12].appl  "Number of packets sent from mobile node 0"  TV
+363	224426 2507 1.86 483.44 200 0 1 117 117
+vector 364  ieee802154Narrow.anchor[12].appl  "Effectiveness in each anchor"  TV
+364	226933 4579 1.86 483.44 200 0.72211089924707 1 190.46509413969 182.30230091466
+vector 365  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - No ACK received"  TV
+365	231512 2507 1.86 483.44 200 0 8 162 422
+vector 366  ieee802154Narrow.anchor[13].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+366	234019 2508 1.86 483.44 200 0 18 330 1394
+vector 367  ieee802154Narrow.anchor[13].appl  "Number of AN Reports with ACK"  TV
+367	236527 2701 1.86 483.44 200 8 21 2929 44823
+vector 369  ieee802154Narrow.anchor[13].appl  "Number of packets sent from mobile node 0"  TV
+369	241790 2507 1.86 483.44 200 0 1 33 33
+vector 370  ieee802154Narrow.anchor[13].appl  "Effectiveness in each anchor"  TV
+370	244297 3749 1.86 483.44 200 0.74653132086168 1 195.19589134562 190.99130714449
+vector 371  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - No ACK received"  TV
+371	248046 2507 1.86 483.44 200 0 4 51 89
+vector 372  ieee802154Narrow.anchor[14].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+372	250553 2507 1.86 483.44 200 0 6 99 257
+vector 373  ieee802154Narrow.anchor[14].appl  "Number of AN Reports with ACK"  TV
+373	253060 2513 1.86 483.44 200 2 11 1160 7624
+vector 375  ieee802154Narrow.anchor[14].appl  "Number of packets sent from mobile node 0"  TV
+375	258080 2507 1.86 483.44 200 0 0 0 0
+vector 376  ieee802154Narrow.anchor[14].appl  "Effectiveness in each anchor"  TV
+376	260587 3564 1.86 483.44 200 0.89583333333333 1 198.17210227862 196.42950132955
+vector 377  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - No ACK received"  TV
+377	264151 2507 1.86 483.44 200 0 1 11 11
+vector 378  ieee802154Narrow.anchor[15].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+378	266658 2507 1.86 483.44 200 0 0 0 0
+vector 379  ieee802154Narrow.anchor[15].appl  "Number of AN Reports with ACK"  TV
+379	269165 2507 1.86 483.44 200 1 4 386 952
+vector 381  ieee802154Narrow.anchor[15].appl  "Number of packets sent from mobile node 0"  TV
+381	274179 2507 1.86 483.44 200 0 1 75 75
+vector 382  ieee802154Narrow.anchor[15].appl  "Effectiveness in each anchor"  TV
+382	276686 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
+vector 383  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - No ACK received"  TV
+383	281263 2507 1.86 483.44 200 0 5 129 291
+vector 384  ieee802154Narrow.anchor[16].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+384	283770 2507 1.86 483.44 200 0 8 155 527
+vector 385  ieee802154Narrow.anchor[16].appl  "Number of AN Reports with ACK"  TV
+385	286277 2550 1.86 483.44 200 4 13 1511 12475
+vector 387  ieee802154Narrow.anchor[16].appl  "Number of packets sent from mobile node 0"  TV
+387	291334 2507 1.86 483.44 200 0 1 115 115
+vector 388  ieee802154Narrow.anchor[16].appl  "Effectiveness in each anchor"  TV
+388	293841 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
+vector 389  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - No ACK received"  TV
+389	298418 2507 1.86 483.44 200 0 8 221 607
+vector 390  ieee802154Narrow.anchor[17].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+390	300925 2507 1.86 483.44 200 0 6 210 518
+vector 391  ieee802154Narrow.anchor[17].appl  "Number of AN Reports with ACK"  TV
+391	303432 2600 1.86 483.44 200 6 16 1967 20637
+vector 393  ieee802154Narrow.anchor[17].appl  "Number of packets sent from mobile node 0"  TV
+393	308559 2507 1.86 483.44 200 0 1 72 72
+vector 394  ieee802154Narrow.anchor[17].appl  "Effectiveness in each anchor"  TV
+394	311066 4577 1.86 483.44 200 0.71506897304945 1 190.13296584752 181.764182802
+vector 395  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - No ACK received"  TV
+395	315643 2507 1.86 483.44 200 0 7 49 145
+vector 396  ieee802154Narrow.anchor[18].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+396	318150 2507 1.86 483.44 200 0 4 23 55
+vector 397  ieee802154Narrow.anchor[18].appl  "Number of AN Reports with ACK"  TV
+397	320657 2525 1.86 483.44 200 2 11 1350 10012
+vector 399  ieee802154Narrow.anchor[18].appl  "Number of packets sent from mobile node 0"  TV
+399	325689 2507 1.86 483.44 200 0 1 6 6
+vector 400  ieee802154Narrow.anchor[18].appl  "Effectiveness in each anchor"  TV
+400	328196 3787 1.86 483.44 200 0.67913613217278 1 194.71833591575 190.19617760783
+vector 401  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - No ACK received"  TV
+401	331983 2507 1.86 483.44 200 0 3 17 29
+vector 402  ieee802154Narrow.anchor[19].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+402	334490 2507 1.86 483.44 200 0 1 1 1
+vector 403  ieee802154Narrow.anchor[19].appl  "Number of AN Reports with ACK"  TV
+403	336997 2507 1.86 483.44 200 0 6 520 1956
+vector 405  ieee802154Narrow.anchor[19].appl  "Number of packets sent from mobile node 0"  TV
+405	342011 2507 1.86 483.44 200 0 0 0 0
+vector 406  ieee802154Narrow.anchor[19].appl  "Effectiveness in each anchor"  TV
+406	344518 3572 1.86 483.44 200 0.88072916666667 1 197.97887311196 196.06500832825
+vector 407  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - No ACK received"  TV
+407	348090 2507 1.86 483.44 200 0 0 0 0
+vector 408  ieee802154Narrow.anchor[20].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+408	350597 2507 1.86 483.44 200 0 0 0 0
+vector 409  ieee802154Narrow.anchor[20].appl  "Number of AN Reports with ACK"  TV
+409	353104 2507 1.86 483.44 200 0 2 137 173
+vector 411  ieee802154Narrow.anchor[20].appl  "Number of packets sent from mobile node 0"  TV
+411	358118 2507 1.86 483.44 200 0 1 35 35
+vector 412  ieee802154Narrow.anchor[20].appl  "Effectiveness in each anchor"  TV
+412	360625 4577 1.86 483.44 200 0.65118929307102 1 188.52078712911 179.00368571103
+vector 413  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - No ACK received"  TV
+413	365202 2507 1.86 483.44 200 0 2 8 12
+vector 414  ieee802154Narrow.anchor[21].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+414	367709 2507 1.86 483.44 200 0 1 5 5
+vector 415  ieee802154Narrow.anchor[21].appl  "Number of AN Reports with ACK"  TV
+415	370216 2507 1.86 483.44 200 0 3 298 606
+vector 417  ieee802154Narrow.anchor[21].appl  "Number of packets sent from mobile node 0"  TV
+417	375230 2507 1.86 483.44 200 0 1 37 37
+vector 418  ieee802154Narrow.anchor[21].appl  "Effectiveness in each anchor"  TV
+418	377737 4622 1.86 483.44 200 0.71506897304945 1 189.80032695863 181.12794485833
+vector 419  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - No ACK received"  TV
+419	382359 2507 1.86 483.44 200 0 4 4 16
+vector 420  ieee802154Narrow.anchor[22].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+420	384866 2507 1.86 483.44 200 0 4 4 16
+vector 421  ieee802154Narrow.anchor[22].appl  "Number of AN Reports with ACK"  TV
+421	387373 2507 1.86 483.44 200 0 4 370 842
+vector 423  ieee802154Narrow.anchor[22].appl  "Number of packets sent from mobile node 0"  TV
+423	392387 2507 1.86 483.44 200 0 0 0 0
+vector 424  ieee802154Narrow.anchor[22].appl  "Effectiveness in each anchor"  TV
+424	394894 4583 1.86 483.44 200 0.67138157894737 1 189.17306087676 180.14835776315
+vector 425  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - No ACK received"  TV
+425	399477 2507 1.86 483.44 200 0 7 8 50
+vector 426  ieee802154Narrow.anchor[23].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+426	401984 2507 1.86 483.44 200 0 3 3 9
+vector 427  ieee802154Narrow.anchor[23].appl  "Number of AN Reports with ACK"  TV
+427	404491 2507 1.86 483.44 200 0 4 321 739
+vector 429  ieee802154Narrow.anchor[23].appl  "Number of packets sent from mobile node 0"  TV
+429	409505 2507 1.86 483.44 200 0 0 0 0
+vector 430  ieee802154Narrow.anchor[23].appl  "Effectiveness in each anchor"  TV
+430	412012 3805 1.86 483.44 200 0.54651281335852 1 193.85018597969 188.83134499908
+vector 431  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - No ACK received"  TV
+431	415817 2507 1.86 483.44 200 0 0 0 0
+vector 432  ieee802154Narrow.anchor[24].appl  "Dropped Packets in AN - Max MAC BackOff tries"  TV
+432	418324 2507 1.86 483.44 200 0 0 0 0
+vector 433  ieee802154Narrow.anchor[24].appl  "Number of AN Reports with ACK"  TV
+433	420831 2507 1.86 483.44 200 0 2 120 174
+vector 435  ieee802154Narrow.anchor[24].appl  "Number of packets sent from mobile node 0"  TV
 435	425845 2507 1.86 483.44 200 0 0 0 0
+vector 436  ieee802154Narrow.anchor[24].appl  "Effectiveness in each anchor"  TV
 436	428352 3572 1.86 483.44 200 0.88072916666667 1 197.97887311196 196.06500832825
+vector 437  ieee802154Narrow.computer[0].appl  received-packets-per-period  TV
 437	431924 2801 1.86 483.44 200 87 111 19765 1956843
+vector 438  ieee802154Narrow.computer[0].appl  received-no-repeated-packets-per-period  TV
 438	434725 2753 1.86 483.44 200 74 105 19331 1871825
-439	437478 2507 1.86 483.44 200 4 9 1269 8275
+vector 440  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 8"  TV
 440	439985 2511 1.86 483.44 200 5 10 1469 11091
+vector 441  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 12"  TV
 441	442496 2635 1.86 483.44 200 6 14 2015 20947
+vector 442  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 16"  TV
 442	445131 2507 1.86 483.44 200 2 8 974 5018
+vector 443  ieee802154Narrow.computer[0].appl  "Number of packets sent from anchor 20"  TV
 443	447638 2507 1.86 483.44 200 0 2 135 169
+vector 439  ieee802154Narrow.computer[0].appl  "Number of packets sent from mobile node 0"  TV
+439	437478 2507 1.86 483.44 200 4 9 1269 8275
+vector 444  ieee802154Narrow.anchor[0].appl  ""  TV
 444	450145 68 484 484 3 0.83551753646 1.541603102835 3.291011689296 3.9098265316746
+vector 445  ieee802154Narrow.anchor[0].appl  ""  TV
 445	450213 30 484 484 3 1 1 3 3
+vector 446  ieee802154Narrow.anchor[1].appl  ""  TV
 446	450243 160 484 484 7 0.843611740772 1.591729915243 7.941735777623 9.7463929945289
+vector 447  ieee802154Narrow.anchor[1].appl  ""  TV
 447	450403 70 484 484 7 5 5 35 175
+vector 448  ieee802154Narrow.anchor[2].appl  ""  TV
 448	450473 1534 484 484 67 0.890272782067 1.6630896722 89.60765584234 123.24397996789
+vector 449  ieee802154Narrow.anchor[2].appl  ""  TV
 449	452007 670 484 484 67 1 5 183 709
+vector 450  ieee802154Narrow.anchor[3].appl  ""  TV
 450	452677 1737 484 484 76 0.866797410917 1.773527472242 107.99164926653 157.8449202574
+vector 451  ieee802154Narrow.anchor[3].appl  ""  TV
 451	454414 760 484 484 76 1 5 282 1284
+vector 452  ieee802154Narrow.anchor[4].appl  ""  TV
 452	455174 46 484 484 2 0.838731126295 1.550102637796 2.388833764091 3.1062880899182
+vector 453  ieee802154Narrow.anchor[4].appl  ""  TV
 453	455220 20 484 484 2 5 5 10 50
+vector 454  ieee802154Narrow.anchor[5].appl  ""  TV
 454	455240 68 484 484 3 0.829723452954 0.933127613693 2.684552883907 2.4087023917587
+vector 455  ieee802154Narrow.anchor[5].appl  ""  TV
 455	455308 30 484 484 3 1 5 11 51
+vector 456  ieee802154Narrow.anchor[6].appl  ""  TV
 456	455338 2076 484 484 91 0.853206167217 1.596806729667 119.99860805126 161.38824660973
+vector 457  ieee802154Narrow.anchor[6].appl  ""  TV
 457	457414 910 484 484 91 1 5 148 414
+vector 458  ieee802154Narrow.anchor[7].appl  ""  TV
 458	458324 522 484 484 23 0.918021317479 1.657694847139 32.194234450878 46.065177133657
+vector 459  ieee802154Narrow.anchor[7].appl  ""  TV
 459	458846 230 484 484 23 5 5 115 575
+vector 460  ieee802154Narrow.anchor[8].appl  ""  TV
 460	459076 1764 484 484 77 0.850976157739 1.773191803657 109.37178258505 159.45871727989
+vector 461  ieee802154Narrow.anchor[8].appl  ""  TV
 461	460840 770 484 484 77 1 5 356 1738
+vector 462  ieee802154Narrow.anchor[9].appl  ""  TV
 462	461610 1858 484 484 81 0.859732180162 1.768036438046 113.41898440517 163.42291286914
+vector 463  ieee802154Narrow.anchor[9].appl  ""  TV
 463	463468 810 484 484 81 1 5 288 1254
+vector 464  ieee802154Narrow.anchor[10].appl  ""  TV
 464	464278 91 484 484 4 0.890869382746 0.91962961726 3.626427964116 3.2881986329401
+vector 465  ieee802154Narrow.anchor[10].appl  ""  TV
 465	464369 40 484 484 4 1 5 16 76
+vector 466  ieee802154Narrow.anchor[11].appl  ""  TV
 466	464409 574 484 484 25 0.957893248649 1.595218115107 34.444685124527 48.379673382839
+vector 467  ieee802154Narrow.anchor[11].appl  ""  TV
 467	464983 250 484 484 25 1 5 96 428
+vector 468  ieee802154Narrow.anchor[12].appl  ""  TV
 468	465233 1028 484 484 45 0.915709710673 1.661978908526 64.902967076127 95.184496760402
+vector 469  ieee802154Narrow.anchor[12].appl  ""  TV
 469	466261 450 484 484 45 1 5 206 982
+vector 470  ieee802154Narrow.anchor[13].appl  ""  TV
 470	466711 1393 484 484 61 0.892838353809 1.662358544147 83.618161982859 117.19417392451
+vector 471  ieee802154Narrow.anchor[13].appl  ""  TV
 471	468104 610 484 484 61 1 5 178 720
+vector 472  ieee802154Narrow.anchor[14].appl  ""  TV
 472	468714 1466 484 484 64 0.82352541923 1.66371791569 86.701187700639 120.48716300798
+vector 473  ieee802154Narrow.anchor[14].appl  ""  TV
 473	470180 640 484 484 64 1 5 128 418
+vector 474  ieee802154Narrow.anchor[15].appl  ""  TV
 474	470820 69 484 484 3 0.824409325542 1.061263161118 2.818183324535 2.6755066959411
+vector 475  ieee802154Narrow.anchor[15].appl  ""  TV
 475	470889 30 484 484 3 5 5 15 75
+vector 476  ieee802154Narrow.anchor[16].appl  ""  TV
 476	470919 1875 484 484 82 0.84673210825 1.596304226266 110.64500761238 151.67087531961
+vector 477  ieee802154Narrow.anchor[16].appl  ""  TV
 477	472794 820 484 484 82 1 5 145 429
+vector 478  ieee802154Narrow.anchor[17].appl  ""  TV
 478	473614 1696 484 484 74 1.031966068455 1.598868113792 101.43805063083 140.80175126493
+vector 479  ieee802154Narrow.anchor[17].appl  ""  TV
 479	475310 740 484 484 74 1 5 175 631
+vector 480  ieee802154Narrow.anchor[18].appl  ""  TV
 480	476050 1079 484 484 47 0.853346757372 1.59851405482 60.286520322352 79.761361400587
+vector 481  ieee802154Narrow.anchor[18].appl  ""  TV
 481	477129 470 484 484 47 1 5 102 342
+vector 482  ieee802154Narrow.anchor[19].appl  ""  TV
 482	477599 138 484 484 6 0.844099212961 1.589801355337 7.007113934249 8.6227405402602
+vector 483  ieee802154Narrow.anchor[19].appl  ""  TV
 483	477737 60 484 484 6 5 5 30 150
+vector 484  ieee802154Narrow.anchor[20].appl  ""  TV
 484	477797 23 484 484 1 0.822030255128 0.822030255128 0.822030255128 0.6757337403458
+vector 485  ieee802154Narrow.anchor[20].appl  ""  TV
 485	477820 10 484 484 1 5 5 5 25
+vector 486  ieee802154Narrow.anchor[21].appl  ""  TV
 486	477830 46 484 484 2 0.834892035753 1.306307615407 2.14119965116 2.4034842974341
+vector 487  ieee802154Narrow.anchor[21].appl  ""  TV
 487	477876 20 484 484 2 5 5 10 50
+vector 488  ieee802154Narrow.anchor[22].appl  ""  TV
 488	477896 69 484 484 3 0.831446978273 0.923699617638 2.664201466363 2.3709058187964
+vector 489  ieee802154Narrow.anchor[22].appl  ""  TV
 489	477965 30 484 484 3 5 5 15 75
+vector 490  ieee802154Narrow.anchor[23].appl  ""  TV
 490	477995 69 484 484 3 0.826011340883 0.933277248143 2.659845331932 2.3643036043622
+vector 491  ieee802154Narrow.anchor[23].appl  ""  TV
 491	478064 30 484 484 3 1 1 3 3
+vector 492  ieee802154Narrow.anchor[24].appl  ""  TV
 492	478094 23 484 484 1 0.894209929387 0.894209929387 0.894209929387 0.7996113978143
+vector 493  ieee802154Narrow.anchor[24].appl  ""  TV
 493	478117 10 484 484 1 1 1 1 1

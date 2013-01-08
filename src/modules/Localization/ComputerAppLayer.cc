@@ -439,6 +439,13 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
         // Change the phase and prepare the data for the new phase
         switch (nextPhase)
         {
+        case AppLayer::RANGING_PHASE:
+            EV<<"Phase Ranging" << endl;
+            phase = AppLayer::RANGING_PHASE;
+            nextPhase = AppLayer::SYNC_PHASE_1;
+            nextPhaseStartTime = simTime() + timeSyncPhase;
+            scheduleAt(nextPhaseStartTime, beginPhases);
+            break;
         case AppLayer::SYNC_PHASE_1:
             phase = AppLayer::SYNC_PHASE_1;
             nextPhase = AppLayer::REPORT_PHASE;

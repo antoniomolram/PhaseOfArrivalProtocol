@@ -35,7 +35,11 @@ public:
 		BEGIN_PHASE,					// Event to be executed at the beginning of every phase
 		WAKE_UP,						// Event to wake up the node timeSleepToRX before activity
 		SLEEP,						    // Event to sleep the node
-		MAC_ERROR_MANAGEMENT            // Event to to delay the handle of packets with MAC error.
+		MAC_ERROR_MANAGEMENT,            // Event to to delay the handle of packets with MAC error.
+
+	    //Added by Antonio
+        INIT_RANGING,                   // Event to transmit fast transmit ranging packets.
+        RANGE_REQUEST                   // Range request (See manual)
 	};
 
 	enum PhaseType{						// Phases of the Full Phase or Period
@@ -46,8 +50,16 @@ public:
 		SYNC_PHASE_2,
 		COM_SINK_PHASE_1,
 		SYNC_PHASE_3,
-		COM_SINK_PHASE_2
+		COM_SINK_PHASE_2,
+		//Added by Antonio
+		RANGING_PHASE
+
+
 	};
+
+    enum RangingTips{
+        Init=1, RangingRequest
+    };
 
 
 protected:
@@ -160,6 +172,9 @@ protected:
 
 	//Victor
     long nbReportsNoDuplicated;         // Variable to count the number of no duplicated reports successfully received
+
+    //by Antonio
+    int RTBHeader;
 
 public:
 
