@@ -1,17 +1,32 @@
 MiXiM http://mixim.sourceforge.net/
+
+Documentation about the project.
+https://bitbucket.org/cecc2/cecc2/wiki/Home
 -----------------------------------
 -----------------------------------
 
 
 Contents
 ========
- - Purpose and History
- - Copyright
- - Authors and Maintainers
- - Installation
- - Documentation
- - Release notes
+ · Intelligent traffic lights
+ Documentation about MiXiM 
+	 - Purpose and History
+	 - Copyright
+	 - Authors and Maintainers
+	 - Installation
+	 - Documentation
+	 - Release notes
 
+Intelligent traffic lights
+==========================
+
+Wireless sensor network of Intelligent traffic lights simulated in MiXiM framework 
+on OMNeT++ engine. 
+
+Main developers in the project at the moment:
+	Victor Casas
+	Maria de la Fuente
+	Antonio Molina
 
 Purpose and History
 ===================
