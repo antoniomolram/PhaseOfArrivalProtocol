@@ -126,6 +126,8 @@ $O/SimpleNetwLayer.o: SimpleNetwLayer.cc \
 	../../src/base/modules/BatteryAccess.h \
 	../../src/base/phyLayer/Interpolation.h \
 	../../src/base/phyLayer/MappingBase.h \
+	../../src/base/utils/Coord.h \
+	../../src/base/utils/FWMath.h \
 	../../src/base/utils/FindModule.h \
 	../../src/base/utils/HostState.h \
 	../../src/base/utils/MacToNetwControlInfo.h \

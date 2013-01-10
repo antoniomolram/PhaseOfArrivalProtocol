@@ -68,7 +68,7 @@ void AppLayer::initialize(int stage)
 		timeSyncPhase = 0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
 		timeVIPPhase =  0.3; // 300ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
 		timeReportPhase = 0.4 ; // 400 ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
-
+		timeRangingPhase = 0.6 ;
 		beginPhases = new cMessage("next-phase",AppLayer::BEGIN_PHASE);
 		nextPhase = AppLayer::RANGING_PHASE;
 		nextPhaseStartTime = simTime();

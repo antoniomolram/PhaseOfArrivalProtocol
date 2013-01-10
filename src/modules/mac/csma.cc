@@ -92,6 +92,8 @@ void csma::initialize(int stage) {
         ccaSamplesCounter = 0;
         ccaValueBusy = 0;
 
+        //Added by Antonio
+        fast_transmision= false;
 
         //init parameters for backoff method
         std::string backoffMethodStr = par("backoffMethod").stdstringValue();
@@ -248,6 +250,11 @@ void csma::handleUpperMsg(cMessage *msg) {
 /***MOD***/
     //macPkt->setCsmaActive(false);
     macPkt->setCsmaActive(cInfo->getCsmaActive());
+//Added: FastTransmision Setup
+    if(cInfo->getFastTransmision()){
+        EV<< "Estamos en FastTransmision" << endl;
+        fast_transmision=true;
+    }
 /*********/
     macPkt->setDestAddr(dest);
     delete cInfo;
@@ -846,6 +853,7 @@ void csma::updateStatusNotIdle(cMessage *msg) {
  */
 void csma::executeMac(t_mac_event event, cMessage *msg) {
     EV<< "In executeMac" << endl;
+
     if(macState != IDLE_1 && event == EV_SEND_REQUEST) {
         updateStatusNotIdle(msg);
     } else if(event == EV_SEND_REQUEST && phy->getRadioState() == Radio::RX_BUSY && !transmitOnReception){
@@ -853,6 +861,15 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
         updateStatusNotIdle(msg);
         checkQueue = true;
     }
+    //Added: Included fastTransmision transmision!
+    else if(event == EV_SEND_REQUEST && fast_transmision==true){
+        macQueue.push_back(static_cast<MacPkt *> (msg));
+        EV << "Fast transmission" << endl;
+        updateStatusTransmit(event, msg);
+//
+    }
+
+
     else{
         switch(macState) {
         case IDLE_1:
@@ -881,6 +898,19 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
             break;
         }
     }
+}
+void csma::updateStatusTransmit(t_mac_event event, cMessage *msg) {
+    phy->setRadioState(Radio::TX);
+
+
+    MacPkt * mac = check_and_cast<MacPkt *>(macQueue.front()->dup());
+    attachSignal(mac, simTime()+aTurnaroundTime);
+//    //sendDown(msg);
+//    // give time for the radio to be in Tx state before transmitting
+
+    //CUIDADO: Modificado BasePhyLayer.cc en la recepción de selfmessage "TX_OVER".
+    sendDelayed(mac, aTurnaroundTime, lowerLayerOut);
+
 }
 
 void csma::manageQueue() {

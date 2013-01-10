@@ -291,6 +291,7 @@ $O/Localization/AnchorNetLayer.o: Localization/AnchorNetLayer.cc \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/NetwToMacControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AnchorAppLayer.h \

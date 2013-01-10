@@ -276,7 +276,7 @@ void AnchorAppLayer::finish()
 		sprintf(buffer, "Number of packets sent from mobile node %d", i);
 		recordScalar(buffer, fromNode[i]);
 	}
-	//free(packetsResend);
+	free(packetsResend);
 }
 
 void AnchorAppLayer::handleSelfMsg(cMessage *msg)
@@ -443,6 +443,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 EV<<"Phase Ranging" << endl;
                 phase = AppLayer::RANGING_PHASE;
                 nextPhase = AppLayer::SYNC_PHASE_1;
+                nextPhaseStartTime = simTime() + timeRangingPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
+                nextPhaseStart = simTime();
                 scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), initRangingProcedure);
                 break;
 

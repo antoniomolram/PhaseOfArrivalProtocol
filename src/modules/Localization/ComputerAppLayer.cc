@@ -422,7 +422,7 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
                 packetsResend[i] = -1;
             }
             numPckToSentByPeriod = 0;
-            receivedPacketsPerPeriod = 0;
+           receivedPacketsPerPeriod = 0;
             nbReportsNoDupPerPeriod = 0;
         }
         if (!transfersQueue.empty()) {
@@ -443,7 +443,7 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
             EV<<"Phase Ranging" << endl;
             phase = AppLayer::RANGING_PHASE;
             nextPhase = AppLayer::SYNC_PHASE_1;
-            nextPhaseStartTime = simTime() + timeSyncPhase;
+            nextPhaseStartTime = simTime() + timeRangingPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
         case AppLayer::SYNC_PHASE_1:
@@ -627,8 +627,8 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
                             pkt->setDestAddr(pkt->getSrcAddr());
                             pkt->setRealSrcAddr(realSrc);
                             pkt->setSrcAddr(src);
-                            pkt->setRetransmisionCounterBO(0);  // Reset the retransmission counter BackOff
-                            pkt->setRetransmisionCounterACK(0); // Reset the retransmission counter ACK
+                            pkt->setRetransmisionCounterBO(0);	// Reset the retransmission counter BackOff
+                            pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
                             pkt->setCSMA(true);
                             if(!receivedId[pkt->getCreatedIn()*10000 + pkt->getId()]) { // Checks if the packet was already received to only count it once
                                 fromNode[pkt->getFromNode()]++;
@@ -647,7 +647,7 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
 
                                     pkt->setIsAnswer(true); // Puts a flag to inform the packet is now an answer to the ask for request
                                 } else {
-                                    if(pkt->getWasBroadcast()) {    // Checks if it was a Broadcast
+                                    if(pkt->getWasBroadcast()) {	// Checks if it was a Broadcast
                                         broadOK[pkt->getPriority()]++;
 
                                         if(pkt->getNodeMode() == 1){
@@ -870,487 +870,487 @@ void ComputerAppLayer::orderQueue(int *queue, int *numerTimesQueue, int queueCou
 
 void ComputerAppLayer::finish()
 {
-    recordScalar("Dropped Packets in Comp - No ACK received", nbPacketDroppedNoACK);
-    recordScalar("Dropped Packets in Comp - Max MAC BackOff tries", nbPacketDroppedBackOff);
-    recordScalar("Dropped Packets in Comp - App Queue Full", nbPacketDroppedAppQueueFull);
-    recordScalar("Dropped Packets in Comp - Mac Queue Full", nbPacketDroppedMacQueueFull);
-    recordScalar("Dropped Packets in Comp - No Time in the Phase", nbPacketDroppedNoTimeApp);
-    recordScalar("Erased Packets in Comp - No more BackOff retries", nbErasedPacketsBackOffMax);
-    recordScalar("Erased Packets in Comp - No more No ACK retries", nbErasedPacketsNoACKMax);
-    recordScalar("Erased Packets in Comp - No more MAC Queue Full retries", nbErasedPacketsMacQueueFull);
-    recordScalar("Number of Comp Reports with ACK", nbReportsWithACK);
-    recordScalar("Number of Reports received in Comp", nbReportsReceived);
-    recordScalar("Number of Reports really for me received in Comp", nbReportsForMeReceived);
-/*
-    recordScalar("Number of packets 1 created by a mobile broadcast TX OK", broadOK[1]);
-    recordScalar("Number of packets 1 created by a mobile report TX OK", reportOK[1]);
-
-    recordScalar("Number of packets 2 created by a mobile broadcast TX OK", broadOK[2]);
-    recordScalar("Number of packets 2 created by a mobile report TX OK", reportOK[2]);
-
-    recordScalar("Number of packets 3 created by a mobile broadcast TX OK", broadOK[3]);
-    recordScalar("Number of packets 3 created by a mobile report TX OK", reportOK[3]);
-
-    recordScalar("Number of packets 4 created by a mobile broadcast TX OK", broadOK[4]);
-    recordScalar("Number of packets 4 created by a mobile report TX OK", reportOK[4]);
-
-    recordScalar("Number of packets created by a mobile request TX OK", requestOK);
-*/
-    recordScalar("Number of app duplicated packets",duplicatedPktCounter);
-    recordScalar("Number of no duplicated reports",nbReportsNoDuplicated);
-/*
-    for(int i=0; i<numberOfAnchors; i++) {
-        int n1,n2,n3,n4,n5,n6,n7,n8,n9;
-        n1=n2=n3=n4=n5=n6=n7=n8=n9=0;
-
-        int m1,m2,m3,m4,m5,m6,m7,m8,m9;
-        m1=m2=m3=m4=m5=m6=m7=m8=m9=0;
-
-        maxBroad1[i] = timeBroad1[4000*i];
-        maxBroad2[i] = timeBroad2[4000*i];
-        maxBroad3[i] = timeBroad3[4000*i];
-        maxBroad4[i] = timeBroad4[4000*i];
-        maxReport1[i] = timeReport1[700*i];
-        maxReport2[i] = timeReport2[700*i];
-        maxReport3[i] = timeReport3[700*i];
-        maxReport4[i] = timeReport4[700*i];
-        maxRequest[i] = timeRequest[200*i];
-
-        maxDelayBroad1[i] = delayBroad1[4000*i];
-        maxDelayBroad2[i] = delayBroad2[4000*i];
-        maxDelayBroad3[i] = delayBroad3[4000*i];
-        maxDelayBroad4[i] = delayBroad4[4000*i];
-        maxDelayReport1[i] = delayReport1[700*i];
-        maxDelayReport2[i] = delayReport2[700*i];
-        maxDelayReport3[i] = delayReport3[700*i];
-        maxDelayReport4[i] = delayReport4[700*i];
-        maxDelayRequest[i] = delayRequest[200*i];
-
-        minBroad1[i] = timeBroad1[4000*i];
-        minBroad2[i] = timeBroad2[4000*i];
-        minBroad3[i] = timeBroad3[4000*i];
-        minBroad4[i] = timeBroad4[4000*i];
-        minReport1[i] = timeReport1[700*i];
-        minReport2[i] = timeReport2[700*i];
-        minReport3[i] = timeReport3[700*i];
-        minReport4[i] = timeReport4[700*i];
-        minRequest[i] = timeRequest[200*i];
-
-        minDelayBroad1[i] = delayBroad1[4000*i];
-        minDelayBroad2[i] = delayBroad2[4000*i];
-        minDelayBroad3[i] = delayBroad3[4000*i];
-        minDelayBroad4[i] = delayBroad4[4000*i];
-        minDelayReport1[i] = delayReport1[700*i];
-        minDelayReport2[i] = delayReport2[700*i];
-        minDelayReport3[i] = delayReport3[700*i];
-        minDelayReport4[i] = delayReport4[700*i];
-        minDelayRequest[i] = delayRequest[200*i];
-
-        for(int j=0; j<4000; j++) {
-            if(timeBroad1[4000*i + j] != 0) {meanBroad1[i] = meanBroad1[i] + timeBroad1[4000*i + j]; n1++;}
-            if(timeBroad2[4000*i + j] != 0) {meanBroad2[i] = meanBroad2[i] + timeBroad2[4000*i + j]; n2++;}
-            if(timeBroad3[4000*i + j] != 0) {meanBroad3[i] = meanBroad3[i] + timeBroad3[4000*i + j]; n3++;}
-            if(timeBroad4[4000*i + j] != 0) {meanBroad4[i] = meanBroad4[i] + timeBroad4[4000*i + j]; n4++;}
-
-            if(timeBroad1[4000*i + j] > maxBroad1[i]) maxBroad1[i] = timeBroad1[4000*i + j];
-            if(timeBroad2[4000*i + j] > maxBroad2[i]) maxBroad2[i] = timeBroad2[4000*i + j];
-            if(timeBroad3[4000*i + j] > maxBroad3[i]) maxBroad3[i] = timeBroad3[4000*i + j];
-            if(timeBroad4[4000*i + j] > maxBroad4[i]) maxBroad4[i] = timeBroad4[4000*i + j];
-
-            if(timeBroad1[4000*i + j] < minBroad1[i]) minBroad1[i] = timeBroad1[4000*i + j];
-            if(timeBroad2[4000*i + j] < minBroad2[i]) minBroad2[i] = timeBroad2[4000*i + j];
-            if(timeBroad3[4000*i + j] < minBroad3[i]) minBroad3[i] = timeBroad3[4000*i + j];
-            if(timeBroad4[4000*i + j] < minBroad4[i]) minBroad4[i] = timeBroad4[4000*i + j];
-
-            if(delayBroad1[4000*i + j] != 0) {meanDelayBroad1[i] = meanDelayBroad1[i] + delayBroad1[4000*i + j]; m1++;}
-            if(delayBroad2[4000*i + j] != 0) {meanDelayBroad2[i] = meanDelayBroad2[i] + delayBroad2[4000*i + j]; m2++;}
-            if(delayBroad3[4000*i + j] != 0) {meanDelayBroad3[i] = meanDelayBroad3[i] + delayBroad3[4000*i + j]; m3++;}
-            if(delayBroad4[4000*i + j] != 0) {meanDelayBroad4[i] = meanDelayBroad4[i] + delayBroad4[4000*i + j]; m4++;}
-
-            if(delayBroad1[4000*i + j] > maxDelayBroad1[i]) maxDelayBroad1[i] = delayBroad1[4000*i + j];
-            if(delayBroad2[4000*i + j] > maxDelayBroad2[i]) maxDelayBroad2[i] = delayBroad2[4000*i + j];
-            if(delayBroad3[4000*i + j] > maxDelayBroad3[i]) maxDelayBroad3[i] = delayBroad3[4000*i + j];
-            if(delayBroad4[4000*i + j] > maxDelayBroad4[i]) maxDelayBroad4[i] = delayBroad4[4000*i + j];
-
-            if(delayBroad1[4000*i + j] < minDelayBroad1[i]) minDelayBroad1[i] = delayBroad1[4000*i + j];
-            if(delayBroad2[4000*i + j] < minDelayBroad2[i]) minDelayBroad2[i] = delayBroad2[4000*i + j];
-            if(delayBroad3[4000*i + j] < minDelayBroad3[i]) minDelayBroad3[i] = delayBroad3[4000*i + j];
-            if(delayBroad4[4000*i + j] < minDelayBroad4[i]) minDelayBroad4[i] = delayBroad4[4000*i + j];
-        }
-
-        for(int j=0; j<700; j++) {
-            if(timeReport1[700*i + j] != 0) {meanReport1[i] = meanReport1[i] + timeReport1[700*i + j]; n5++;}
-            if(timeReport2[700*i + j] != 0) {meanReport2[i] = meanReport2[i] + timeReport2[700*i + j]; n6++;}
-            if(timeReport3[700*i + j] != 0) {meanReport3[i] = meanReport3[i] + timeReport3[700*i + j]; n7++;}
-            if(timeReport4[700*i + j] != 0) {meanReport4[i] = meanReport4[i] + timeReport4[700*i + j]; n8++;}
-
-            if(timeReport1[700*i + j] > maxReport1[i]) maxReport1[i] = timeReport1[700*i + j];
-            if(timeReport2[700*i + j] > maxReport2[i]) maxReport2[i] = timeReport2[700*i + j];
-            if(timeReport3[700*i + j] > maxReport3[i]) maxReport3[i] = timeReport3[700*i + j];
-            if(timeReport4[700*i + j] > maxReport4[i]) maxReport4[i] = timeReport4[700*i + j];
-
-            if(timeReport1[700*i + j] < minReport1[i]) minReport1[i] = timeReport1[700*i + j];
-            if(timeReport2[700*i + j] < minReport2[i]) minReport2[i] = timeReport2[700*i + j];
-            if(timeReport3[700*i + j] < minReport3[i]) minReport3[i] = timeReport3[700*i + j];
-            if(timeReport4[700*i + j] < minReport4[i]) minReport4[i] = timeReport4[700*i + j];
-
-            if(delayReport1[700*i + j] != 0) {meanDelayReport1[i] = meanDelayReport1[i] + delayReport1[700*i + j]; m5++;}
-            if(delayReport2[700*i + j] != 0) {meanDelayReport2[i] = meanDelayReport2[i] + delayReport2[700*i + j]; m6++;}
-            if(delayReport3[700*i + j] != 0) {meanDelayReport3[i] = meanDelayReport3[i] + delayReport3[700*i + j]; m7++;}
-            if(delayReport4[700*i + j] != 0) {meanDelayReport4[i] = meanDelayReport4[i] + delayReport4[700*i + j]; m8++;}
-
-            if(delayReport1[700*i + j] > maxDelayReport1[i]) maxDelayReport1[i] = delayReport1[700*i + j];
-            if(delayReport2[700*i + j] > maxDelayReport2[i]) maxDelayReport2[i] = delayReport2[700*i + j];
-            if(delayReport3[700*i + j] > maxDelayReport3[i]) maxDelayReport3[i] = delayReport3[700*i + j];
-            if(delayReport4[700*i + j] > maxDelayReport4[i]) maxDelayReport4[i] = delayReport4[700*i + j];
-
-            if(delayReport1[700*i + j] < minDelayReport1[i]) minDelayReport1[i] = delayReport1[700*i + j];
-            if(delayReport2[700*i + j] < minDelayReport2[i]) minDelayReport2[i] = delayReport2[700*i + j];
-            if(delayReport3[700*i + j] < minDelayReport3[i]) minDelayReport3[i] = delayReport3[700*i + j];
-            if(delayReport4[700*i + j] < minDelayReport4[i]) minDelayReport4[i] = delayReport4[700*i + j];
-        }
-
-        for(int j=0; j<200; j++) {
-            if(timeRequest[200*i + j] != 0) {meanRequest[i] = meanRequest[i] + timeRequest[200*i + j]; n9++;}
-
-            if(timeRequest[200*i + j] > maxRequest[i]) maxRequest[i] = timeRequest[200*i + j];
-
-            if(timeRequest[200*i + j] < minRequest[i]) minRequest[i] = timeRequest[200*i + j];
-
-            if(delayRequest[200*i + j] != 0) {meanDelayRequest[i] = meanDelayRequest[i] + delayRequest[200*i + j]; m9++;}
-
-            if(delayRequest[200*i + j] > maxDelayRequest[i]) maxDelayRequest[i] = delayRequest[200*i + j];
-
-            if(delayRequest[200*i + j] < minDelayRequest[i]) minDelayRequest[i] = delayRequest[200*i + j];
-        }
-
-        if(n1 > 0) meanBroad1[i] = meanBroad1[i]/n1;
-        if(n2 > 0) meanBroad2[i] = meanBroad2[i]/n2;
-        if(n3 > 0) meanBroad3[i] = meanBroad3[i]/n3;
-        if(n4 > 0) meanBroad4[i] = meanBroad4[i]/n4;
-        if(n5 > 0) meanReport1[i] = meanReport1[i]/n5;
-        if(n6 > 0) meanReport2[i] = meanReport2[i]/n6;
-        if(n7 > 0) meanReport3[i] = meanReport3[i]/n7;
-        if(n8 > 0) meanReport4[i] = meanReport4[i]/n8;
-        if(n9 > 0) meanRequest[i] = meanRequest[i]/n9;
-
-        if(m1 > 0) meanDelayBroad1[i] = meanDelayBroad1[i]/m1;
-        if(m2 > 0) meanDelayBroad2[i] = meanDelayBroad2[i]/m2;
-        if(m3 > 0) meanDelayBroad3[i] = meanDelayBroad3[i]/m3;
-        if(m4 > 0) meanDelayBroad4[i] = meanDelayBroad4[i]/m4;
-        if(m5 > 0) meanDelayReport1[i] = meanDelayReport1[i]/m5;
-        if(m6 > 0) meanDelayReport2[i] = meanDelayReport2[i]/m6;
-        if(m7 > 0) meanDelayReport3[i] = meanDelayReport3[i]/m7;
-        if(m8 > 0) meanDelayReport4[i] = meanDelayReport4[i]/m8;
-        if(m9 > 0) meanDelayRequest[i] = meanDelayRequest[i]/m9;
-
-        char buffer[100] = "";
-        sprintf(buffer, "Number of Broadcast 1 from node %d", i);
-        recordScalar(buffer, m1);
-        sprintf(buffer, "Number of Broadcast 2 from node %d", i);
-        recordScalar(buffer, m2);
-        sprintf(buffer, "Number of Broadcast 3 from node %d", i);
-        recordScalar(buffer, m3);
-        sprintf(buffer, "Number of Broadcast 4 from node %d", i);
-        recordScalar(buffer, m4);
-        sprintf(buffer, "Number of Report 1 from node %d", i);
-        recordScalar(buffer, m5);
-        sprintf(buffer, "Number of Report 2 from node %d", i);
-        recordScalar(buffer, m6);
-        sprintf(buffer, "Number of Report 3 from node %d", i);
-        recordScalar(buffer, m7);
-        sprintf(buffer, "Number of Report 4 from node %d", i);
-        recordScalar(buffer, m8);
-        sprintf(buffer, "Number of Request from node %d", i);
-        recordScalar(buffer, m9);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Broadcast 1 from node %d", i);
-        recordScalar(buffer, meanBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Broadcast 2 from node %d", i);
-        recordScalar(buffer, meanBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Broadcast 3 from node %d", i);
-        recordScalar(buffer, meanBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Broadcast 4 from node %d", i);
-        recordScalar(buffer, meanBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Report 1 from node %d", i);
-        recordScalar(buffer, meanReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Report 2 from node %d", i);
-        recordScalar(buffer, meanReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Report 3 from node %d", i);
-        recordScalar(buffer, meanReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Report 4 from node %d", i);
-        recordScalar(buffer, meanReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean time for Request from node %d", i);
-        recordScalar(buffer, meanRequest[i]);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Broadcast 1 from node %d", i);
-        recordScalar(buffer, meanDelayBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Broadcast 2 from node %d", i);
-        recordScalar(buffer, meanDelayBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Broadcast 3 from node %d", i);
-        recordScalar(buffer, meanDelayBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Broadcast 4 from node %d", i);
-        recordScalar(buffer, meanDelayBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Report 1 from node %d", i);
-        recordScalar(buffer, meanDelayReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Report 2 from node %d", i);
-        recordScalar(buffer, meanDelayReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Report 3 from node %d", i);
-        recordScalar(buffer, meanDelayReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Report 4 from node %d", i);
-        recordScalar(buffer, meanDelayReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Mean delay for Request from node %d", i);
-        recordScalar(buffer, meanDelayRequest[i]);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Broadcast 1 from node %d", i);
-        recordScalar(buffer, maxBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Broadcast 2 from node %d", i);
-        recordScalar(buffer, maxBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Broadcast 3 from node %d", i);
-        recordScalar(buffer, maxBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Broadcast 4 from node %d", i);
-        recordScalar(buffer, maxBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Report 1 from node %d", i);
-        recordScalar(buffer, maxReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Report 2 from node %d", i);
-        recordScalar(buffer, maxReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Report 3 from node %d", i);
-        recordScalar(buffer, maxReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Report 4 from node %d", i);
-        recordScalar(buffer, maxReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum time for Request from node %d", i);
-        recordScalar(buffer, maxRequest[i]);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Broadcast 1 from node %d", i);
-        recordScalar(buffer, minBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Broadcast 2 from node %d", i);
-        recordScalar(buffer, minBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Broadcast 3 from node %d", i);
-        recordScalar(buffer, minBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Broadcast 4 from node %d", i);
-        recordScalar(buffer, minBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Report 1 from node %d", i);
-        recordScalar(buffer, minReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Report 2 from node %d", i);
-        recordScalar(buffer, minReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Report 3 from node %d", i);
-        recordScalar(buffer, minReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Report 4 from node %d", i);
-        recordScalar(buffer, minReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum time for Request from node %d", i);
-        recordScalar(buffer, minRequest[i]);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Broadcast 1 from node %d", i);
-        recordScalar(buffer, maxDelayBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Broadcast 2 from node %d", i);
-        recordScalar(buffer, maxDelayBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Broadcast 3 from node %d", i);
-        recordScalar(buffer, maxDelayBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Broadcast 4 from node %d", i);
-        recordScalar(buffer, maxDelayBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Report 1 from node %d", i);
-        recordScalar(buffer, maxDelayReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Report 2 from node %d", i);
-        recordScalar(buffer, maxDelayReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Report 3 from node %d", i);
-        recordScalar(buffer, maxDelayReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Report 4 from node %d", i);
-        recordScalar(buffer, maxDelayReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Maximum delay for Request from node %d", i);
-        recordScalar(buffer, maxDelayRequest[i]);
-    }
-
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Broadcast 1 from node %d", i);
-        recordScalar(buffer, minDelayBroad1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Broadcast 2 from node %d", i);
-        recordScalar(buffer, minDelayBroad2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Broadcast 3 from node %d", i);
-        recordScalar(buffer, minDelayBroad3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Broadcast 4 from node %d", i);
-        recordScalar(buffer, minDelayBroad4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Report 1 from node %d", i);
-        recordScalar(buffer, minDelayReport1[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Report 2 from node %d", i);
-        recordScalar(buffer, minDelayReport2[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Report 3 from node %d", i);
-        recordScalar(buffer, minDelayReport3[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Report 4 from node %d", i);
-        recordScalar(buffer, minDelayReport4[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Minimum delay for Request from node %d", i);
-        recordScalar(buffer, minDelayRequest[i]);
-    }*/
-
-    for(int i = 0; i < numberOfNodes; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Number of packets sent from mobile node %d", i);
-        recordScalar(buffer, fromNode[i]);
-    }
-    for(int i = 0; i < numberOfAnchors; i++) {
-        char buffer[100] = "";
-        sprintf(buffer, "Number of packets sent from anchor%d", i);
-        recordScalar(buffer, fromAnchor[i]);
-    }
-
-    free(packetsResend);
+//    recordScalar("Dropped Packets in Comp - No ACK received", nbPacketDroppedNoACK);
+//    recordScalar("Dropped Packets in Comp - Max MAC BackOff tries", nbPacketDroppedBackOff);
+//    recordScalar("Dropped Packets in Comp - App Queue Full", nbPacketDroppedAppQueueFull);
+//    recordScalar("Dropped Packets in Comp - Mac Queue Full", nbPacketDroppedMacQueueFull);
+//    recordScalar("Dropped Packets in Comp - No Time in the Phase", nbPacketDroppedNoTimeApp);
+//    recordScalar("Erased Packets in Comp - No more BackOff retries", nbErasedPacketsBackOffMax);
+//    recordScalar("Erased Packets in Comp - No more No ACK retries", nbErasedPacketsNoACKMax);
+//    recordScalar("Erased Packets in Comp - No more MAC Queue Full retries", nbErasedPacketsMacQueueFull);
+//    recordScalar("Number of Comp Reports with ACK", nbReportsWithACK);
+//    recordScalar("Number of Reports received in Comp", nbReportsReceived);
+//    recordScalar("Number of Reports really for me received in Comp", nbReportsForMeReceived);
+///*
+//    recordScalar("Number of packets 1 created by a mobile broadcast TX OK", broadOK[1]);
+//    recordScalar("Number of packets 1 created by a mobile report TX OK", reportOK[1]);
+//
+//    recordScalar("Number of packets 2 created by a mobile broadcast TX OK", broadOK[2]);
+//    recordScalar("Number of packets 2 created by a mobile report TX OK", reportOK[2]);
+//
+//    recordScalar("Number of packets 3 created by a mobile broadcast TX OK", broadOK[3]);
+//    recordScalar("Number of packets 3 created by a mobile report TX OK", reportOK[3]);
+//
+//    recordScalar("Number of packets 4 created by a mobile broadcast TX OK", broadOK[4]);
+//    recordScalar("Number of packets 4 created by a mobile report TX OK", reportOK[4]);
+//
+//    recordScalar("Number of packets created by a mobile request TX OK", requestOK);
+//*/
+//    recordScalar("Number of app duplicated packets",duplicatedPktCounter);
+//    recordScalar("Number of no duplicated reports",nbReportsNoDuplicated);
+///*
+//    for(int i=0; i<numberOfAnchors; i++) {
+//        int n1,n2,n3,n4,n5,n6,n7,n8,n9;
+//        n1=n2=n3=n4=n5=n6=n7=n8=n9=0;
+//
+//        int m1,m2,m3,m4,m5,m6,m7,m8,m9;
+//        m1=m2=m3=m4=m5=m6=m7=m8=m9=0;
+//
+//        maxBroad1[i] = timeBroad1[4000*i];
+//        maxBroad2[i] = timeBroad2[4000*i];
+//        maxBroad3[i] = timeBroad3[4000*i];
+//        maxBroad4[i] = timeBroad4[4000*i];
+//        maxReport1[i] = timeReport1[700*i];
+//        maxReport2[i] = timeReport2[700*i];
+//        maxReport3[i] = timeReport3[700*i];
+//        maxReport4[i] = timeReport4[700*i];
+//        maxRequest[i] = timeRequest[200*i];
+//
+//        maxDelayBroad1[i] = delayBroad1[4000*i];
+//        maxDelayBroad2[i] = delayBroad2[4000*i];
+//        maxDelayBroad3[i] = delayBroad3[4000*i];
+//        maxDelayBroad4[i] = delayBroad4[4000*i];
+//        maxDelayReport1[i] = delayReport1[700*i];
+//        maxDelayReport2[i] = delayReport2[700*i];
+//        maxDelayReport3[i] = delayReport3[700*i];
+//        maxDelayReport4[i] = delayReport4[700*i];
+//        maxDelayRequest[i] = delayRequest[200*i];
+//
+//        minBroad1[i] = timeBroad1[4000*i];
+//        minBroad2[i] = timeBroad2[4000*i];
+//        minBroad3[i] = timeBroad3[4000*i];
+//        minBroad4[i] = timeBroad4[4000*i];
+//        minReport1[i] = timeReport1[700*i];
+//        minReport2[i] = timeReport2[700*i];
+//        minReport3[i] = timeReport3[700*i];
+//        minReport4[i] = timeReport4[700*i];
+//        minRequest[i] = timeRequest[200*i];
+//
+//        minDelayBroad1[i] = delayBroad1[4000*i];
+//        minDelayBroad2[i] = delayBroad2[4000*i];
+//        minDelayBroad3[i] = delayBroad3[4000*i];
+//        minDelayBroad4[i] = delayBroad4[4000*i];
+//        minDelayReport1[i] = delayReport1[700*i];
+//        minDelayReport2[i] = delayReport2[700*i];
+//        minDelayReport3[i] = delayReport3[700*i];
+//        minDelayReport4[i] = delayReport4[700*i];
+//        minDelayRequest[i] = delayRequest[200*i];
+//
+//        for(int j=0; j<4000; j++) {
+//            if(timeBroad1[4000*i + j] != 0) {meanBroad1[i] = meanBroad1[i] + timeBroad1[4000*i + j]; n1++;}
+//            if(timeBroad2[4000*i + j] != 0) {meanBroad2[i] = meanBroad2[i] + timeBroad2[4000*i + j]; n2++;}
+//            if(timeBroad3[4000*i + j] != 0) {meanBroad3[i] = meanBroad3[i] + timeBroad3[4000*i + j]; n3++;}
+//            if(timeBroad4[4000*i + j] != 0) {meanBroad4[i] = meanBroad4[i] + timeBroad4[4000*i + j]; n4++;}
+//
+//            if(timeBroad1[4000*i + j] > maxBroad1[i]) maxBroad1[i] = timeBroad1[4000*i + j];
+//            if(timeBroad2[4000*i + j] > maxBroad2[i]) maxBroad2[i] = timeBroad2[4000*i + j];
+//            if(timeBroad3[4000*i + j] > maxBroad3[i]) maxBroad3[i] = timeBroad3[4000*i + j];
+//            if(timeBroad4[4000*i + j] > maxBroad4[i]) maxBroad4[i] = timeBroad4[4000*i + j];
+//
+//            if(timeBroad1[4000*i + j] < minBroad1[i]) minBroad1[i] = timeBroad1[4000*i + j];
+//            if(timeBroad2[4000*i + j] < minBroad2[i]) minBroad2[i] = timeBroad2[4000*i + j];
+//            if(timeBroad3[4000*i + j] < minBroad3[i]) minBroad3[i] = timeBroad3[4000*i + j];
+//            if(timeBroad4[4000*i + j] < minBroad4[i]) minBroad4[i] = timeBroad4[4000*i + j];
+//
+//            if(delayBroad1[4000*i + j] != 0) {meanDelayBroad1[i] = meanDelayBroad1[i] + delayBroad1[4000*i + j]; m1++;}
+//            if(delayBroad2[4000*i + j] != 0) {meanDelayBroad2[i] = meanDelayBroad2[i] + delayBroad2[4000*i + j]; m2++;}
+//            if(delayBroad3[4000*i + j] != 0) {meanDelayBroad3[i] = meanDelayBroad3[i] + delayBroad3[4000*i + j]; m3++;}
+//            if(delayBroad4[4000*i + j] != 0) {meanDelayBroad4[i] = meanDelayBroad4[i] + delayBroad4[4000*i + j]; m4++;}
+//
+//            if(delayBroad1[4000*i + j] > maxDelayBroad1[i]) maxDelayBroad1[i] = delayBroad1[4000*i + j];
+//            if(delayBroad2[4000*i + j] > maxDelayBroad2[i]) maxDelayBroad2[i] = delayBroad2[4000*i + j];
+//            if(delayBroad3[4000*i + j] > maxDelayBroad3[i]) maxDelayBroad3[i] = delayBroad3[4000*i + j];
+//            if(delayBroad4[4000*i + j] > maxDelayBroad4[i]) maxDelayBroad4[i] = delayBroad4[4000*i + j];
+//
+//            if(delayBroad1[4000*i + j] < minDelayBroad1[i]) minDelayBroad1[i] = delayBroad1[4000*i + j];
+//            if(delayBroad2[4000*i + j] < minDelayBroad2[i]) minDelayBroad2[i] = delayBroad2[4000*i + j];
+//            if(delayBroad3[4000*i + j] < minDelayBroad3[i]) minDelayBroad3[i] = delayBroad3[4000*i + j];
+//            if(delayBroad4[4000*i + j] < minDelayBroad4[i]) minDelayBroad4[i] = delayBroad4[4000*i + j];
+//        }
+//
+//        for(int j=0; j<700; j++) {
+//            if(timeReport1[700*i + j] != 0) {meanReport1[i] = meanReport1[i] + timeReport1[700*i + j]; n5++;}
+//            if(timeReport2[700*i + j] != 0) {meanReport2[i] = meanReport2[i] + timeReport2[700*i + j]; n6++;}
+//            if(timeReport3[700*i + j] != 0) {meanReport3[i] = meanReport3[i] + timeReport3[700*i + j]; n7++;}
+//            if(timeReport4[700*i + j] != 0) {meanReport4[i] = meanReport4[i] + timeReport4[700*i + j]; n8++;}
+//
+//            if(timeReport1[700*i + j] > maxReport1[i]) maxReport1[i] = timeReport1[700*i + j];
+//            if(timeReport2[700*i + j] > maxReport2[i]) maxReport2[i] = timeReport2[700*i + j];
+//            if(timeReport3[700*i + j] > maxReport3[i]) maxReport3[i] = timeReport3[700*i + j];
+//            if(timeReport4[700*i + j] > maxReport4[i]) maxReport4[i] = timeReport4[700*i + j];
+//
+//            if(timeReport1[700*i + j] < minReport1[i]) minReport1[i] = timeReport1[700*i + j];
+//            if(timeReport2[700*i + j] < minReport2[i]) minReport2[i] = timeReport2[700*i + j];
+//            if(timeReport3[700*i + j] < minReport3[i]) minReport3[i] = timeReport3[700*i + j];
+//            if(timeReport4[700*i + j] < minReport4[i]) minReport4[i] = timeReport4[700*i + j];
+//
+//            if(delayReport1[700*i + j] != 0) {meanDelayReport1[i] = meanDelayReport1[i] + delayReport1[700*i + j]; m5++;}
+//            if(delayReport2[700*i + j] != 0) {meanDelayReport2[i] = meanDelayReport2[i] + delayReport2[700*i + j]; m6++;}
+//            if(delayReport3[700*i + j] != 0) {meanDelayReport3[i] = meanDelayReport3[i] + delayReport3[700*i + j]; m7++;}
+//            if(delayReport4[700*i + j] != 0) {meanDelayReport4[i] = meanDelayReport4[i] + delayReport4[700*i + j]; m8++;}
+//
+//            if(delayReport1[700*i + j] > maxDelayReport1[i]) maxDelayReport1[i] = delayReport1[700*i + j];
+//            if(delayReport2[700*i + j] > maxDelayReport2[i]) maxDelayReport2[i] = delayReport2[700*i + j];
+//            if(delayReport3[700*i + j] > maxDelayReport3[i]) maxDelayReport3[i] = delayReport3[700*i + j];
+//            if(delayReport4[700*i + j] > maxDelayReport4[i]) maxDelayReport4[i] = delayReport4[700*i + j];
+//
+//            if(delayReport1[700*i + j] < minDelayReport1[i]) minDelayReport1[i] = delayReport1[700*i + j];
+//            if(delayReport2[700*i + j] < minDelayReport2[i]) minDelayReport2[i] = delayReport2[700*i + j];
+//            if(delayReport3[700*i + j] < minDelayReport3[i]) minDelayReport3[i] = delayReport3[700*i + j];
+//            if(delayReport4[700*i + j] < minDelayReport4[i]) minDelayReport4[i] = delayReport4[700*i + j];
+//        }
+//
+//        for(int j=0; j<200; j++) {
+//            if(timeRequest[200*i + j] != 0) {meanRequest[i] = meanRequest[i] + timeRequest[200*i + j]; n9++;}
+//
+//            if(timeRequest[200*i + j] > maxRequest[i]) maxRequest[i] = timeRequest[200*i + j];
+//
+//            if(timeRequest[200*i + j] < minRequest[i]) minRequest[i] = timeRequest[200*i + j];
+//
+//            if(delayRequest[200*i + j] != 0) {meanDelayRequest[i] = meanDelayRequest[i] + delayRequest[200*i + j]; m9++;}
+//
+//            if(delayRequest[200*i + j] > maxDelayRequest[i]) maxDelayRequest[i] = delayRequest[200*i + j];
+//
+//            if(delayRequest[200*i + j] < minDelayRequest[i]) minDelayRequest[i] = delayRequest[200*i + j];
+//        }
+//
+//        if(n1 > 0) meanBroad1[i] = meanBroad1[i]/n1;
+//        if(n2 > 0) meanBroad2[i] = meanBroad2[i]/n2;
+//        if(n3 > 0) meanBroad3[i] = meanBroad3[i]/n3;
+//        if(n4 > 0) meanBroad4[i] = meanBroad4[i]/n4;
+//        if(n5 > 0) meanReport1[i] = meanReport1[i]/n5;
+//        if(n6 > 0) meanReport2[i] = meanReport2[i]/n6;
+//        if(n7 > 0) meanReport3[i] = meanReport3[i]/n7;
+//        if(n8 > 0) meanReport4[i] = meanReport4[i]/n8;
+//        if(n9 > 0) meanRequest[i] = meanRequest[i]/n9;
+//
+//        if(m1 > 0) meanDelayBroad1[i] = meanDelayBroad1[i]/m1;
+//        if(m2 > 0) meanDelayBroad2[i] = meanDelayBroad2[i]/m2;
+//        if(m3 > 0) meanDelayBroad3[i] = meanDelayBroad3[i]/m3;
+//        if(m4 > 0) meanDelayBroad4[i] = meanDelayBroad4[i]/m4;
+//        if(m5 > 0) meanDelayReport1[i] = meanDelayReport1[i]/m5;
+//        if(m6 > 0) meanDelayReport2[i] = meanDelayReport2[i]/m6;
+//        if(m7 > 0) meanDelayReport3[i] = meanDelayReport3[i]/m7;
+//        if(m8 > 0) meanDelayReport4[i] = meanDelayReport4[i]/m8;
+//        if(m9 > 0) meanDelayRequest[i] = meanDelayRequest[i]/m9;
+//
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of Broadcast 1 from node %d", i);
+//        recordScalar(buffer, m1);
+//        sprintf(buffer, "Number of Broadcast 2 from node %d", i);
+//        recordScalar(buffer, m2);
+//        sprintf(buffer, "Number of Broadcast 3 from node %d", i);
+//        recordScalar(buffer, m3);
+//        sprintf(buffer, "Number of Broadcast 4 from node %d", i);
+//        recordScalar(buffer, m4);
+//        sprintf(buffer, "Number of Report 1 from node %d", i);
+//        recordScalar(buffer, m5);
+//        sprintf(buffer, "Number of Report 2 from node %d", i);
+//        recordScalar(buffer, m6);
+//        sprintf(buffer, "Number of Report 3 from node %d", i);
+//        recordScalar(buffer, m7);
+//        sprintf(buffer, "Number of Report 4 from node %d", i);
+//        recordScalar(buffer, m8);
+//        sprintf(buffer, "Number of Request from node %d", i);
+//        recordScalar(buffer, m9);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, meanBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, meanBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, meanBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, meanBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Report 1 from node %d", i);
+//        recordScalar(buffer, meanReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Report 2 from node %d", i);
+//        recordScalar(buffer, meanReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Report 3 from node %d", i);
+//        recordScalar(buffer, meanReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Report 4 from node %d", i);
+//        recordScalar(buffer, meanReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean time for Request from node %d", i);
+//        recordScalar(buffer, meanRequest[i]);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, meanDelayBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, meanDelayBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, meanDelayBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, meanDelayBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Report 1 from node %d", i);
+//        recordScalar(buffer, meanDelayReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Report 2 from node %d", i);
+//        recordScalar(buffer, meanDelayReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Report 3 from node %d", i);
+//        recordScalar(buffer, meanDelayReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Report 4 from node %d", i);
+//        recordScalar(buffer, meanDelayReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Mean delay for Request from node %d", i);
+//        recordScalar(buffer, meanDelayRequest[i]);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, maxBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, maxBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, maxBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, maxBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Report 1 from node %d", i);
+//        recordScalar(buffer, maxReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Report 2 from node %d", i);
+//        recordScalar(buffer, maxReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Report 3 from node %d", i);
+//        recordScalar(buffer, maxReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Report 4 from node %d", i);
+//        recordScalar(buffer, maxReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum time for Request from node %d", i);
+//        recordScalar(buffer, maxRequest[i]);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, minBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, minBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, minBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, minBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Report 1 from node %d", i);
+//        recordScalar(buffer, minReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Report 2 from node %d", i);
+//        recordScalar(buffer, minReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Report 3 from node %d", i);
+//        recordScalar(buffer, minReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Report 4 from node %d", i);
+//        recordScalar(buffer, minReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum time for Request from node %d", i);
+//        recordScalar(buffer, minRequest[i]);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, maxDelayBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, maxDelayBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, maxDelayBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, maxDelayBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Report 1 from node %d", i);
+//        recordScalar(buffer, maxDelayReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Report 2 from node %d", i);
+//        recordScalar(buffer, maxDelayReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Report 3 from node %d", i);
+//        recordScalar(buffer, maxDelayReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Report 4 from node %d", i);
+//        recordScalar(buffer, maxDelayReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Maximum delay for Request from node %d", i);
+//        recordScalar(buffer, maxDelayRequest[i]);
+//    }
+//
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Broadcast 1 from node %d", i);
+//        recordScalar(buffer, minDelayBroad1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Broadcast 2 from node %d", i);
+//        recordScalar(buffer, minDelayBroad2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Broadcast 3 from node %d", i);
+//        recordScalar(buffer, minDelayBroad3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Broadcast 4 from node %d", i);
+//        recordScalar(buffer, minDelayBroad4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Report 1 from node %d", i);
+//        recordScalar(buffer, minDelayReport1[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Report 2 from node %d", i);
+//        recordScalar(buffer, minDelayReport2[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Report 3 from node %d", i);
+//        recordScalar(buffer, minDelayReport3[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Report 4 from node %d", i);
+//        recordScalar(buffer, minDelayReport4[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Minimum delay for Request from node %d", i);
+//        recordScalar(buffer, minDelayRequest[i]);
+//    }*/
+//
+//    for(int i = 0; i < numberOfNodes; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of packets sent from mobile node %d", i);
+//        recordScalar(buffer, fromNode[i]);
+//    }
+//    for(int i = 0; i < numberOfAnchors; i++) {
+//        char buffer[100] = "";
+//        sprintf(buffer, "Number of packets sent from anchor%d", i);
+//        recordScalar(buffer, fromAnchor[i]);
+//    }
+//
+//    free(packetsResend);
 }

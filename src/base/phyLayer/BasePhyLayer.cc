@@ -395,6 +395,7 @@ void BasePhyLayer::handleAirFrame(AirFrame* frame) {
 }
 
 void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
+    EV << "Estamos en el archivo-> BasePhyLayer" << endl;
 	coreEV << "Received new AirFrame " << frame << " from channel." << endl;
 
 	if(channelInfo.isChannelEmpty()) {
@@ -409,6 +410,7 @@ void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
 		simtime_t delay = simTime() - s.getSendingStart();
 		s.setPropagationDelay(delay);
 	}
+	//Cuidado: Comentar si se desea añadir el retraso por propragación
 	assert(frame->getSignal().getReceptionStart() == simTime());
 
 	frame->getSignal().setReceptionSenderInfo(frame);
@@ -602,7 +604,9 @@ void BasePhyLayer::handleSelfMessage(cMessage* msg) {
 	//transmission over
 	case TX_OVER:
 		assert(msg == txOverTimer);
-		sendControlMsgToMac(new cMessage("Transmission over", TX_OVER));
+
+		//CUIDADO: Modificado!
+		//sendControlMsgToMac(new cMessage("Transmission over", TX_OVER));
 		break;
 
 	//radio switch over

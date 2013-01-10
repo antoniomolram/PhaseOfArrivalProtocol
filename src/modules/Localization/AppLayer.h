@@ -88,6 +88,7 @@ protected:
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
 	simtime_t timeComSinkPhase1;		// Duration of every Com Sink Phase 1
 	simtime_t timeComSinkPhase2;        // Duration of every Com Sink Phase 2
+	simtime_t timeRangingPhase;         // Duration of every Ranging phase. //Added by Antonio
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase

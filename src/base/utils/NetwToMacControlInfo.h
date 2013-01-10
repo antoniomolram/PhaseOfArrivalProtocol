@@ -26,6 +26,9 @@
 #include "MiXiMDefs.h"
 #include "SimpleAddress.h"
 
+//Added: Libreria
+#include "Coord.h"
+
 /**
  * @brief Control info to pass next hop L2 addr from netw to MAC layer
  *
@@ -44,10 +47,18 @@ class MIXIM_API NetwToMacControlInfo : public cObject
   protected:
     /** @brief MAC address of the sending or receiving node*/
 	LAddress::L2Type nextHopMac;
-
+	//Cuidado: Añadido fastTransmision
 /***MOD***/
     // CSMA Active
     bool csmaActive;
+    bool fastTransmisionBool;
+//    struct RangeRequestParams{
+//        int f_start;
+//        int f_stop;
+//        int f_step;
+//    };
+    Coord coordenadas_var;
+
 /*********/
 
   public:
@@ -58,11 +69,15 @@ class MIXIM_API NetwToMacControlInfo : public cObject
 //    {
 //    };
 
+    //Cuidado: Añadido fastTransmision
 /***MOD***/
-    NetwToMacControlInfo(const LAddress::L2Type& addr = LAddress::L2NULL, const bool csma = false)
+    NetwToMacControlInfo(const LAddress::L2Type& addr = LAddress::L2NULL, const bool csma = false, const bool fastTransmision = false)
       : cObject()
       , nextHopMac(addr)
 	  , csmaActive(csma)
+    //Added: Mirar que mierda pasa si comento AnchorNetLayer funciona
+      , fastTransmisionBool(fastTransmision)
+
     {
     };
 /********/
@@ -83,7 +98,10 @@ class MIXIM_API NetwToMacControlInfo : public cObject
     	return csmaActive;
     };
 /*********/
-
+    //Added: Getter method of fastTransmision
+    virtual const int getFastTransmision() {
+        return fastTransmisionBool;
+    };
     /** @brief Setter method */
     virtual void setNextHopMac(const LAddress::L2Type& addr) {
     	nextHopMac = addr;
@@ -91,11 +109,29 @@ class MIXIM_API NetwToMacControlInfo : public cObject
     virtual void setDest(const LAddress::L2Type& addr) {
     	nextHopMac = addr;
     };
+    //Added: Setter method of fastTransmision
+    virtual void setFastTransmision(const int fastTransmision) {
+        fastTransmisionBool= fastTransmision;
+    };
 /***MOD***/
     // Setter method
     virtual void setCsmaActive(const int csma) {
     	csmaActive = csma;
     };
+
+
+    //Added:
+
+    Coord& getCoordenadas()
+    {
+        return coordenadas_var;
+    }
+
+    void setCoordenadas(const Coord& coordenadas)
+    {
+        this->coordenadas_var = coordenadas;
+    }
+
 /**********/
     /**
      * @brief Attaches a "control info" structure (object) to the message pMsg.
@@ -120,6 +156,8 @@ class MIXIM_API NetwToMacControlInfo : public cObject
      * @return The MAC address of message receiver.
      */
     static const LAddress::L2Type& getDestFromControlInfo(const cObject *const pCtrlInfo);
+
+    void setDataInfo(const cObject* *const data);
 };
 
 

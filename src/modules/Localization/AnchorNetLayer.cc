@@ -7,6 +7,8 @@
 #include <MacToNetwControlInfo.h>
 #include <cassert>
 #include "FindModule.h"
+//Added by Antonio
+#include "RangingParams.h"
 
 Define_Module(AnchorNetLayer);
 
@@ -190,11 +192,24 @@ NetwPkt* AnchorNetLayer::encapsMsg(cPacket *appPkt) {
         }
     }
 
-    if ((static_cast<ApplPkt*>(appPkt))->getCSMA()) {
-        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, true));
-    } else {
-        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, false));
-    }
+//    if ((static_cast<ApplPkt*>(appPkt))->getCSMA()) {
+//        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, true));
+//    } else {
+//        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, false));
+//    }
+
+
+    RangingParams* parametros = new RangingParams();
+
+
+  NetwToMacControlInfo* cInfo = new NetwToMacControlInfo;
+
+  cInfo->setFastTransmision((static_cast<ApplPkt*>(appPkt))->getFastTransmision());
+  cInfo->setDest(macAddr);
+  cInfo->setCsmaActive((static_cast<ApplPkt*>(appPkt))->getCSMA());
+
+  pkt->setControlInfo(cInfo);
+
 
 
     //encapsulate the application packet

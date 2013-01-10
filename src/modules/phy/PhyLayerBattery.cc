@@ -19,6 +19,7 @@
 #include "MacToPhyControlInfo.h"
 #include "MacPkt_m.h"
 
+
 Define_Module(PhyLayerBattery);
 
 void PhyLayerBattery::initialize(int stage) {
@@ -118,6 +119,7 @@ void PhyLayerBattery::handleUpperMessage(cMessage* msg) {
 }
 
 void PhyLayerBattery::handleAirFrame(AirFrame* frame) {
+    EV << "Recibimos un AirFrame" << endl;
 	if (battery && battery->getState() != HostState::ACTIVE) {
 		coreEV<< "host has FAILED, dropping air frame msg " << frame->getName() << endl;
 		delete frame;

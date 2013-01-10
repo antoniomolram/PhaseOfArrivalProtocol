@@ -568,7 +568,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
             EV<<"Phase Ranging" << endl;
             phase = AppLayer::RANGING_PHASE;
             nextPhase = AppLayer::SYNC_PHASE_1;
-            nextPhaseStartTime = simTime() + timeSyncPhase;
+            nextPhaseStartTime = simTime() + timeRangingPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
 		case AppLayer::SYNC_PHASE_1:

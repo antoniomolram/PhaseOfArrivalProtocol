@@ -57,6 +57,7 @@ OBJS = \
     $O/phyLayer/ChannelInfo.o \
     $O/phyLayer/MappingUtils.o \
     $O/utils/SimpleAddress.o \
+    $O/utils/RangingParams.o \
     $O/utils/Coord.o \
     $O/utils/NetwToMacControlInfo.o \
     $O/utils/winsupport.o \
@@ -64,6 +65,7 @@ OBJS = \
     $O/messages/SyncPkt_m.o \
     $O/messages/AirFrame_m.o \
     $O/messages/ApplPkt_m.o \
+    $O/messages/RangPkt_m.o \
     $O/messages/ChannelSenseRequest_m.o \
     $O/messages/MacPkt_m.o \
     $O/messages/BorderMsg_m.o
@@ -74,6 +76,7 @@ MSGFILES = \
     messages/SyncPkt.msg \
     messages/AirFrame.msg \
     messages/ApplPkt.msg \
+    messages/RangPkt.msg \
     messages/ChannelSenseRequest.msg \
     messages/MacPkt.msg \
     messages/BorderMsg.msg
@@ -265,6 +268,14 @@ $O/messages/NetwPkt_m.o: messages/NetwPkt_m.cc \
 	utils/MiXiMDefs.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
+$O/messages/RangPkt_m.o: messages/RangPkt_m.cc \
+	messages/ApplPkt_m.h \
+	messages/RangPkt_m.h \
+	utils/Coord.h \
+	utils/FWMath.h \
+	utils/MiXiMDefs.h \
+	utils/SimpleAddress.h \
+	utils/miximkerneldefs.h
 $O/messages/SyncPkt_m.o: messages/SyncPkt_m.cc \
 	messages/SyncPkt_m.h
 $O/modules/BaseApplLayer.o: modules/BaseApplLayer.cc \
@@ -371,6 +382,8 @@ $O/modules/BaseNetwLayer.o: modules/BaseNetwLayer.cc \
 	modules/BatteryAccess.h \
 	phyLayer/Interpolation.h \
 	phyLayer/MappingBase.h \
+	utils/Coord.h \
+	utils/FWMath.h \
 	utils/FindModule.h \
 	utils/HostState.h \
 	utils/MiXiMDefs.h \
@@ -516,9 +529,16 @@ $O/utils/Coord.o: utils/Coord.cc \
 	utils/MiXiMDefs.h \
 	utils/miximkerneldefs.h
 $O/utils/NetwToMacControlInfo.o: utils/NetwToMacControlInfo.cc \
+	utils/Coord.h \
+	utils/FWMath.h \
 	utils/MiXiMDefs.h \
 	utils/NetwToMacControlInfo.h \
 	utils/SimpleAddress.h \
+	utils/miximkerneldefs.h
+$O/utils/RangingParams.o: utils/RangingParams.cc \
+	utils/FWMath.h \
+	utils/MiXiMDefs.h \
+	utils/RangingParams.h \
 	utils/miximkerneldefs.h
 $O/utils/SimpleAddress.o: utils/SimpleAddress.cc \
 	utils/MiXiMDefs.h \

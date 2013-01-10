@@ -157,6 +157,11 @@ class MIXIM_API csma : public BaseMacLayer
 	long nbDroppedMACNoTimeBeforePhaseEnd;
 /******/
 
+/*
+ * Added by Antonio
+ */
+	bool fast_transmision;
+
 	/** @brief Records general statistics?*/
 	bool stats;
 	/** @brief Record out put vectors?*/
@@ -173,6 +178,8 @@ class MIXIM_API csma : public BaseMacLayer
         WAITACK_5,
         WAITSIFS_6,
         TRANSMITACK_7,
+        //MOD Just to transmit without CCA and Backoff
+        TRANSMIT_WITHOUT_NOTHING,
 		// MOD Just to count the number of states
 		NUM_MAC_STATES
 
@@ -396,6 +403,8 @@ protected:
 	void updateStatusNotIdle(cMessage *msg);
 	void manageQueue();
 	void updateMacState(t_mac_states newMacState);
+
+	void updateStatusTransmit(t_mac_event event, cMessage *msg);
 
 	void attachSignal(MacPkt* mac, simtime_t_cref startTime);
 	void manageMissingAck(t_mac_event event, cMessage *msg);
