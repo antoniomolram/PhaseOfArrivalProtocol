@@ -88,11 +88,15 @@ protected:
 	simtime_t fullPhaseTime;			// Duration of the Full Phase or Period
 	simtime_t timeComSinkPhase1;		// Duration of every Com Sink Phase 1
 	simtime_t timeComSinkPhase2;        // Duration of every Com Sink Phase 2
-	simtime_t timeRangingPhase;         // Duration of every Ranging phase. //Added by Antonio
+	simtime_t timeRangingPhase;         // Duration of every Ranging phase.     // Added by Antonio
 	simtime_t timeSyncPhase;			// Duration of every Sync Phase, everyone is formed by syncPacketsPerSyncPhase mini sync phases
 	simtime_t timeReportPhase;			// Duration of the Report Phase
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase
 	double phase2VIPPercentage;			// Percentage of the time Phase Report + Phase VIP that the Phase VIP takes
+
+	simtime_t ranginglength;            // Duration of rangingPeriod            // Added by Antonio
+	float transmissionTime;         // Time to transmit anchor ranging      // Added by Antonio
+	int anchornum;
 
 	simtime_t guardTimeReportPhase;		// Guard time to leave at the end of the Report Phase, so the transmissions don't invade next phase
 	simtime_t guardTimeVIPPhase;		// Guard time to leave at the end of the VIP Phase, so the transmissions don't invade next phase

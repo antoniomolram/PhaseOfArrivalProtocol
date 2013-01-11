@@ -117,6 +117,7 @@ void ApplPkt::copy(const ApplPkt& other)
     this->timestampComRelated_var = other.timestampComRelated_var;
     this->broadcastedSuccess_var = other.broadcastedSuccess_var;
     this->fastTransmision_var = other.fastTransmision_var;
+    this->RangingParams_var = other.RangingParams_var;
 }
 
 void ApplPkt::parsimPack(cCommBuffer *b)
@@ -153,6 +154,7 @@ void ApplPkt::parsimPack(cCommBuffer *b)
     doPacking(b,this->timestampComRelated_var);
     doPacking(b,this->broadcastedSuccess_var);
     doPacking(b,this->fastTransmision_var);
+    doPacking(b,this->RangingParams_var);
 }
 
 void ApplPkt::parsimUnpack(cCommBuffer *b)
@@ -189,6 +191,7 @@ void ApplPkt::parsimUnpack(cCommBuffer *b)
     doUnpacking(b,this->timestampComRelated_var);
     doUnpacking(b,this->broadcastedSuccess_var);
     doUnpacking(b,this->fastTransmision_var);
+    doUnpacking(b,this->RangingParams_var);
 }
 
 LAddress::L3Type& ApplPkt::getDestAddr()
@@ -501,6 +504,16 @@ void ApplPkt::setFastTransmision(bool fastTransmision)
     this->fastTransmision_var = fastTransmision;
 }
 
+RangingParams& ApplPkt::getRangingParams()
+{
+    return RangingParams_var;
+}
+
+void ApplPkt::setRangingParams(const RangingParams& RangingParams)
+{
+    this->RangingParams_var = RangingParams;
+}
+
 class ApplPktDescriptor : public cClassDescriptor
 {
   public:
@@ -548,7 +561,7 @@ const char *ApplPktDescriptor::getProperty(const char *propertyname) const
 int ApplPktDescriptor::getFieldCount(void *object) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 31+basedesc->getFieldCount(object) : 31;
+    return basedesc ? 32+basedesc->getFieldCount(object) : 32;
 }
 
 unsigned int ApplPktDescriptor::getFieldTypeFlags(void *object, int field) const
@@ -591,8 +604,9 @@ unsigned int ApplPktDescriptor::getFieldTypeFlags(void *object, int field) const
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISCOMPOUND,
     };
-    return (field>=0 && field<31) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<32) ? fieldTypeFlags[field] : 0;
 }
 
 const char *ApplPktDescriptor::getFieldName(void *object, int field) const
@@ -635,8 +649,9 @@ const char *ApplPktDescriptor::getFieldName(void *object, int field) const
         "timestampComRelated",
         "broadcastedSuccess",
         "fastTransmision",
+        "RangingParams",
     };
-    return (field>=0 && field<31) ? fieldNames[field] : NULL;
+    return (field>=0 && field<32) ? fieldNames[field] : NULL;
 }
 
 int ApplPktDescriptor::findField(void *object, const char *fieldName) const
@@ -674,6 +689,7 @@ int ApplPktDescriptor::findField(void *object, const char *fieldName) const
     if (fieldName[0]=='t' && strcmp(fieldName, "timestampComRelated")==0) return base+28;
     if (fieldName[0]=='b' && strcmp(fieldName, "broadcastedSuccess")==0) return base+29;
     if (fieldName[0]=='f' && strcmp(fieldName, "fastTransmision")==0) return base+30;
+    if (fieldName[0]=='R' && strcmp(fieldName, "RangingParams")==0) return base+31;
     return basedesc ? basedesc->findField(object, fieldName) : -1;
 }
 
@@ -717,8 +733,9 @@ const char *ApplPktDescriptor::getFieldTypeString(void *object, int field) const
         "double",
         "double",
         "bool",
+        "RangingParams",
     };
-    return (field>=0 && field<31) ? fieldTypeStrings[field] : NULL;
+    return (field>=0 && field<32) ? fieldTypeStrings[field] : NULL;
 }
 
 const char *ApplPktDescriptor::getFieldProperty(void *object, int field, const char *propertyname) const
@@ -789,6 +806,7 @@ std::string ApplPktDescriptor::getFieldAsString(void *object, int field, int i) 
         case 28: return double2string(pp->getTimestampComRelated());
         case 29: return double2string(pp->getBroadcastedSuccess());
         case 30: return bool2string(pp->getFastTransmision());
+        case 31: {std::stringstream out; out << pp->getRangingParams(); return out.str();}
         default: return "";
     }
 }
@@ -876,8 +894,9 @@ const char *ApplPktDescriptor::getFieldStructName(void *object, int field) const
         NULL,
         NULL,
         NULL,
+        "RangingParams",
     };
-    return (field>=0 && field<31) ? fieldStructNames[field] : NULL;
+    return (field>=0 && field<32) ? fieldStructNames[field] : NULL;
 }
 
 void *ApplPktDescriptor::getFieldStructPointer(void *object, int field, int i) const
@@ -892,6 +911,7 @@ void *ApplPktDescriptor::getFieldStructPointer(void *object, int field, int i) c
     switch (field) {
         case 0: return (void *)(&pp->getDestAddr()); break;
         case 1: return (void *)(&pp->getSrcAddr()); break;
+        case 31: return (void *)(&pp->getRangingParams()); break;
         default: return NULL;
     }
 }

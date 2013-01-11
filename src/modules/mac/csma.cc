@@ -893,6 +893,7 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
         case TRANSMITACK_7:
             updateStatusTransmitAck(event, msg);
             break;
+
         default:
             EV << "Error in CSMA FSM: an unknown state has been reached. macState=" << macState << endl;
             break;
@@ -1271,7 +1272,8 @@ void csma::handleLowerMsg(cMessage *msg) {
 
 void csma::handleLowerControl(cMessage *msg) {
     if (msg->getKind() == MacToPhyInterface::TX_OVER) {
-        executeMac(EV_FRAME_TRANSMITTED, msg);
+        EV << "Tx_over en csma.cc" << endl;
+       // Added executeMac(EV_FRAME_TRANSMITTED, msg);
     } else if (msg->getKind() == BaseDecider::PACKET_DROPPED) {
         EV<< "control message: PACKED DROPPED" << endl;
         if (phy->getRadioState() == Radio::RX_BUSY)

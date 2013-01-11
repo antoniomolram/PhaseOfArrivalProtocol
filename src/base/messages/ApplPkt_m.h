@@ -15,6 +15,7 @@
 
 // cplusplus {{
 #include "SimpleAddress.h"
+    #include "RangingParams.h"
 // }}
 
 
@@ -64,6 +65,7 @@
  * 	
  * 	
  * 	bool fastTransmision=false;
+ * 	RangingParams RangingParams;
  * 
  * }
  * </pre>
@@ -102,6 +104,7 @@ class ApplPkt : public ::cPacket
     double timestampComRelated_var;
     double broadcastedSuccess_var;
     bool fastTransmision_var;
+    RangingParams RangingParams_var;
 
   private:
     void copy(const ApplPkt& other);
@@ -184,6 +187,9 @@ class ApplPkt : public ::cPacket
     virtual void setBroadcastedSuccess(double broadcastedSuccess);
     virtual bool getFastTransmision() const;
     virtual void setFastTransmision(bool fastTransmision);
+    virtual RangingParams& getRangingParams();
+    virtual const RangingParams& getRangingParams() const {return const_cast<ApplPkt*>(this)->getRangingParams();}
+    virtual void setRangingParams(const RangingParams& RangingParams);
 };
 
 inline void doPacking(cCommBuffer *b, ApplPkt& obj) {obj.parsimPack(b);}

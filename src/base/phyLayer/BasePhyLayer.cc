@@ -606,7 +606,7 @@ void BasePhyLayer::handleSelfMessage(cMessage* msg) {
 		assert(msg == txOverTimer);
 
 		//CUIDADO: Modificado!
-		//sendControlMsgToMac(new cMessage("Transmission over", TX_OVER));
+		sendControlMsgToMac(new cMessage("Transmission over", TX_OVER));
 		break;
 
 	//radio switch over

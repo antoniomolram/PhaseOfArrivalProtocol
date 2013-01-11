@@ -56,11 +56,57 @@ public:
     /*
      * SetterFreqStart
      */
-
-
+    void setFreqStart(const int freqStart) {
+        PMUFreqStart= freqStart;
+    };
     /*
      * GetterFreqStart
      */
+    const int getFreqStart() {
+         return PMUFreqStart;
+     };
+    /*
+    * SetterRangingEnabled
+    */
+    void setRangingEnabled(const bool Enabled) {
+        RangingEnabled= Enabled;
+    };
+    /*
+     * GetterRangingEnabled
+     */
+    const bool getRangingEnabled() {
+         return RangingEnabled;
+     };
+    /*
+     * SetterFreqStep
+     */
+    void setFreqStep(const int freqStep) {
+        PMUFreqStep= freqStep;
+    };
+    /*
+     * GetterFreqStep
+     */
+    const int getFreqStep() {
+         return PMUFreqStep;
+     };
+    /*
+    * SetterFreqStop
+    */
+    void setFreqStop(const int freqStop) {
+       PMUFreqStop= freqStop;
+    };
+    /*
+    * GetterFreqStop
+    */
+    const int getFreqStop() {
+       return PMUFreqStop;
+    };
+    /*
+    * GetterFreqStop
+    */
+    const int getSamplesM() {
+       return PMUSamplesM;
+    };
 
 
 

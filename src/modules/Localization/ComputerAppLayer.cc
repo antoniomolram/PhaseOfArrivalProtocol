@@ -532,6 +532,9 @@ void ComputerAppLayer::handleLowerMsg(cMessage *msg)
     // Filter first according to the phase we are in
     switch(phase)
     {
+    case AppLayer::RANGING_PHASE:
+        EV << "Ranging phase, computer" << endl;
+        break;
     case AppLayer::SYNC_PHASE_1:
     case AppLayer::SYNC_PHASE_2:
     case AppLayer::SYNC_PHASE_3:

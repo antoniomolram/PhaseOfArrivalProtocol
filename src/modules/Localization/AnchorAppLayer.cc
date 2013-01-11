@@ -1,5 +1,6 @@
 #include "AnchorAppLayer.h"
-
+//Added by Antonio
+#include "RangingParams.h"
 Define_Module(AnchorAppLayer);
 
 void AnchorAppLayer::initialize(int stage)
@@ -446,7 +447,20 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 nextPhaseStartTime = simTime() + timeRangingPhase;
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 nextPhaseStart = simTime();
-                scheduleAt(nextPhaseStart + (anchor->transmisionSlot[scheduledSlot] * syncPacketTime), initRangingProcedure);
+                EV <<"Id anchor:"<< anchor->nicId << endl;
+                EV <<"Host anchor:"<< anchor->hostId << endl;
+                EV <<"Id de nodo:" << getParentModule()->getIndex() << endl;
+                //Transmitir consecutivamente anchors! :D
+                anchornum=getParentModule()->getIndex();
+                ranginglength=0.02;
+
+                transmissionTime=(anchornum + 1);
+                EV << "Transmision time:" << transmissionTime  << endl;
+
+                //Para desarrollo del protocolo solo quiero un anchor haciendo ranging
+                if(anchornum==0){
+                scheduleAt(nextPhaseStart + transmissionTime / 100, initRangingProcedure);
+                }
                 break;
 
 
@@ -667,6 +681,9 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	// Filter first according to the phase we are in
 	switch(phase)
 	{
+	case AppLayer::RANGING_PHASE:
+
+	    break;
 	case AppLayer::SYNC_PHASE_1:
 	case AppLayer::SYNC_PHASE_2:
 	case AppLayer::SYNC_PHASE_3:
@@ -1235,7 +1252,7 @@ void AnchorAppLayer::Ranging(int status){
 
     switch (status)
     {
-        case Init:
+        case Init:{
             EV << "Init Ranging" << endl;
             Ranging->setName("Range request");
             Ranging->setKind(RANGE_REQUEST);
@@ -1243,15 +1260,20 @@ void AnchorAppLayer::Ranging(int status){
             Ranging->setBitLength(RTBHeader);
             Ranging->setSrcAddr(myNetwAddr);
             Ranging->setRealSrcAddr(myNetwAddr);
-            Ranging->setDestAddr(destination);
+            Ranging->setDestAddr(39);
             Ranging->setFastTransmision(true);
-
+            RangingParams* parame = new RangingParams();
+            parame->setFreqStart(2413);
+            parame->setRangingEnabled(true);
+            parame->setFreqStep(2);
+            parame->setFreqStop(2513);
+            Ranging->setRangingParams(*parame);
             EV << "Inserting sending Packet in Transmission Queue" << endl;
             transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
             sendDown(Ranging);
 
         break;
-
+        }
         default:
             EV << "WTF! Why!?!" << endl;
         break;

@@ -244,7 +244,9 @@ $O/messages/AirFrame_m.o: messages/AirFrame_m.cc \
 	utils/miximkerneldefs.h
 $O/messages/ApplPkt_m.o: messages/ApplPkt_m.cc \
 	messages/ApplPkt_m.h \
+	utils/FWMath.h \
 	utils/MiXiMDefs.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/messages/BorderMsg_m.o: messages/BorderMsg_m.cc \
@@ -274,6 +276,7 @@ $O/messages/RangPkt_m.o: messages/RangPkt_m.cc \
 	utils/Coord.h \
 	utils/FWMath.h \
 	utils/MiXiMDefs.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/messages/SyncPkt_m.o: messages/SyncPkt_m.cc \
@@ -417,10 +420,12 @@ $O/modules/TestApplLayer.o: modules/TestApplLayer.cc \
 	modules/BaseModule.h \
 	modules/BatteryAccess.h \
 	modules/TestApplLayer.h \
+	utils/FWMath.h \
 	utils/HostState.h \
 	utils/MiXiMDefs.h \
 	utils/NetwControlInfo.h \
 	utils/PassedMessage.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/phyLayer/BaseDecider.o: phyLayer/BaseDecider.cc \

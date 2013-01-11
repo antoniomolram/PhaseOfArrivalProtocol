@@ -21,16 +21,20 @@
 
 cplusplus {{
     #include "SimpleAddress.h"
+    #include "RangingParams.h"
+    
 }}
 
 class LAddress::L3Type extends void;
+class RangingParams extends void;
 
 // Basic application packet definition
 //
 // subclass if you want to create your own application layer packet
 // class
 //
-// @author Jorge Perez Hidalgo
+// @author Jorge Perez Hidalgo and modificated by Antonio Molina Ramirez
+
 packet ApplPkt
 {
     LAddress::L3Type destAddr = LAddress::L3BROADCAST; // destination address
@@ -73,5 +77,6 @@ packet ApplPkt
 	
 	//Added by Antonio
 	bool fastTransmision=false;
+	RangingParams RangingParams;
 
 }

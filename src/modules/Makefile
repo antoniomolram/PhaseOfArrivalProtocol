@@ -258,6 +258,7 @@ $O/Localization/AnchorAppLayer.o: Localization/AnchorAppLayer.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AnchorAppLayer.h \
@@ -332,6 +333,7 @@ $O/Localization/AppLayer.o: Localization/AppLayer.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AppLayer.h \
@@ -359,6 +361,7 @@ $O/Localization/ComputerAppLayer.o: Localization/ComputerAppLayer.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AppLayer.h \
@@ -392,6 +395,7 @@ $O/Localization/ComputerNetLayer.o: Localization/ComputerNetLayer.cc \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/NetwToMacControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AppLayer.h \
@@ -466,6 +470,7 @@ $O/Localization/NodeAppLayer.o: Localization/NodeAppLayer.cc \
 	../base/utils/Move.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AppLayer.h \
@@ -499,6 +504,7 @@ $O/Localization/NodeNetLayer.o: Localization/NodeNetLayer.cc \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/NetwToMacControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/AppLayer.h \
@@ -555,6 +561,7 @@ $O/Localization/cQueueWithPriority.o: Localization/cQueueWithPriority.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/cQueueWithPriority.h \
@@ -673,9 +680,11 @@ $O/application/BurstApplLayer.o: application/BurstApplLayer.cc \
 	../base/modules/BaseModule.h \
 	../base/modules/BatteryAccess.h \
 	../base/modules/TestApplLayer.h \
+	../base/utils/FWMath.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	application/BurstApplLayer.h
@@ -687,9 +696,11 @@ $O/application/BurstApplLayerBattery.o: application/BurstApplLayerBattery.cc \
 	../base/modules/BaseModule.h \
 	../base/modules/BatteryAccess.h \
 	../base/modules/TestApplLayer.h \
+	../base/utils/FWMath.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	application/BurstApplLayer.h \
@@ -710,6 +721,7 @@ $O/application/SensorApplLayer.o: application/SensorApplLayer.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	application/SensorApplLayer.h \
@@ -723,10 +735,12 @@ $O/application/TestApplication.o: application/TestApplication.cc \
 	../base/modules/BatteryAccess.h \
 	../base/phyLayer/Interpolation.h \
 	../base/phyLayer/MappingBase.h \
+	../base/utils/FWMath.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	application/TestApplication.h
@@ -746,6 +760,7 @@ $O/application/TrafficGen.o: application/TrafficGen.cc \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	application/TrafficGen.h \
@@ -1069,14 +1084,18 @@ $O/mac/csma.o: mac/csma.cc \
 	utility/DroppedPacket.h
 $O/messages/AggrPkt.o: messages/AggrPkt.cc \
 	../base/messages/ApplPkt_m.h \
+	../base/utils/FWMath.h \
 	../base/utils/MiXiMDefs.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	messages/AggrPkt.h \
 	messages/AggrPkt_m.h
 $O/messages/AggrPkt_m.o: messages/AggrPkt_m.cc \
 	../base/messages/ApplPkt_m.h \
+	../base/utils/FWMath.h \
 	../base/utils/MiXiMDefs.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	messages/AggrPkt_m.h
@@ -1777,9 +1796,11 @@ $O/transport/Aggregation.o: transport/Aggregation.cc \
 	../base/modules/BaseLayer.h \
 	../base/modules/BaseModule.h \
 	../base/modules/BatteryAccess.h \
+	../base/utils/FWMath.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	messages/AggrPkt.h \

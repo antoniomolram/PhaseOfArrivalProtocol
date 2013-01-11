@@ -3,7 +3,8 @@
 
 #include <ChannelAccess.h>
 #include "MacToPhyInterface.h"
-
+//Added by Antonio
+#include "RangingParams.h"
 
 Define_Module(NodeAppLayer);
 
@@ -1185,6 +1186,19 @@ void NodeAppLayer::handleLowerMsg(cMessage *msg)
 	// Filter first according to the phase we are in
 	switch(phase)
 	{
+	case AppLayer::RANGING_PHASE:{
+	    pkt->getRangingParams().getFreqStart();
+	    EV << "Joya:" << pkt->getRangingParams().getFreqStart() << endl;
+        EV << "Joya:" << pkt->getRangingParams().getFreqStep() << endl;
+        EV << "Joya:" << pkt->getRangingParams().getFreqStop() << endl;
+        EV << "Joya:" << pkt->getRangingParams().getRangingEnabled() << endl;
+
+
+
+
+
+	    break;
+	}
 	case AppLayer::SYNC_PHASE_1:
 	case AppLayer::SYNC_PHASE_2:
 	case AppLayer::SYNC_PHASE_3:
