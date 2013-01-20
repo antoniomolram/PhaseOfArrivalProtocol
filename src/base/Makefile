@@ -349,6 +349,7 @@ $O/modules/BaseMacLayer.o: modules/BaseMacLayer.cc \
 	utils/Move.h \
 	utils/NetwToMacControlInfo.h \
 	utils/PassedMessage.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/modules/BaseMobility.o: modules/BaseMobility.cc \
@@ -393,6 +394,7 @@ $O/modules/BaseNetwLayer.o: modules/BaseNetwLayer.cc \
 	utils/NetwControlInfo.h \
 	utils/NetwToMacControlInfo.h \
 	utils/PassedMessage.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/modules/BaseWorldUtility.o: modules/BaseWorldUtility.cc \
@@ -538,6 +540,7 @@ $O/utils/NetwToMacControlInfo.o: utils/NetwToMacControlInfo.cc \
 	utils/FWMath.h \
 	utils/MiXiMDefs.h \
 	utils/NetwToMacControlInfo.h \
+	utils/RangingParams.h \
 	utils/SimpleAddress.h \
 	utils/miximkerneldefs.h
 $O/utils/RangingParams.o: utils/RangingParams.cc \

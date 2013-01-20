@@ -29,6 +29,9 @@
 //Added: Libreria
 #include "Coord.h"
 
+//Added by Antonio
+#include "RangingParams.h"
+
 /**
  * @brief Control info to pass next hop L2 addr from netw to MAC layer
  *
@@ -52,11 +55,7 @@ class MIXIM_API NetwToMacControlInfo : public cObject
     // CSMA Active
     bool csmaActive;
     bool fastTransmisionBool;
-//    struct RangeRequestParams{
-//        int f_start;
-//        int f_stop;
-//        int f_step;
-//    };
+    RangingParams Params;
     Coord coordenadas_var;
 
 /*********/
@@ -121,6 +120,12 @@ class MIXIM_API NetwToMacControlInfo : public cObject
 
 
     //Added:
+    RangingParams& getRangingParams(){
+        return Params;
+    }
+    void setRangingParams(const RangingParams& parametros){
+        this->Params=parametros;
+    }
 
     Coord& getCoordenadas()
     {

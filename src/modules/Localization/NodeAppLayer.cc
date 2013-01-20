@@ -13,6 +13,9 @@ void NodeAppLayer::initialize(int stage)
 	AppLayer::initialize(stage);
 
 	if(stage == 0) {
+
+
+
 		// Parameter load
 		nodeConfig = par("nodeConfig");
 		offsetPhases = par("offsetPhases");
@@ -56,7 +59,9 @@ void NodeAppLayer::initialize(int stage)
 		reportPhasesCounter			= reportPhases; // The first period after the offset will be extra report period, if 0 then the last reportPhases period
 		offsetBroadcastCounter		= activePhasesCounter; // Must be synchronized to the starting active phase in order to offset from the first active phase
 
-
+		//Ranging Parameters initialization
+		next_frequency=0;
+		changeFreq= new cMessage("Changing Freq",CHANGE_FREQUENCY);
 
 		// Start all the arrays to 0 and with the appropriate size reserved in memory
 		listRSSI = (RSSIs*)calloc(sizeof(RSSIs), numberOfAnchors);
@@ -312,14 +317,17 @@ NodeAppLayer::~NodeAppLayer() {
 	cancelAndDelete(sleep);
 	//BORRAR
 	cancelAndDelete(PUTEAR);
+	cancelAndDelete(changeFreq);
 	for(cQueue::Iterator iter(transfersQueue, 1); !iter.end(); iter++) {
 		delete(iter());
 	}
+
 }
 
 
 void NodeAppLayer::finish()
 {
+
 /*	recordScalar("Dropped Packets in MN - No ACK received", nbPacketDroppedNoACK);
 	recordScalar("Dropped Packets in MN - Max MAC BackOff tries", nbPacketDroppedBackOff);
 	recordScalar("Dropped Packets in MN - App Queue Full", nbPacketDroppedAppQueueFull);
@@ -390,6 +398,9 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 
 	switch(msg->getKind())
 	{
+	case NodeAppLayer::CHANGE_FREQUENCY:
+	    Ranging(CHANGE_FREQUENCY);
+	    break;
 	case NodeAppLayer::SLEEP:
 		EV << "Changing PHY state to Sleep" << endl;
 		phy->setRadioState(Radio::SLEEP);
@@ -1167,6 +1178,88 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 }
 
 
+void NodeAppLayer::Ranging(int status,cMessage *msg){
+    EV << "Ranging Procedure with status: " << status << endl;
+
+      switch (status)
+      {
+      case RANGE_REQUEST:{
+            ApplPkt *Ranging= new ApplPkt("Generic", RANGE_ACCEPT);
+            ApplPkt *RangingReceived = check_and_cast<ApplPkt*>(msg);
+            srcAddr=RangingReceived->getSrcAddr();
+            EV << "Init Ranging" << endl;
+            Ranging->setName("Range accept");
+            Ranging->setKind(RANGE_ACCEPT);
+            RTBHeader=24;
+            Ranging->setBitLength(RTBHeader);
+            Ranging->setSrcAddr(myNetwAddr);
+            Ranging->setRealSrcAddr(myNetwAddr);
+            Ranging->setDestAddr(srcAddr);
+            Ranging->setFastTransmision(true);
+            RangingParams* parame = new RangingParams();
+            Ranging->setRangingParamsApp(*parame);
+            EV << "Inserting sending Packet in Transmission Queue" << endl;
+        //    transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+            sendDown(Ranging);
+
+
+
+
+      } break;
+      case TIME_SYNC:{
+          EV << "PMU Start" << endl;
+          ApplPkt *Ranging= new ApplPkt("PMU_Start", PMU_START);
+          EV << "Init Ranging" << endl;
+          RTBHeader=24;
+          Ranging->setBitLength(RTBHeader);
+          Ranging->setSrcAddr(myNetwAddr);
+          Ranging->setRealSrcAddr(myNetwAddr);
+          Ranging->setDestAddr(srcAddr);
+          Ranging->setFastTransmision(true);
+          RangingParams* parame = new RangingParams();
+          Ranging->setRangingParamsApp(*parame);
+          EV << "Inserting sending Packet in Transmission Queue" << endl;
+          transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+          sendDown(Ranging);
+
+      }break;
+      case RANGING_MEASUREMENT:{
+            ApplPkt *RangingReceived = check_and_cast<ApplPkt*>(msg);
+            RangingParams* parame = new RangingParams();
+            *parame =RangingReceived->getRangingParamsApp();
+            parame->setActualFreq(next_frequency);
+            actual_frequency=parame->getActualFreq();
+            sprintf(buff, "Ranging in Channel %d", actual_frequency);
+            RangingReceived->setName(buff);
+            next_frequency=parame->getActualFreq()+1;
+
+            scheduleAt(simTime()+0.75e-3,changeFreq); // Valor exacto ~ para cambiar de freq despues de tx! ;D
+
+          //Cambiar frequencia una vez transmitido el paquete!
+
+            RangingReceived->setBitLength(RTBHeader);
+            RangingReceived->setSrcAddr(myNetwAddr);
+            RangingReceived->setRealSrcAddr(myNetwAddr);
+            RangingReceived->setDestAddr(srcAddr);
+            RangingReceived->setFastTransmision(true);
+
+            RangingReceived->setRangingParamsApp(*parame);
+            EV << "Inserting sending Packet in Transmission Queue" << endl;
+           transfersQueue.insert(RangingReceived->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+           sendDown(RangingReceived);
+
+      }break;
+      case CHANGE_FREQUENCY:{
+          phy->setCurrentRadioChannel(next_frequency);
+
+      }break;
+      default:
+            EV << "Fail! Why? Anyone knows..." << endl;
+            break;
+      }
+
+}
+
 
 void NodeAppLayer::handleLowerMsg(cMessage *msg)
 {
@@ -1187,17 +1280,25 @@ void NodeAppLayer::handleLowerMsg(cMessage *msg)
 	switch(phase)
 	{
 	case AppLayer::RANGING_PHASE:{
-	    pkt->getRangingParams().getFreqStart();
-	    EV << "Joya:" << pkt->getRangingParams().getFreqStart() << endl;
-        EV << "Joya:" << pkt->getRangingParams().getFreqStep() << endl;
-        EV << "Joya:" << pkt->getRangingParams().getFreqStop() << endl;
-        EV << "Joya:" << pkt->getRangingParams().getRangingEnabled() << endl;
+	    switch(pkt->getKind()){
+        case RANGE_REQUEST:{
+            Ranging(RANGE_REQUEST,pkt);
+            delete pkt;
+        }
+        break;
+        case TIME_SYNC:{
+            Ranging(TIME_SYNC,pkt);
+            delete pkt;
+        }
+        break;
+        case RANGING_MEASUREMENT:
+            Ranging(RANGING_MEASUREMENT,pkt);
 
-
-
-
-
-	    break;
+	    default:
+	        EV << "Fail! Why? Anyone knows..." << endl;
+	        break;
+	}
+    break;
 	}
 	case AppLayer::SYNC_PHASE_1:
 	case AppLayer::SYNC_PHASE_2:

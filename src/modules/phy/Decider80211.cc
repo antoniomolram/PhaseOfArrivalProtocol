@@ -49,6 +49,7 @@ simtime_t Decider80211::processNewSignal(AirFrame* frame) {
 	start.setTime(signal.getReceptionStart());
 	start.setArgValue(Dimension::frequency, centerFrequency);
 
+
 	double recvPower = signal.getReceivingPower()->getValue(start);
 
 	// check whether signal is strong enough to receive

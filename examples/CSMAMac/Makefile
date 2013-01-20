@@ -134,6 +134,7 @@ $O/SimpleNetwLayer.o: SimpleNetwLayer.cc \
 	../../src/base/utils/MiXiMDefs.h \
 	../../src/base/utils/NetwToMacControlInfo.h \
 	../../src/base/utils/PassedMessage.h \
+	../../src/base/utils/RangingParams.h \
 	../../src/base/utils/SimpleAddress.h \
 	../../src/base/utils/miximkerneldefs.h
 

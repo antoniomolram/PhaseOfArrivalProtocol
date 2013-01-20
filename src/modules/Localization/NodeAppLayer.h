@@ -95,6 +95,13 @@ protected:
 	//BORRAR CUANDO ESTÉ TODO PROBADO
 	cMessage *PUTEAR;
 
+    // Added by Antonio
+    // Ranging Parameters initialization
+    int next_frequency;
+    char buff[30];
+    int actual_frequency;
+    cMessage *changeFreq;
+
 	NicEntry* node;						// Pointer to the NIC of this anchor to access some NIC variables
 
 	/** @brief Handler to the physical layer.*/
@@ -158,6 +165,9 @@ protected:
 
 	/** @brief Handle messages from lower layer */
 	virtual void handleLowerMsg(cMessage *msg);
+
+	/** @brief Controller of Ranging Procedure   */
+    virtual void Ranging(int state, cMessage *msg=NULL);
 
 	/** @brief Handle control messages from lower layer */
 	virtual void handleLowerControl(cMessage *msg);

@@ -40,18 +40,27 @@ public:
 //    bool EnableAntennaDiv;
 //    bool ProvideAntennaDivResults;
 
+    //Internal parameters.
+    int actual_step;
+    int actual_Freq;
+    int total_step;
+
+
 public:
     /*
      * Constructor
      */
     RangingParams():
        RangingEnabled(false),
-       RangingMethod(0),       // Only one method.
+       RangingMethod(0),        // Only one method.
        PMUFreqStart(2403),      // Freq default.
-       PMUFreqStep(2),         // Default value (2Mhz hops).
+       PMUFreqStep(2),          // Default value (2Mhz hops).
        PMUFreqStop(2443),       // Freq default.
        PMUSamplesM(4),          // PMU units (Only read at the moment)
-       PMUCompress(false)    // Default not enable.
+       PMUCompress(false),      // Default not enable.
+       actual_step(0),          // During the procedure the different steps.
+       actual_Freq(0),          // Frequency used at the moment
+       total_step(20)            // Number tot
        {}
     /*
      * SetterFreqStart
@@ -107,7 +116,42 @@ public:
     const int getSamplesM() {
        return PMUSamplesM;
     };
-
+    /*
+     * SetterFreqStep
+     */
+    void setActualStep(const int InputActualStep) {
+        actual_step= InputActualStep;
+    };
+    /*
+     * GetterFreqStep
+     */
+    const int getActualStep() {
+         return actual_step;
+     };
+    /*
+     * SetterFreqStep
+     */
+    void setActualFreq(const int InputActualFreq) {
+        actual_Freq= InputActualFreq;
+    };
+    /*
+     * GetterFreqStep
+     */
+    const int getActualFreq() {
+         return actual_Freq;
+     };
+    /*
+     * SetterTotalStep
+     */
+    void setTotalStep(const int inputTotalStep) {
+        total_step= inputTotalStep;
+    };
+    /*
+     * GetterTotalStep
+     */
+    const int getTotalStep() {
+         return total_step;
+     };
 
 
 };

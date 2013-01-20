@@ -24,6 +24,9 @@ void AnchorAppLayer::initialize(int stage)
 		broadPriority = (int*)calloc(sizeof(int), numberOfNodes);
 		broadNodeMode = (int*)calloc(sizeof(int), numberOfNodes);
 
+		// Parameters Ranging
+		next_frequency=0;
+
 		/* Modified by Victor */
 		nbCafInComSink1 = 0;
 		nbNoAckInComsink1 = 0;
@@ -154,6 +157,7 @@ AnchorAppLayer::~AnchorAppLayer() {
 	cancelAndDelete(initRangingProcedure);
 	cancelAndDelete(checkQueue);
 	cancelAndDelete(beginPhases);
+
 	packetsQueue.clear();
 	for(cQueue::Iterator iter(packetsQueue, 1); !iter.end(); iter++) {
 		delete(iter());
@@ -289,7 +293,10 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         break;
 
         case INIT_RANGING:
-           Ranging(Init);
+           Ranging(RANGE_REQUEST);
+           break;
+        case RANGE_REQUEST_TIMER:
+           Ranging(RANGE_REQUEST_TIMER);
            break;
 
 
@@ -682,8 +689,24 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	switch(phase)
 	{
 	case AppLayer::RANGING_PHASE:
-
-	    break;
+	    switch(pkt->getKind()){
+                case AppLayer::RANGE_ACCEPT:
+                    Ranging(TIME_SYNC);
+                    delete pkt;
+                break;
+                case AppLayer::PMU_START:
+                    Ranging(RANGING_MEASUREMENT, msg);
+                    delete pkt;
+                break;
+                case AppLayer::RANGING_MEASUREMENT:
+                   Ranging(RANGING_MEASUREMENT, msg);
+                   delete pkt;
+               break;
+                default:
+                    EV << "Handler LowerMessage in phase Ranging fails" << endl;
+                    break;
+	    }
+	break;
 	case AppLayer::SYNC_PHASE_1:
 	case AppLayer::SYNC_PHASE_2:
 	case AppLayer::SYNC_PHASE_3:
@@ -1246,16 +1269,13 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 	delete msg;
 }
 
-void AnchorAppLayer::Ranging(int status){
-    EV << "Ranging Procedure" << endl;
-    ApplPkt *Ranging= new ApplPkt("Generic", RANGE_REQUEST);
-
+void AnchorAppLayer::Ranging(int status,cMessage *msg){
+    EV << "Ranging Procedure with status: " << status << endl;
     switch (status)
     {
-        case Init:{
+        case RANGE_REQUEST:{
+            ApplPkt *Ranging= new ApplPkt("Range request", RANGE_REQUEST);
             EV << "Init Ranging" << endl;
-            Ranging->setName("Range request");
-            Ranging->setKind(RANGE_REQUEST);
             RTBHeader=24;
             Ranging->setBitLength(RTBHeader);
             Ranging->setSrcAddr(myNetwAddr);
@@ -1263,20 +1283,97 @@ void AnchorAppLayer::Ranging(int status){
             Ranging->setDestAddr(39);
             Ranging->setFastTransmision(true);
             RangingParams* parame = new RangingParams();
-            parame->setFreqStart(2413);
+            parame->setFreqStart(2412);
             parame->setRangingEnabled(true);
             parame->setFreqStep(2);
-            parame->setFreqStop(2513);
-            Ranging->setRangingParams(*parame);
+            parame->setFreqStop(2476);
+            Ranging->setRangingParamsApp(*parame);
+            int bandwidth = abs(parame->getFreqStop() - parame->getFreqStart() );
+            //Number of steps
+
+            EV << "Ancho de banda donde se hace Ranging: "<< bandwidth << endl;
+            steps=bandwidth / (parame->getFreqStep());
+
+            if(bandwidth % (parame->getFreqStep())!=0){
+                error("Ranging Setup error =>(start-stop)/steps not natural %i / %i ", bandwidth,parame->getFreqStep());
+            }
+            parame->setTotalStep(steps);
+            EV << "Steps in this Ranging Procedure: "<< parame->getTotalStep() << endl;
+
+
+
+
             EV << "Inserting sending Packet in Transmission Queue" << endl;
             transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
             sendDown(Ranging);
 
-        break;
+
         }
+        break;
+        case TIME_SYNC:{
+            EV << "Time sync moment :D " << endl;
+            ApplPkt *Ranging= new ApplPkt("Time sync", TIME_SYNC);
+            EV << "Init Time Sync" << endl;
+            Ranging->setName("Time Sync");
+            Ranging->setKind(TIME_SYNC);
+            RTBHeader=24;
+            Ranging->setBitLength(RTBHeader);
+            Ranging->setSrcAddr(myNetwAddr);
+            Ranging->setRealSrcAddr(myNetwAddr);
+            Ranging->setDestAddr(39);
+            Ranging->setFastTransmision(true);
+            RangingParams* parame = new RangingParams();
+            Ranging->setRangingParamsApp(*parame);
+
+            EV << "Inserting sending Packet in Transmission Queue" << endl;
+            transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+            sendDown(Ranging);
+        }
+        break;
+        case RANGING_MEASUREMENT:{
+
+            if(actual_frequency >= steps){
+
+                EV << "End of ranging process" << endl;
+                EV << "Report results" << endl;
+                break;
+            }
+
+            ApplPkt *Ranging= new ApplPkt(buff , RANGING_MEASUREMENT);
+
+            RangingParams* parame = new RangingParams();
+
+
+            parame->setActualFreq(next_frequency);
+            actual_frequency=parame->getActualFreq();
+            sprintf(buff, "Ranging in Channel %d", actual_frequency);
+            Ranging->setName(buff);
+            next_frequency=parame->getActualFreq()+1;
+
+
+            RTBHeader=24;
+            Ranging->setBitLength(RTBHeader);
+            Ranging->setSrcAddr(myNetwAddr);
+            Ranging->setRealSrcAddr(myNetwAddr);
+            Ranging->setDestAddr(39);
+            Ranging->setFastTransmision(true);
+
+            Ranging->setRangingParamsApp(*parame);
+            transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
+            sendDown(Ranging);
+
+        }
+
+
+
+
+
+        break;
+
         default:
             EV << "WTF! Why!?!" << endl;
         break;
+
     }
 }
 void AnchorAppLayer::sendBroadcast()

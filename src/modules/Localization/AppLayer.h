@@ -38,9 +38,20 @@ public:
 		MAC_ERROR_MANAGEMENT,            // Event to to delay the handle of packets with MAC error.
 
 	    //Added by Antonio
-        INIT_RANGING,                   // Event to transmit fast transmit ranging packets.
-        RANGE_REQUEST                   // Range request (See manual)
+        INIT_RANGING                   // Event to transmit fast transmit ranging packets.
 	};
+	enum RangingPhases{
+        RANGE_REQUEST=101,                   // Range request [See manual "AVR2152 REB233 - Software user guide.pdf" ]
+        RANGE_REQUEST_TIMER=102,
+        RANGE_ACCEPT=103,
+        RANGE_ACCEPT_TIMER=104,
+        TIME_SYNC=105,
+        PMU_START=106,
+        RANGING_MEASUREMENT=107,
+        CHANGE_FREQUENCY=200
+
+	};
+
 
 	enum PhaseType{						// Phases of the Full Phase or Period
 
@@ -58,7 +69,7 @@ public:
 	};
 
     enum RangingTips{
-        Init=1, RangingRequest
+        Init=1, Time_sync=2
     };
 
 
@@ -66,6 +77,7 @@ protected:
 
 	BaseArp* arp;						// Pointer to the ARP of the Host
 	int myNetwAddr;						// Network address of the Host
+	int srcAddr;                        // Added by Antonio (Address to answer in RangingMode).
 
 	BaseConnectionManager* cc;			// Pointer to the Propagation Model module
 
@@ -178,8 +190,10 @@ protected:
 	//Victor
     long nbReportsNoDuplicated;         // Variable to count the number of no duplicated reports successfully received
 
-    //by Antonio
+    //Added by Antonio
     int RTBHeader;
+    simtime_t waitTime;
+    bool ACKRangeRequest;
 
 public:
 

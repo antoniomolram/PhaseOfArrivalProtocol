@@ -41,7 +41,8 @@
 #include "NicEntry.h"
 /*****/
 class MacPkt;
-
+//Added by Antonio
+#include "RangingParams.h"
 
 /***MOD***/
 #include <EnergyConsumption.h>

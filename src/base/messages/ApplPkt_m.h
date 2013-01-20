@@ -65,7 +65,7 @@
  * 	
  * 	
  * 	bool fastTransmision=false;
- * 	RangingParams RangingParams;
+ * 	RangingParams RangingParamsApp;
  * 
  * }
  * </pre>
@@ -104,7 +104,7 @@ class ApplPkt : public ::cPacket
     double timestampComRelated_var;
     double broadcastedSuccess_var;
     bool fastTransmision_var;
-    RangingParams RangingParams_var;
+    RangingParams RangingParamsApp_var;
 
   private:
     void copy(const ApplPkt& other);
@@ -187,9 +187,9 @@ class ApplPkt : public ::cPacket
     virtual void setBroadcastedSuccess(double broadcastedSuccess);
     virtual bool getFastTransmision() const;
     virtual void setFastTransmision(bool fastTransmision);
-    virtual RangingParams& getRangingParams();
-    virtual const RangingParams& getRangingParams() const {return const_cast<ApplPkt*>(this)->getRangingParams();}
-    virtual void setRangingParams(const RangingParams& RangingParams);
+    virtual RangingParams& getRangingParamsApp();
+    virtual const RangingParams& getRangingParamsApp() const {return const_cast<ApplPkt*>(this)->getRangingParamsApp();}
+    virtual void setRangingParamsApp(const RangingParams& RangingParamsApp);
 };
 
 inline void doPacking(cCommBuffer *b, ApplPkt& obj) {obj.parsimPack(b);}

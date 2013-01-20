@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for nicTest
 #
 # This file was generated with the command:
-#  opp_makemake -f -o nicTest -O out -u CMDENV -I../../src/modules/phy -I../../src/base/phyLayer -I../../src/modules/utility -I../../src/base/connectionManager -I../../src/base/messages -I../../src/modules/mac -I../../src/modules/messages -I../../src/modules/energy -I../../src/base/modules -I../../src/base/utils -I../../src/modules/analogueModel -L../../out/$(CONFIGNAME)/tests/testUtils -L../../out/$(CONFIGNAME)/tests/power/utils -L../../out/$(CONFIGNAME)/src/base -L../../out/$(CONFIGNAME)/src/modules -lmiximbase -lmiximmodules -lmiximtestUtils
+#  opp_makemake -f -o nicTest -O out -u CMDENV -I../../src/modules/phy -I../../src/base/phyLayer -I../../src/modules/utility -I../../src/base/connectionManager -I../../src/modules/Localization -I../../src/base/messages -I../../src/modules/mac -I../../src/modules/messages -I../../src/modules/energy -I../../src/base/modules -I../../src/base/utils -I../../src/modules/analogueModel -L../../out/$(CONFIGNAME)/tests/testUtils -L../../out/$(CONFIGNAME)/tests/power/utils -L../../out/$(CONFIGNAME)/src/base -L../../out/$(CONFIGNAME)/src/modules -lmiximbase -lmiximmodules -lmiximtestUtils
 #
 
 # Name of target to be created (-o option)
@@ -19,6 +19,7 @@ INCLUDE_PATH = \
     -I../../src/base/phyLayer \
     -I../../src/modules/utility \
     -I../../src/base/connectionManager \
+    -I../../src/modules/Localization \
     -I../../src/base/messages \
     -I../../src/modules/mac \
     -I../../src/modules/messages \
@@ -158,6 +159,7 @@ $O/TestApp.o: TestApp.cc \
 	../../src/base/utils/MiXiMDefs.h \
 	../../src/base/utils/NetwToMacControlInfo.h \
 	../../src/base/utils/PassedMessage.h \
+	../../src/base/utils/RangingParams.h \
 	../../src/base/utils/SimpleAddress.h \
 	../../src/base/utils/miximkerneldefs.h \
 	../../src/modules/mac/Mac80211.h \

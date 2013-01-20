@@ -38,6 +38,11 @@
 
 #include <NetwToMacControlInfo.h>
 
+//Added by Antonio
+#include "AppLayer.h"
+#include "RangingParams.h"
+
+
 Define_Module(csma);
 
 /**
@@ -250,11 +255,31 @@ void csma::handleUpperMsg(cMessage *msg) {
 /***MOD***/
     //macPkt->setCsmaActive(false);
     macPkt->setCsmaActive(cInfo->getCsmaActive());
+
 //Added: FastTransmision Setup
     if(cInfo->getFastTransmision()){
         EV<< "Estamos en FastTransmision" << endl;
         fast_transmision=true;
     }
+    if(msg->getKind()==AppLayer::RANGING_MEASUREMENT){
+        EV << "Ranging in CSMA" << endl;
+        RangingParams* parame = new RangingParams();
+        *parame= cInfo->getRangingParams();
+        phy->setCurrentRadioChannel(parame->getActualFreq());
+        delete parame;
+//        if(channel_changed=true){
+//
+//        }
+//        EV << "Paso actual: " <<  parame->getActualStep() << endl;
+//        *parame=ChannelControl(parame);
+//        EV << "Paso tras ChannelControl: " <<  parame->getActualStep() << endl;
+//
+//        //phy->setCurrentRadioChannel(2);
+//        EV << phy->getRadioState() << endl;
+//        EV << "Mostramos frecuencia inicial" << parame->getFreqStart()<<endl;
+    }
+
+
 /*********/
     macPkt->setDestAddr(dest);
     delete cInfo;
@@ -282,8 +307,12 @@ void csma::handleUpperMsg(cMessage *msg) {
 /*********/
     macPkt->encapsulate(static_cast<cPacket*>(msg));
     EV <<"pkt encapsulated, length: " << macPkt->getBitLength() << "\n";
+
     executeMac(EV_SEND_REQUEST, macPkt);
+
 }
+
+
 
 void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
     switch (event) {
@@ -373,6 +402,14 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
         sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
         nbRxFrames++;
         delete msg;
+
+        //Added by Antonio
+        if(fast_transmision){
+            EV << "Estamos en fast transmision no queremos mierda" << endl;
+        }else{
+
+
+
 /***MOD***/
 //      if(useMACAcks) {
         // We check if we are still in RX because if the waiting time for the ask report is gone and at this moment
@@ -393,6 +430,7 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
            //  if(phy->getRadioState() == Radio::RX)
                  manageQueue(); //Mod Victor: revisar paquetes almacenados
          }
+        }
         break;
 
     case EV_BROADCAST_RECEIVED:
@@ -401,6 +439,14 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
         sendUp(decapsMsg(static_cast<MacPkt *>(msg)));
         delete msg;
         manageQueue(); // MOD JJR
+        break;
+
+        //Mod for RangingProcedure
+    case EV_FRAME_TRANSMITTED:
+        macQueue.pop_front();
+        EV << "Subimos en tinglao" << endl;
+        phy->setRadioState(Radio::RX);
+        updateMacState(IDLE_1);
         break;
     default:
         fsmError(event, msg);
@@ -853,7 +899,6 @@ void csma::updateStatusNotIdle(cMessage *msg) {
  */
 void csma::executeMac(t_mac_event event, cMessage *msg) {
     EV<< "In executeMac" << endl;
-
     if(macState != IDLE_1 && event == EV_SEND_REQUEST) {
         updateStatusNotIdle(msg);
     } else if(event == EV_SEND_REQUEST && phy->getRadioState() == Radio::RX_BUSY && !transmitOnReception){
@@ -866,6 +911,7 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
         macQueue.push_back(static_cast<MacPkt *> (msg));
         EV << "Fast transmission" << endl;
         updateStatusTransmit(event, msg);
+
 //
     }
 
@@ -911,8 +957,10 @@ void csma::updateStatusTransmit(t_mac_event event, cMessage *msg) {
 
     //CUIDADO: Modificado BasePhyLayer.cc en la recepción de selfmessage "TX_OVER".
     sendDelayed(mac, aTurnaroundTime, lowerLayerOut);
+    delete msg;
 
 }
+
 
 void csma::manageQueue() {
     checkQueue = false;
@@ -1274,6 +1322,7 @@ void csma::handleLowerControl(cMessage *msg) {
     if (msg->getKind() == MacToPhyInterface::TX_OVER) {
         EV << "Tx_over en csma.cc" << endl;
        // Added executeMac(EV_FRAME_TRANSMITTED, msg);
+        executeMac(EV_FRAME_TRANSMITTED, msg);
     } else if (msg->getKind() == BaseDecider::PACKET_DROPPED) {
         EV<< "control message: PACKED DROPPED" << endl;
         if (phy->getRadioState() == Radio::RX_BUSY)

@@ -121,11 +121,25 @@ NetwPkt* NodeNetLayer::encapsMsg(cPacket *appPkt) {
         macAddr = arp->getMacAddr(netwAddr);
     }
 
-    if ((static_cast<ApplPkt*>(appPkt))->getCSMA()) {
-    	pkt->setControlInfo(new NetwToMacControlInfo(macAddr, true));
-    } else {
-    	pkt->setControlInfo(new NetwToMacControlInfo(macAddr, false));
-    }
+
+    //    if ((static_cast<ApplPkt*>(appPkt))->getCSMA()) {
+    //        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, true));
+    //    } else {
+    //        pkt->setControlInfo(new NetwToMacControlInfo(macAddr, false));
+    //    }
+
+
+        RangingParams* parametros = new RangingParams();
+
+
+        NetwToMacControlInfo* cInfo = new NetwToMacControlInfo;
+
+        cInfo->setFastTransmision((static_cast<ApplPkt*>(appPkt))->getFastTransmision());
+        cInfo->setDest(macAddr);
+        cInfo->setCsmaActive((static_cast<ApplPkt*>(appPkt))->getCSMA());
+        cInfo->setRangingParams((static_cast<ApplPkt*>(appPkt))->getRangingParamsApp());
+        (static_cast<ApplPkt*>(appPkt))->getRangingParamsApp();
+        pkt->setControlInfo(cInfo);
 
 
     //encapsulate the application packet

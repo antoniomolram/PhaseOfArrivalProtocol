@@ -433,6 +433,7 @@ $O/Localization/NetworkStackTrafficGen.o: Localization/NetworkStackTrafficGen.cc
 	../base/utils/MiXiMDefs.h \
 	../base/utils/NetwToMacControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	Localization/NetworkStackTrafficGen.h \
@@ -868,6 +869,7 @@ $O/mac/CSMA802154.o: mac/CSMA802154.cc \
 	../base/utils/MacToNetwControlInfo.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
 	energy/EnergyConsumption.h \
@@ -1043,6 +1045,7 @@ $O/mac/csma.o: mac/csma.cc \
 	../base/connectionManager/ChannelAccess.h \
 	../base/connectionManager/NicEntry.h \
 	../base/messages/AirFrame_m.h \
+	../base/messages/ApplPkt_m.h \
 	../base/messages/ChannelSenseRequest_m.h \
 	../base/messages/MacPkt_m.h \
 	../base/modules/AddressingInterface.h \
@@ -1069,19 +1072,25 @@ $O/mac/csma.o: mac/csma.cc \
 	../base/phyLayer/MappingUtils.h \
 	../base/phyLayer/PhyUtils.h \
 	../base/phyLayer/Signal_.h \
+	../base/utils/AppToNetControlInfo.h \
 	../base/utils/Coord.h \
 	../base/utils/FWMath.h \
 	../base/utils/FindModule.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
 	../base/utils/Move.h \
+	../base/utils/NetwControlInfo.h \
 	../base/utils/NetwToMacControlInfo.h \
 	../base/utils/PassedMessage.h \
+	../base/utils/RangingParams.h \
 	../base/utils/SimpleAddress.h \
 	../base/utils/miximkerneldefs.h \
+	Localization/AppLayer.h \
+	Localization/cQueueWithPriority.h \
 	energy/EnergyConsumption.h \
 	mac/csma.h \
-	utility/DroppedPacket.h
+	utility/DroppedPacket.h \
+	utility/Packet.h
 $O/messages/AggrPkt.o: messages/AggrPkt.cc \
 	../base/messages/ApplPkt_m.h \
 	../base/utils/FWMath.h \

@@ -34,6 +34,14 @@ protected:
 	cMessage *checkQueue;				// Variable to schedule the events to process the Queue elements
 	cMessage* MsgPrueba;
 
+
+    // Added by Antonio
+    // Ranging Parameters initialization
+    int next_frequency;
+    char buff[30];
+    int actual_frequency;
+    int steps;
+
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 
 	bool macDeviceFree;					// Flag signaling if transmitter is available for new packet
@@ -82,6 +90,7 @@ protected:
     simtime_t initTimeComSink1;           // Save the time when the COM_SINK_1 began
 
 
+
 public:
 	virtual ~AnchorAppLayer();
 
@@ -117,7 +126,7 @@ protected:
 	virtual void sendBroadcast();
 
     /** @brief Ranging procedure */
-    virtual void Ranging(int stat);
+    virtual void Ranging(int stat,cMessage *msg = NULL);
 
 	/** @brief Manage the Mac errors */
 	void errorManagement(cMessage *msg);

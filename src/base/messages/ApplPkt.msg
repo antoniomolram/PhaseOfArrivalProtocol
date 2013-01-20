@@ -77,6 +77,6 @@ packet ApplPkt
 	
 	//Added by Antonio
 	bool fastTransmision=false;
-	RangingParams RangingParams;
+	RangingParams RangingParamsApp;
 
 }
