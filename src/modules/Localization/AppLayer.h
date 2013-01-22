@@ -48,6 +48,7 @@ public:
         TIME_SYNC=105,
         PMU_START=106,
         RANGING_MEASUREMENT=107,
+        RESULT_REQUEST=108,
         CHANGE_FREQUENCY=200
 
 	};

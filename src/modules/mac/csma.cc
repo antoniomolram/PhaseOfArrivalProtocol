@@ -178,7 +178,11 @@ void csma::initialize(int stage) {
 /****MOD***/
         else if (stage == 4) { // Modified by Jorge, in this stage we calculate the necessary things to cancel the queue and don't permit to schedule more packets after a determined time
         beginPhases = new cMessage("next-phase",csma::EV_BEGIN_PHASE);
-        nextPhase = csma::REPORT_PHASE;
+
+
+        nextPhase = csma::RANGING_PHASE;
+       // nextPhase = csma::SYNC_PHASE_1;
+
         syncPacketsPerSyncPhase = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("syncPacketsPerSyncPhase");
         syncPacketTime = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("syncPacketTime");
         phase2VIPPercentage = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("phase2VIPPercentage");
@@ -193,6 +197,8 @@ void csma::initialize(int stage) {
         timeSyncPhase =  0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
         timeVIPPhase = 0.3; // 300ms // (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
         timeReportPhase = 0.4 ; // 400 ms // (fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
+
+        timeRangingPhase = 1.6 ;
         nextPhaseStartTime = simTime() + timeSyncPhase - smallTime;
         scheduleAt(nextPhaseStartTime, beginPhases);
     }
@@ -266,17 +272,7 @@ void csma::handleUpperMsg(cMessage *msg) {
         RangingParams* parame = new RangingParams();
         *parame= cInfo->getRangingParams();
         phy->setCurrentRadioChannel(parame->getActualFreq());
-        delete parame;
-//        if(channel_changed=true){
-//
-//        }
-//        EV << "Paso actual: " <<  parame->getActualStep() << endl;
-//        *parame=ChannelControl(parame);
-//        EV << "Paso tras ChannelControl: " <<  parame->getActualStep() << endl;
-//
-//        //phy->setCurrentRadioChannel(2);
-//        EV << phy->getRadioState() << endl;
-//        EV << "Mostramos frecuencia inicial" << parame->getFreqStart()<<endl;
+
     }
 
 
@@ -308,7 +304,9 @@ void csma::handleUpperMsg(cMessage *msg) {
     macPkt->encapsulate(static_cast<cPacket*>(msg));
     EV <<"pkt encapsulated, length: " << macPkt->getBitLength() << "\n";
 
+
     executeMac(EV_SEND_REQUEST, macPkt);
+
 
 }
 
@@ -406,6 +404,7 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
         //Added by Antonio
         if(fast_transmision){
             EV << "Estamos en fast transmision no queremos mierda" << endl;
+
         }else{
 
 
@@ -441,9 +440,9 @@ void csma::updateStatusIdle(t_mac_event event, cMessage *msg) {
         manageQueue(); // MOD JJR
         break;
 
-        //Mod for RangingProcedure
+        //Added by Antonio: Mod for RangingProcedure
     case EV_FRAME_TRANSMITTED:
-        macQueue.pop_front();
+       // macQueue.pop_front();
         EV << "Subimos en tinglao" << endl;
         phy->setRadioState(Radio::RX);
         updateMacState(IDLE_1);
@@ -464,6 +463,7 @@ void csma::updateStatusBackoff(t_mac_event event, cMessage *msg) {
 /***MOD***/
         EV<< "Radio Status: " << phy->getRadioState()<<endl;
         ccaStatusIniIdle = phy->getChannelState().isIdle(); // MOD VICTOR
+
 /*********/
         phy->setRadioState(Radio::RX);
 /***MOD***/
@@ -908,10 +908,10 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
     }
     //Added: Included fastTransmision transmision!
     else if(event == EV_SEND_REQUEST && fast_transmision==true){
-        macQueue.push_back(static_cast<MacPkt *> (msg));
+        fast_transmision=false;
+      //  macQueue.push_back(static_cast<MacPkt *> (msg));
         EV << "Fast transmission" << endl;
         updateStatusTransmit(event, msg);
-
 //
     }
 
@@ -950,14 +950,14 @@ void csma::updateStatusTransmit(t_mac_event event, cMessage *msg) {
     phy->setRadioState(Radio::TX);
 
 
-    MacPkt * mac = check_and_cast<MacPkt *>(macQueue.front()->dup());
+    MacPkt * mac = check_and_cast<MacPkt*>(msg);
     attachSignal(mac, simTime()+aTurnaroundTime);
 //    //sendDown(msg);
 //    // give time for the radio to be in Tx state before transmitting
 
     //CUIDADO: Modificado BasePhyLayer.cc en la recepción de selfmessage "TX_OVER".
     sendDelayed(mac, aTurnaroundTime, lowerLayerOut);
-    delete msg;
+
 
 }
 
@@ -1149,6 +1149,12 @@ void csma::handleSelfMsg(cMessage *msg) {
      else if(msg==beginPhases) {
         switch (nextPhase)
         {
+        case csma::RANGING_PHASE:
+             EV<<"Phase Ranging" << endl;
+             nextPhase = csma::SYNC_PHASE_1;
+             nextPhaseStartTime = simTime() + timeRangingPhase;
+             scheduleAt(nextPhaseStartTime, beginPhases);
+             break;
         case csma::SYNC_PHASE_1:
             nextPhase = csma::REPORT_PHASE;
             nextPhaseStartTime = simTime() + timeSyncPhase;

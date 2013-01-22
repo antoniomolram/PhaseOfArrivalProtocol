@@ -101,6 +101,8 @@ protected:
     char buff[30];
     int actual_frequency;
     cMessage *changeFreq;
+    int steps;
+
 
 	NicEntry* node;						// Pointer to the NIC of this anchor to access some NIC variables
 

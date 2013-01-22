@@ -1232,7 +1232,7 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
             sprintf(buff, "Ranging in Channel %d", actual_frequency);
             RangingReceived->setName(buff);
             next_frequency=parame->getActualFreq()+1;
-
+            steps=parame->getTotalStep();
             scheduleAt(simTime()+0.75e-3,changeFreq); // Valor exacto ~ para cambiar de freq despues de tx! ;D
 
           //Cambiar frequencia una vez transmitido el paquete!
@@ -1251,6 +1251,11 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
       }break;
       case CHANGE_FREQUENCY:{
           phy->setCurrentRadioChannel(next_frequency);
+          EV << "Total steps:" << steps << endl;
+          if(next_frequency>steps){
+              phy->setCurrentRadioChannel(0);
+
+          }
 
       }break;
       default:
@@ -1395,10 +1400,15 @@ void NodeAppLayer::handleLowerMsg(cMessage *msg)
 
 void NodeAppLayer::handleLowerControl(cMessage *msg)
 {
+    EV << "Handle Lower Control Node" << endl;
+    EV << "Probando" << endl;
+
 	ApplPkt* pkt;
 	switch (msg->getKind())
 	{
 	case BaseMacLayer::PACKET_DROPPED_BACKOFF: // In case its dropped due to maximum BackOffs periods reached
+
+
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
 		nbPacketDroppedBackOff++;
@@ -1456,6 +1466,7 @@ void NodeAppLayer::handleLowerControl(cMessage *msg)
 		EV << endl;
 		break;
 	case BaseMacLayer::PACKET_DROPPED: // In case its dropped due to no ACK received...
+
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
 		nbPacketDroppedNoACK++;
@@ -1567,6 +1578,7 @@ void NodeAppLayer::handleLowerControl(cMessage *msg)
 		delete pkt;
 		break;
 	case BaseMacLayer::TX_OVER:
+
 		// Take the first message from the transmission queue, the first is always the one the MAC is referring to...
 		pkt = check_and_cast<ApplPkt*>((cMessage *)transfersQueue.pop());
 		EV << "Message correctly transmitted, received the ACK." << endl;
@@ -1801,7 +1813,7 @@ Coord NodeAppLayer::extractElementFIFO()
 	Coord result;
 
 	if (positionsSavedCounter == 0) {
-		error("There are no elements in the FIFO");
+		error("There fare no elements in the FIFO");
 	} else {
 		result = positionFIFO[0];
 		if (positionsSavedCounter > 1) {

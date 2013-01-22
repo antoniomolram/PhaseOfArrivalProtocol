@@ -1,5 +1,7 @@
 #include "AnchorAppLayer.h"
 //Added by Antonio
+#include <ChannelAccess.h>
+#include "MacToPhyInterface.h"
 #include "RangingParams.h"
 Define_Module(AnchorAppLayer);
 
@@ -26,6 +28,8 @@ void AnchorAppLayer::initialize(int stage)
 
 		// Parameters Ranging
 		next_frequency=0;
+        // get handler to phy layer
+        phy = FindModule<MacToPhyInterface*>::findSubModule(getParentModule());
 
 		/* Modified by Victor */
 		nbCafInComSink1 = 0;
@@ -1286,21 +1290,15 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
             parame->setFreqStart(2412);
             parame->setRangingEnabled(true);
             parame->setFreqStep(2);
-            parame->setFreqStop(2476);
+            parame->setFreqStop(2512);
             Ranging->setRangingParamsApp(*parame);
             int bandwidth = abs(parame->getFreqStop() - parame->getFreqStart() );
             //Number of steps
-
             EV << "Ancho de banda donde se hace Ranging: "<< bandwidth << endl;
             steps=bandwidth / (parame->getFreqStep());
-
             if(bandwidth % (parame->getFreqStep())!=0){
                 error("Ranging Setup error =>(start-stop)/steps not natural %i / %i ", bandwidth,parame->getFreqStep());
             }
-            parame->setTotalStep(steps);
-            EV << "Steps in this Ranging Procedure: "<< parame->getTotalStep() << endl;
-
-
 
 
             EV << "Inserting sending Packet in Transmission Queue" << endl;
@@ -1332,10 +1330,15 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
         break;
         case RANGING_MEASUREMENT:{
 
-            if(actual_frequency >= steps){
+            if(actual_frequency == steps){
 
                 EV << "End of ranging process" << endl;
                 EV << "Report results" << endl;
+                // get handler to phy layer
+                phy->setCurrentRadioChannel(0);
+                //Ranging(RESULT_REQUEST);
+
+
                 break;
             }
 
@@ -1349,7 +1352,8 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
             sprintf(buff, "Ranging in Channel %d", actual_frequency);
             Ranging->setName(buff);
             next_frequency=parame->getActualFreq()+1;
-
+            parame->setTotalStep(steps);
+            EV << "Steps in this Ranging Procedure: "<< parame->getTotalStep() << endl;
 
             RTBHeader=24;
             Ranging->setBitLength(RTBHeader);
@@ -1369,6 +1373,10 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
 
 
         break;
+        case RESULT_REQUEST:{
+
+
+        }break;
 
         default:
             EV << "WTF! Why!?!" << endl;

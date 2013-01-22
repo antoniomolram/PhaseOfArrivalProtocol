@@ -31,6 +31,7 @@ void AppLayer::initialize(int stage)
 
 		destination = par("destination");
 
+
 		syncPacketTime = par("syncPacketTime");
 		phase2VIPPercentage = par("phase2VIPPercentage");
 		fullPhaseTime = getParentModule()->getParentModule()->par("fullPhaseTime");
@@ -68,8 +69,9 @@ void AppLayer::initialize(int stage)
 		timeSyncPhase = 0.06;// 60ms // syncPacketsPerSyncPhase * computer->numTotalSlots * syncPacketTime ;
 		timeVIPPhase =  0.3; // 300ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * phase2VIPPercentage;
 		timeReportPhase = 0.4 ; // 400 ms //(fullPhaseTime - (2 * timeComSinkPhase) - (3 * timeSyncPhase)) * (1 - phase2VIPPercentage);
-		timeRangingPhase = 0.6 ;
+		timeRangingPhase = 1.6 ;
 		beginPhases = new cMessage("next-phase",AppLayer::BEGIN_PHASE);
+        // nextPhase = AppLayer::SYNC_PHASE_1;
 		nextPhase = AppLayer::RANGING_PHASE;
 		nextPhaseStartTime = simTime();
 		scheduleAt(nextPhaseStartTime, beginPhases);

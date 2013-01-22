@@ -364,6 +364,7 @@ class MIXIM_API csma : public BaseMacLayer
 	simtime_t guardTransmitTime;		// Time to leave before the end of the phase together with Backoff + aTurnaroundTime + rxSetupTime to ensure any packet is delivered after the end of the phase
 	simtime_t nextPhaseStartTime;		// Time to know the next Phase Start Time
 	simtime_t timeFromBackOffToTX;		// Time that goes between the end of the backoff time and the transmission of a packet
+	simtime_t timeRangingPhase;         // Added by Antonio
 
 	int syncPacketsPerSyncPhase; 		// Determines how many times do we repeat all the slots per sync phase
 	double phase2VIPPercentage;			// Percentage of the time Phase Report + Phase VIP that the Phase VIP takes
@@ -378,7 +379,9 @@ class MIXIM_API csma : public BaseMacLayer
 		SYNC_PHASE_2,
 		COM_SINK_PHASE_1,
 		SYNC_PHASE_3,
-		COM_SINK_PHASE_2
+		COM_SINK_PHASE_2,
+        //Added by Antonio
+        RANGING_PHASE
 	};
 
 	PhaseType nextPhase;				// To know in which phase are we

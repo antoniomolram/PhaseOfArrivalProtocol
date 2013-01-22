@@ -238,6 +238,7 @@ depend:
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/Localization/AnchorAppLayer.o: Localization/AnchorAppLayer.cc \
 	../base/connectionManager/BaseConnectionManager.h \
+	../base/connectionManager/ChannelAccess.h \
 	../base/connectionManager/NicEntry.h \
 	../base/messages/ApplPkt_m.h \
 	../base/modules/AddressingInterface.h \
@@ -246,16 +247,26 @@ $O/Localization/AnchorAppLayer.o: Localization/AnchorAppLayer.cc \
 	../base/modules/BaseBattery.h \
 	../base/modules/BaseLayer.h \
 	../base/modules/BaseMacLayer.h \
+	../base/modules/BaseMobility.h \
 	../base/modules/BaseModule.h \
 	../base/modules/BaseWorldUtility.h \
 	../base/modules/BatteryAccess.h \
+	../base/phyLayer/AnalogueModel.h \
+	../base/phyLayer/ChannelState.h \
 	../base/phyLayer/Interpolation.h \
+	../base/phyLayer/MacToPhyInterface.h \
+	../base/phyLayer/Mapping.h \
 	../base/phyLayer/MappingBase.h \
+	../base/phyLayer/MappingUtils.h \
+	../base/phyLayer/PhyUtils.h \
+	../base/phyLayer/Signal_.h \
 	../base/utils/AppToNetControlInfo.h \
 	../base/utils/Coord.h \
 	../base/utils/FWMath.h \
+	../base/utils/FindModule.h \
 	../base/utils/HostState.h \
 	../base/utils/MiXiMDefs.h \
+	../base/utils/Move.h \
 	../base/utils/NetwControlInfo.h \
 	../base/utils/PassedMessage.h \
 	../base/utils/RangingParams.h \

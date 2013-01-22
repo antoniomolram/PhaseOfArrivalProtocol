@@ -44,6 +44,9 @@ protected:
 
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 
+    /** @brief Handler to the physical layer.*/
+    MacToPhyInterface* phy;
+
 	bool macDeviceFree;					// Flag signaling if transmitter is available for new packet
 
 	int* broadPriority;					// Flag to save the priority of the broadcasts received on anchors
