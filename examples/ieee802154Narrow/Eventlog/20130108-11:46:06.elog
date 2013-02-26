@@ -1,6 +1,0 @@
-E # 0 t 0 m 1 ce -1 msg -1
-SB v 1026 rid Red8012154-0-20130108-11:46:06-13951 b 1000
-KF p -1 c "" s ""
-MC id 1 c cCompoundModule t org.mixim.examples.ieee802154Narrow.ieee802154Narrow n ieee802154Narrow cm 1
-SE e 1 c 9 m "The simulation wanted to ask a question, set cmdenv-interactive=true to allow it: \"Enter parameter `ieee802154Narrow.numNodes' (unassigned):\""
-MD id 1
