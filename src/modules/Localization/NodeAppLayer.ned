@@ -22,7 +22,10 @@ simple NodeAppLayer
 		int positionsToSave = default(5); 						// Number of positions to save for the MN in Type 2
 		bool centralized = default(true); 						// In Type 1, who calculates the position? True = Computer, False = AN Selected
 		int askFrequency = default(1);							// Every askFrequency Extra Reports we activate the ASK flag to make a request 
-
+		// Added by Antonio
+		
+		int channelgroup = default(0);							// Initial channelgroup 
+		
 		// All of them except syncPacket have a + 6 bytes due to the extra bytes needed by the long address for Mobile Nodes, it corresponds to MAC layer but here is easier to add the offset    	
     	int syncPacketLength @unit("bit") = default(88bit);			// Sync Packet Length, includes 1 byte status, 4 byte timestamp and 2 + 2 + 2 bytes possition
     	int normalReportPacketLength @unit("bit") = default(56bit); // Rutinary Report Packet Length, includes 1 byte status and should be added 2 bytes x each listened Anchor, only exists in MN type 1 and 4

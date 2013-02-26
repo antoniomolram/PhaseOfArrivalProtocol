@@ -32,6 +32,7 @@ void AppLayer::initialize(int stage)
 		destination = par("destination");
 
 
+
 		syncPacketTime = par("syncPacketTime");
 		phase2VIPPercentage = par("phase2VIPPercentage");
 		fullPhaseTime = getParentModule()->getParentModule()->par("fullPhaseTime");
@@ -63,6 +64,9 @@ void AppLayer::initialize(int stage)
 		maxRetransDroppedReportMN 	= 1;
 		maxRetransDroppedReportAN 	= 4;
 		maxRetransDroppedBackOff 	= 4;
+		timeEachFreq = 1e-3;
+		//Added by Antonio
+
 		myNetwAddr = getParentModule()->findSubmodule("nic");
 	} else if (stage == 4) { // We have to wait till stage 4 because before the number of slots are not yet calculated
 		computer = cc->findNic(getParentModule()->getParentModule()->getSubmodule("computer", 0)->findSubmodule("nic"));

@@ -29,21 +29,26 @@ public:
 
     bool RangingEnabled;
     int RangingMethod;        // Only one method.
-    int PMUFreqStart;      // Freq default.
+    int PMUFreqStart;         // Freq default.
     int PMUFreqStep;          // Default value (2Mhz hops).
-    int PMUFreqStop;       // Freq default.
+    int PMUFreqStop;          // Freq default.
     int PMUSamplesM;          // PMU units (Only read at the moment)
-    bool PMUCompress;     // Default not enable.
+    bool PMUCompress;         // Default not enable.
+
+
 
 //    int pmuVerboseLevel=0;      // See reference to implement
 //    bool DefaultAntenna;
 //    bool EnableAntennaDiv;
 //    bool ProvideAntennaDivResults;
 
-    //Internal parameters.
+    //Internal parameters. (functional parameters)
     int actual_step;
     int actual_Freq;
     int total_step;
+    int channel;
+    int class_node;         // Iniciator =0 , Reflector =1
+    simtime_t StartTimestamp;
 
 
 public:
@@ -60,7 +65,10 @@ public:
        PMUCompress(false),      // Default not enable.
        actual_step(0),          // During the procedure the different steps.
        actual_Freq(0),          // Frequency used at the moment
-       total_step(20)            // Number tot
+       total_step(20),          // Number total of steps
+       channel(0),              // Groups of channels to make multiple rangings in the same time!
+       class_node(0),
+       StartTimestamp()        // time to start ranging measurement
        {}
     /*
      * SetterFreqStart
@@ -126,6 +134,8 @@ public:
      * GetterFreqStep
      */
     const int getActualStep() {
+
+
          return actual_step;
      };
     /*
@@ -152,6 +162,49 @@ public:
     const int getTotalStep() {
          return total_step;
      };
+
+    const int getChannelStep(const int freqStep) {
+        switch(channel){
+        case 0:
+            return freqStep;
+        break;
+        case 1:
+            return freqStep+total_step;
+        break;
+        default:
+            return freqStep+total_step*channel;
+        break;
+
+        };
+//Initial solution :: DELETE
+
+        //         if(channel==0 || freqStep==0){
+        //             return freqStep;
+        //         }else{
+        //             return freqStep+20*channel;
+        //         }
+    };
+    void setChannel(const int input_channel){
+        channel=input_channel;
+    }
+    const int getChannel(){
+        return channel;
+    }
+    //Getter returning 0 if the node is set to Iniciator or 1 if the node is a reflector
+    const int getClassNode(){
+        return class_node;
+    }
+    void setClassNode(const int input_class){
+        class_node=input_class;
+    }
+
+    void setStartTimeStamp(const simtime_t timestamp ){
+        StartTimestamp= timestamp;
+    }
+    const simtime_t getStartTimestamp(){
+        return StartTimestamp;
+    }
+
 
 
 };

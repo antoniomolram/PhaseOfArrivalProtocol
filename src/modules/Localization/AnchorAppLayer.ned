@@ -8,7 +8,7 @@ simple AnchorAppLayer
     	int destination = default(-1);								// Broadcast destination, usually -1
     	double syncPacketTime @unit(s) = default(1.5ms); 			// Max. duration of a Sync Packet, determines the slot size
     	double phase2VIPPercentage = default(0.4);					// Percentage of the time Phase Report + Phase VIP that the Phase VIP takes
-
+		
     	bool syncInSlot = default(true);							// Indicates if the sync packets have to be slotted or not
     	double syncFirstMaxRandomTime @unit(s) = default(6ms); 		// First maximum time an anchor must wait to transmit the first sync packet in no slotted mode
     	double syncRestMaxRandomTimes @unit(s) = default(1ms); 		// Rest of maximum times an anchor must wait to transmit the rest of the sync packets in no slotted mode
@@ -25,7 +25,10 @@ simple AnchorAppLayer
 		bool appDuplicateFilter = default(false);					// Aply filter for duplicated packets that were received.
         int maxRetransTotal = default(4);							// Number of retransmissions.
         int PktLengthMN3;											// Lenght of packets from mobile nodes in mode 3.
-       
+        
+        //Added by Antonio
+        int channelgroup = default(0);
+		int classNode = default(1);
         gates:
     	input lowerLayerIn; 										// from NIC
         output lowerLayerOut; 									// to NIC

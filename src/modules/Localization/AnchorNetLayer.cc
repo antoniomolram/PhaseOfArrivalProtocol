@@ -99,9 +99,11 @@ NetwPkt* AnchorNetLayer::encapsMsg(cPacket *appPkt) {
     int netwAddr;
     int origen;
     int destino;
-    // Routing matrix for 2 anchors conneted to a coordinator initialization
+    // Routing matrix for 2 anchors connected to a coordinator initialization
     int routing_matrix_25[3][3]={{0,2,2},{2,1,2},{0,1,2}};
-    int C = 2; // Define el coordinador
+    // Routing matrix for 2 anchors connected to a coordinator initialization
+ //   int routing_matrix_25[5][5]={{0,2,2,2,2},{2,1,2,2,2},{0,1,2,3,4},{2,2,2,3,2},{2,2,2,2,4}};
+    int C = 2; // Definition of coordinator
 
 
     // Routing matrix for 25 elements initialization

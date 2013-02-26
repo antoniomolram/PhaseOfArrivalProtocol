@@ -7,6 +7,9 @@
 #include <MacToNetwControlInfo.h>
 #include <cassert>
 
+//Added by Antonio
+#include "AppLayer.h"
+
 Define_Module(NodeNetLayer);
 
 void NodeNetLayer::initialize(int stage) {
@@ -84,6 +87,8 @@ cMessage* NodeNetLayer::decapsMsg(NetwPkt *msg)
 	//and set its rssi and ber
 	assert(dynamic_cast<MacToNetwControlInfo*>(msg->getControlInfo()));
 	MacToNetwControlInfo* cInfo = static_cast<MacToNetwControlInfo*>(msg->getControlInfo());
+
+
 
 	m->setControlInfo(new NetwControlInfo(msg->getSrcAddr(), cInfo->getBitErrorRate(), cInfo->getRSSI()));
     // delete the netw packet

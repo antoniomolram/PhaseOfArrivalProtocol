@@ -33,15 +33,20 @@ protected:
     cMessage *initRangingProcedure;     // Added by Antonio: Pointer to start ranging procedure.
 	cMessage *checkQueue;				// Variable to schedule the events to process the Queue elements
 	cMessage* MsgPrueba;
-
+	cMessage* syncro;
+	simtime_t syncrotime;
 
     // Added by Antonio
     // Ranging Parameters initialization
     int next_frequency;
+    int channelQueue[5];
+    int timeQueue[5];
     char buff[30];
     int actual_frequency;
     int steps;
-
+    int channelgroup;
+    int classNode;
+    RangingParams* GlobalRanging;       // Global rangingValues for all the ranging procedures
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 
     /** @brief Handler to the physical layer.*/

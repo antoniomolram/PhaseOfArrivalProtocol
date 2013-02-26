@@ -49,7 +49,10 @@ public:
         PMU_START=106,
         RANGING_MEASUREMENT=107,
         RESULT_REQUEST=108,
-        CHANGE_FREQUENCY=200
+        RESULT_CONFIRM=109,
+        CHANGE_FREQUENCY=200,
+        SYNC_RANGING=201,        //Message to synchronize node-anchors
+        NEXT_RANGING=202
 
 	};
 
@@ -107,6 +110,8 @@ protected:
 	simtime_t timeVIPPhase;				// Duration of the VIP Phase
 	double phase2VIPPercentage;			// Percentage of the time Phase Report + Phase VIP that the Phase VIP takes
 
+
+	simtime_t StartTimestamp;           // Time to start anchor and node the Ranging measurement // Added by Antonio
 	simtime_t ranginglength;            // Duration of rangingPeriod            // Added by Antonio
 	float transmissionTime;         // Time to transmit anchor ranging      // Added by Antonio
 	int anchornum;
@@ -195,6 +200,8 @@ protected:
     int RTBHeader;
     simtime_t waitTime;
     bool ACKRangeRequest;
+    int rangingNode;
+    simtime_t timeEachFreq;
 
 public:
 

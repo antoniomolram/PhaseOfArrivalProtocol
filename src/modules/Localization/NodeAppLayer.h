@@ -97,10 +97,15 @@ protected:
 
     // Added by Antonio
     // Ranging Parameters initialization
+    RangingParams* GlobalRanging;             // Global rangingValues
+    int channelgroup;
     int next_frequency;
+    int channelQueue[5];
+    int timeQueue[5];
     char buff[30];
     int actual_frequency;
     cMessage *changeFreq;
+    cMessage *SyncRanging;
     int steps;
 
 

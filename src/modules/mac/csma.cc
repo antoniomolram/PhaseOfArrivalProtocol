@@ -271,7 +271,8 @@ void csma::handleUpperMsg(cMessage *msg) {
         EV << "Ranging in CSMA" << endl;
         RangingParams* parame = new RangingParams();
         *parame= cInfo->getRangingParams();
-        phy->setCurrentRadioChannel(parame->getActualFreq());
+        phy->setCurrentRadioChannel( parame->getChannelStep(parame->getActualFreq()));
+        EV << "Channel:" <<  parame->getChannelStep(parame->getActualFreq()) << endl;
 
     }
 
@@ -899,6 +900,7 @@ void csma::updateStatusNotIdle(cMessage *msg) {
  */
 void csma::executeMac(t_mac_event event, cMessage *msg) {
     EV<< "In executeMac" << endl;
+    EV << "Current channel: " << phy->getCurrentRadioChannel() << endl;
     if(macState != IDLE_1 && event == EV_SEND_REQUEST) {
         updateStatusNotIdle(msg);
     } else if(event == EV_SEND_REQUEST && phy->getRadioState() == Radio::RX_BUSY && !transmitOnReception){
@@ -948,6 +950,7 @@ void csma::executeMac(t_mac_event event, cMessage *msg) {
 }
 void csma::updateStatusTransmit(t_mac_event event, cMessage *msg) {
     phy->setRadioState(Radio::TX);
+
 
 
     MacPkt * mac = check_and_cast<MacPkt*>(msg);
