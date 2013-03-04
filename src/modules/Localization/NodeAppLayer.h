@@ -14,7 +14,8 @@ public:
 		LISTEN_AND_REPORT = 1,
 		LISTEN_AND_CALCULATE,
 		VIP_TRANSMIT,
-		LISTEN_TRANSMIT_REPORT
+		LISTEN_TRANSMIT_REPORT,
+		RANGING   //Added by Antonio
 	};
 
 	typedef struct {					// Struct to store the RSSI info, we add all of them and then at the end we divide to get the mean, each position is from an AN 0, 1, 2 ... 24
@@ -106,7 +107,10 @@ protected:
     int actual_frequency;
     cMessage *changeFreq;
     cMessage *SyncRanging;
+    cMessage * initRangingProcedure;
     int steps;
+    int canal;
+    int slot;
 
 
 	NicEntry* node;						// Pointer to the NIC of this anchor to access some NIC variables

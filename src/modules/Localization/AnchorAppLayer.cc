@@ -156,12 +156,15 @@ void AnchorAppLayer::initialize(int stage)
  //        channelQueue[5]={1,0,0,0,0,0};
  //        timeQueue[5]={10,10,10,10,10};
  //        int timeSlotActual=0;
+        // int slotMatrix[2][3]= {{1,2,3},{4,3,2},{2,3,4}};
+         slot=0;
 
          // Parameters Ranging
          next_frequency=0;
          // get handler to phy layer
          phy = FindModule<MacToPhyInterface*>::findSubModule(getParentModule());
 
+         //Parameters to schedule ranging initiators.
 
          GlobalRanging->setChannel(channelgroup);
          GlobalRanging->setClassNode(classNode);
@@ -184,6 +187,7 @@ AnchorAppLayer::~AnchorAppLayer() {
 	cancelAndDelete(initRangingProcedure);
 	cancelAndDelete(checkQueue);
 	cancelAndDelete(beginPhases);
+	cancelAndDelete(syncro);
 
 	packetsQueue.clear();
 	for(cQueue::Iterator iter(packetsQueue, 1); !iter.end(); iter++) {
@@ -318,20 +322,17 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
         case MAC_ERROR_MANAGEMENT:
             errorManagement(msg);
         break;
-
         case INIT_RANGING:
 
-           Ranging(RANGE_REQUEST,msg);
+           Ranging(PRE_SETUP,msg);
 
            break;
         case NEXT_RANGING:
            Ranging(NEXT_RANGING);
+           break;
         case RANGE_REQUEST_TIMER:
            Ranging(RANGE_REQUEST_TIMER);
            break;
-
-
-
         case SEND_SYNC_TIMER_WITHOUT_CSMA:
             sendBroadcast(); // Send the broadcast
             // If we still have full phases to do
@@ -480,40 +481,11 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
             switch (nextPhase)
             {
 
-            //Added by Antonio
-            case AppLayer::RANGING_PHASE:
-                EV<<"Phase Ranging" << endl;
-                phase = AppLayer::RANGING_PHASE;
-                nextPhase = AppLayer::SYNC_PHASE_1;
-                nextPhaseStartTime = simTime() + timeRangingPhase;
-                scheduleAt(nextPhaseStartTime, beginPhases);
-                nextPhaseStart = simTime();
-                EV <<"Id anchor:"<< anchor->nicId << endl;
-                EV <<"Host anchor:"<< anchor->hostId << endl;
-                EV <<"Id de nodo:" << getParentModule()->getIndex() << endl;
-                //Transmitir consecutivamente anchors! :D
-                anchornum=getParentModule()->getIndex();
-                ranginglength=0.02;
-
-                transmissionTime=(anchornum + 1);
-                EV << "Transmision time:" << transmissionTime  << endl;
-
-                //Para desarrollo del protocolo solo quiero un anchor haciendo ranging
-                if(anchornum==0){
-                    rangingNode=40;
-                    scheduleAt(nextPhaseStart + transmissionTime / 100, initRangingProcedure);
-                }
-//                if(anchornum==1){
-//                    rangingNode=64;
-//                    scheduleAt(nextPhaseStart + transmissionTime / 100, initRangingProcedure);
-//                }
-                break;
-
-
             case AppLayer::SYNC_PHASE_1:
                 phase = AppLayer::SYNC_PHASE_1;
                 nextPhase = AppLayer::REPORT_PHASE;
                 nextPhaseStartTime = simTime() + timeSyncPhase;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
 
@@ -560,20 +532,53 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 break;
             case AppLayer::REPORT_PHASE:
                 phase = AppLayer::REPORT_PHASE;
-                nextPhase = AppLayer::VIP_PHASE;
+                nextPhase = AppLayer::RANGING_PHASE;
                 nextPhaseStartTime = simTime() + timeReportPhase;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 break;
+                //Added by Antonio
+            case AppLayer::RANGING_PHASE:
+                    EV<<"Phase Ranging" << endl;
+                    phase = AppLayer::RANGING_PHASE;
+                    nextPhase = AppLayer::VIP_PHASE;
+//                    phase = AppLayer::RANGING_PHASE;
+//                    nextPhase = AppLayer::SYNC_PHASE_1;
+                    nextPhaseStartTime = simTime() + timeRangingPhase;
+                    scheduleAt(nextPhaseStartTime, beginPhases);
+
+                    EV <<"Id anchor:"<< anchor->nicId << endl;
+                    EV <<"Host anchor:"<< anchor->hostId << endl;
+                    EV <<"Id de nodo:" << getParentModule()->getIndex() << endl;
+                    //Transmitir consecutivamente anchors! :D
+                    anchornum=getParentModule()->getIndex();
+                    ranginglength=0.2;
+                    EV << "Duration of each ranging procedure: "<< ranginglength << endl;
+                        for(int a=0;a<anchor->rangingTotalTimeSlot;a++){
+                            if(anchor->rangingTransmisionSlot[a]!=0){
+                                scheduleAt(simTime()+a*ranginglength , initRangingProcedure->dup());
+                            }
+                        }
+                    transmissionTime=(anchornum + 1);
+                    EV << "Transmision time:" << transmissionTime  << endl;
+
+
+
+
+                    break;
+
             case AppLayer::VIP_PHASE:
                 phase = AppLayer::VIP_PHASE;
                 nextPhase = AppLayer::SYNC_PHASE_2;
                 nextPhaseStartTime = simTime() + timeVIPPhase;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 break;
             case AppLayer::SYNC_PHASE_2:
                 phase = AppLayer::SYNC_PHASE_2;
                 nextPhase = AppLayer::COM_SINK_PHASE_1;
                 nextPhaseStartTime = simTime() + timeSyncPhase;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
 
                 for (int i = 0; i < numberOfNodes; i++) {
@@ -638,6 +643,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 comsinkPhaseStartTime = simTime().dbl();
                 nextPhaseStartTime = simTime() + timeComSinkPhase1;
                 initTimeComSink1 = simTime();
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
 
                 pktsFromThisAnchor = packetsQueue.length();
@@ -678,6 +684,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 phase = AppLayer::SYNC_PHASE_3;
                 nextPhase = AppLayer::COM_SINK_PHASE_2;
                 nextPhaseStartTime = simTime() + timeSyncPhase;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 // Schedule the sync packets. If we execute some full phase (-1 not limited full phases)
                 if (phaseRepetitionNumber != 0 && syncInSlot) { // If sync phase slotted
@@ -696,6 +703,7 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 phase = AppLayer::COM_SINK_PHASE_2;
                 nextPhase = AppLayer::SYNC_PHASE_1;
                 nextPhaseStartTime = simTime() + timeComSinkPhase2;
+                phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
                 scheduleAt(nextPhaseStartTime, beginPhases);
                 break;
             }
@@ -725,6 +733,7 @@ void AnchorAppLayer::handleLowerMsg(cMessage *msg)
 	// Pointer to the source host
 	host = cc->findNic(pkt->getSrcAddr());
 	// Filter first according to the phase we are in
+	EV << "Phase actual: " << phase << endl;
 	switch(phase)
 	{
 	case AppLayer::RANGING_PHASE:
@@ -1314,116 +1323,37 @@ void AnchorAppLayer::handleLowerControl(cMessage *msg)
 
 void AnchorAppLayer::Ranging(int status,cMessage *msg){
     EV << "Ranging Procedure with status: " << status << endl;
+
+
     GlobalRanging->setClassNode(0);
     if(GlobalRanging->getClassNode()==1){	 // Reflector mode!
         EV << "Reflector mode" << endl;
-//        switch (status)
-//              {
-//              case RANGE_REQUEST:{
-//                  EV << "Range Request" << endl;
-//                    ApplPkt *Ranging= new ApplPkt("Range accept", RANGE_ACCEPT);
-//                    ApplPkt *RangingReceived = check_and_cast<ApplPkt*>(msg);
-//                    srcAddr=RangingReceived->getSrcAddr();
-//
-//                    RTBHeader=24;
-//                    Ranging->setBitLength(RTBHeader);
-//                    Ranging->setSrcAddr(myNetwAddr);
-//                    Ranging->setRealSrcAddr(myNetwAddr);
-//                    Ranging->setDestAddr(srcAddr);
-//                    Ranging->setFastTransmision(true);
-//                    RangingParams* parame = new RangingParams();
-//
-//                    Ranging->setRangingParamsApp(*parame);
-//                    EV << "Inserting sending Packet in Transmission Queue" << endl;
-//                //    transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-//                    sendDown(Ranging);
-//
-//
-//
-//
-//              } break;
-//              case TIME_SYNC:{
-//                  EV << "PMU Start" << endl;
-//                  ApplPkt *Ranging= new ApplPkt("PMU_Start", PMU_START);
-//                  EV << "Init Ranging" << endl;
-//                  RTBHeader=24;
-//                  Ranging->setBitLength(RTBHeader);
-//                  Ranging->setSrcAddr(myNetwAddr);
-//                  Ranging->setRealSrcAddr(myNetwAddr);
-//                  Ranging->setDestAddr(srcAddr);
-//                  Ranging->setFastTransmision(true);
-//                  RangingParams* parame = new RangingParams();
-//
-//                  Ranging->setRangingParamsApp(*parame);
-//                  EV << "Inserting sending Packet in Transmission Queue" << endl;
-//                  transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-//                  sendDown(Ranging);
-//
-//              }break;
-//              case RANGING_MEASUREMENT:{
-//                    ApplPkt *RangingReceived = check_and_cast<ApplPkt*>(msg);
-//                    RangingParams* parame = new RangingParams();
-//                    *parame =RangingReceived->getRangingParamsApp();
-//                    parame->setActualFreq(next_frequency);
-//                    actual_frequency=parame->getActualFreq();
-//                    sprintf(buff, "Ranging in Channel %d", actual_frequency);
-//                    RangingReceived->setName(buff);
-//                    next_frequency=parame->getActualFreq()+1;
-//                    steps=parame->getTotalStep();
-//                    //scheduleAt(simTime()+0.75e-3,changeFreq); // Valor exacto ~ para cambiar de freq despues de tx! ;D
-//
-//                  //Cambiar frequencia una vez transmitido el paquete!
-//
-//                    RangingReceived->setBitLength(RTBHeader);
-//                    RangingReceived->setSrcAddr(myNetwAddr);
-//                    RangingReceived->setRealSrcAddr(myNetwAddr);
-//                    RangingReceived->setDestAddr(srcAddr);
-//                    RangingReceived->setFastTransmision(true);
-//
-//                    RangingReceived->setRangingParamsApp(*parame);
-//                    EV << "Inserting sending Packet in Transmission Queue" << endl;
-//                   transfersQueue.insert(RangingReceived->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-//                   sendDown(RangingReceived);
-//
-//              }break;
-//              case CHANGE_FREQUENCY:{
-//                  RangingParams* parame = new RangingParams();
-//                  phy->setCurrentRadioChannel(parame->getChannelStep(next_frequency));
-//                  EV << "Total steps:" << steps << endl;
-//                  if(next_frequency>steps){
-//
-//                      phy->setCurrentRadioChannel( parame->getChannelStep(0));
-//
-//                  }
-//
-//              }break;
-//              case RESULT_REQUEST:{
-//                  EV << "Result Confirm in node" << endl;
-//                  ApplPkt *Ranging= new ApplPkt("Result Confirm", RESULT_CONFIRM);
-//                  RTBHeader=24;
-//                  Ranging->setBitLength(RTBHeader);
-//                  Ranging->setSrcAddr(myNetwAddr);
-//                  Ranging->setRealSrcAddr(myNetwAddr);
-//                  Ranging->setDestAddr(srcAddr);
-//                  Ranging->setFastTransmision(true);
-//                  RangingParams* parame = new RangingParams();
-//                  Ranging->setRangingParamsApp(*parame);
-//                  EV << "Inserting sending Packet in Transmission Queue" << endl;
-//                  transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
-//                  sendDown(Ranging);
-//
-//
-//              }break;
-//              default:
-//                    EV << "Fail! Why? Anyone knows..." << endl;
-//                    break;
-//              }
 
     }else if (GlobalRanging->getClassNode()==0){ // Initiator mode!
         EV << "Initiator mode" << endl;
         switch (status)
         {
+        case PRE_SETUP:{
+            canal=0;
+            EV << "Pre setup" << endl;
+            canal=anchor->rangingTransmisionSlot[slot];
+
+            EV << "Canal actual: " << canal << endl;
+            phy->setCurrentRadioChannel(canal);
+            EV << "Slot temporal: " << slot << endl;
+            EV << "Transmision hacia: " << anchor->initiatorDirections[slot] << endl;
+
+            if(anchor->initiatorDirections[slot]!=0){
+                rangingNode=anchor->initiatorDirections[slot];
+                Ranging(RANGE_REQUEST,msg);
+
+            }
+            slot=slot+1;
+        }break;
+
+                     break;
         case RANGE_REQUEST:{
+
             ApplPkt *Ranging= new ApplPkt("Range request", RANGE_REQUEST);
             EV << "Init Ranging" << endl;
             RTBHeader=24;
@@ -1434,16 +1364,12 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
             Ranging->setDestAddr(rangingNode);
             Ranging->setFastTransmision(true);
 
-
-
             //< Setting up parameters .ini :D
             RangingParams* IndividualRanging = new RangingParams();
             IndividualRanging= GlobalRanging;
             IndividualRanging->setChannel(channelgroup);
-            phy->setCurrentRadioChannel(IndividualRanging->getChannelStep(0));
-
+          //  phy->setCurrentRadioChannel(canal+IndividualRanging->getChannelStep(0));
             //>
-
 
             Ranging->setRangingParamsApp(*IndividualRanging);
             int bandwidth = abs(IndividualRanging->getFreqStop() - IndividualRanging->getFreqStart() );
@@ -1465,9 +1391,6 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
             ApplPkt *RangingRx = check_and_cast<ApplPkt*>(msg);
 //            RangingRx->getRealSrcAddr();
 
-
-
-
             EV << "Init Time Sync" << endl;
             RTBHeader=24;
             RangingTx->setBitLength(RTBHeader);
@@ -1475,7 +1398,6 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
             RangingTx->setRealSrcAddr(myNetwAddr);
             RangingTx->setDestAddr(rangingNode);
             RangingTx->setFastTransmision(true);
-          //  RangingParams* parame = new RangingParams();
             RangingTx->setRangingParamsApp(RangingRx->getRangingParamsApp());
 
             EV << "Inserting sending Packet in Transmission Queue" << endl;
@@ -1499,26 +1421,29 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
                 syncrotime=0;
             }
 
-
             RangingParams* parame = new RangingParams();
 
             EV << "Total steps:" << steps << endl;
             EV << "Next frequency:" << next_frequency << endl;
+            EV << "Actual frequency:" << actual_frequency << endl;
             if(actual_frequency == steps){
                 EV << "End of ranging process" << endl;
                 EV << "Report results" << endl;
                 // get handler to phy layer
-                phy->setCurrentRadioChannel(parame->getChannelStep(0));
+                phy->setCurrentRadioChannel(canal+parame->getChannelStep(0));
                 EV << "Capa fisica actual:" << phy->getCurrentRadioChannel() << endl;
                 Ranging(RESULT_REQUEST);
                 break;
+                next_frequency=0;
+                actual_frequency=0;
             }
 
 
 
 
             parame->setActualFreq(next_frequency);
-            phy->setCurrentRadioChannel(parame->getChannelStep(next_frequency));
+            phy->setCurrentRadioChannel(canal+parame->getChannelStep(next_frequency));
+            EV <<"Canal tx:"<< phy->getCurrentRadioChannel()<< endl;
 
             actual_frequency=parame->getActualFreq();
             sprintf(buff, "Ranging in Channel %d", actual_frequency);
@@ -1563,25 +1488,18 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
                RangingParams* parame = new RangingParams();
                parame->setRangingEnabled(true);
                Ranging->setRangingParamsApp(*parame);
-               int bandwidth = abs(parame->getFreqStop() - parame->getFreqStart() );
-               //Number of steps
-               EV << "Ancho de banda donde se hace Ranging: "<< bandwidth << endl;
-               steps=bandwidth / (parame->getFreqStep());
-               if(bandwidth % (parame->getFreqStep())!=0){
-                   error("Ranging Setup error =>(start-stop)/steps not natural %i / %i ", bandwidth,parame->getFreqStep());
-               }
-
-
                EV << "Inserting sending Packet in Transmission Queue" << endl;
                transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
                sendDown(Ranging);
-
-
-
-
         }break;
         case RESULT_CONFIRM:
             EV << "Deseamos más Result request?" << endl;
+            EV << "Next frequency:" << next_frequency << endl;
+            EV << "Actual frequency:" << actual_frequency << endl;
+            next_frequency=0;
+            actual_frequency=0;
+            phy->setCurrentRadioChannel(canal+0); // At the end of the Ranging Process we go back to the basic channel
+
             break;
         default:
             EV << "WTF! Why!?!" << endl;

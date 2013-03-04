@@ -316,7 +316,10 @@ void NodeAppLayer::initialize(int stage)
 		//Ranging change channel!
 		GlobalRanging = new RangingParams();
 		GlobalRanging->setChannel(channelgroup);
-        phy->setCurrentRadioChannel(GlobalRanging->getChannelStep(0));
+        phy->setCurrentRadioChannel(canal+GlobalRanging->getChannelStep(0));
+        canal=0;
+        slot=0;
+        initRangingProcedure = new cMessage("Init ranging procedure", PRE_SETUP);
 
 
 	}
@@ -415,6 +418,9 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 
 	switch(msg->getKind())
 	{
+	case NodeAppLayer::PRE_SETUP:
+	    Ranging(PRE_SETUP);
+	    break;
 	case NodeAppLayer::CHANGE_FREQUENCY:
 	    Ranging(CHANGE_FREQUENCY);
 	    break;
@@ -596,21 +602,20 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 		}
 		switch (nextPhase)
 		{
-        case AppLayer::RANGING_PHASE:
-            EV<<"Phase Ranging" << endl;
-            phase = AppLayer::RANGING_PHASE;
-            nextPhase = AppLayer::SYNC_PHASE_1;
-            nextPhaseStartTime = simTime() + timeRangingPhase;
-            scheduleAt(nextPhaseStartTime, beginPhases);
-            break;
+
 		case AppLayer::SYNC_PHASE_1:
 			phase = AppLayer::SYNC_PHASE_1;
 			nextPhase = AppLayer::REPORT_PHASE;
 			nextPhaseStartTime = simTime() + timeSyncPhase;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 
 			nodeSuccess = -1;
 			EV << "Node " << getParentModule()->getIndex() << " working under mode " << nodeConfig << endl;
+			if(nodeConfig==5){
+			    EV << "No toca dormir" << endl;
+			    break;
+			}
 			for(int i = 0; i < numberOfAnchors; i++) {
 				if(anchorSuccess[i] != -1) // If node sends broadcasts, must use the effectiveness of the anchors listened; if not, the one from its selected anchor
 					if(((nodeConfig == NodeAppLayer::LISTEN_AND_REPORT) && (i == anchorSelected)) ||
@@ -663,6 +668,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 					}
 					switch(nodeConfig)
 					{
+
 					case NodeAppLayer::VIP_TRANSMIT: // Mobile Node type 3
 						syncListen = false; // Don't listen this sync phase
 						goToSleep(simTime());
@@ -958,8 +964,9 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			break;
 		case AppLayer::REPORT_PHASE:
 			phase = AppLayer::REPORT_PHASE;
-			nextPhase = AppLayer::VIP_PHASE;
+			nextPhase = AppLayer::RANGING_PHASE;
 			nextPhaseStartTime = simTime() + timeReportPhase;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// Sleep the node if the first and already scheduled broadcast is transmitted after timeSleepToRX + timeRXToSleep
 			canSleep = true; // Activate the sleep variable, we will make it false if some condition is not fulfilled
@@ -985,7 +992,11 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 				}
 			}
 			if (canSleep) { // If after all the conditions it is true, we sleep the node
+
+			    //Added by Antonio
+			    if(nodeConfig!=5){
 				goToSleep(simTime());
+			    }
 			} else { // If we don't go to sleep is because another event is comming
 				EV << "Don't sleeping as another sending or event is coming soon" << endl;
 				phy->setRadioState(Radio::RX);
@@ -995,10 +1006,42 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 				syncListenReport = false;
 			}
 			break;
+
+        case AppLayer::RANGING_PHASE:
+                    EV<<"Phase Ranging" << endl;
+
+                    phase = AppLayer::RANGING_PHASE;
+                    nextPhase = AppLayer::VIP_PHASE;
+//                    phase = AppLayer::RANGING_PHASE;
+//                    nextPhase = AppLayer::SYNC_PHASE_1;
+                    nextPhaseStartTime = simTime() + timeRangingPhase;
+                    phy->setCurrentRadioChannel(canal); //Added by Antonio: To ensure that we are in the same channel
+
+                    EV <<"Id node:"<< node->nicId << endl;
+                    EV <<"Host node:"<< node->hostId << endl;
+                    EV <<"Id de nodo:" << getParentModule()->getIndex() << endl;
+                    //Transmitir consecutivamente anchors! :D
+                    anchornum=getParentModule()->getIndex();
+                    ranginglength=0.2;
+                    EV << "Duration of each ranging procedure: "<< ranginglength << endl;
+                        for(int a=0;a<node->rangingTotalTimeSlot;a++){
+                            if(node->rangingTransmisionSlot[a]!=0){
+                                scheduleAt(simTime()+a*ranginglength , initRangingProcedure->dup());
+                            }
+                        }
+                    transmissionTime=(anchornum + 1);
+                    EV << "Transmision time:" << transmissionTime  << endl;
+
+
+
+
+                    scheduleAt(nextPhaseStartTime, beginPhases);
+                    break;
 		case AppLayer::VIP_PHASE:
 			phase = AppLayer::VIP_PHASE;
 			nextPhase = AppLayer::SYNC_PHASE_2;
 			nextPhaseStartTime = simTime() + timeVIPPhase;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// Sleep the node if the following conditions fulfill
 			canSleep = true; // Activate the sleep variable, we will make it false if some condition is not fulfilled
@@ -1038,6 +1081,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::SYNC_PHASE_2;
 			nextPhase = AppLayer::COM_SINK_PHASE_1;
 			nextPhaseStartTime = simTime() + timeSyncPhase;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// Configuring the normal way of working for the active phases in the mobile nodes
 			if (activePhase) {
@@ -1085,6 +1129,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::COM_SINK_PHASE_1;
 			nextPhase = AppLayer::SYNC_PHASE_3;
 			nextPhaseStartTime = simTime() + timeComSinkPhase1;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			goToSleep(simTime());
 			// Wake up node for next sync phase 3 if necessary, wake it up timeSleepToRX sec. before
@@ -1107,6 +1152,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::SYNC_PHASE_3;
 			nextPhase = AppLayer::COM_SINK_PHASE_2;
 			nextPhaseStartTime = simTime() + timeSyncPhase;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			// Configuring the normal way of working for the active phases in the mobile nodes
 			if (activePhase) {
@@ -1155,6 +1201,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			phase = AppLayer::COM_SINK_PHASE_2;
 			nextPhase = AppLayer::SYNC_PHASE_1;
 			nextPhaseStartTime = simTime() + timeComSinkPhase2;
+			phy->setCurrentRadioChannel(0); //Added by Antonio: To ensure that we are in the same channel
 			scheduleAt(nextPhaseStartTime, beginPhases);
 			goToSleep(simTime());
 			// Wake up node for next sync phase 1 if necessary, wake it up timeSleepToRX sec. before
@@ -1307,6 +1354,25 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
           EV << "Reflector mode" << endl;
           switch (status)
                 {
+                case PRE_SETUP:{
+                    EV << "Pre setup" << endl;
+                    canal=20;
+
+                    EV << "Pre setup" << endl;
+                    canal=node->rangingTransmisionSlot[slot];
+
+                    EV << "Canal actual: " << canal << endl;
+                    phy->setCurrentRadioChannel(canal);
+                    EV << "Slot temporal: " << slot << endl;
+                    EV << "Transmision hacia: " << node->initiatorDirections[slot] << endl;
+                    slot=slot+1;
+//                    if(node->initiatorDirections[slot]!=0){
+//                    rangingNode=node->initiatorDirections[slot];
+//                    Ranging(RANGE_REQUEST,msg);
+//                    }
+
+                }break;
+
                 case RANGE_REQUEST:{
                       ApplPkt *RangingTx= new ApplPkt("Range accept", RANGE_ACCEPT);
                       ApplPkt *RangingRx = check_and_cast<ApplPkt*>(msg);
@@ -1329,7 +1395,6 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
                           //FUTURO:Maybe in these phases with CCA and Backoff!
                       }
 
-
 // Howto: This data is how to setup new RangingParams data to another one.
 //                      RangingParams* parame = new RangingParams();
 //                      RangingParams* parameReceived;
@@ -1339,14 +1404,10 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
 
 
                       RangingTx->setRangingParamsApp(RangingRx->getRangingParamsApp());
-                      EV << "Inserting sending Packet in Transmission Queue" << endl;
-                  //    transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
                       sendDown(RangingTx);
 
-
-
-
                 } break;
+
                 case TIME_SYNC:{
 
 
@@ -1381,10 +1442,11 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
                       *parame =RangingReceived->getRangingParamsApp();
                       parame->setActualFreq(next_frequency);
                       actual_frequency=parame->getActualFreq();
-                      sprintf(buff, "Ranging in Channel %d", actual_frequency);
+                      sprintf(buff, "Ranging in Channel %d", next_frequency);
+                      next_frequency=next_frequency+1;
                       RangingReceived->setName(buff);
-                      next_frequency=parame->getActualFreq()+1;
-                      steps=parame->getTotalStep();
+                    //  next_frequency=parame->getActualFreq()+1;
+                      steps=20;
                      // scheduleAt(simTime()+0.75e-3,changeFreq); // Valor exacto ~ para cambiar de freq despues de tx! ;D
 
                     //Cambiar frequencia una vez transmitido el paquete!
@@ -1402,14 +1464,16 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
 
                 }break;
                 case CHANGE_FREQUENCY:{
-                    RangingParams* parame = new RangingParams();
-                    phy->setCurrentRadioChannel(parame->getChannelStep(next_frequency));
+                    phy->setCurrentRadioChannel(canal+next_frequency);
+
+                    steps=20;
                     EV << "Total steps:" << steps << endl;
                     EV << "Next frequency:" << next_frequency << endl;
 
                     if(next_frequency>steps){
 
-                        phy->setCurrentRadioChannel( parame->getChannelStep(0));
+                        phy->setCurrentRadioChannel(canal+0);
+                        next_frequency=0;
                         break;
 
                     }
@@ -1418,13 +1482,15 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
                 }break;
                 case SYNC_RANGING:{
                     EV << "Execute Ranging synchronized" << endl;
+                    next_frequency=0;
                     scheduleAt(simTime(),changeFreq);
+
 
                 }
                 break;
                 case RESULT_REQUEST:{
                     EV << "Result Confirm in node" << endl;
-                    EV << "Channel RESULT_REQUEST: " << phy->getCurrentRadioChannel() << endl;
+                    EV << "Channel RESULT_REQUEST: " << + phy->getCurrentRadioChannel() << endl;
                     ApplPkt *Ranging= new ApplPkt("Result Confirm", RESULT_CONFIRM);
                     RTBHeader=24;
                     Ranging->setBitLength(RTBHeader);
@@ -1437,6 +1503,10 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
                     EV << "Inserting sending Packet in Transmission Queue" << endl;
                     transfersQueue.insert(Ranging->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails
                     sendDown(Ranging);
+                    EV << "Next frequency:" << next_frequency << endl;
+                    EV << "Actual frequency:" << actual_frequency << endl;
+                    next_frequency=0;
+                    actual_frequency=0;
 
 
                 }break;
@@ -1582,7 +1652,6 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
       }
 
 }
-
 
 void NodeAppLayer::handleLowerMsg(cMessage *msg)
 {

@@ -70,6 +70,15 @@ protected:
     int numSlots; 				// Slots that this anchor has (mobile nodes and computer doesn't)
     int numTotalSlots; 			// Total slots that are in the network
 /*********/
+/***MOD Ranging***/
+    int rangingTransmisionSlot[100];
+    int rangingSlot;
+    int rangingTotalTimeSlot;
+    int initiatorDirections[100];
+
+
+/*****************/
+
     /** @brief Points to this nics ChannelAccess module */
     ChannelAccess* chAccess;
 

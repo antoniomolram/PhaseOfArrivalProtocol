@@ -52,7 +52,9 @@ public:
         RESULT_CONFIRM=109,
         CHANGE_FREQUENCY=200,
         SYNC_RANGING=201,        //Message to synchronize node-anchors
-        NEXT_RANGING=202
+        NEXT_RANGING=202,
+        PRE_SETUP=203
+
 
 	};
 
@@ -61,13 +63,14 @@ public:
 
 		SYNC_PHASE_1 = 1,
 		REPORT_PHASE ,
+		RANGING_PHASE, //Added by Antonio
 		VIP_PHASE,
 		SYNC_PHASE_2,
 		COM_SINK_PHASE_1,
 		SYNC_PHASE_3,
-		COM_SINK_PHASE_2,
-		//Added by Antonio
-		RANGING_PHASE
+		COM_SINK_PHASE_2
+
+
 
 
 	};
@@ -197,11 +200,14 @@ protected:
     long nbReportsNoDuplicated;         // Variable to count the number of no duplicated reports successfully received
 
     //Added by Antonio
+    int SlotAssignation[3][3];
     int RTBHeader;
     simtime_t waitTime;
     bool ACKRangeRequest;
     int rangingNode;
     simtime_t timeEachFreq;
+
+
 
 public:
 

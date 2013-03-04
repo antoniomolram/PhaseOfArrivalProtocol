@@ -269,10 +269,10 @@ void csma::handleUpperMsg(cMessage *msg) {
     }
     if(msg->getKind()==AppLayer::RANGING_MEASUREMENT){
         EV << "Ranging in CSMA" << endl;
-        RangingParams* parame = new RangingParams();
-        *parame= cInfo->getRangingParams();
-        phy->setCurrentRadioChannel( parame->getChannelStep(parame->getActualFreq()));
-        EV << "Channel:" <<  parame->getChannelStep(parame->getActualFreq()) << endl;
+//        RangingParams* parame = new RangingParams();
+//        *parame= cInfo->getRangingParams();
+//        phy->setCurrentRadioChannel( parame->getChannelStep(parame->getActualFreq()));
+//        EV << "Channel:" <<  parame->getChannelStep(parame->getActualFreq()) << endl;
 
     }
 

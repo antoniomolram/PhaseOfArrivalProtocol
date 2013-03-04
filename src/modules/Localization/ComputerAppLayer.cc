@@ -46,6 +46,7 @@ void ComputerAppLayer::initialize(int stage)
             if (i->second->moduleType == 1) {
                 anchors[j] = i->second;
                 anchors[j]->numSlots = 0;
+
                 j++;
             }
         }
@@ -163,6 +164,9 @@ void ComputerAppLayer::initialize(int stage)
             }
             EV << endl;
         }
+        //Added by Antonio
+//        anchors[0]->rangingSlot=1;
+//        EV<< "Prueba: " << anchors[0]->rangingSlot<< endl;
         computer->numTotalSlots = numTotalSlots; // Asign in the computer NIC the total number of slots to have it accessible from other hosts
 
         // This for prints the Slots in which every Anchor transmits (sometimes they could have more than one)
@@ -439,13 +443,6 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
         // Change the phase and prepare the data for the new phase
         switch (nextPhase)
         {
-        case AppLayer::RANGING_PHASE:
-            EV<<"Phase Ranging" << endl;
-            phase = AppLayer::RANGING_PHASE;
-            nextPhase = AppLayer::SYNC_PHASE_1;
-            nextPhaseStartTime = simTime() + timeRangingPhase;
-            scheduleAt(nextPhaseStartTime, beginPhases);
-            break;
         case AppLayer::SYNC_PHASE_1:
             phase = AppLayer::SYNC_PHASE_1;
             nextPhase = AppLayer::REPORT_PHASE;
@@ -454,10 +451,20 @@ void ComputerAppLayer::handleSelfMsg(cMessage *msg)
             break;
         case AppLayer::REPORT_PHASE:
             phase = AppLayer::REPORT_PHASE;
-            nextPhase = AppLayer::VIP_PHASE;
+            nextPhase = AppLayer::RANGING_PHASE;
             nextPhaseStartTime = simTime() + timeReportPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
+        //Added by Antonio
+        case AppLayer::RANGING_PHASE:
+                 EV<<"Phase Ranging" << endl;
+                 phase = AppLayer::RANGING_PHASE;
+                 nextPhase = AppLayer::VIP_PHASE;
+//                 phase = AppLayer::RANGING_PHASE;
+//                 nextPhase = AppLayer::SYNC_PHASE_1;
+                 nextPhaseStartTime = simTime() + timeRangingPhase;
+                 scheduleAt(nextPhaseStartTime, beginPhases);
+                 break;
         case AppLayer::VIP_PHASE:
             phase = AppLayer::VIP_PHASE;
             nextPhase = AppLayer::SYNC_PHASE_2;
