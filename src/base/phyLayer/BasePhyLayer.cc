@@ -407,10 +407,11 @@ void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
     if(frame->getChannel() != radio->getCurrentChannel()) {
         EV << "Frame in another channel!!" << endl;
         // we cannot synchronize on a frame on another channel.
-        return ;
+        delete frame;
+        return;
+    }
 //
 
-    }
 	if(channelInfo.isChannelEmpty()) {
 		radio->setTrackingModeTo(true);
 	}

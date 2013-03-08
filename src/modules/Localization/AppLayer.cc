@@ -117,9 +117,10 @@ void AppLayer::initialize(int stage)
 	            const int timeSlots=2;
 	            int canal;
 
-                int AnchorRangingTransmision[numbersOfAnchors][timeSlots]= {{2,0},{2,0}};
-                int nodeRangingTransmision[numberOfNodes][timeSlots]={{2,0},{2,0}};
-                int initiators[numbersOfAnchors+numberOfNodes][timeSlots]={{40,0},{52,52},{0,0},{0,0}};
+                int AnchorRangingTransmision[numbersOfAnchors][timeSlots]= {{3,0},{2,0}};
+                int nodeRangingTransmision[numberOfNodes][timeSlots]={{3,0},{2,0}};
+               // int initiators[numbersOfAnchors+numberOfNodes][timeSlots]={{40,0},{52,52},{0,0},{0,0}}; // Anchor to nodes
+                int initiators[numbersOfAnchors+numberOfNodes][timeSlots]={{0,0},{0,52},{17,0},{28,0}};
 
 	            int temporalSlots = sizeof(AnchorRangingTransmision[0])/sizeof(AnchorRangingTransmision[0][0]);
 	            EV << "Solution Matrix (Ranging Procedure):"<< endl;

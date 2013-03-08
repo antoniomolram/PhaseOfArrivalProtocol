@@ -111,6 +111,8 @@ protected:
     int steps;
     int canal;
     int slot;
+    simtime_t syncrotime;
+    cMessage* syncro;
 
 
 	NicEntry* node;						// Pointer to the NIC of this anchor to access some NIC variables

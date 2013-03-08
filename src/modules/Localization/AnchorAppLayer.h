@@ -52,6 +52,9 @@ protected:
 	NicEntry* anchor;					// Pointer to the NIC of this anchor to access some NIC variables
 	int slot;
 	int canal;
+    cMessage *changeFreq;
+    cMessage *SyncRanging;
+
 
     /** @brief Handler to the physical layer.*/
     MacToPhyInterface* phy;
