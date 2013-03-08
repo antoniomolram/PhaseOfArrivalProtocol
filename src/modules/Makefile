@@ -1714,6 +1714,7 @@ $O/phy/PhyLayerBattery.o: phy/PhyLayerBattery.cc \
 	../base/phyLayer/Mapping.h \
 	../base/phyLayer/MappingBase.h \
 	../base/phyLayer/MappingUtils.h \
+	../base/phyLayer/PhyToMacControlInfo.h \
 	../base/phyLayer/PhyUtils.h \
 	../base/phyLayer/Signal_.h \
 	../base/utils/Coord.h \

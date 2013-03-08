@@ -1025,9 +1025,9 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
                     ranginglength=0.2;
                     EV << "Duration of each ranging procedure: "<< ranginglength << endl;
                         for(int a=0;a<node->rangingTotalTimeSlot;a++){
-                            if(node->rangingTransmisionSlot[a]!=0){
+
                                 scheduleAt(simTime()+a*ranginglength , initRangingProcedure->dup());
-                            }
+
                         }
                     transmissionTime=(anchornum + 1);
                     EV << "Transmision time:" << transmissionTime  << endl;
@@ -1365,6 +1365,7 @@ void NodeAppLayer::Ranging(int status,cMessage *msg){
                     phy->setCurrentRadioChannel(canal);
                     EV << "Slot temporal: " << slot << endl;
                     EV << "Transmision hacia: " << node->initiatorDirections[slot] << endl;
+                    EV << phy->getRadioState() << endl;
                     slot=slot+1;
 //                    if(node->initiatorDirections[slot]!=0){
 //                    rangingNode=node->initiatorDirections[slot];

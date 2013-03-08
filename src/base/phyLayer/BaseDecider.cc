@@ -12,19 +12,19 @@
 #include "AirFrame_m.h"
 
 simtime_t BaseDecider::processSignal(AirFrame* frame) {
-    EV << "Estamos en el archivo-> Base Decider" << endl;
+    EV << "  BaseDecider: "<< "ProcessSignal()" << endl;
 	assert(frame);
-	deciderEV << "Processing AirFrame..." << endl;
+	deciderEV << "  Processing AirFrame..." << endl;
 	switch(getSignalState(frame)) {
 	case NEW:
-	    setChannelIdleStatus(false); //
-	    EV<<"CHANNEL BUSY"<<endl;
+	    setChannelIdleStatus(false);
+            EV <<"  BaseDecider: "<< "ProcessNewSignal() ending with duration of HEADER" << endl;
 		return processNewSignal(frame);
 	case EXPECT_HEADER:
-	    EV << "Procesamos header" << endl;
+	    EV << "  BaseDecider: "<< "ProcessSignalHeader()" << endl;
 		return processSignalHeader(frame);
 	case EXPECT_END:
-	    EV << "Recibimos todo y subimos " << endl;
+	    EV << "  BaseDecider: "<< "ProcessSignalEnd()" << endl;
 		return processSignalEnd(frame);
 	default:
 		return processUnknownSignal(frame);

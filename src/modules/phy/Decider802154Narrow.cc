@@ -35,7 +35,10 @@ bool Decider802154Narrow::syncOnSFD(AirFrame* frame) {
 
     //CUIDADO: Esto provoca errores a lo largo del tiempo aleatorios
     //return true;
+    EV << "SyncOnSDF: "<<"BER=" <<BER<< endl;
+    EV << "SyncOnSDF: "<<"sfdErrorProbability=" <<sfdErrorProbability<< endl;
 	return sfdErrorProbability < uniform(0, 1, 0);
+	//return true;
 }
 
 double Decider802154Narrow::evalBER(AirFrame* frame) {
@@ -48,6 +51,12 @@ double Decider802154Narrow::evalBER(AirFrame* frame) {
 
 	Argument argStart(time);
 	double noiseLevel = noise->getValue(argStart);
+	//Tests Added by Antonio
+   // noiseLevel=0;
+	EV << "Noise Level=" << noiseLevel << endl;
+
+	EV << "rcvPower="    << rcvPower << endl;
+
 
 	delete noise;
 
@@ -55,24 +64,33 @@ double Decider802154Narrow::evalBER(AirFrame* frame) {
 }
 
 simtime_t Decider802154Narrow::processNewSignal(AirFrame* frame) {
-    EV << "Estamos en el archivo-> Decider802154Narrow" << endl;
+    EV << "     Decider802154Narrow: " << "ProcessNewSignal STARTS" <<  endl;
+
+    if(frame->getChannel() != phy->getCurrentRadioChannel()) {
+        EV << "Frame in another channel!!" << endl;
+        // we cannot synchronize on a frame on another channel.
+        return notAgain;
+
+    }
 
 	//if we are already receiving another signal this is noise
 	if(currentSignal.first != 0) {
+	    EV << "Simultaneus request" << endl;
 		return notAgain;
 	}
 
-	if(frame->getChannel() != phy->getCurrentRadioChannel()) {
-		// we cannot synchronize on a frame on another channel.
-		return notAgain;
-	}
 
+	 EV << "     Decider802154Narrow: " << "Changing .second EXPECT_HEADER" <<  endl;
 	currentSignal.first = frame;
 	currentSignal.second = EXPECT_HEADER;
 	Signal& s = frame->getSignal();
 	double bitrate = s.getBitrate()->getValue(Argument(s.getReceptionStart()));
 	simtime_t phyHeaderDuration = ((double) phyHeaderLength)/bitrate;
+	EV << "phyHeaderDuration: " << phyHeaderDuration << endl;
+	EV << "     Decider802154Narrow: " << "ProcessNewSignal ENDS returning duration of HEADER" <<  endl;
 	return s.getReceptionStart() + phyHeaderDuration;
+
+
 
 }
 
@@ -184,6 +202,9 @@ simtime_t Decider802154Narrow::processSignalEnd(AirFrame* frame)
 	snirAvg = snirAvg / (end - start);
 	//double rssi = 10*log10(snirAvg);
 	double rssi = calcChannelSenseRSSI(start, end);
+
+	//Cuidado by Antonio?
+	//noErrors=true;
 	if (noErrors)
 	{
 		phy->sendUp(frame,

@@ -20,6 +20,10 @@
 #include "PhyLayer.h"
 #include "HostState.h"
 
+//Added by Antonio:
+#include "PhyToMacControlInfo.h"
+
+
 class MacToPhyControlInfo;
 class MacPkt;
 
@@ -66,6 +70,9 @@ protected:
 	/*@{*/
 	double setupRxCurrent, setupTxCurrent, rxTxCurrent, txRxCurrent, rxRxBusyCurrent;
 	/*@}*/
+
+
+    DeciderToPhyInterface*  phy;
 
 	/**
 	 * @brief Defines the power consuming activities (accounts) of

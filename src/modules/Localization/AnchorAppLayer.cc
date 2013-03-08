@@ -555,9 +555,9 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                     ranginglength=0.2;
                     EV << "Duration of each ranging procedure: "<< ranginglength << endl;
                         for(int a=0;a<anchor->rangingTotalTimeSlot;a++){
-                            if(anchor->rangingTransmisionSlot[a]!=0){
+
                                 scheduleAt(simTime()+a*ranginglength , initRangingProcedure->dup());
-                            }
+
                         }
                     transmissionTime=(anchornum + 1);
                     EV << "Transmision time:" << transmissionTime  << endl;

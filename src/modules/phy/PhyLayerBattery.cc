@@ -19,6 +19,9 @@
 #include "MacToPhyControlInfo.h"
 #include "MacPkt_m.h"
 
+//Added by Antonio:
+#include "PhyToMacControlInfo.h"
+
 
 Define_Module(PhyLayerBattery);
 
@@ -125,7 +128,9 @@ void PhyLayerBattery::handleAirFrame(AirFrame* frame) {
 		delete frame;
 		return;
 	}
+
 	PhyLayer::handleAirFrame(frame);
+
 }
 
 void PhyLayerBattery::handleHostState(const HostState& state) {

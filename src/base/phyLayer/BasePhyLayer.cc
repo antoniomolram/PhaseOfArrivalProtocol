@@ -369,22 +369,26 @@ void BasePhyLayer::handleMessage(cMessage* msg) {
 void BasePhyLayer::handleAirFrame(AirFrame* frame) {
 	//TODO: ask jerome to set air frame priority in his UWBIRPhy
 	//assert(frame->getSchedulingPriority() == airFramePriority);
-
     int nodeIndex = getParentModule()->getParentModule()->getIndex(); // MOD
     int nodeID = getParentModule()->getParentModule()->getId(); // MOD
     int frameIndex = frame->getId(); // MOD
+    EV << "BasePhyLayer: "<< "frameIndex=" << frameIndex << endl;
+
+
 
 	switch(frame->getState()) {
 	case START_RECEIVE:
+	    EV << "BasePhyLayer: "<< "case :START_RECEIVE"<< endl;
 		handleAirFrameStartReceive(frame);
 		break;
 
 	case RECEIVING: {
-
+	    EV << "BasePhyLayer: "<< "case: RECEIVING"<< endl;
 		handleAirFrameReceiving(frame);
 		break;
 	}
 	case END_RECEIVE:
+	    EV << "BasePhyLayer: "<< "case: END_RECEIVE "<< endl;
 		handleAirFrameEndReceive(frame);
 		break;
 
@@ -395,9 +399,18 @@ void BasePhyLayer::handleAirFrame(AirFrame* frame) {
 }
 
 void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
-    EV << "Estamos en el archivo-> BasePhyLayer" << endl;
+    EV << "BasePhyLayer: " << "case: RECEIVING"<< endl;
 	coreEV << "Received new AirFrame " << frame << " from channel." << endl;
+	EV << "BasePhyLayer: " << "CurrentChannel=" << radio->getCurrentChannel() << endl;
 
+//Added by Antonio, is right?
+    if(frame->getChannel() != radio->getCurrentChannel()) {
+        EV << "Frame in another channel!!" << endl;
+        // we cannot synchronize on a frame on another channel.
+        return ;
+//
+
+    }
 	if(channelInfo.isChannelEmpty()) {
 		radio->setTrackingModeTo(true);
 	}
@@ -417,6 +430,7 @@ void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
 	filterSignal(frame);
 
 	if(decider && isKnownProtocolId(frame->getProtocolId())) {
+	    EV << "BasePhyLayer: " << "We know the Protocol" << endl;
 		frame->setState(RECEIVING);
 
 		//pass the AirFrame the first time to the Decider
@@ -434,15 +448,33 @@ void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {
 }
 
 void BasePhyLayer::handleAirFrameReceiving(AirFrame* frame) {
-
+    EV << "BasePhyLayer: " << "HandleAirFrameReceiving STARTS!" << endl;
 	Signal& signal = frame->getSignal();
-	simtime_t nextHandleTime = decider->processSignal(frame);
 
+	simtime_t nextHandleTime = decider->processSignal(frame);
+	EV << "BasePhyLayer: " <<"NextHandleTime= " << nextHandleTime << endl;
+
+    //Added by Antonio: Possible solution!
+    //Cuidado: Be commented!
+        //    AirFrameVector AirFrameVector1;
+        //    channelInfo.getAirFrames(simTime(),simTime(),AirFrameVector1);
+        //        int j=0;
+        //        for(AirFrameVector::iterator it = AirFrameVector1.begin();
+        //                it != AirFrameVector1.end(); ++it)
+        //            {
+        //            j++;
+        //            }
+        //    if(j==2){
+        //        return;
+        //    }
+        //    EV << "Total frames" << j << endl;
 	assert(signal.getDuration() == frame->getDuration());
 	simtime_t signalEndTime = signal.getReceptionStart() + frame->getDuration();
 
+    EV << "BasePhyLayer: " <<"SignalEndTime= " << signalEndTime << endl;
 	//check if this is the end of the receiving process
 	if(simTime() >= signalEndTime) {
+	    EV << "SignalEnd time is bigger than simTime()" << endl;
 		frame->setState(END_RECEIVE);
 		handleAirFrameEndReceive(frame);
 		return;
@@ -450,8 +482,10 @@ void BasePhyLayer::handleAirFrameReceiving(AirFrame* frame) {
 
 	//smaller zero means don't give it to me again
 	if(nextHandleTime < 0) {
+        EV << "SignalEnd time is smaller than 0" << endl;
 		nextHandleTime = signalEndTime;
 		frame->setState(END_RECEIVE);
+
 
 	//invalid point in time
 	} else if(nextHandleTime < simTime() || nextHandleTime > signalEndTime) {
@@ -462,6 +496,7 @@ void BasePhyLayer::handleAirFrameReceiving(AirFrame* frame) {
 	coreEV << "Handed AirFrame with ID " << frame->getId() << " to Decider. Next handling in " << nextHandleTime - simTime() << "s." << endl;
 
 	sendSelfMessage(frame, nextHandleTime);
+	  EV << "BasePhyLayer: " << "HandleAirFrameReceiving ENDS!" << endl;
 }
 
 void BasePhyLayer::handleAirFrameEndReceive(AirFrame* frame) {
@@ -604,8 +639,6 @@ void BasePhyLayer::handleSelfMessage(cMessage* msg) {
 	//transmission over
 	case TX_OVER:
 		assert(msg == txOverTimer);
-
-		//CUIDADO: Modificado!
 		sendControlMsgToMac(new cMessage("Transmission over", TX_OVER));
 		break;
 
