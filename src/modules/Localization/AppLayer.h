@@ -82,6 +82,9 @@ public:
 
 protected:
 
+
+
+
 	BaseArp* arp;						// Pointer to the ARP of the Host
 	int myNetwAddr;						// Network address of the Host
 	int srcAddr;                        // Added by Antonio (Address to answer in RangingMode).

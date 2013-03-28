@@ -284,7 +284,7 @@ class MIXIM_API csma : public BaseMacLayer
     simtime_t aUnitBackoffPeriod;
     /** @brief Stores if the MAC expects Acks for Unicast packets.*/
     bool useMACAcks;
-
+    bool globalMacAck; //Added by Antonio
     /** @brief Defines the backoff method to be used.*/
     backoff_methods backoffMethod;
 

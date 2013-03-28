@@ -57,6 +57,7 @@ void csma::initialize(int stage) {
 
         checkQueue = false;
         useMACAcks = par("useMACAcks").boolValue();
+        globalMacAck=useMACAcks;
         queueLength = par("queueLength");
         sifs = par("sifs");
         transmissionAttemptInterruptedByRx = false;
@@ -180,8 +181,8 @@ void csma::initialize(int stage) {
         beginPhases = new cMessage("next-phase",csma::EV_BEGIN_PHASE);
 
 
-        nextPhase = csma::RANGING_PHASE;
-       // nextPhase = csma::SYNC_PHASE_1;
+      //  nextPhase = csma::RANGING_PHASE;
+        nextPhase = csma::SYNC_PHASE_1;
 
         syncPacketsPerSyncPhase = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("syncPacketsPerSyncPhase");
         syncPacketTime = getParentModule()->getParentModule()->getParentModule()->getSubmodule("computer", 0)->getSubmodule("appl")->par("syncPacketTime");
@@ -200,6 +201,7 @@ void csma::initialize(int stage) {
 
         timeRangingPhase = 1.6 ;
         nextPhaseStartTime = simTime() + timeSyncPhase - smallTime;
+        nextPhaseStartTime=simTime(); //Added by Antonio
         scheduleAt(nextPhaseStartTime, beginPhases);
     }
 /*******/
@@ -266,6 +268,7 @@ void csma::handleUpperMsg(cMessage *msg) {
     if(cInfo->getFastTransmision()){
         EV<< "Estamos en FastTransmision" << endl;
         fast_transmision=true;
+        useMACAcks=false;
     }
     if(msg->getKind()==AppLayer::RANGING_MEASUREMENT){
         EV << "Ranging in CSMA" << endl;
@@ -1152,23 +1155,27 @@ void csma::handleSelfMsg(cMessage *msg) {
      else if(msg==beginPhases) {
         switch (nextPhase)
         {
-        case csma::RANGING_PHASE:
-             EV<<"Phase Ranging" << endl;
-             nextPhase = csma::SYNC_PHASE_1;
-             nextPhaseStartTime = simTime() + timeRangingPhase;
-             scheduleAt(nextPhaseStartTime, beginPhases);
-             break;
         case csma::SYNC_PHASE_1:
             nextPhase = csma::REPORT_PHASE;
             nextPhaseStartTime = simTime() + timeSyncPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
         case csma::REPORT_PHASE:
-            nextPhase = csma::VIP_PHASE;
+            nextPhase = csma::RANGING_PHASE;
             nextPhaseStartTime = simTime() + timeReportPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);
             break;
+        case csma::RANGING_PHASE:
+             EV<<"Phase Ranging" << endl;
+             globalMacAck=useMACAcks;
+             useMACAcks=false;
+
+             nextPhase = csma::VIP_PHASE;
+             nextPhaseStartTime = simTime() + timeRangingPhase;
+             scheduleAt(nextPhaseStartTime, beginPhases);
+             break;
         case csma::VIP_PHASE:
+            useMACAcks=globalMacAck;
             nextPhase = csma::SYNC_PHASE_2;
             nextPhaseStartTime = simTime() + timeVIPPhase;
             scheduleAt(nextPhaseStartTime, beginPhases);

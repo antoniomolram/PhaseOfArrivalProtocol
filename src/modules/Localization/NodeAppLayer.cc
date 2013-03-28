@@ -1021,14 +1021,14 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 			break;
 
         case AppLayer::RANGING_PHASE:
-                    EV<<"Phase Ranging" << endl;
+                //Next phase scheduler.
+                EV<<"Start Phase Ranging" << endl;
+                phase = AppLayer::RANGING_PHASE;
+                nextPhase = AppLayer::VIP_PHASE;
+                nextPhaseStartTime = simTime() + timeRangingPhase;
+                scheduleAt(nextPhaseStartTime, beginPhases);
 
-                    phase = AppLayer::RANGING_PHASE;
-                    nextPhase = AppLayer::VIP_PHASE;
-//                    phase = AppLayer::RANGING_PHASE;
-//                    nextPhase = AppLayer::SYNC_PHASE_1;
-                    nextPhaseStartTime = simTime() + timeRangingPhase;
-                    phy->setCurrentRadioChannel(canal); //Added by Antonio: To ensure that we are in the same channel
+                    //phy->setCurrentRadioChannel(canal); //Added by Antonio: To ensure that we are in the same channel
 
                     EV <<"Id node:"<< node->nicId << endl;
                     EV <<"Host node:"<< node->hostId << endl;
@@ -1047,7 +1047,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 
 
 
-                    scheduleAt(nextPhaseStartTime, beginPhases);
+
                     break;
 		case AppLayer::VIP_PHASE:
 			phase = AppLayer::VIP_PHASE;
@@ -1910,7 +1910,7 @@ void NodeAppLayer::handleLowerControl(cMessage *msg)
 			}
 		}
 		if (canSleep) { // If after all the conditions it is true, we sleep the node
-			goToSleep(simTime());
+			//goToSleep(simTime());
 		} else { // If we don't go to sleep is because another event is comming
 			EV << "Don't sleeping as another sending or event is coming soon" << endl;
 			phy->setRadioState(Radio::RX);

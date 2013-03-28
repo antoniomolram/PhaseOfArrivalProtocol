@@ -550,32 +550,22 @@ void AnchorAppLayer::handleSelfMsg(cMessage *msg)
                 break;
                 //Added by Antonio
             case AppLayer::RANGING_PHASE:
-                    EV<<"Phase Ranging" << endl;
+                    //Next phase scheduler.
+                    EV<<"Start Phase Ranging" << endl;
                     phase = AppLayer::RANGING_PHASE;
                     nextPhase = AppLayer::VIP_PHASE;
-//                    phase = AppLayer::RANGING_PHASE;
-//                    nextPhase = AppLayer::SYNC_PHASE_1;
                     nextPhaseStartTime = simTime() + timeRangingPhase;
                     scheduleAt(nextPhaseStartTime, beginPhases);
-
-                    EV <<"Id anchor:"<< anchor->nicId << endl;
-                    EV <<"Host anchor:"<< anchor->hostId << endl;
-                    EV <<"Id de nodo:" << getParentModule()->getIndex() << endl;
-                    //Transmitir consecutivamente anchors! :D
-                    anchornum=getParentModule()->getIndex();
+                    //Important info about the device.
+                    EV <<"Anchor Nic ID:"<< anchor->nicId << endl;
+                    EV <<"Host ID:"<< anchor->hostId << endl;
+                    EV <<"Anchor number:" << getParentModule()->getIndex() << endl;
+                    //Scheduler of the next time slots in Ranging phase.
                     ranginglength=0.2;
                     EV << "Duration of each ranging procedure: "<< ranginglength << endl;
                         for(int a=0;a<anchor->rangingTotalTimeSlot;a++){
-
                                 scheduleAt(simTime()+a*ranginglength , initRangingProcedure->dup());
-
                         }
-                    transmissionTime=(anchornum + 1);
-                    EV << "Transmision time:" << transmissionTime  << endl;
-
-
-
-
                     break;
 
             case AppLayer::VIP_PHASE:
@@ -1365,7 +1355,6 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
         canal=20;
         EV << "Pre setup" << endl;
         canal=anchor->rangingTransmisionSlot[slot];
-        EV << "Canal actual: " << canal << endl;
         phy->setCurrentRadioChannel(canal);
         EV << "Temporal Slot: " << slot << endl;
         EV << "Transmision to: " << anchor->initiatorDirections[slot] << endl;
@@ -1381,7 +1370,6 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
         slot=slot+1;
         return;
     }
-
     if(GlobalRanging->getClassNode()==1){	 // Reflector mode!
         EV << "Reflector mode" << endl;
             switch (status)
@@ -1415,7 +1403,7 @@ void AnchorAppLayer::Ranging(int status,cMessage *msg){
   //                      *parame = RangingRx->getRangingParamsApp();
   //                      parame = parameReceived;
 
-
+                        transfersQueue.insert(RangingTx->dup());
                         RangingTx->setRangingParamsApp(RangingRx->getRangingParamsApp());
                         sendDown(RangingTx);
 
