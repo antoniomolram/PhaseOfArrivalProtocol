@@ -196,7 +196,7 @@ void UWBIRIEEE802154APathlossModel::filterSignal(AirFrame *frame, const Coord& /
     L = max(1, poisson(cfg.Lmean));
     // Choose block shadowing
     //Changed by Antonio: pow() now -> before powf()
-    S = pow(10.,(normal(0, cfg.sigma_s)/10.));
+    S = powf(10.,(normal(0, cfg.sigma_s)/10.));
 
     // Loop on each value of the original mapping and generate multipath echoes
     ConstMappingIterator* iter = txPower->createConstIterator();

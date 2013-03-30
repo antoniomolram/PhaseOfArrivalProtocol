@@ -34,7 +34,6 @@ bool Decider802154Narrow::syncOnSFD(AirFrame* frame) {
     bool sfdErrorProbabilityFlag = sfdErrorProbability < uniform(0, 1, 0); /*MOD*/
 
     //CUIDADO: Esto provoca errores a lo largo del tiempo aleatorios
-    //return true;
     EV << "SyncOnSDF: "<<"BER=" <<BER<< endl;
     EV << "SyncOnSDF: "<<"sfdErrorProbability=" <<sfdErrorProbability<< endl;
 	return sfdErrorProbability < uniform(0, 1, 0);
@@ -52,11 +51,10 @@ double Decider802154Narrow::evalBER(AirFrame* frame) {
 	Argument argStart(time);
 	double noiseLevel = noise->getValue(argStart);
 	//Tests Added by Antonio
-   // noiseLevel=0;
 	EV << "Noise Level=" << noiseLevel << endl;
 
 	EV << "rcvPower="    << rcvPower << endl;
-
+	EV << "BER from SNR:" << getBERFromSNR(rcvPower/noiseLevel) << endl;
 
 	delete noise;
 
@@ -65,7 +63,7 @@ double Decider802154Narrow::evalBER(AirFrame* frame) {
 
 simtime_t Decider802154Narrow::processNewSignal(AirFrame* frame) {
     EV << "     Decider802154Narrow: " << "ProcessNewSignal STARTS" <<  endl;
-
+	//Added by Antonio
     if(frame->getChannel() != phy->getCurrentRadioChannel()) {
         EV << "Frame in another channel!!" << endl;
         // we cannot synchronize on a frame on another channel.
@@ -203,8 +201,8 @@ simtime_t Decider802154Narrow::processSignalEnd(AirFrame* frame)
 	//double rssi = 10*log10(snirAvg);
 	double rssi = calcChannelSenseRSSI(start, end);
 
-	//Cuidado by Antonio?
-	//noErrors=true;
+	//Cuidado by Antonio?   //noErrors=true;
+
 	if (noErrors)
 	{
 		phy->sendUp(frame,

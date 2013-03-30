@@ -46,6 +46,9 @@ cPacket *CSMA802154::decapsMsg(MacPkt * macPkt) {
 	//and set its rssi and ber
 	assert(dynamic_cast<MacToNetwControlInfo*>(msg->getControlInfo()));
 	MacToNetwControlInfo* cInfo = static_cast<MacToNetwControlInfo*>(msg->getControlInfo());
+	EV << "CSMA802154: BER in CSMA:" << ber << endl;
+    EV << "CSMA802154: RSSI in CSMA:" << rssi << endl;
+
 	cInfo->setBitErrorRate(ber);
 	cInfo->setRSSI(rssi);
 

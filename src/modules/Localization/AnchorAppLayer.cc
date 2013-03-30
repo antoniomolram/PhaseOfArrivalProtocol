@@ -1690,6 +1690,11 @@ void AnchorAppLayer::sendBroadcast()
 	pkt->setRetransmisionCounterACK(0);	// Reset the retransmission counter ACK
 	pkt->setCSMA(false);
 	pkt->setBroadcastedSuccess(successToTx);
+	int temporalSlots=2;
+	  for(int b=0;b<temporalSlots;b++){
+	      pkt->setRangingTransmisionSlot(b,anchor->rangingTransmisionSlot[b]);
+}
+
 
 	EV << "Inserting Broadcast Packet in Transmission Queue" << endl;
 	transfersQueue.insert(pkt->dup()); // Make a copy of the sent packet till the MAC says it's ok or to retransmit it when something fails

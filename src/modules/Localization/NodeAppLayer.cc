@@ -625,6 +625,7 @@ void NodeAppLayer::handleSelfMsg(cMessage *msg)
 
 			nodeSuccess = -1;
 			EV << "Node " << getParentModule()->getIndex() << " working under mode " << nodeConfig << endl;
+			//Added by Antonio
 			if(nodeConfig==5){
 			    EV << "No toca dormir" << endl;
 			    break;
@@ -1663,6 +1664,48 @@ void NodeAppLayer::handleLowerMsg(cMessage *msg)
 			break;
 	    case AppLayer::SYNC_MESSAGE_WITHOUT_CSMA:
 	    case AppLayer::SYNC_MESSAGE_WITH_CSMA:
+	        if(nodeConfig==5 || nodeConfig==6){
+
+	            EV << "Node in mode RANGING" << endl;
+	            EV << "We are in SYNC and we want to know where I can tx!" << endl;
+	            nbBroadcastPacketsReceived++;
+                EV << "Getting the RSSI from the packet and storing it." << endl;
+                // Get the index of the host who sent the packet, it will be the index of the vector to store the RSSI
+                indiceRSSI = simulation.getModule(pkt->getSrcAddr())->getParentModule()->getIndex();
+                EV <<"Indice del anchor tx:"<< indiceRSSI << endl;
+                EV <<"Su primer slot es: " <<  pkt->getRangingTransmisionSlot(0) << endl;
+
+
+                // Save the effectiveness of the anchor listened
+                anchorSuccess[indiceRSSI] = pkt->getBroadcastedSuccess();
+
+                // Initialize the vector to the first value and then add all the rest values, we will divide with the total RSSI read at the end (report or calculation) to get the mean
+                if (listRSSI[indiceRSSI].RSSIAdition == 0) {
+                    listRSSI[indiceRSSI].RSSIAdition = cInfo->getRSSI();
+                } else {
+                    listRSSI[indiceRSSI].RSSIAdition = listRSSI[indiceRSSI].RSSIAdition + cInfo->getRSSI();
+                }
+                listRSSI[indiceRSSI].counterRSSI ++;
+                EV << "Total RSSI received: " << listRSSI[indiceRSSI].RSSIAdition << ", total measured: " << listRSSI[indiceRSSI].counterRSSI << endl;
+                int selectedAnchor = -1;
+                double highestRSSI = 0.0;
+                int netwAddr;
+                int listenedRSSI = 0; // Store how much RSSI did we listened to
+                // Print all the RSSI from all the AN and looks for the bigger to get the selected Anchor
+                for (int i = 0; i < (numberOfAnchors); i++) {
+                    EV << "RSSI: " << (listRSSI[i].RSSIAdition / listRSSI[i].counterRSSI) << " en Anchor " << i << endl;
+                    if ((listRSSI[i].RSSIAdition / listRSSI[i].counterRSSI) > highestRSSI) {
+                        highestRSSI = listRSSI[i].RSSIAdition / listRSSI[i].counterRSSI;
+                        selectedAnchor = i;
+                    }
+                    if ((listRSSI[i].RSSIAdition / listRSSI[i].counterRSSI) > 0) {
+                        listenedRSSI ++;
+                    }
+                }
+
+                anchorSelected = selectedAnchor;
+                EV << "We want TX to: " << anchorSelected << endl;
+	        }
 	    	if (host->moduleType == 2) { // Mobile Node
 				EV << "Discarding the packet, in Sync Phase Mobile Node cannot receive any Broadcast from a Mobile Node" << endl;
 	    	} else { // Computer or AN

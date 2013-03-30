@@ -65,6 +65,7 @@
  * 	
  * 	
  * 	bool fastTransmision=false;
+ * 	int rangingTransmisionSlot[100];
  * 	RangingParams RangingParamsApp;
  * 
  * }
@@ -104,6 +105,7 @@ class ApplPkt : public ::cPacket
     double timestampComRelated_var;
     double broadcastedSuccess_var;
     bool fastTransmision_var;
+    int rangingTransmisionSlot_var[100];
     RangingParams RangingParamsApp_var;
 
   private:
@@ -187,6 +189,9 @@ class ApplPkt : public ::cPacket
     virtual void setBroadcastedSuccess(double broadcastedSuccess);
     virtual bool getFastTransmision() const;
     virtual void setFastTransmision(bool fastTransmision);
+    virtual unsigned int getRangingTransmisionSlotArraySize() const;
+    virtual int getRangingTransmisionSlot(unsigned int k) const;
+    virtual void setRangingTransmisionSlot(unsigned int k, int rangingTransmisionSlot);
     virtual RangingParams& getRangingParamsApp();
     virtual const RangingParams& getRangingParamsApp() const {return const_cast<ApplPkt*>(this)->getRangingParamsApp();}
     virtual void setRangingParamsApp(const RangingParams& RangingParamsApp);
